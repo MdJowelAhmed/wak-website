@@ -5,6 +5,7 @@ import { Star, ShoppingCart, Zap, Truck, RotateCcw, Shield } from "lucide-react"
 import Link from "next/link";
 import { myFetch } from "../../../../../helpers/myFetch";
 import { toast } from "sonner";
+import { useCart } from "@/context/CartContext";
 
 interface Highlight {
     label: string;
@@ -42,6 +43,7 @@ export default function ProductInfo({
 }: ProductInfoProps) {
     const [qty, setQty] = useState(1);
     const [addingToCart, setAddingToCart] = useState(false);
+    const { refreshCart } = useCart();
 
     const decrement = () => setQty((q) => Math.max(1, q - 1));
     const increment = () => setQty((q) => q + 1);
@@ -55,6 +57,7 @@ export default function ProductInfo({
             });
             if (res?.success) {
                 toast.success("Added to cart successfully!");
+                await refreshCart(); // update navbar badge instantly
             } else {
                 toast.error(res?.message || "Failed to add to cart");
             }

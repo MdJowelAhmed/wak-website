@@ -7,6 +7,7 @@ import CartItemRow from "./CartItemRow";
 import OrderSummary from "./OrderSummary";
 import { myFetch } from "../../../../helpers/myFetch";
 import { resolveImageUrl } from "../../../../helpers/resolveImageUrl";
+import { useCart } from "@/context/CartContext";
 
 export interface CartItem {
     id: string; // cart item ID
@@ -20,6 +21,7 @@ export interface CartItem {
 const ProductCart = () => {
     const [items, setItems] = useState<CartItem[]>([]);
     const [loading, setLoading] = useState(true);
+    const { refreshCart } = useCart();
     // Assuming a static delivery fee for now unless provided by API
     const deliveryFee = 55;
 
@@ -56,6 +58,7 @@ const ProductCart = () => {
         
         try {
             await myFetch(`/carts/products/${itemToRemove.productId}`, { method: 'DELETE' });
+            await refreshCart(); // sync navbar count
         } catch (error) {
             console.error("Failed to delete item", error);
         }
@@ -76,6 +79,7 @@ const ProductCart = () => {
                 method: 'PATCH',
                 body: { product: itemToUpdate.productId }
             });
+            await refreshCart(); // sync navbar count
         } catch (error) {
             console.error("Failed to update quantity", error);
         }
