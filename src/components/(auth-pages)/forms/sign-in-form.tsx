@@ -42,10 +42,11 @@ export function SignInForm({ onSwitch }: SignInFormProps) {
       if (res?.success) {
         toast.success(res?.message || "Login successfully", { id: "login" });
         if (res?.data?.accessToken) {
-          Cookies.set("accessToken", res.data.accessToken);
+          await login(res.data.accessToken);
+        } else {
+          await login();
         }
-        login();
-        router.push("/home");
+        router.push("/");
       } else {
         if (res?.error && Array.isArray(res.error)) {
           res.error.forEach((err: { message: string }) => {

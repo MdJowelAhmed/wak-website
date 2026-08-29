@@ -64,7 +64,7 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
 
             {/* Mobile Menu */}
             {isMenuOpen && (
-                <CustomerMobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} isLoggedIn={isLoggedIn} userMode={userMode} />
+                <CustomerMobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} isLoggedIn={isLoggedIn} logout={logout} userMode={userMode} />
             )}
         </div>
     );

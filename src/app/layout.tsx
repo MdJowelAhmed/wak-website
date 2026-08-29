@@ -6,6 +6,7 @@ import CustomerNavbar from "@/shared/Navbar";
 import Footer from "@/shared/Footer";
 import { Toaster } from "sonner";
 import { CartProvider } from "@/context/CartContext";
+import { AuthProvider } from "@/context/AuthContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,14 +34,16 @@ export default async function RootLayout({
     >
 
       <body className="min-h-full flex flex-col mx-auto font-sans">
-        <CartProvider>
-          <Toaster richColors position="top-center" />
-          <CustomerNavbar userMode={userMode} />
-          <div className="">
-            {children}
-          </div>
-          <Footer />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <Toaster richColors position="top-center" />
+            <CustomerNavbar userMode={userMode} />
+            <div className="">
+              {children}
+            </div>
+            <Footer />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

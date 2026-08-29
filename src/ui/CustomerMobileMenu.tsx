@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, LogOut } from 'lucide-react';
 import NavLinks from '@/ui/NavLinks';
 import AuthModal from '@/components/(auth-pages)';
 import SearchBar from '@/ui/SearchBar';
@@ -13,9 +13,10 @@ interface CustomerMobileMenuProps {
     onClose: () => void;
     isLoggedIn: boolean;
     userMode: string;
+    logout?: () => void;
 }
 
-export default function CustomerMobileMenu({ isOpen, onClose, isLoggedIn, userMode }: CustomerMobileMenuProps) {
+export default function CustomerMobileMenu({ isOpen, onClose, isLoggedIn, userMode, logout }: CustomerMobileMenuProps) {
     if (!isOpen) return null;
 
     return (
@@ -43,12 +44,24 @@ export default function CustomerMobileMenu({ isOpen, onClose, isLoggedIn, userMo
                             }
                         />
                     ) : (
-                        <Link href="/profile" onClick={onClose} className="flex items-center justify-between text-white py-2 cursor-pointer">
-                            <span className="text-sm font-medium">My Profile</span>
-                            <div className="w-8 h-8 rounded-full overflow-hidden border border-zinc-700">
-                                <img src="https://i.pravatar.cc/150?img=68" alt="Profile" className="w-full h-full object-cover" />
-                            </div>
-                        </Link>
+                        <>
+                            <Link href="/profile" onClick={onClose} className="flex items-center justify-between text-white py-2 cursor-pointer">
+                                <span className="text-sm font-medium">My Profile</span>
+                                <div className="w-8 h-8 rounded-full overflow-hidden border border-zinc-700">
+                                    <img src="https://i.pravatar.cc/150?img=68" alt="Profile" className="w-full h-full object-cover" />
+                                </div>
+                            </Link>
+                            <button
+                                onClick={() => {
+                                    onClose();
+                                    logout?.();
+                                }}
+                                className="flex items-center justify-between text-red-400 hover:text-red-300 py-2 cursor-pointer w-full text-left"
+                            >
+                                <span className="text-sm font-medium">Logout</span>
+                                <LogOut className="w-4 h-4" />
+                            </button>
+                        </>
                     )}
 
                     <Link href="/cart" onClick={onClose} className="flex items-center justify-between text-white py-2 cursor-pointer">

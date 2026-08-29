@@ -29,9 +29,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
     }, []);
 
-    // Fetch once on mount
+    // Fetch on mount and when auth changes
     useEffect(() => {
         refreshCart();
+
+        const handleAuthChange = () => {
+            refreshCart();
+        };
+
+        window.addEventListener("auth-change", handleAuthChange);
+        return () => window.removeEventListener("auth-change", handleAuthChange);
     }, [refreshCart]);
 
     return (

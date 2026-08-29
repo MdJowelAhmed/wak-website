@@ -7,6 +7,9 @@ import { resolveImageUrl } from "./resolveImageUrl";
 const getProfile = async () => {
 try {
     const token = (await cookies())?.get("accessToken")?.value;
+    if (!token) {
+        return null;
+    }
 
     const res = await fetch(`${process.env?.BASE_URL}/users/profile`, {
         next: {
