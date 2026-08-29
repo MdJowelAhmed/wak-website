@@ -25,6 +25,7 @@ export default function CustomerMobileMenu({ isOpen, onClose, isLoggedIn, userMo
                     <SearchBar
                         placeholder="Search Product"
                         inputClassName="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-3 pl-12 pr-4 text-sm text-white outline-none"
+                        onClose={onClose}
                     />
                 </div>
 

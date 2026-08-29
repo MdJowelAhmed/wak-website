@@ -30,7 +30,7 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
                 <Logo />
 
                 <div className="hidden md:flex flex-1 max-w-2xl mx-auto">
-                    <SearchBar placeholder="Search Product" />
+                    <SearchBar placeholder="Search Product or service" />
                 </div>
 
                 <div className="hidden sm:block">
