@@ -12,7 +12,7 @@ const Home = () => {
         <main className="w-full">
             <UserModeReset />
 
-            <Banner />
+            {/* <Banner /> */}
             <AllBrands />
             <FeaturedCategories />
             <BestSelling />

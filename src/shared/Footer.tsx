@@ -34,13 +34,12 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
                     {/* Logo & Description */}
                     <div className="lg:col-span-4">
-                        <Link href="/" className="inline-flex items-center justify-center w-32 h-14 border border-white rounded-lg mb-8">
+                        {/* <Link href="/" className="inline-flex items-center justify-center w-32 h-14 border border-white rounded-lg mb-8">
                             <span className="text-white font-semibold tracking-wider text-xl">LOGO</span>
-                        </Link>
+                        </Link> */}
 
                         <p className="max-w-xs leading-relaxed  text-sm mb-8">
-                            E-commerce is the buying and selling of goods or services using the internet,
-                            allowing 24/7 transactions, global reach, and increased efficiency.
+                            Follow us on social media for exclusive discounts, flash deals, and the latest product drops.
                         </p>
 
                         {/* Social Icons */}
