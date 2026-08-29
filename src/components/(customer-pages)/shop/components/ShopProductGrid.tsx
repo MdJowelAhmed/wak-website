@@ -71,6 +71,7 @@ export default function ShopProductGrid({ filters }: ShopProductGridProps) {
                     params.append("minRating", filters.rating.toString());
                 }
                 params.append("page", currentPage.toString());
+                params.append("limit", "12");
 
                 const res = await myFetch(`/products?${params.toString()}`);
                 if (res?.data) {
