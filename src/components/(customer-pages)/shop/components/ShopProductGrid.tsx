@@ -64,12 +64,17 @@ export default function ShopProductGrid({ filters }: ShopProductGridProps) {
                 if (filters?.categories && filters.categories.length > 0) {
                     params.append("category", filters.categories[0]);
                 }
-                if (filters?.brands && filters.brands.length > 0) {
-                    params.append("brand", filters.brands[0]);
-                }
                 if (filters?.rating !== null && filters?.rating !== undefined) {
                     params.append("minRating", filters.rating.toString());
                 }
+                // Discount filter: send only when one option is exclusively selected
+                const offers = filters?.offers ?? [];
+                if (offers.includes("discounted") && !offers.includes("regular")) {
+                    params.append("discount", "true");
+                } else if (offers.includes("regular") && !offers.includes("discounted")) {
+                    params.append("discount", "false");
+                }
+                // Both or neither selected → no discount param (backend returns all)
                 params.append("page", currentPage.toString());
                 params.append("limit", "12");
 

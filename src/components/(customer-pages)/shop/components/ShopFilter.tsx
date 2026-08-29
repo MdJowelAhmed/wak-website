@@ -6,7 +6,6 @@ import { RefreshCw } from "lucide-react";
 import PriceFilter from "./filters/PriceFilter";
 import CategoryFilter from "./filters/CategoryFilter";
 import RatingFilter from "./filters/RatingFilter";
-import BrandFilter from "./filters/BrandFilter";
 import OfferFilter from "./filters/OfferFilter";
 
 export interface FilterState {
@@ -14,7 +13,6 @@ export interface FilterState {
     priceMax: number;
     categories: string[];
     rating: number | null;
-    brands: string[];
     offers: string[];
 }
 
@@ -33,7 +31,6 @@ export default function ShopFilter({ initialFilters, onApply }: ShopFilterProps)
     const [priceMax, setPriceMax] = useState(initialFilters?.priceMax ?? 1000);
     const [selectedCategories, setSelectedCategories] = useState<string[]>(initialFilters?.categories ?? []);
     const [selectedRating, setSelectedRating] = useState<number | null>(initialFilters?.rating ?? null);
-    const [selectedBrands, setSelectedBrands] = useState<string[]>(initialFilters?.brands ?? []);
     const [selectedOffers, setSelectedOffers] = useState<string[]>(initialFilters?.offers ?? []);
 
     const [categoriesList, setCategoriesList] = useState<Category[]>([]);
@@ -67,7 +64,6 @@ export default function ShopFilter({ initialFilters, onApply }: ShopFilterProps)
             priceMax,
             categories: selectedCategories,
             rating: selectedRating,
-            brands: selectedBrands,
             offers: selectedOffers,
         });
     };
@@ -77,7 +73,6 @@ export default function ShopFilter({ initialFilters, onApply }: ShopFilterProps)
         setPriceMax(1000);
         setSelectedCategories([]);
         setSelectedRating(null);
-        setSelectedBrands([]);
         setSelectedOffers([]);
 
         onApply?.({
@@ -85,7 +80,6 @@ export default function ShopFilter({ initialFilters, onApply }: ShopFilterProps)
             priceMax: 1000,
             categories: [],
             rating: null,
-            brands: [],
             offers: []
         });
     };
@@ -112,14 +106,6 @@ export default function ShopFilter({ initialFilters, onApply }: ShopFilterProps)
             <RatingFilter 
                 selectedRating={selectedRating} 
                 setSelectedRating={setSelectedRating} 
-            />
-
-            <div className="border-t border-white/5" />
-
-            <BrandFilter 
-                selectedBrands={selectedBrands} 
-                setSelectedBrands={setSelectedBrands} 
-                toggleItem={toggleItem} 
             />
 
             <div className="border-t border-white/5" />

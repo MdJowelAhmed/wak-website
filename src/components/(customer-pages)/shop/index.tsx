@@ -10,14 +10,12 @@ interface ShopProps {
 
 export default function Shop({ searchParams }: ShopProps) {
     const initialCategory = searchParams?.category as string;
-    const initialBrand = searchParams?.brand as string;
 
     const [filters, setFilters] = useState<FilterState>({
         priceMin: 0,
         priceMax: 1000,
         categories: initialCategory ? [initialCategory] : [],
         rating: null,
-        brands: initialBrand ? [initialBrand] : [],
         offers: [],
     });
 
