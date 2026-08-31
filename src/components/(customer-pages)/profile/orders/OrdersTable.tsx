@@ -32,21 +32,59 @@ interface OrdersTableProps {
   orders: Order[];
   onSelectOrder: (order: Order) => void;
   onReviewOrder: (order: Order) => void;
+  currentPage?: number;
+  totalPages?: number;
+  onPageChange?: (page: number) => void;
 }
 
-export default function OrdersTable({ title = "My Orders", orders, onSelectOrder, onReviewOrder }: OrdersTableProps) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-  const totalPages = Math.ceil(orders.length / itemsPerPage);
+function buildPageRange(current: number, total: number): (number | null)[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentOrders = orders.slice(startIndex, startIndex + itemsPerPage);
+  const pages: (number | null)[] = [1];
+
+  if (current > 3) pages.push(null);
+
+  const start = Math.max(2, current - 1);
+  const end = Math.min(total - 1, current + 1);
+  for (let i = start; i <= end; i++) pages.push(i);
+
+  if (current < total - 2) pages.push(null);
+
+  pages.push(total);
+  return pages;
+}
+
+export default function OrdersTable({
+  title = "My Orders",
+  orders,
+  onSelectOrder,
+  onReviewOrder,
+  currentPage: propCurrentPage,
+  totalPages: propTotalPages,
+  onPageChange,
+}: OrdersTableProps) {
+  const [internalPage, setInternalPage] = useState(1);
+
+  const isServerPaginated = propTotalPages !== undefined && onPageChange !== undefined;
+  const currentPage = isServerPaginated ? (propCurrentPage ?? 1) : internalPage;
+  const itemsPerPage = 5;
+  const totalPages = isServerPaginated ? propTotalPages : Math.ceil(orders.length / itemsPerPage);
+
+  const currentOrders = isServerPaginated
+    ? orders
+    : orders.slice((currentPage - 1) * itemsPerPage, (currentPage - 1) * itemsPerPage + itemsPerPage);
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
+      if (isServerPaginated) {
+        onPageChange(page);
+      } else {
+        setInternalPage(page);
+      }
     }
   };
+
+  const pageRange = buildPageRange(currentPage, totalPages);
 
   return (
     <div>
@@ -149,25 +187,31 @@ export default function OrdersTable({ title = "My Orders", orders, onSelectOrder
                 />
               </PaginationItem>
 
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <PaginationItem key={page}>
-                  <PaginationLink
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handlePageChange(page);
-                    }}
-                    isActive={currentPage === page}
-                    className={
-                      currentPage === page
-                        ? "bg-primary border border-primary text-white shadow-md shadow-primary/20 hover:bg-orange-500 transition-all duration-200 rounded-xl cursor-pointer"
-                        : "bg-white border border-zinc-200 text-zinc-800 hover:bg-zinc-100 hover:text-zinc-900 transition-all duration-200 shadow-sm rounded-xl cursor-pointer"
-                    }
-                  >
-                    {page}
-                  </PaginationLink>
-                </PaginationItem>
-              ))}
+              {pageRange.map((page, idx) =>
+                page === null ? (
+                  <PaginationItem key={`ellipsis-${idx}`}>
+                    <PaginationEllipsis className="bg-white border border-zinc-200 text-zinc-800 rounded-xl h-10 w-10 shadow-sm flex items-center justify-center" />
+                  </PaginationItem>
+                ) : (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handlePageChange(page);
+                      }}
+                      isActive={currentPage === page}
+                      className={
+                        currentPage === page
+                          ? "bg-primary border border-primary text-white shadow-md shadow-primary/20 hover:bg-orange-500 transition-all duration-200 rounded-xl cursor-pointer"
+                          : "bg-white border border-zinc-200 text-zinc-800 hover:bg-zinc-100 hover:text-zinc-900 transition-all duration-200 shadow-sm rounded-xl cursor-pointer"
+                      }
+                    >
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                )
+              )}
 
               <PaginationItem>
                 <PaginationNext

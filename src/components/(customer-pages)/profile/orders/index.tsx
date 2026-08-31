@@ -20,15 +20,24 @@ export default function OrdersPage({ title = "My Orders", type }: OrdersPageProp
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [reviewOrder, setReviewOrder] = useState<Order | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreatingChat, setIsCreatingChat] = useState(false);
   const router = useRouter();
+
+  // Reset to page 1 when tab/type changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [type]);
 
   useEffect(() => {
     const fetchOrders = async () => {
       setIsLoading(true);
       try {
-        const endpoint = type === "product" ? "/product-orders/my-orders" : "/service-orders/";
+        const endpoint = type === "product"
+          ? `/product-orders/my-orders?page=${currentPage}&limit=10`
+          : `/service-orders/?page=${currentPage}&limit=10`;
         const res = await myFetch(endpoint);
         
         if (res?.success && Array.isArray(res.data)) {
@@ -84,6 +93,9 @@ export default function OrdersPage({ title = "My Orders", type }: OrdersPageProp
             };
           });
           setOrders(formattedOrders);
+          if (res.pagination) {
+            setTotalPages(res.pagination.totalPage ?? 1);
+          }
         }
       } catch (error) {
         console.error("Failed to fetch orders:", error);
@@ -93,7 +105,7 @@ export default function OrdersPage({ title = "My Orders", type }: OrdersPageProp
     };
     
     fetchOrders();
-  }, [type]);
+  }, [type, currentPage]);
 
   const handleMessageSeller = async () => {
     if (!selectedOrder?.sellerId) {
@@ -139,6 +151,9 @@ export default function OrdersPage({ title = "My Orders", type }: OrdersPageProp
             orders={orders}
             onSelectOrder={setSelectedOrder} 
             onReviewOrder={setReviewOrder}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
           />
         )}
         <ReviewModal
