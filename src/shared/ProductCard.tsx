@@ -5,7 +5,7 @@ import { Star, ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
-    id: number;
+    id: string | number;
     name: string;
     image: string;
     currentPrice: number;

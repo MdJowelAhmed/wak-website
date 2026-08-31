@@ -1,24 +1,24 @@
 "use client";
 
-import { useState } from "react";
-import ShopFilter, { FilterState } from "./components/ShopFilter";
+import ShopFilter, { Category } from "./components/ShopFilter";
 import ShopProductGrid from "./components/ShopProductGrid";
+import { Product } from "../home/components/NewArrival";
+
+export interface PaginationData {
+    total: number;
+    page: number;
+    limit: number;
+    totalPage: number;
+}
 
 interface ShopProps {
+    products: Product[];
+    pagination: PaginationData;
+    categoriesList: Category[];
     searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default function Shop({ searchParams }: ShopProps) {
-    const initialCategory = searchParams?.category as string;
-
-    const [filters, setFilters] = useState<FilterState>({
-        priceMin: 0,
-        priceMax: 1000,
-        categories: initialCategory ? [initialCategory] : [],
-        rating: null,
-        offers: [],
-    });
-
+export default function Shop({ products, pagination, categoriesList, searchParams }: ShopProps) {
     return (
         <div className="min-h-[calc(100vh-180px)] bg-[#4f2c1d] py-[50px]">
             <div className="container mx-auto px-4">
@@ -28,17 +28,21 @@ export default function Shop({ searchParams }: ShopProps) {
                     {/* Filter Sidebar — fluid responsive width */}
                     <div className="col-span-12 lg:col-span-3 shrink-0">
                         <ShopFilter 
-                            initialFilters={filters}
-                            onApply={(newFilters) => setFilters(newFilters)} 
+                            categoriesList={categoriesList}
+                            searchParams={searchParams}
                         />
                     </div>
 
                     {/* Product Grid + Pagination */}
                     <div className="col-span-12 lg:col-span-9 bg-white/5 p-3 rounded-2xl">
-                        <ShopProductGrid filters={filters} />
+                        <ShopProductGrid 
+                            products={products}
+                            pagination={pagination}
+                        />
                     </div>
                 </div>
             </div>
         </div>
     );
 }
+

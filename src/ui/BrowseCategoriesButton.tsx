@@ -27,7 +27,7 @@ export default function BrowseCategoriesButton() {
     const [productCategories, setProductCategories] = useState<Category[]>([]);
     const [serviceCategories, setServiceCategories] = useState<Category[]>([]);
 
-    console.log("product", productCategories, productCategories.length > 0 ? resolveImageUrl(productCategories[0]?.image) : "no image yet");
+    // console.log("product", productCategories, productCategories.length > 0 ? resolveImageUrl(productCategories[0]?.image) : "no image yet");
 
     useEffect(() => {
         const fetchCategories = async () => {

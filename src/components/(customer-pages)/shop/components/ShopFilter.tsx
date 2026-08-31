@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { myFetch } from "../../../../../helpers/myFetch";
+import { useState } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { RefreshCw } from "lucide-react";
 import PriceFilter from "./filters/PriceFilter";
 import CategoryFilter from "./filters/CategoryFilter";
@@ -16,39 +16,35 @@ export interface FilterState {
     offers: string[];
 }
 
-interface ShopFilterProps {
-    initialFilters?: FilterState;
-    onApply?: (filters: FilterState) => void;
-}
-
-interface Category {
+export interface Category {
     _id: string;
     name: string;
 }
 
-export default function ShopFilter({ initialFilters, onApply }: ShopFilterProps) {
-    const [priceMin, setPriceMin] = useState(initialFilters?.priceMin ?? 0);
-    const [priceMax, setPriceMax] = useState(initialFilters?.priceMax ?? 1000);
-    const [selectedCategories, setSelectedCategories] = useState<string[]>(initialFilters?.categories ?? []);
-    const [selectedRating, setSelectedRating] = useState<number | null>(initialFilters?.rating ?? null);
-    const [selectedOffers, setSelectedOffers] = useState<string[]>(initialFilters?.offers ?? []);
+interface ShopFilterProps {
+    categoriesList?: Category[];
+    searchParams?: { [key: string]: string | string[] | undefined };
+}
 
-    const [categoriesList, setCategoriesList] = useState<Category[]>([]);
-    
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                // Fetch all active categories
-                const res = await myFetch("/categories/active");
-                if (res?.data) {
-                    setCategoriesList(res.data);
-                }
-            } catch (error) {
-                console.error("Error fetching categories:", error);
-            }
-        };
-        fetchCategories();
-    }, []);
+export default function ShopFilter({ categoriesList = [], searchParams }: ShopFilterProps) {
+    const router = useRouter();
+    const pathname = usePathname();
+    const currentSearchParams = useSearchParams();
+
+    const initialMinPrice = Number(searchParams?.minPrice ?? currentSearchParams.get("minPrice") ?? 0);
+    const initialMaxPrice = Number(searchParams?.maxPrice ?? currentSearchParams.get("maxPrice") ?? 1000);
+    const initialCategory = (searchParams?.category ?? currentSearchParams.get("category")) as string;
+    const initialRating = searchParams?.minRating ? Number(searchParams.minRating) : (currentSearchParams.get("minRating") ? Number(currentSearchParams.get("minRating")) : null);
+    const initialDiscount = searchParams?.discount ?? currentSearchParams.get("discount");
+    const initialOffers: string[] = [];
+    if (initialDiscount === "true") initialOffers.push("discounted");
+    if (initialDiscount === "false") initialOffers.push("regular");
+
+    const [priceMin, setPriceMin] = useState(initialMinPrice);
+    const [priceMax, setPriceMax] = useState(initialMaxPrice);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCategory ? [initialCategory] : []);
+    const [selectedRating, setSelectedRating] = useState<number | null>(initialRating);
+    const [selectedOffers, setSelectedOffers] = useState<string[]>(initialOffers);
 
     const toggleItem = (
         list: string[],
@@ -59,13 +55,22 @@ export default function ShopFilter({ initialFilters, onApply }: ShopFilterProps)
     };
 
     const handleApply = () => {
-        onApply?.({
-            priceMin,
-            priceMax,
-            categories: selectedCategories,
-            rating: selectedRating,
-            offers: selectedOffers,
-        });
+        const params = new URLSearchParams();
+        if (priceMin > 0) params.set("minPrice", priceMin.toString());
+        if (priceMax < 1000) params.set("maxPrice", priceMax.toString());
+        if (selectedCategories.length > 0) params.set("category", selectedCategories[0]);
+        if (selectedRating !== null) params.set("minRating", selectedRating.toString());
+        
+        if (selectedOffers.includes("discounted") && !selectedOffers.includes("regular")) {
+            params.set("discount", "true");
+        } else if (selectedOffers.includes("regular") && !selectedOffers.includes("discounted")) {
+            params.set("discount", "false");
+        }
+
+        params.set("page", "1");
+
+        const queryStr = params.toString();
+        router.push(queryStr ? `${pathname}?${queryStr}` : pathname);
     };
 
     const handleReset = () => {
@@ -75,13 +80,7 @@ export default function ShopFilter({ initialFilters, onApply }: ShopFilterProps)
         setSelectedRating(null);
         setSelectedOffers([]);
 
-        onApply?.({
-            priceMin: 0,
-            priceMax: 1000,
-            categories: [],
-            rating: null,
-            offers: []
-        });
+        router.push(pathname);
     };
 
     return (
@@ -135,3 +134,4 @@ export default function ShopFilter({ initialFilters, onApply }: ShopFilterProps)
         </aside>
     );
 }
+

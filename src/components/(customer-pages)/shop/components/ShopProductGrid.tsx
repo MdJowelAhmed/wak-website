@@ -1,9 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import ProductCard from "@/shared/ProductCard";
-import { FilterState } from "./ShopFilter";
-import { myFetch } from "../../../../../helpers/myFetch";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
 import {
     Pagination,
@@ -13,11 +11,13 @@ import {
     PaginationLink,
     PaginationNext,
     PaginationPrevious,
-} from "@/ui/pagination"
+} from "@/ui/pagination";
 import { Product } from "../../home/components/NewArrival";
+import { PaginationData } from "../index";
 
 interface ShopProductGridProps {
-    filters?: FilterState;
+    products: Product[];
+    pagination: PaginationData;
 }
 
 const LINK_BASE = "bg-white border border-zinc-200 text-zinc-800 hover:bg-zinc-100 hover:text-zinc-900 transition-all duration-200 shadow-sm rounded-xl cursor-pointer";
@@ -42,76 +42,28 @@ function buildPageRange(current: number, total: number): (number | null)[] {
     return pages;
 }
 
-export default function ShopProductGrid({ filters }: ShopProductGridProps) {
-    const [products, setProducts] = useState<Product[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPage, setTotalPage] = useState(1);
-    const [total, setTotal] = useState(0);
+export default function ShopProductGrid({ products = [], pagination }: ShopProductGridProps) {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
 
-    // Reset to page 1 whenever filters change
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [filters]);
+    const currentPage = pagination?.page ?? 1;
+    const totalPage = pagination?.totalPage ?? 1;
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                setLoading(true);
-                const params = new URLSearchParams();
-                if (filters?.priceMin !== undefined) params.append("minPrice", filters.priceMin.toString());
-                if (filters?.priceMax !== undefined) params.append("maxPrice", filters.priceMax.toString());
-                if (filters?.categories && filters.categories.length > 0) {
-                    params.append("category", filters.categories[0]);
-                }
-                if (filters?.rating !== null && filters?.rating !== undefined) {
-                    params.append("minRating", filters.rating.toString());
-                }
-                // Discount filter: send only when one option is exclusively selected
-                const offers = filters?.offers ?? [];
-                if (offers.includes("discounted") && !offers.includes("regular")) {
-                    params.append("discount", "true");
-                } else if (offers.includes("regular") && !offers.includes("discounted")) {
-                    params.append("discount", "false");
-                }
-                // Both or neither selected → no discount param (backend returns all)
-                params.append("page", currentPage.toString());
-                params.append("limit", "12");
-
-                const res = await myFetch(`/products?${params.toString()}`);
-                if (res?.data) {
-                    setProducts(res.data);
-                    if (res.pagination) {
-                        setTotalPage(res.pagination.totalPage ?? 1);
-                        setTotal(res.pagination.total ?? 0);
-                    }
-                } else {
-                    setProducts([]);
-                    setTotalPage(1);
-                    setTotal(0);
-                }
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (filters) {
-            fetchProducts();
+    const handlePageChange = (newPage: number) => {
+        if (newPage >= 1 && newPage <= totalPage) {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set("page", newPage.toString());
+            router.push(`${pathname}?${params.toString()}`);
         }
-    }, [filters, currentPage]);
+    };
 
     const pageRange = buildPageRange(currentPage, totalPage);
 
     return (
         <div className="flex-1 flex flex-col gap-6">
             {/* Product Grid */}
-            {loading ? (
-                <div className="flex justify-center items-center py-20 text-[#FFDDA5]">
-                    Loading products...
-                </div>
-            ) : products.length > 0 ? (
+            {products.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                     {products.map((product) => (
                         <ProductCard key={product._id} product={{
@@ -133,7 +85,7 @@ export default function ShopProductGrid({ filters }: ShopProductGridProps) {
             )}
 
             {/* Pagination */}
-            {!loading && totalPage > 1 && (
+            {totalPage > 1 && (
                 <div className="flex flex-col items-center gap-2 pt-8 pb-4">
                     <Pagination>
                         <PaginationContent className="gap-2 flex-wrap justify-center">
@@ -143,7 +95,7 @@ export default function ShopProductGrid({ filters }: ShopProductGridProps) {
                                     href="#"
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        if (currentPage > 1) setCurrentPage((p) => p - 1);
+                                        if (currentPage > 1) handlePageChange(currentPage - 1);
                                     }}
                                     className={`${LINK_BASE} ${currentPage === 1 ? LINK_DISABLED : ""}`}
                                 />
@@ -162,7 +114,7 @@ export default function ShopProductGrid({ filters }: ShopProductGridProps) {
                                             isActive={page === currentPage}
                                             onClick={(e) => {
                                                 e.preventDefault();
-                                                setCurrentPage(page);
+                                                handlePageChange(page);
                                             }}
                                             className={page === currentPage ? LINK_ACTIVE : LINK_BASE}
                                         >
@@ -178,21 +130,17 @@ export default function ShopProductGrid({ filters }: ShopProductGridProps) {
                                     href="#"
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        if (currentPage < totalPage) setCurrentPage((p) => p + 1);
+                                        if (currentPage < totalPage) handlePageChange(currentPage + 1);
                                     }}
                                     className={`${LINK_BASE} ${currentPage === totalPage ? LINK_DISABLED : ""}`}
                                 />
                             </PaginationItem>
                         </PaginationContent>
                     </Pagination>
-
-                    {/* Info text */}
-                    {/* <p className="text-xs text-white/40 mt-1">
-                        Page {currentPage} of {totalPage} — {total} products
-                    </p> */}
                 </div>
             )}
         </div>
     );
 }
+
 
