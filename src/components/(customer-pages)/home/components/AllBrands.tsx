@@ -34,7 +34,7 @@ const CategoryMarquee = ({
     const hrefBase = type === 'service' ? '/services' : '/shop';
 
     return (
-        <div className="w-full relative overflow-hidden group py-2">
+        <div className="w-full overflow-hidden relative group py-2">
             <div className="flex select-none">
                 <div className="flex space-x-8 sm:space-x-12 animate-marquee whitespace-nowrap items-center">
                     {[...categories, ...categories, ...categories].map((cat, index) => (
@@ -73,9 +73,9 @@ const AllBrands = () => {
     return (
         <section className="py-12 bg-[#4f2c1d] space-y-12">
             {/* 1. Product Categories Section */}
-            <div className="w-full">
+            <div className="container mx-auto px-4">
                 <Tabs defaultValue="all" className="w-full">
-                    <div className="container mx-auto px-4 mb-6 flex justify-start">
+                    <div className="mb-6 flex justify-start">
                         <TabsList className="bg-white/10 p-1.5 h-auto rounded-2xl border border-white/10 backdrop-blur-sm gap-1">
                             <TabsTrigger
                                 value="all"
@@ -92,7 +92,7 @@ const AllBrands = () => {
                         </TabsList>
                     </div>
 
-                    <TabsContent value="all" className="mt-0 focus-visible:outline-none">
+                    <TabsContent value="all" className="mt-0 focus-visible:outline-none overflow-hidden">
                         <CategoryMarquee
                             categories={productCategories}
                             loading={prodLoading}
@@ -100,7 +100,7 @@ const AllBrands = () => {
                             type="product"
                         />
                     </TabsContent>
-                    <TabsContent value="featured" className="mt-0 focus-visible:outline-none">
+                    <TabsContent value="featured" className="mt-0 focus-visible:outline-none overflow-hidden">
                         <CategoryMarquee
                             categories={featuredProductCategories.length > 0 ? featuredProductCategories : productCategories}
                             loading={prodLoading}
@@ -112,13 +112,13 @@ const AllBrands = () => {
             </div>
 
             {/* 2. Service Categories Section */}
-            <div className="w-full">
+            <div className="container mx-auto px-4">
                 <Tabs defaultValue="all" className="w-full">
-                    <div className="container mx-auto px-4 mb-6 flex justify-start">
+                    <div className="mb-6 flex justify-start">
                         <TabsList className="bg-white/10 p-1.5 h-auto rounded-2xl border border-white/10 backdrop-blur-sm gap-1">
                             <TabsTrigger
                                 value="all"
-                                className="px-5 py-2.5 rounded-xl text-xs sm:text-sm md:text-base font-semibold text-white/70 data-[state=active]:bg-[#FF6700] data-[state=active]:text-white data-[state=active]:shadow-md transition-all cursor-pointer"
+                                className="px-5 py-2.5 rounded-xl text-xs sm:text-sm md:text-base font-semibold text-white/70 data-[state=active]:bg-[#FF6700] data-[state=active]:text-[#FFFFFF] data-[state=active]:shadow-md transition-all cursor-pointer"
                             >
                                 Service Categories
                             </TabsTrigger>
@@ -131,7 +131,7 @@ const AllBrands = () => {
                         </TabsList>
                     </div>
 
-                    <TabsContent value="all" className="mt-0 focus-visible:outline-none">
+                    <TabsContent value="all" className="mt-0 focus-visible:outline-none overflow-hidden">
                         <CategoryMarquee
                             categories={serviceCategories}
                             loading={servLoading}
@@ -139,7 +139,7 @@ const AllBrands = () => {
                             type="service"
                         />
                     </TabsContent>
-                    <TabsContent value="featured" className="mt-0 focus-visible:outline-none">
+                    <TabsContent value="featured" className="mt-0 focus-visible:outline-none overflow-hidden">
                         <CategoryMarquee
                             categories={featuredServiceCategories.length > 0 ? featuredServiceCategories : serviceCategories}
                             loading={servLoading}
