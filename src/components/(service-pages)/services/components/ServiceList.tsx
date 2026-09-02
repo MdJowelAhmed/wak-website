@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Star } from 'lucide-react';
 import { myFetch } from '../../../../../helpers/myFetch';
+import { getActiveCategories } from '../../../../../helpers/categoryService';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
 
 const HorizontalServiceCard = ({
@@ -108,7 +109,7 @@ export default function ServiceList() {
         const fetchData = async () => {
             try {
                 // Fetch categories
-                const catRes = await myFetch("/categories/active?type=service");
+                const catRes = await getActiveCategories({ type: 'service' });
                 if (catRes?.data) {
                     const mappedCats = catRes.data.map((c: any) => ({ name: c.name, value: c.name }));
                     setCategories([{ name: "All", value: "All" }, ...mappedCats]);

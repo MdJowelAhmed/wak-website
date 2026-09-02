@@ -10,40 +10,11 @@ import Image from 'next/image';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { myFetch } from '../../../../../helpers/myFetch';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
-
-interface Category {
-    _id: string;
-    name: string;
-    slug: string;
-    image: string;
-    type: string;
-    isFeatured?: boolean;
-}
+import { useCategories } from '../../../../../src/hooks/useCategories';
 
 const FeaturedCategories = () => {
-    const [featuredCategories, setFeaturedCategories] = useState<Category[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                // Fetch all categories
-                const res = await myFetch("/categories/active");
-                if (res?.data) {
-                    // Filter to only those that are featured
-                    const featured = res.data.filter((c: Category) => c.isFeatured === true);
-                    setFeaturedCategories(featured);
-                }
-            } catch (error) {
-                console.error("Failed to fetch featured categories", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchCategories();
-    }, []);
+    const { categories: featuredCategories, loading } = useCategories({ isFeatured: true });
 
     return (
         <section className="py-[50px] bg-[#4f2c1d]">

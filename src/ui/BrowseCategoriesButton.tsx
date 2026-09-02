@@ -9,40 +9,16 @@ import {
     ChevronDown,
     ChevronRight,
 } from 'lucide-react';
-import { myFetch } from '../../helpers/myFetch';
 import { resolveImageUrl } from '../../helpers/resolveImageUrl';
-
-interface Category {
-    _id: string;
-    name: string;
-    slug: string;
-    image: string;
-    type: string;
-}
+import { useCategories } from '../hooks/useCategories';
 
 export default function BrowseCategoriesButton() {
     const [isOpen, setIsOpen] = useState(false);
     const [activeTab, setActiveTab] = useState<'products' | 'services'>('products');
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const [productCategories, setProductCategories] = useState<Category[]>([]);
-    const [serviceCategories, setServiceCategories] = useState<Category[]>([]);
 
-    // console.log("product", productCategories, productCategories.length > 0 ? resolveImageUrl(productCategories[0]?.image) : "no image yet");
-
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const prodRes = await myFetch("/categories/active?type=product");
-                if (prodRes?.data) setProductCategories(prodRes.data);
-
-                const servRes = await myFetch("/categories/active?type=service");
-                if (servRes?.data) setServiceCategories(servRes.data);
-            } catch (error) {
-                console.error("Failed to fetch categories", error);
-            }
-        };
-        fetchCategories();
-    }, []);
+    const { categories: productCategories } = useCategories({ type: 'product' });
+    const { categories: serviceCategories } = useCategories({ type: 'service' });
 
     // Close dropdown when clicking outside
     useEffect(() => {

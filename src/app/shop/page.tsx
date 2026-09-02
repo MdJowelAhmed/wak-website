@@ -2,6 +2,7 @@ import Shop from "@/components/(customer-pages)/shop";
 import { Category } from "@/components/(customer-pages)/shop/components/ShopFilter";
 import { Product } from "@/components/(customer-pages)/home/components/NewArrival";
 import { nextFetch } from "../../../helpers/myFetch";
+import { getActiveCategories } from "../../../helpers/categoryService";
 
 interface ShopPageProps {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }> | { [key: string]: string | string[] | undefined };
@@ -33,7 +34,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     params.append("limit", "12");
 
     const [categoriesRes, productsRes] = await Promise.all([
-        nextFetch<Category[]>("/categories/active"),
+        getActiveCategories(),
         nextFetch<Product[]>(`/products?${params.toString()}`),
     ]);
 
