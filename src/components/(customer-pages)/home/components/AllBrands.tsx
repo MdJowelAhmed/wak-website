@@ -116,13 +116,13 @@ const AllBrands = () => {
                         <TabsList className="inline-flex bg-white/10  h-auto rounded-xl  backdrop-blur-sm select-none shrink-0 min-w-max">
                             <TabsTrigger
                                 value="all"
-                                className="px-3  py-2 sm:py-2.5 rounded-l-xl text-xs sm:text-sm md:text-base font-semibold text-white/90 data-[state=active]:bg-[#FF6700] data-[state=active]:text-white data-[state=active]:shadow-md hover:text-white hover:bg-white/10 transition-all cursor-pointer select-none whitespace-nowrap"
+                                className="px-3  py-2 sm:py-2 rounded-l-xl text-xs sm:text-sm md:text-base font-semibold text-white/90 data-[state=active]:bg-[#FF6700] data-[state=active]:text-white data-[state=active]:shadow-md hover:text-white hover:bg-white/10 transition-all cursor-pointer select-none whitespace-nowrap"
                             >
                                 Product Categories
                             </TabsTrigger>
                             <TabsTrigger
                                 value="featured"
-                                className="px-3 py-2 sm:py-2.5 rounded-r-xl text-xs sm:text-sm md:text-base font-semibold text-white/90 data-[state=active]:bg-[#FF6700] data-[state=active]:text-white data-[state=active]:shadow-md hover:text-white hover:bg-white/10 transition-all cursor-pointer select-none whitespace-nowrap"
+                                className="px-3 py-2 sm:py-2 rounded-r-xl text-xs sm:text-sm md:text-base font-semibold text-white/90 data-[state=active]:bg-[#FF6700] data-[state=active]:text-white data-[state=active]:shadow-md hover:text-white hover:bg-white/10 transition-all cursor-pointer select-none whitespace-nowrap"
                             >
                                 Featured Categories
                             </TabsTrigger>
@@ -155,13 +155,13 @@ const AllBrands = () => {
                         <TabsList className="inline-flex bg-white/10  h-auto rounded-xl  backdrop-blur-sm select-none shrink-0 min-w-max">
                             <TabsTrigger
                                 value="all"
-                                className="px-3 py-2 sm:py-2.5 rounded-l-xl text-xs sm:text-sm md:text-base font-semibold text-white/90 data-[state=active]:bg-[#FF6700] data-[state=active]:text-white data-[state=active]:shadow-md hover:text-white hover:bg-white/10 transition-all cursor-pointer select-none whitespace-nowrap"
+                                className="px-3 py-2 sm:py-2 rounded-l-xl text-xs sm:text-sm md:text-base font-semibold text-white/90 data-[state=active]:bg-[#FF6700] data-[state=active]:text-white data-[state=active]:shadow-md hover:text-white hover:bg-white/10 transition-all cursor-pointer select-none whitespace-nowrap"
                             >
                                 Service Categories
                             </TabsTrigger>
                             <TabsTrigger
                                 value="featured"
-                                className="px-3 py-2 sm:py-2.5 rounded-r-xl text-xs sm:text-sm md:text-base font-semibold text-white/90 data-[state=active]:bg-[#FF6700] data-[state=active]:text-white data-[state=active]:shadow-md hover:text-white hover:bg-white/10 transition-all cursor-pointer select-none whitespace-nowrap"
+                                className="px-3 py-2 sm:py-2 rounded-r-xl text-xs sm:text-sm md:text-base font-semibold text-white/90 data-[state=active]:bg-[#FF6700] data-[state=active]:text-white data-[state=active]:shadow-md hover:text-white hover:bg-white/10 transition-all cursor-pointer select-none whitespace-nowrap"
                             >
                                 Featured Categories
                             </TabsTrigger>
