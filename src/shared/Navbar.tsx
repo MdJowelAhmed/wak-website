@@ -9,6 +9,7 @@ import Logo from '@/ui/Logo';
 import CartButton from '@/ui/CartButton';
 import UserAuthMenu from '@/ui/UserAuthMenu';
 import SearchBar from '@/ui/SearchBar';
+import LanguageSelector from '@/ui/LanguageSelector';
 import CustomerMobileMenu from '@/ui/CustomerMobileMenu';
 
 interface NavbarProps {
@@ -38,6 +39,10 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
 
                 {/* Right side actions */}
                 <div className="ml-auto flex items-center gap-3 xl:gap-4 shrink-0">
+                    {/* Language selector — desktop only */}
+                    <div className="hidden xl:block">
+                        <LanguageSelector className="flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/15 px-3 py-1.5 rounded-lg cursor-pointer transition-colors text-sm text-white font-medium shrink-0" />
+                    </div>
                     <CartButton />
                     <UserAuthMenu isLoggedIn={isLoggedIn} logout={logout} />
                 </div>
