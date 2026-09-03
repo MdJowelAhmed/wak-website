@@ -2,11 +2,33 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRef, useEffect, useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/ui/tabs';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
 import { useCategories } from '../../../../../src/hooks/useCategories';
 
-const CategoryMarquee = ({
+// Reusable card shared between both layouts
+const CategoryCard = ({ cat, hrefBase, type }: { cat: any; hrefBase: string; type: string }) => (
+    <Link
+        href={`${hrefBase}?category=${encodeURIComponent(cat.name)}`}
+        className="inline-flex flex-col items-center justify-between gap-2 group cursor-pointer shrink-0 p-2 sm:p-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#FF6700]/60 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-36 sm:w-48 h-[158px] sm:h-[165px] select-none"
+    >
+        <div className="w-full h-24 sm:h-28 relative rounded-xl overflow-hidden bg-white p-2 shadow-inner flex items-center justify-center shrink-0">
+            <Image
+                src={resolveImageUrl(cat.image) || ""}
+                alt={cat.name}
+                fill
+                unoptimized={true}
+                className="object-cover p-1.5 group-hover:scale-110 transition-transform duration-300"
+            />
+        </div>
+        <span className="text-xs sm:text-sm font-semibold text-white group-hover:text-[#FF6700] transition-colors text-center w-full line-clamp-2 leading-tight px-1 break-words whitespace-normal">
+            {cat.name}
+        </span>
+    </Link>
+);
+
+const CategoryDisplay = ({
     categories,
     loading,
     emptyMessage,
@@ -17,6 +39,27 @@ const CategoryMarquee = ({
     emptyMessage: string;
     type: 'product' | 'service';
 }) => {
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    const trackRef = useRef<HTMLDivElement>(null);
+    const [needsMarquee, setNeedsMarquee] = useState(false);
+
+    useEffect(() => {
+        const check = () => {
+            if (trackRef.current && wrapperRef.current) {
+                // If single-row content wider than container → marquee needed
+                const overflows = trackRef.current.scrollWidth > wrapperRef.current.clientWidth + 4;
+                setNeedsMarquee(overflows);
+            }
+        };
+        // Small delay so DOM has rendered
+        const t = setTimeout(check, 50);
+        window.addEventListener('resize', check);
+        return () => {
+            clearTimeout(t);
+            window.removeEventListener('resize', check);
+        };
+    }, [categories]);
+
     if (loading) {
         return (
             <div className="w-full flex justify-center py-6">
@@ -34,34 +77,28 @@ const CategoryMarquee = ({
     const hrefBase = type === 'service' ? '/services' : '/shop';
 
     return (
-        <div className="marquee-wrapper w-full overflow-hidden relative py-3">
-            <div className="flex select-none">
-                <div className="flex space-x-4 sm:space-x-6 animate-marquee whitespace-nowrap items-center">
-                    {[...categories, ...categories, ...categories].map((cat, index) => (
-                        <Link
-                            key={`${type}-${cat._id}-${index}`}
-                            href={`${hrefBase}?category=${encodeURIComponent(cat.name)}`}
-                            className="inline-flex flex-col items-center justify-between gap-2 group cursor-pointer shrink-0 p-2 sm:p-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#FF6700]/60 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-36 sm:w-48 h-[158px] sm:h-[165px] select-none"
-                        >
-                            <div className="w-full h-24 sm:h-28 relative rounded-xl overflow-hidden bg-white p-2 shadow-inner flex items-center justify-center shrink-0">
-                                <Image
-                                    src={resolveImageUrl(cat.image) || ""}
-                                    alt={cat.name}
-                                    fill
-                                    unoptimized={true}
-                                    className="object-cover p-1.5 group-hover:scale-110 transition-transform duration-300"
-                                />
-                            </div>
-                            <span className="text-xs sm:text-sm font-semibold text-white group-hover:text-[#FF6700] transition-colors text-center w-full line-clamp-2 leading-tight px-1 break-words whitespace-normal">
-                                {cat.name}
-                            </span>
-                        </Link>
+        <div ref={wrapperRef} className={`w-full py-3 ${needsMarquee ? 'marquee-wrapper overflow-hidden' : ''}`}>
+            {needsMarquee ? (
+                /* Marquee mode — infinite scroll */
+                <div className="flex select-none">
+                    <div ref={trackRef} className="flex gap-4 sm:gap-6 animate-marquee items-start">
+                        {[...categories, ...categories, ...categories].map((cat, index) => (
+                            <CategoryCard key={`${type}-${cat._id}-${index}`} cat={cat} hrefBase={hrefBase} type={type} />
+                        ))}
+                    </div>
+                </div>
+            ) : (
+                /* Grid mode — all fit on screen, show centered */
+                <div ref={trackRef} className="flex flex-wrap justify-start gap-4 sm:gap-5 select-none">
+                    {categories.map((cat, index) => (
+                        <CategoryCard key={`${type}-${cat._id}-${index}`} cat={cat} hrefBase={hrefBase} type={type} />
                     ))}
                 </div>
-            </div>
+            )}
         </div>
     );
 };
+
 
 const AllBrands = () => {
     const { categories: productCategories, loading: prodLoading } = useCategories({ type: 'product' });
@@ -93,7 +130,7 @@ const AllBrands = () => {
                     </div>
 
                     <TabsContent value="all" className="mt-0 focus-visible:outline-none overflow-hidden">
-                        <CategoryMarquee
+                        <CategoryDisplay
                             categories={productCategories}
                             loading={prodLoading}
                             emptyMessage="No product categories found"
@@ -101,7 +138,7 @@ const AllBrands = () => {
                         />
                     </TabsContent>
                     <TabsContent value="featured" className="mt-0 focus-visible:outline-none overflow-hidden">
-                        <CategoryMarquee
+                        <CategoryDisplay
                             categories={featuredProductCategories.length > 0 ? featuredProductCategories : productCategories}
                             loading={prodLoading}
                             emptyMessage="No product featured categories found"
@@ -132,7 +169,7 @@ const AllBrands = () => {
                     </div>
 
                     <TabsContent value="all" className="mt-0 focus-visible:outline-none overflow-hidden">
-                        <CategoryMarquee
+                        <CategoryDisplay
                             categories={serviceCategories}
                             loading={servLoading}
                             emptyMessage="No service categories found"
@@ -140,7 +177,7 @@ const AllBrands = () => {
                         />
                     </TabsContent>
                     <TabsContent value="featured" className="mt-0 focus-visible:outline-none overflow-hidden">
-                        <CategoryMarquee
+                        <CategoryDisplay
                             categories={featuredServiceCategories.length > 0 ? featuredServiceCategories : serviceCategories}
                             loading={servLoading}
                             emptyMessage="No service featured categories found"
