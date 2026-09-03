@@ -41,18 +41,18 @@ const CategoryMarquee = ({
                         <Link
                             key={`${type}-${cat._id}-${index}`}
                             href={`${hrefBase}?category=${encodeURIComponent(cat.name)}`}
-                            className="inline-flex flex-col items-center justify-center gap-3 group cursor-pointer shrink-0 p-2 sm:p-2 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#FF6700]/60 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-32 sm:w-[133px] select-none"
+                            className="inline-flex flex-col items-center justify-between gap-2 group cursor-pointer shrink-0 p-2 sm:p-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#FF6700]/60 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-36 sm:w-48 h-[158px] sm:h-[165px] select-none"
                         >
-                            <div className="w-24 h-24 sm:w-28 sm:h-28 relative rounded-xl overflow-hidden bg-white p-2 shadow-inner flex items-center justify-center shrink-0">
+                            <div className="w-full h-24 sm:h-28 relative rounded-xl overflow-hidden bg-white p-2 shadow-inner flex items-center justify-center shrink-0">
                                 <Image
                                     src={resolveImageUrl(cat.image) || ""}
                                     alt={cat.name}
                                     fill
                                     unoptimized={true}
-                                    className="object-contain p-1.5 group-hover:scale-110 transition-transform duration-300"
+                                    className="object-cover p-1.5 group-hover:scale-110 transition-transform duration-300"
                                 />
                             </div>
-                            <span className="text-xs sm:text-sm font-semibold text-white group-hover:text-[#FF6700] transition-colors text-center max-w-full truncate px-1">
+                            <span className="text-xs sm:text-sm font-semibold text-white group-hover:text-[#FF6700] transition-colors text-center w-full line-clamp-2 leading-tight px-1 break-words whitespace-normal">
                                 {cat.name}
                             </span>
                         </Link>
