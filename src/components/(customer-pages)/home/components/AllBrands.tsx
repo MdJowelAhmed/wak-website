@@ -71,11 +71,11 @@ const AllBrands = () => {
     const featuredServiceCategories = serviceCategories.filter((c) => c.isFeatured === true);
 
     return (
-        <section className="py-12 bg-[#4f2c1d] space-y-12">
+        <section className="py-6 md:py-12 bg-[#4f2c1d] space-y-12">
             {/* 1. Product Categories Section */}
             <div className="container mx-auto px-4">
                 <Tabs defaultValue="all" className="w-full">
-                    <div className="mb-6 overflow-x-auto no-scrollbar max-w-full pb-1">
+                    <div className="mb-3 overflow-x-auto no-scrollbar max-w-full pb-1">
                         <TabsList className="inline-flex bg-white/10  h-auto rounded-xl  backdrop-blur-sm select-none shrink-0 min-w-max">
                             <TabsTrigger
                                 value="all"
@@ -114,7 +114,7 @@ const AllBrands = () => {
             {/* 2. Service Categories Section */}
             <div className="container mx-auto px-4">
                 <Tabs defaultValue="all" className="w-full">
-                    <div className="mb-6 overflow-x-auto no-scrollbar max-w-full pb-1">
+                    <div className="mb-3 overflow-x-auto no-scrollbar max-w-full pb-1">
                         <TabsList className="inline-flex bg-white/10  h-auto rounded-xl  backdrop-blur-sm select-none shrink-0 min-w-max">
                             <TabsTrigger
                                 value="all"
