@@ -96,6 +96,6 @@ body {
   animation: marquee 30s linear infinite;
 }
 
-.group:hover .animate-marquee {
+.marquee-wrapper:hover .animate-marquee {
   animation-play-state: paused;
 }

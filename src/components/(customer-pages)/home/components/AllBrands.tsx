@@ -34,7 +34,7 @@ const CategoryMarquee = ({
     const hrefBase = type === 'service' ? '/services' : '/shop';
 
     return (
-        <div className="w-full overflow-hidden relative group py-3">
+        <div className="marquee-wrapper w-full overflow-hidden relative py-3">
             <div className="flex select-none">
                 <div className="flex space-x-4 sm:space-x-6 animate-marquee whitespace-nowrap items-center">
                     {[...categories, ...categories, ...categories].map((cat, index) => (
