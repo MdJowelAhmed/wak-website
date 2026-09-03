@@ -22,16 +22,25 @@ export default function NavLinks({ userMode }: { userMode: string }) {
     const pathname = usePathname();
     const navItems = navLinks;
     return (
-        <nav className="flex flex-col xl:flex-row items-stretch xl:items-center gap-2 xl:gap-8 w-full xl:w-auto">
+        <nav className="flex flex-col xl:flex-row items-stretch xl:items-center gap-1 xl:gap-1 w-full xl:w-auto">
             {navItems.map((link) => {
                 const isActive = pathname === link.href;
                 return (
                     <Link
                         key={link.name}
                         href={link.href}
-                        className={`hover:text-primary transition-colors duration-200 font-normal text-sm py-2.5 xl:py-0 border-b border-white/5 xl:border-0 ${isActive ? 'text-primary font-medium' : 'text-white'}`}
+                        className={`relative px-3 py-2 xl:py-1.5 text-sm font-medium rounded-md transition-all duration-200
+                            border-b border-white/5 xl:border-0
+                            ${isActive
+                                ? 'text-white xl:text-white'
+                                : 'text-white/70 hover:text-white hover:bg-white/10 xl:hover:bg-white/10'
+                            }`}
                     >
                         {link.name}
+                        {/* Active underline indicator — desktop only */}
+                        {isActive && (
+                            <span className="hidden xl:block absolute bottom-0 left-3 right-3 h-0.5 bg-[#FF6700] rounded-full" />
+                        )}
                     </Link>
                 );
             })}

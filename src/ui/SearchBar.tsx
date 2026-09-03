@@ -33,8 +33,8 @@ function formatPrice(price: number) {
 export default function SearchBar({
     placeholder = 'Search...',
     containerClassName = 'relative w-full',
-    inputClassName = 'w-full bg-white border border-[#3d3d3d] focus:border-orange-500 rounded-lg py-2.5 pl-12 pr-4 text-sm text-black outline-none transition-all placeholder:text-gray-500',
-    iconClassName = 'absolute left-4 top-1/2 -translate-y-1/2 text-zinc-700 w-5 h-5',
+    inputClassName = 'w-full bg-white/10 border border-white/15 focus:border-[#FF6700]/70 focus:bg-white/15 rounded-full py-2.5 pl-11 pr-4 text-sm text-white outline-none transition-all placeholder:text-white/50 backdrop-blur-sm',
+    iconClassName = 'absolute left-3.5 top-1/2 -translate-y-1/2 text-white/50 w-4.5 h-4.5',
     onClose,
 }: SearchBarProps) {
     const [query, setQuery] = useState('');
@@ -171,7 +171,7 @@ export default function SearchBar({
                 {query && (
                     <button
                         onClick={clearQuery}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer"
+                        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/80 transition-colors cursor-pointer"
                         aria-label="Clear search"
                         type="button"
                     >
