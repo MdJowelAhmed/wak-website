@@ -108,11 +108,11 @@ const AllBrands = () => {
     const featuredServiceCategories = serviceCategories.filter((c) => c.isFeatured === true);
 
     return (
-        <section className="py-6 md:py-12 bg-[#4f2c1d] space-y-12">
+        <section className="py-6 md:pb-12 pb-3 bg-[#4f2c1d] space-y-3">
             {/* 1. Product Categories Section */}
             <div className="container mx-auto px-4">
                 <Tabs defaultValue="all" className="w-full">
-                    <div className="mb-3 overflow-x-auto no-scrollbar max-w-full pb-1">
+                    <div className="mb-1 overflow-x-auto no-scrollbar max-w-full pb-1">
                         <TabsList className="inline-flex bg-white/10  h-auto rounded-xl  backdrop-blur-sm select-none shrink-0 min-w-max">
                             <TabsTrigger
                                 value="all"
@@ -124,7 +124,7 @@ const AllBrands = () => {
                                 value="featured"
                                 className="px-3 py-2 sm:py-2.5 rounded-r-xl text-xs sm:text-sm md:text-base font-semibold text-white/90 data-[state=active]:bg-[#FF6700] data-[state=active]:text-white data-[state=active]:shadow-md hover:text-white hover:bg-white/10 transition-all cursor-pointer select-none whitespace-nowrap"
                             >
-                                Product Featured Categories
+                                Featured Categories
                             </TabsTrigger>
                         </TabsList>
                     </div>
@@ -151,7 +151,7 @@ const AllBrands = () => {
             {/* 2. Service Categories Section */}
             <div className="container mx-auto px-4">
                 <Tabs defaultValue="all" className="w-full">
-                    <div className="mb-3 overflow-x-auto no-scrollbar max-w-full pb-1">
+                    <div className="mb-1 overflow-x-auto no-scrollbar max-w-full pb-1">
                         <TabsList className="inline-flex bg-white/10  h-auto rounded-xl  backdrop-blur-sm select-none shrink-0 min-w-max">
                             <TabsTrigger
                                 value="all"
@@ -163,7 +163,7 @@ const AllBrands = () => {
                                 value="featured"
                                 className="px-3 py-2 sm:py-2.5 rounded-r-xl text-xs sm:text-sm md:text-base font-semibold text-white/90 data-[state=active]:bg-[#FF6700] data-[state=active]:text-white data-[state=active]:shadow-md hover:text-white hover:bg-white/10 transition-all cursor-pointer select-none whitespace-nowrap"
                             >
-                                Service Featured Categories
+                                Featured Categories
                             </TabsTrigger>
                         </TabsList>
                     </div>

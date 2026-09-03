@@ -1,4 +1,5 @@
 import UserModeReset from "./components/UserModeReset";
+import UserTypes from "./components/UserTypes";
 import AllBrands from "./components/AllBrands";
 import Banner from "./components/Banner";
 import BestSelling from "./components/BestSelling";
@@ -13,8 +14,9 @@ const Home = () => {
             <UserModeReset />
 
             {/* <Banner /> */}
+            <UserTypes />
             <AllBrands />
-            <FeaturedCategories />
+            {/* <FeaturedCategories /> */}
             <BestSelling />
             <NewArrival />
             <Services />
