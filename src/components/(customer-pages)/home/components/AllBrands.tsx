@@ -5,13 +5,12 @@ import Link from 'next/link';
 import { useRef, useEffect, useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/ui/tabs';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
-import { useCategories } from '../../../../../src/hooks/useCategories';
 
 // Reusable card shared between both layouts
 const CategoryCard = ({ cat, hrefBase, type }: { cat: any; hrefBase: string; type: string }) => (
     <Link
         href={`${hrefBase}?category=${encodeURIComponent(cat.name)}`}
-        className="inline-flex flex-col items-center justify-between gap-2 group cursor-pointer shrink-0 p-2 sm:p-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#FF6700]/60 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-36 sm:w-48 h-[158px] sm:h-[165px] select-none"
+        className="inline-flex flex-col items-center justify-between gap-2 group cursor-pointer shrink-0 p-2 sm:p-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#FF6700]/60 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-30 sm:w-48 h-[158px] sm:h-[165px] select-none"
     >
         <div className="w-full h-24 sm:h-28 relative rounded-xl overflow-hidden bg-white p-2 shadow-inner flex items-center justify-center shrink-0">
             <Image
@@ -81,7 +80,7 @@ const CategoryDisplay = ({
             {needsMarquee ? (
                 /* Marquee mode — infinite scroll */
                 <div className="flex select-none">
-                    <div ref={trackRef} className="flex gap-4 sm:gap-6 animate-marquee items-start">
+                    <div ref={trackRef} className="flex gap-2 md:gap-4 sm:gap-6 animate-marquee items-start">
                         {[...categories, ...categories, ...categories].map((cat, index) => (
                             <CategoryCard key={`${type}-${cat._id}-${index}`} cat={cat} hrefBase={hrefBase} type={type} />
                         ))}
@@ -89,7 +88,7 @@ const CategoryDisplay = ({
                 </div>
             ) : (
                 /* Grid mode — all fit on screen, show centered */
-                <div ref={trackRef} className="flex flex-wrap justify-start gap-4 sm:gap-5 select-none">
+                <div ref={trackRef} className="flex flex-wrap justify-start gap-2 sm:gap-5 select-none">
                     {categories.map((cat, index) => (
                         <CategoryCard key={`${type}-${cat._id}-${index}`} cat={cat} hrefBase={hrefBase} type={type} />
                     ))}
@@ -100,10 +99,15 @@ const CategoryDisplay = ({
 };
 
 
-const AllBrands = () => {
-    const { categories: productCategories, loading: prodLoading } = useCategories({ type: 'product' });
-    const { categories: serviceCategories, loading: servLoading } = useCategories({ type: 'service' });
+interface AllBrandsProps {
+    productCategories?: any[];
+    serviceCategories?: any[];
+}
 
+const AllBrands = ({
+    productCategories = [],
+    serviceCategories = [],
+}: AllBrandsProps) => {
     const featuredProductCategories = productCategories.filter((c) => c.isFeatured === true);
     const featuredServiceCategories = serviceCategories.filter((c) => c.isFeatured === true);
 
@@ -132,7 +136,7 @@ const AllBrands = () => {
                     <TabsContent value="all" className="mt-0 focus-visible:outline-none overflow-hidden">
                         <CategoryDisplay
                             categories={productCategories}
-                            loading={prodLoading}
+                            loading={false}
                             emptyMessage="No product categories found"
                             type="product"
                         />
@@ -140,7 +144,7 @@ const AllBrands = () => {
                     <TabsContent value="featured" className="mt-0 focus-visible:outline-none overflow-hidden">
                         <CategoryDisplay
                             categories={featuredProductCategories.length > 0 ? featuredProductCategories : productCategories}
-                            loading={prodLoading}
+                            loading={false}
                             emptyMessage="No product featured categories found"
                             type="product"
                         />
@@ -171,7 +175,7 @@ const AllBrands = () => {
                     <TabsContent value="all" className="mt-0 focus-visible:outline-none overflow-hidden">
                         <CategoryDisplay
                             categories={serviceCategories}
-                            loading={servLoading}
+                            loading={false}
                             emptyMessage="No service categories found"
                             type="service"
                         />
@@ -179,7 +183,7 @@ const AllBrands = () => {
                     <TabsContent value="featured" className="mt-0 focus-visible:outline-none overflow-hidden">
                         <CategoryDisplay
                             categories={featuredServiceCategories.length > 0 ? featuredServiceCategories : serviceCategories}
-                            loading={servLoading}
+                            loading={false}
                             emptyMessage="No service featured categories found"
                             type="service"
                         />

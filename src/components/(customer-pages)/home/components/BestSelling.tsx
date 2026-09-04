@@ -1,38 +1,22 @@
 "use client"
 
-import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { ArrowRight } from 'lucide-react';
 import ProductCard from '@/shared/ProductCard';
-import { myFetch } from '../../../../../helpers/myFetch';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
 
 // Import Swiper styles
 import 'swiper/css';
 import { useRouter } from 'next/navigation';
 
-const BestSelling = () => {
+interface BestSellingProps {
+    initialProducts?: any[];
+}
+
+const BestSelling = ({ initialProducts = [] }: BestSellingProps) => {
     const router = useRouter();
-    const [products, setProducts] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchBestSelling = async () => {
-            try {
-                const res = await myFetch('/products/best-selling');
-                if (res?.data) {
-                    setProducts(res.data);
-                }
-            } catch (error) {
-                console.error("Failed to fetch best selling products:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchBestSelling();
-    }, []);
+    const products = initialProducts;
 
     const handleClick = () => {
         const cookies = document.cookie;
@@ -66,9 +50,7 @@ const BestSelling = () => {
 
                 {/* Slider */}
                 <div className="products-slider">
-                    {loading ? (
-                        <div className="flex justify-center items-center py-12 text-[#FFDDA5]">Loading...</div>
-                    ) : products.length > 0 ? (
+                    {products.length > 0 ? (
                         <Swiper
                             modules={[Autoplay]}
                             spaceBetween={30}

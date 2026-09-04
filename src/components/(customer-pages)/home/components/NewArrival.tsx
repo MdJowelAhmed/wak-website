@@ -1,11 +1,9 @@
 "use client"
 
-import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { ArrowRight } from 'lucide-react';
 import ProductCard from '@/shared/ProductCard';
-import { myFetch } from '../../../../../helpers/myFetch';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
 
 // Import Swiper styles
@@ -23,27 +21,13 @@ export interface Product {
     slug: string;
 }
 
-const NewArrival = () => {
-    const router = useRouter();
-    const [products, setProducts] = useState<Product[]>([]);
-    const [loading, setLoading] = useState(true);
+interface NewArrivalProps {
+    initialProducts?: Product[];
+}
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const res = await myFetch("/products");
-                if (res?.data) {
-                    // Limit to 6 items
-                    setProducts(res.data.slice(0, 6));
-                }
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchProducts();
-    }, []);
+const NewArrival = ({ initialProducts = [] }: NewArrivalProps) => {
+    const router = useRouter();
+    const products = initialProducts.slice(0, 6);
 
     const handleClick = () => {
         const cookies = document.cookie;
@@ -76,9 +60,7 @@ const NewArrival = () => {
 
                 {/* Slider */}
                 <div className="products-slider">
-                    {loading ? (
-                        <div className="flex justify-center items-center py-12 text-[#FFDDA5]">Loading...</div>
-                    ) : products.length > 0 ? (
+                    {products.length > 0 ? (
                         <Swiper
                             modules={[Autoplay]}
                             spaceBetween={30}

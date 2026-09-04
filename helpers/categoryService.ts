@@ -32,5 +32,11 @@ export async function getActiveCategories(
     }
 
     const queryString = query.toString() ? `?${query.toString()}` : "";
-    return await myFetch<Category[]>(`/categories/active${queryString}`);
+    return await myFetch<Category[]>(`/categories/active${queryString}`, {
+        cache: "force-cache",
+        next: {
+            revalidate: 3600, 
+            tags: ["categories"],
+        },
+    });
 }

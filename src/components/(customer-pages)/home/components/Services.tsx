@@ -1,33 +1,17 @@
-"use client"
-import { useState, useEffect } from "react";
+"use client";
+
 import ServiceCard from "@/shared/ServiceCard";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { myFetch } from "../../../../../helpers/myFetch";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
 
+interface ServicesProps {
+    initialServices?: any[];
+}
 
-const Services = () => {
+const Services = ({ initialServices = [] }: ServicesProps) => {
     const router = useRouter();
-    const [services, setServices] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchServices = async () => {
-            try {
-                const res = await myFetch('/services');
-                if (res?.data) {
-                    setServices(res.data);
-                }
-            } catch (error) {
-                console.error("Failed to fetch services:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchServices();
-    }, []);
+    const services = initialServices;
 
     const handleClick = () => {
         const cookies = document.cookie;
@@ -61,9 +45,7 @@ const Services = () => {
                 </div>
 
                 {/* Grid */}
-                {loading ? (
-                    <div className="flex justify-center items-center py-12 text-[#FFDDA5]">Loading...</div>
-                ) : services.length > 0 ? (
+                {services.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {services.map((service) => (
                             <ServiceCard 
