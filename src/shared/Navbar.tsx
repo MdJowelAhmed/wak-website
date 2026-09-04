@@ -39,8 +39,8 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
 
                 {/* Right side actions */}
                 <div className="ml-auto flex items-center gap-3 xl:gap-4 shrink-0">
-                    {/* Language selector — desktop only */}
-                    <div className="hidden xl:block">
+                    {/* Language selector — desktop & tablet */}
+                    <div className="hidden md:block">
                         <LanguageSelector className="flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/15 px-3 py-1.5 rounded-lg cursor-pointer transition-colors text-sm text-white font-medium shrink-0" />
                     </div>
                     <CartButton />
