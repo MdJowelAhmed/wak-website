@@ -1,13 +1,8 @@
 "use client"
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
 import { ArrowRight } from 'lucide-react';
 import ProductCard from '@/shared/ProductCard';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
-
-// Import Swiper styles
-import 'swiper/css';
 import { useRouter } from 'next/navigation';
 
 interface BestSellingProps {
@@ -41,44 +36,30 @@ const BestSelling = ({ initialProducts = [] }: BestSellingProps) => {
                     </div>
                     <div className="flex justify-between items-end">
                         <h2 className="title mb-0!">Best Selling Products</h2>
-                        <button className="flex items-center gap-2  text-[#FFDDA5] px-6 py-3 rounded-md font-medium hover:underline underline-offset-4 transition-all group cursor-pointer" onClick={handleClick}>
+                        <button className="flex items-center gap-2 text-[#FFDDA5] px-6 py-3 rounded-md font-medium hover:underline underline-offset-4 transition-all group cursor-pointer" onClick={handleClick}>
                             View All
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </button>
                     </div>
                 </div>
 
-                {/* Slider */}
-                <div className="products-slider">
+                {/* Products Grid */}
+                <div>
                     {products.length > 0 ? (
-                        <Swiper
-                            modules={[Autoplay]}
-                            spaceBetween={30}
-                            slidesPerView={4}
-                            autoplay={{ delay: 4000 }}
-                            breakpoints={{
-                                320: { slidesPerView: 1.2, spaceBetween: 20 },
-                                640: { slidesPerView: 2.2, spaceBetween: 20 },
-                                1024: { slidesPerView: 3, spaceBetween: 30 },
-                                1280: { slidesPerView: 4, spaceBetween: 30 }
-                            }}
-                            className="w-full"
-                        >
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                             {products.map((product) => (
-                                <SwiperSlide key={product._id}>
-                                    <ProductCard product={{
-                                        id: product.slug || (product._id as any),
-                                        name: product.name,
-                                        image: resolveImageUrl(product.images?.[0]) || "/placeholder.jpg",
-                                        currentPrice: product.discountPrice || product.price,
-                                        originalPrice: product.price,
-                                        discount: product.discountPrice ? Math.round(((product.price - product.discountPrice) / product.price) * 100) : 0,
-                                        rating: product.ratingAverage || 0,
-                                        reviews: product.ratingCount || 0
-                                    }} />
-                                </SwiperSlide>
+                                <ProductCard key={product._id} product={{
+                                    id: product.slug || (product._id as any),
+                                    name: product.name,
+                                    image: resolveImageUrl(product.images?.[0]) || "/placeholder.jpg",
+                                    currentPrice: product.discountPrice || product.price,
+                                    originalPrice: product.price,
+                                    discount: product.discountPrice ? Math.round(((product.price - product.discountPrice) / product.price) * 100) : 0,
+                                    rating: product.ratingAverage || 0,
+                                    reviews: product.ratingCount || 0
+                                }} />
                             ))}
-                        </Swiper>
+                        </div>
                     ) : (
                         <div className="text-center text-[#FFDDA5] py-10">No best selling products found.</div>
                     )}

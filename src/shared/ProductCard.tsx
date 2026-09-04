@@ -36,26 +36,31 @@ const ProductCard = ({ product, bgColor }: { product: ProductCardProps, bgColor?
         router.push(`/cart`);
         router.refresh();
     };
+
     return (
         <div
             onClick={handleClick}
-            className={`p-4 rounded-xl group relative transition-all duration-300 cursor-pointer`}
+            className={`p-2.5 sm:p-4 rounded-xl group relative transition-all duration-300 cursor-pointer flex flex-col justify-between`}
             style={{ backgroundColor: bgColor || "#fff" }}
         >
             {/* Top Row: Discount and Cart */}
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-2 sm:mb-4">
                 {discount ? (
-                    <span className="bg-[#FFDDA5] text-[#4f2c1d] text-xs font-bold px-2 py-1 rounded-xs">
+                    <span className="bg-[#FFDDA5] text-[#4f2c1d] text-[10px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-xs">
                         -{discount}%
                     </span>
                 ) : <div />}
-                <button onClick={(e) => handleCartClick(e)} className="w-8 h-8 rounded-full  flex items-center justify-center text-white hover:bg-primary transition-colors cursor-pointer" style={{ backgroundColor: bgColor ? "#353535" : "#4f2c1d" }}>
-                    <ShoppingCart className="w-4 h-4" />
+                <button
+                    onClick={(e) => handleCartClick(e)}
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white hover:bg-primary transition-colors cursor-pointer"
+                    style={{ backgroundColor: bgColor ? "#353535" : "#4f2c1d" }}
+                >
+                    <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
             </div>
 
             {/* Product Image */}
-            <div className="relative w-full h-48 mb-6 flex items-center justify-center overflow-hidden">
+            <div className="relative w-full h-28 sm:h-48 mb-2 sm:mb-6 flex items-center justify-center overflow-hidden">
                 <div className="relative w-full h-full">
                     <Image
                         src={image}
@@ -68,13 +73,13 @@ const ProductCard = ({ product, bgColor }: { product: ProductCardProps, bgColor?
             </div>
 
             {/* Product Info */}
-            <div className="space-y-2">
-                <h3 className="text-zinc-900 font-medium text-base truncate">{name}</h3>
+            <div className="space-y-1 sm:space-y-2">
+                <h3 className="text-zinc-900 font-medium text-xs sm:text-base truncate">{name}</h3>
 
-                <div className="flex items-center gap-3">
-                    <span className="text-primary font-semibold">${currentPrice}</span>
+                <div className="flex items-center gap-1.5 sm:gap-3">
+                    <span className="text-primary font-semibold text-xs sm:text-base">${currentPrice}</span>
                     {originalPrice && (
-                        <span className="text-zinc-600 line-through text-sm">${originalPrice}</span>
+                        <span className="text-zinc-600 line-through text-[10px] sm:text-sm">${originalPrice}</span>
                     )}
                 </div>
 
@@ -84,11 +89,11 @@ const ProductCard = ({ product, bgColor }: { product: ProductCardProps, bgColor?
                         {[...Array(5)].map((_, i) => (
                             <Star
                                 key={i}
-                                className={`w-3.5 h-3.5 ${i < Math.floor(rating) ? "fill-[#FFC107] text-[#FFC107]" : "text-zinc-600"}`}
+                                className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${i < Math.floor(rating) ? "fill-[#FFC107] text-[#FFC107]" : "text-zinc-600"}`}
                             />
                         ))}
                     </div>
-                    <span className="text-zinc-600 text-xs ml-1">({reviews})</span>
+                    <span className="text-zinc-600 text-[10px] sm:text-xs ml-0.5 sm:ml-1">({reviews})</span>
                 </div>
             </div>
         </div>

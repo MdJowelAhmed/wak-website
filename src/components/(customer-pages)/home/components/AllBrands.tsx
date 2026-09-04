@@ -2,8 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRef, useEffect, useState } from 'react';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/ui/tabs';
+import { useState } from 'react';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
 
 // Reusable card shared between both layouts
@@ -38,27 +37,6 @@ const CategoryDisplay = ({
     emptyMessage: string;
     type: 'product' | 'service';
 }) => {
-    const wrapperRef = useRef<HTMLDivElement>(null);
-    const trackRef = useRef<HTMLDivElement>(null);
-    const [needsMarquee, setNeedsMarquee] = useState(false);
-
-    useEffect(() => {
-        const check = () => {
-            if (trackRef.current && wrapperRef.current) {
-                // If single-row content wider than container → marquee needed
-                const overflows = trackRef.current.scrollWidth > wrapperRef.current.clientWidth + 4;
-                setNeedsMarquee(overflows);
-            }
-        };
-        // Small delay so DOM has rendered
-        const t = setTimeout(check, 50);
-        window.addEventListener('resize', check);
-        return () => {
-            clearTimeout(t);
-            window.removeEventListener('resize', check);
-        };
-    }, [categories]);
-
     if (loading) {
         return (
             <div className="w-full flex justify-center py-6">
@@ -74,30 +52,23 @@ const CategoryDisplay = ({
     }
 
     const hrefBase = type === 'service' ? '/services' : '/shop';
+    // Duplicate 2 or 4 times (even number) for 50% seamless transform marquee
+    const marqueeItems = categories.length < 6
+        ? [...categories, ...categories, ...categories, ...categories]
+        : [...categories, ...categories];
 
     return (
-        <div ref={wrapperRef} className={`w-full py-3 ${needsMarquee ? 'marquee-wrapper overflow-hidden' : ''}`}>
-            {needsMarquee ? (
-                /* Marquee mode — infinite scroll */
-                <div className="flex select-none">
-                    <div ref={trackRef} className="flex gap-2 md:gap-4 sm:gap-6 animate-marquee items-start">
-                        {[...categories, ...categories, ...categories].map((cat, index) => (
-                            <CategoryCard key={`${type}-${cat._id}-${index}`} cat={cat} hrefBase={hrefBase} type={type} />
-                        ))}
-                    </div>
-                </div>
-            ) : (
-                /* Grid mode — all fit on screen, show centered */
-                <div ref={trackRef} className="flex flex-wrap justify-start gap-2 sm:gap-5 select-none">
-                    {categories.map((cat, index) => (
+        <div className="w-full py-3 marquee-wrapper overflow-hidden">
+            <div className="flex select-none">
+                <div className="flex gap-2 md:gap-4 sm:gap-6 animate-marquee items-start shrink-0">
+                    {marqueeItems.map((cat, index) => (
                         <CategoryCard key={`${type}-${cat._id}-${index}`} cat={cat} hrefBase={hrefBase} type={type} />
                     ))}
                 </div>
-            )}
+            </div>
         </div>
     );
 };
-
 
 interface AllBrandsProps {
     productCategories?: any[];
@@ -108,87 +79,109 @@ const AllBrands = ({
     productCategories = [],
     serviceCategories = [],
 }: AllBrandsProps) => {
-    const featuredProductCategories = productCategories.filter((c) => c.isFeatured === true);
-    const featuredServiceCategories = serviceCategories.filter((c) => c.isFeatured === true);
+    const [productTab, setProductTab] = useState<'all' | 'featured'>('all');
+    const [serviceTab, setServiceTab] = useState<'all' | 'featured'>('all');
+
+    const featuredProductCategories = productCategories.filter(
+        (c) => c.isFeatured === true || String(c.isFeatured).toLowerCase() === 'true' || c.isFeatured === 1
+    );
+    const featuredServiceCategories = serviceCategories.filter(
+        (c) => c.isFeatured === true || String(c.isFeatured).toLowerCase() === 'true' || c.isFeatured === 1
+    );
+
+    const activeProductCategories = productTab === 'all' ? productCategories : featuredProductCategories;
+    const activeServiceCategories = serviceTab === 'all' ? serviceCategories : featuredServiceCategories;
 
     return (
         <section className="py-6 md:pb-12 pb-3 bg-[#4f2c1d] space-y-3">
             {/* 1. Product Categories Section */}
             <div className="container mx-auto px-4">
-                <Tabs defaultValue="all" className="w-full">
+                <div className="w-full">
                     <div className="mb-1 overflow-x-auto no-scrollbar max-w-full pb-1">
-                        <TabsList className="inline-flex bg-white/10  h-auto rounded-xl  backdrop-blur-sm select-none shrink-0 min-w-max">
-                            <TabsTrigger
-                                value="all"
-                                className="px-3  py-2 sm:py-2 rounded-l-xl text-xs sm:text-sm md:text-base font-semibold text-white/90 data-[state=active]:bg-[#FF6700] data-[state=active]:text-white data-[state=active]:shadow-md hover:text-white hover:bg-white/10 transition-all cursor-pointer select-none whitespace-nowrap"
+                        <div className="inline-flex bg-white/10 h-auto rounded-xl backdrop-blur-sm select-none shrink-0 min-w-max">
+                            <button
+                                type="button"
+                                onClick={() => setProductTab('all')}
+                                className={`px-3 py-2 sm:py-2 rounded-l-xl text-xs sm:text-sm md:text-base font-semibold transition-all cursor-pointer select-none whitespace-nowrap ${
+                                    productTab === 'all'
+                                        ? 'bg-[#FF6700] text-white shadow-md'
+                                        : 'text-white/90 hover:text-white hover:bg-white/10'
+                                }`}
                             >
                                 Product Categories
-                            </TabsTrigger>
-                            <TabsTrigger
-                                value="featured"
-                                className="px-3 py-2 sm:py-2 rounded-r-xl text-xs sm:text-sm md:text-base font-semibold text-white/90 data-[state=active]:bg-[#FF6700] data-[state=active]:text-white data-[state=active]:shadow-md hover:text-white hover:bg-white/10 transition-all cursor-pointer select-none whitespace-nowrap"
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setProductTab('featured')}
+                                className={`px-3 py-2 sm:py-2 rounded-r-xl text-xs sm:text-sm md:text-base font-semibold transition-all cursor-pointer select-none whitespace-nowrap ${
+                                    productTab === 'featured'
+                                        ? 'bg-[#FF6700] text-white shadow-md'
+                                        : 'text-white/90 hover:text-white hover:bg-white/10'
+                                }`}
                             >
                                 Featured Categories
-                            </TabsTrigger>
-                        </TabsList>
+                            </button>
+                        </div>
                     </div>
 
-                    <TabsContent value="all" className="mt-0 focus-visible:outline-none overflow-hidden">
+                    <div className="mt-0 focus-visible:outline-none overflow-hidden">
                         <CategoryDisplay
-                            categories={productCategories}
+                            categories={activeProductCategories}
                             loading={false}
-                            emptyMessage="No product categories found"
+                            emptyMessage={
+                                productTab === 'all'
+                                    ? 'No product categories found'
+                                    : 'No featured product categories found'
+                            }
                             type="product"
                         />
-                    </TabsContent>
-                    <TabsContent value="featured" className="mt-0 focus-visible:outline-none overflow-hidden">
-                        <CategoryDisplay
-                            categories={featuredProductCategories.length > 0 ? featuredProductCategories : productCategories}
-                            loading={false}
-                            emptyMessage="No product featured categories found"
-                            type="product"
-                        />
-                    </TabsContent>
-                </Tabs>
+                    </div>
+                </div>
             </div>
 
             {/* 2. Service Categories Section */}
             <div className="container mx-auto px-4">
-                <Tabs defaultValue="all" className="w-full">
+                <div className="w-full">
                     <div className="mb-1 overflow-x-auto no-scrollbar max-w-full pb-1">
-                        <TabsList className="inline-flex bg-white/10  h-auto rounded-xl  backdrop-blur-sm select-none shrink-0 min-w-max">
-                            <TabsTrigger
-                                value="all"
-                                className="px-3 py-2 sm:py-2 rounded-l-xl text-xs sm:text-sm md:text-base font-semibold text-white/90 data-[state=active]:bg-[#FF6700] data-[state=active]:text-white data-[state=active]:shadow-md hover:text-white hover:bg-white/10 transition-all cursor-pointer select-none whitespace-nowrap"
+                        <div className="inline-flex bg-white/10 h-auto rounded-xl backdrop-blur-sm select-none shrink-0 min-w-max">
+                            <button
+                                type="button"
+                                onClick={() => setServiceTab('all')}
+                                className={`px-3 py-2 sm:py-2 rounded-l-xl text-xs sm:text-sm md:text-base font-semibold transition-all cursor-pointer select-none whitespace-nowrap ${
+                                    serviceTab === 'all'
+                                        ? 'bg-[#FF6700] text-white shadow-md'
+                                        : 'text-white/90 hover:text-white hover:bg-white/10'
+                                }`}
                             >
                                 Service Categories
-                            </TabsTrigger>
-                            <TabsTrigger
-                                value="featured"
-                                className="px-3 py-2 sm:py-2 rounded-r-xl text-xs sm:text-sm md:text-base font-semibold text-white/90 data-[state=active]:bg-[#FF6700] data-[state=active]:text-white data-[state=active]:shadow-md hover:text-white hover:bg-white/10 transition-all cursor-pointer select-none whitespace-nowrap"
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setServiceTab('featured')}
+                                className={`px-3 py-2 sm:py-2 rounded-r-xl text-xs sm:text-sm md:text-base font-semibold transition-all cursor-pointer select-none whitespace-nowrap ${
+                                    serviceTab === 'featured'
+                                        ? 'bg-[#FF6700] text-white shadow-md'
+                                        : 'text-white/90 hover:text-white hover:bg-white/10'
+                                }`}
                             >
                                 Featured Categories
-                            </TabsTrigger>
-                        </TabsList>
+                            </button>
+                        </div>
                     </div>
 
-                    <TabsContent value="all" className="mt-0 focus-visible:outline-none overflow-hidden">
+                    <div className="mt-0 focus-visible:outline-none overflow-hidden">
                         <CategoryDisplay
-                            categories={serviceCategories}
+                            categories={activeServiceCategories}
                             loading={false}
-                            emptyMessage="No service categories found"
+                            emptyMessage={
+                                serviceTab === 'all'
+                                    ? 'No service categories found'
+                                    : 'No featured service categories found'
+                            }
                             type="service"
                         />
-                    </TabsContent>
-                    <TabsContent value="featured" className="mt-0 focus-visible:outline-none overflow-hidden">
-                        <CategoryDisplay
-                            categories={featuredServiceCategories.length > 0 ? featuredServiceCategories : serviceCategories}
-                            loading={false}
-                            emptyMessage="No service featured categories found"
-                            type="service"
-                        />
-                    </TabsContent>
-                </Tabs>
+                    </div>
+                </div>
             </div>
         </section>
     );
