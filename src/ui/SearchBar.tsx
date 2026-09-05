@@ -142,42 +142,64 @@ export default function SearchBar({
 
     const showDropdown = isOpen && query.trim().length > 0;
 
+    const [categoryFilter, setCategoryFilter] = useState('all');
+
     return (
         <div className={containerClassName} ref={containerRef}>
-            {/* Input Row */}
-            <div className="relative w-full">
-                {isLoading ? (
-                    <Loader2 className={`${iconClassName} animate-spin !text-orange-500`} />
-                ) : (
-                    <Search className={iconClassName} />
-                )}
-                <input
-                    ref={inputRef}
-                    type="text"
-                    placeholder={placeholder}
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    onFocus={() => {
-                        if (query.trim() && results.length > 0) setIsOpen(true);
-                    }}
-                    className={`${inputClassName} ${query ? 'pr-10' : ''}`}
-                    autoComplete="off"
-                    aria-label="Search products and services"
-                    aria-autocomplete="list"
-                    aria-expanded={showDropdown}
-                    aria-haspopup="listbox"
-                />
-                {query && (
-                    <button
-                        onClick={clearQuery}
-                        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/80 transition-colors cursor-pointer"
-                        aria-label="Clear search"
-                        type="button"
-                    >
-                        <X className="w-4 h-4" />
-                    </button>
-                )}
+            {/* Input Row with Category Dropdown & Search Button */}
+            <div className="flex items-center w-full bg-card border border-border focus-within:border-primary rounded-xl shadow-2xs overflow-hidden transition-all">
+                {/* Category Dropdown */}
+                <select
+                    value={categoryFilter}
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                    className="hidden sm:block bg-section-bg border-r border-border text-foreground text-xs font-semibold px-3 py-2.5 outline-none cursor-pointer hover:bg-section-bg/80 transition-colors"
+                >
+                    <option value="all">All Categories</option>
+                    <option value="product">Products</option>
+                    <option value="service">Services</option>
+                </select>
+
+                {/* Search Input */}
+                <div className="relative flex-1 flex items-center">
+                    <input
+                        ref={inputRef}
+                        type="text"
+                        placeholder={placeholder || "Search products, services & categories..."}
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        onFocus={() => {
+                            if (query.trim() && results.length > 0) setIsOpen(true);
+                        }}
+                        className="w-full bg-transparent py-2.5 px-3 sm:px-4 text-xs sm:text-sm text-foreground placeholder:text-muted-text outline-none"
+                        autoComplete="off"
+                        aria-label="Search products and services"
+                    />
+                    {query && (
+                        <button
+                            onClick={clearQuery}
+                            className="mr-2 text-muted-text hover:text-foreground transition-colors cursor-pointer"
+                            aria-label="Clear search"
+                            type="button"
+                        >
+                            <X className="w-4 h-4" />
+                        </button>
+                    )}
+                </div>
+
+                {/* Search Button */}
+                <button
+                    onClick={() => performSearch(query)}
+                    className="bg-primary hover:bg-primary-hover text-white px-4 py-2.5 flex items-center justify-center gap-1.5 text-xs font-bold transition-colors shrink-0 cursor-pointer"
+                    aria-label="Search"
+                >
+                    {isLoading ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                        <Search className="w-4 h-4" />
+                    )}
+                    <span className="hidden md:inline">Search</span>
+                </button>
             </div>
 
             {/* Dropdown */}

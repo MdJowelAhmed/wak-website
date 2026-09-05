@@ -17,23 +17,23 @@ const FeaturedCategories = () => {
     const { categories: featuredCategories, loading } = useCategories({ isFeatured: true });
 
     return (
-        <section className="py-[50px] bg-[#4f2c1d]">
+        <section className="py-[50px] bg-section-bg">
             <div className="container mx-auto px-4">
                 {/* Header with Navigation */}
                 <div className="flex justify-between items-center mb-10">
                     <h2 className="title mb-0!">Featured Categories</h2>
 
-                    <div className="flex gap-4 flex-1 justify-end">
+                    <div className="flex gap-3 flex-1 justify-end">
                         {/* Custom prev/next navigation */}
                         <button
-                            className="category-prev w-10 h-10 rounded-full bg-[#d4a373] flex items-center justify-center hover:bg-[#d4a373]/90 transition-all text-zinc-900 disabled:opacity-40 disabled:cursor-not-allowed [&.swiper-button-disabled]:!bg-zinc-800 [&.swiper-button-disabled]:!text-zinc-600 [&.swiper-button-disabled]:!opacity-40 [&.swiper-button-disabled]:pointer-events-none cursor-pointer"
+                            className="category-prev w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary-hover transition-all shadow-xs disabled:opacity-40 disabled:cursor-not-allowed [&.swiper-button-disabled]:!bg-border [&.swiper-button-disabled]:!text-muted-text [&.swiper-button-disabled]:!opacity-50 [&.swiper-button-disabled]:pointer-events-none cursor-pointer"
                         >
-                            <ChevronLeft className="w-6 h-6" />
+                            <ChevronLeft className="w-5 h-5" />
                         </button>
                         <button
-                            className="category-next w-10 h-10 rounded-full bg-[#d4a373] flex items-center justify-center hover:bg-[#d4a373]/90 transition-all text-zinc-900 disabled:opacity-40 disabled:cursor-not-allowed [&.swiper-button-disabled]:!bg-zinc-800 [&.swiper-button-disabled]:!text-zinc-600 [&.swiper-button-disabled]:!opacity-40 [&.swiper-button-disabled]:pointer-events-none cursor-pointer"
+                            className="category-next w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary-hover transition-all shadow-xs disabled:opacity-40 disabled:cursor-not-allowed [&.swiper-button-disabled]:!bg-border [&.swiper-button-disabled]:!text-muted-text [&.swiper-button-disabled]:!opacity-50 [&.swiper-button-disabled]:pointer-events-none cursor-pointer"
                         >
-                            <ChevronRight className="w-6 h-6" />
+                            <ChevronRight className="w-5 h-5" />
                         </button>
                     </div>
                 </div>
@@ -41,7 +41,7 @@ const FeaturedCategories = () => {
                 <div className="categories-slider">
                     {loading ? (
                         <div className="w-full py-20 flex justify-center items-center">
-                            <span className="text-[#FFDDA5]">Loading categories...</span>
+                            <span className="text-body-text font-medium">Loading categories...</span>
                         </div>
                     ) : featuredCategories.length > 0 ? (
                         <Swiper
@@ -63,7 +63,7 @@ const FeaturedCategories = () => {
                         >
                             {featuredCategories.map((category) => (
                                 <SwiperSlide key={category._id} className="group cursor-pointer">
-                                    <div className="relative w-full h-[200px] rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:-translate-y-1 group-hover:shadow-xl">
+                                    <div className="relative w-full h-[200px] rounded-2xl overflow-hidden shadow-sm border border-border transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
                                         <div className="absolute inset-0 z-0">
                                             <Image
                                                 src={resolveImageUrl(category.image) || ""}
@@ -73,15 +73,15 @@ const FeaturedCategories = () => {
                                                 className="object-cover transition-transform duration-500 group-hover:scale-110"
                                             />
                                         </div>
-                                        {/* Dark gradient overlay */}
-                                        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
+                                        {/* Dark gradient overlay for text readability */}
+                                        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300" />
                                         
                                         {/* Text content at bottom left */}
                                         <div className="absolute bottom-5 left-5 z-20 flex flex-col">
                                             <span className="text-white font-bold text-lg leading-tight mb-1">
                                                 {category.name}
                                             </span>
-                                            <span className="text-zinc-300 text-xs font-semibold tracking-wider uppercase group-hover:text-white transition-colors">
+                                            <span className="text-zinc-200 text-xs font-semibold tracking-wider uppercase group-hover:text-primary-foreground transition-colors">
                                                 EXPLORE {category.type}S
                                             </span>
                                         </div>
@@ -91,7 +91,7 @@ const FeaturedCategories = () => {
                         </Swiper>
                     ) : (
                         <div className="w-full py-20 flex justify-center items-center">
-                            <span className="text-[#FFDDA5]">No featured categories found.</span>
+                            <span className="text-body-text font-medium">No featured categories found.</span>
                         </div>
                     )}
                 </div>

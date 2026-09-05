@@ -9,52 +9,52 @@ const apps = [
         title: 'Customer App',
         badge: 'For Customers',
         icon: User,
-        iconBg: 'bg-primary',
+        iconBg: 'bg-primary text-white',
         description: 'Shop products, book professional services, and track your orders in real-time.',
         features: ['Live Order Tracking', 'Multi-payment Support', 'Exclusive Deals'],
         appStoreUrl: 'https://apple.com',
         playStoreUrl: 'https://google.com',
         qrValue: 'WAK Customer App',
-        activeTabBg: 'bg-primary text-white shadow-lg shadow-primary/20',
+        activeTabBg: 'bg-primary text-white shadow-md shadow-primary/20',
     },
     {
         id: 'merchant',
         title: 'Merchant App',
         badge: 'For Merchants',
         icon: Store,
-        iconBg: 'bg-amber-600',
+        iconBg: 'bg-secondary text-white',
         description: 'Manage store inventory, process customer orders, and view sales analytics on the go.',
         features: ['Inventory Control', 'Batch Fulfillment', 'Instant Payouts'],
         appStoreUrl: 'https://apple.com',
         playStoreUrl: 'https://google.com',
         qrValue: 'WAK Merchant App',
-        activeTabBg: 'bg-amber-600 text-white shadow-lg shadow-amber-600/20',
+        activeTabBg: 'bg-secondary text-white shadow-md shadow-secondary/20',
     },
     {
         id: 'provider',
         title: 'Service Provider App',
         badge: 'For Service Providers',
         icon: Briefcase,
-        iconBg: 'bg-primary',
+        iconBg: 'bg-primary text-white',
         description: 'Receive client bookings, manage appointment schedules, and build your service business.',
         features: ['Booking Calendar', 'Direct Client Messaging', 'Earnings Cashout'],
         appStoreUrl: 'https://apple.com',
         playStoreUrl: 'https://google.com',
         qrValue: 'WAK Provider App',
-        activeTabBg: 'bg-primary text-white shadow-lg shadow-primary/20',
+        activeTabBg: 'bg-primary text-white shadow-md shadow-primary/20',
     },
     {
         id: 'driver',
         title: 'Driver App',
         badge: 'For Drivers',
         icon: Truck,
-        iconBg: 'bg-amber-600',
+        iconBg: 'bg-secondary text-white',
         description: 'Accept delivery requests, navigate optimized routes, and earn money on your schedule.',
         features: ['Route Navigation', 'Weekly Earnings Tracker', '24/7 Delivery Support'],
         appStoreUrl: 'https://apple.com',
         playStoreUrl: 'https://google.com',
         qrValue: 'WAK Driver App',
-        activeTabBg: 'bg-amber-600 text-white shadow-lg shadow-amber-600/20',
+        activeTabBg: 'bg-secondary text-white shadow-md shadow-secondary/20',
     },
 ];
 
@@ -77,25 +77,25 @@ const AppDownloadSection = () => {
     const Icon = currentApp.icon;
 
     return (
-        <section className="py-6 sm:py-8 md:py-10 bg-background relative overflow-hidden">
-            {/* Subtle Ambient Lighting Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[300px] bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
+        <section className="py-8 sm:py-10 md:py-14 bg-background relative overflow-hidden">
+            {/* Subtle Ambient Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[320px] bg-primary/8 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="container mx-auto px-4 relative z-10 max-w-6xl">
                 {/* Section Header */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 md:mb-8">
                     <div>
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/15 border border-primary/30 text-accent text-[11px] font-bold uppercase tracking-wider mb-2">
-                            <Sparkles className="w-3 h-3 text-accent" />
+                        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[11px] font-bold uppercase tracking-wider mb-2">
+                            <Sparkles className="w-3.5 h-3.5 text-primary" />
                             Mobile Apps Ecosystem
                         </div>
-                        <h2 className="text-xl sm:text-3xl font-bold text-white tracking-tight leading-tight">
-                            Everything You Need in <span className="text-accent">One App</span>
+                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground tracking-tight leading-tight">
+                            Everything You Need in <span className="text-primary">One App</span>
                         </h2>
                     </div>
 
                     {/* Compact Tabs Switcher */}
-                    <div className="flex overflow-x-auto no-scrollbar bg-card/80 p-1 rounded-xl border border-card-border shrink-0 self-start md:self-auto">
+                    <div className="flex overflow-x-auto no-scrollbar bg-card p-1 rounded-xl border border-border shrink-0 self-start md:self-auto shadow-xs">
                         {apps.map((app) => {
                             const TabIcon = app.icon;
                             const isActive = activeTab === app.id;
@@ -103,9 +103,9 @@ const AppDownloadSection = () => {
                                 <button
                                     key={app.id}
                                     onClick={() => setActiveTab(app.id)}
-                                    className={`flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs font-semibold transition-all duration-300 cursor-pointer whitespace-nowrap ${isActive
+                                    className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-300 cursor-pointer whitespace-nowrap ${isActive
                                             ? app.activeTabBg
-                                            : 'text-zinc-300 hover:text-white hover:bg-white/5'
+                                            : 'text-body-text hover:text-foreground hover:bg-section-bg'
                                         }`}
                                 >
                                     <TabIcon className="w-3.5 h-3.5" />
@@ -116,26 +116,26 @@ const AppDownloadSection = () => {
                     </div>
                 </div>
 
-                {/* Compact Glassmorphism Showcase Card */}
-                <div className="bg-white/8 backdrop-blur-xl border border-card-border rounded-2xl p-5 sm:p-7 shadow-xl relative overflow-hidden">
+                {/* Showcase Card */}
+                <div className="bg-section-bg border border-border rounded-2xl p-5 sm:p-8 shadow-sm relative overflow-hidden">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
                         {/* Left Side: App Details */}
                         <div className="lg:col-span-8 flex flex-col items-start gap-4">
                             <div className="flex items-center gap-3">
-                                <div className={`${currentApp.iconBg} w-10 h-10 rounded-xl flex items-center justify-center shadow-md text-white shrink-0`}>
+                                <div className={`${currentApp.iconBg} w-11 h-11 rounded-xl flex items-center justify-center shadow-sm shrink-0`}>
                                     <Icon className="w-5 h-5" />
                                 </div>
                                 <div>
-                                    <span className="text-[10px] font-bold uppercase tracking-wider text-accent block leading-none mb-0.5">
+                                    <span className="text-[11px] font-bold uppercase tracking-wider text-primary block leading-none mb-1">
                                         {currentApp.badge}
                                     </span>
-                                    <h3 className="text-lg sm:text-2xl font-bold text-white leading-tight">
+                                    <h3 className="text-xl sm:text-2xl font-bold text-foreground leading-tight">
                                         {currentApp.title}
                                     </h3>
                                 </div>
                             </div>
 
-                            <p className="text-xs sm:text-sm text-zinc-200 leading-relaxed font-medium">
+                            <p className="text-sm text-body-text leading-relaxed font-medium">
                                 {currentApp.description}
                             </p>
 
@@ -144,7 +144,7 @@ const AppDownloadSection = () => {
                                 {currentApp.features.map((feat, idx) => (
                                     <div
                                         key={idx}
-                                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-zinc-100 text-xs font-medium"
+                                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-card border border-border text-foreground text-xs font-medium shadow-2xs"
                                     >
                                         <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0" />
                                         <span>{feat}</span>
@@ -153,16 +153,16 @@ const AppDownloadSection = () => {
                             </div>
 
                             {/* Download Buttons + QR Code */}
-                            <div className="w-full pt-3 border-t border-white/10 flex flex-wrap items-center gap-3">
+                            <div className="w-full pt-4 border-t border-border flex flex-wrap items-center gap-3">
                                 <a
                                     href={currentApp.appStoreUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-zinc-900 hover:bg-black border border-white/15 text-white transition-all duration-300 shadow-md hover:scale-105 cursor-pointer text-xs"
+                                    className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-dark-brown hover:bg-black text-white transition-all duration-300 shadow-sm hover:scale-105 cursor-pointer text-xs"
                                 >
                                     <AppleIcon />
                                     <div className="flex flex-col items-start text-left leading-none">
-                                        <span className="text-[9px] text-zinc-400 uppercase tracking-wider">App Store</span>
+                                        <span className="text-[9px] text-zinc-300 uppercase tracking-wider">App Store</span>
                                         <span className="text-xs font-bold mt-0.5">Download</span>
                                     </div>
                                 </a>
@@ -171,69 +171,69 @@ const AppDownloadSection = () => {
                                     href={currentApp.playStoreUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-zinc-900 hover:bg-black border border-white/15 text-white transition-all duration-300 shadow-md hover:scale-105 cursor-pointer text-xs"
+                                    className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-dark-brown hover:bg-black text-white transition-all duration-300 shadow-sm hover:scale-105 cursor-pointer text-xs"
                                 >
                                     <PlayStoreIcon />
                                     <div className="flex flex-col items-start text-left leading-none">
-                                        <span className="text-[9px] text-zinc-400 uppercase tracking-wider">Google Play</span>
+                                        <span className="text-[9px] text-zinc-300 uppercase tracking-wider">Google Play</span>
                                         <span className="text-xs font-bold mt-0.5">Get it on</span>
                                     </div>
                                 </a>
 
-                                <div className="hidden sm:flex items-center gap-2.5 ml-auto px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10">
-                                    <QrCode className="w-6 h-6 text-accent" />
+                                <div className="hidden sm:flex items-center gap-2.5 ml-auto px-3.5 py-2 rounded-xl bg-card border border-border shadow-2xs">
+                                    <QrCode className="w-6 h-6 text-primary" />
                                     <div className="flex flex-col text-left">
-                                        <span className="text-xs font-semibold text-white">Scan QR Code</span>
-                                        <span className="text-[9px] text-zinc-400">Desktop quick install</span>
+                                        <span className="text-xs font-bold text-foreground">Scan QR Code</span>
+                                        <span className="text-[10px] text-body-text">Desktop quick install</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Right Side: Compact Phone Mockup Visual */}
+                        {/* Right Side: Smartphone Mockup */}
                         <div className="lg:col-span-4 flex justify-center items-center">
-                            <div className="relative w-full max-w-[190px] sm:max-w-[210px] aspect-[9/16] bg-zinc-950 border-[4px] border-zinc-800 rounded-[32px] shadow-xl p-3 flex flex-col justify-between overflow-hidden">
-                                {/* Smartphone Camera Notch */}
-                                <div className="w-20 h-3 bg-zinc-800 rounded-full mx-auto mb-2 shrink-0" />
+                            <div className="relative w-full max-w-[190px] sm:max-w-[210px] aspect-[9/16] bg-dark-brown border-[4px] border-secondary/40 rounded-[32px] shadow-xl p-3 flex flex-col justify-between overflow-hidden">
+                                {/* Smartphone Notch */}
+                                <div className="w-20 h-3 bg-secondary/40 rounded-full mx-auto mb-2 shrink-0" />
 
-                                {/* Simulated App Preview Screen */}
-                                <div className="w-full h-full bg-gradient-to-b from-zinc-900 via-zinc-900/90 to-background rounded-[22px] p-3 flex flex-col justify-between border border-white/10 overflow-hidden relative">
+                                {/* Simulated App Screen */}
+                                <div className="w-full h-full bg-card rounded-[22px] p-3 flex flex-col justify-between border border-border overflow-hidden relative">
                                     {/* App UI Header */}
-                                    <div className="flex justify-between items-center pb-2 border-b border-white/10">
+                                    <div className="flex justify-between items-center pb-2 border-b border-border">
                                         <div className="flex items-center gap-1.5">
-                                            <div className={`${currentApp.iconBg} w-5 h-5 rounded-md flex items-center justify-center text-white shrink-0`}>
+                                            <div className={`${currentApp.iconBg} w-5 h-5 rounded-md flex items-center justify-center shrink-0`}>
                                                 <Icon className="w-3 h-3" />
                                             </div>
-                                            <span className="text-[10px] font-bold text-white tracking-wide truncate max-w-[80px]">WAK App</span>
+                                            <span className="text-[10px] font-bold text-foreground tracking-wide truncate max-w-[80px]">WAK App</span>
                                         </div>
-                                        <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-primary/20 text-accent font-semibold">
+                                        <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-primary/15 text-primary font-bold">
                                             Active
                                         </span>
                                     </div>
 
-                                    {/* App UI Content Preview */}
+                                    {/* Content Preview */}
                                     <div className="my-auto py-2 space-y-2">
-                                        <div className="p-2 rounded-lg bg-white/5 border border-white/10 space-y-1">
-                                            <div className="h-2 w-1/2 bg-white/20 rounded" />
-                                            <div className="h-2 w-3/4 bg-white/10 rounded" />
+                                        <div className="p-2 rounded-lg bg-section-bg border border-border space-y-1">
+                                            <div className="h-2 w-1/2 bg-body-text/30 rounded" />
+                                            <div className="h-2 w-3/4 bg-body-text/20 rounded" />
                                         </div>
 
-                                        <div className="p-2 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-between">
-                                            <span className="text-[9px] font-bold text-white">Live Service</span>
+                                        <div className="p-2 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-between">
+                                            <span className="text-[9px] font-bold text-primary">Live Service</span>
                                             <div className="w-2 h-2 rounded-full bg-primary animate-ping" />
                                         </div>
                                     </div>
 
-                                    {/* App UI Bottom Nav */}
-                                    <div className="pt-2 border-t border-white/10 flex justify-around items-center">
+                                    {/* Bottom Nav */}
+                                    <div className="pt-2 border-t border-border flex justify-around items-center">
                                         <div className="w-3.5 h-3.5 rounded-full bg-primary" />
-                                        <div className="w-3.5 h-3.5 rounded-full bg-white/20" />
-                                        <div className="w-3.5 h-3.5 rounded-full bg-white/20" />
+                                        <div className="w-3.5 h-3.5 rounded-full bg-border" />
+                                        <div className="w-3.5 h-3.5 rounded-full bg-border" />
                                     </div>
                                 </div>
 
                                 {/* Home Bar */}
-                                <div className="w-20 h-1 bg-zinc-700 rounded-full mx-auto mt-2 shrink-0" />
+                                <div className="w-20 h-1 bg-secondary/60 rounded-full mx-auto mt-2 shrink-0" />
                             </div>
                         </div>
                     </div>

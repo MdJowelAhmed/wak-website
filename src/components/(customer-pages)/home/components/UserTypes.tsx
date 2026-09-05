@@ -7,42 +7,42 @@ const userTypes = [
     {
         id: 'customer',
         icon: User,
-        iconBg: 'bg-primary',
+        iconBg: 'bg-primary text-white',
         title: 'Customer',
         subtitle: 'Shop products & book services',
         cta: 'Shop Now',
         href: '/shop',
-        btnStyle: 'bg-primary hover:bg-primary-hover text-white',
+        btnStyle: 'bg-primary hover:bg-primary-hover text-white shadow-xs',
     },
     {
         id: 'vendor',
         icon: Store,
-        iconBg: 'bg-card',
+        iconBg: 'bg-secondary text-white',
         title: 'Vendor / Merchant',
         subtitle: 'Sell your products',
         cta: 'Join as Merchant',
         href: '/vendor/register',
-        btnStyle: 'bg-card hover:bg-card/80 text-white border border-primary/40',
+        btnStyle: 'bg-secondary hover:bg-secondary/90 text-white shadow-xs',
     },
     {
         id: 'provider',
         icon: Briefcase,
-        iconBg: 'bg-primary',
+        iconBg: 'bg-primary text-white',
         title: 'Service Provider',
         subtitle: 'Offer your services',
         cta: 'Join as Provider',
         href: '/provider/register',
-        btnStyle: 'bg-primary hover:bg-primary-hover text-white',
+        btnStyle: 'bg-primary hover:bg-primary-hover text-white shadow-xs',
     },
     {
         id: 'driver',
         icon: Truck,
-        iconBg: 'bg-card',
+        iconBg: 'bg-secondary text-white',
         title: 'Driver',
         subtitle: 'Deliver with us',
         cta: 'Join as Driver',
         href: '/driver/register',
-        btnStyle: 'bg-card hover:bg-card/80 text-white border border-primary/40',
+        btnStyle: 'bg-secondary hover:bg-secondary/90 text-white shadow-xs',
     },
 ];
 
@@ -54,18 +54,18 @@ const UserTypes = () => {
                     {userTypes.map(({ id, icon: Icon, iconBg, title, subtitle, cta, href, btnStyle }) => (
                         <div
                             key={id}
-                            className="flex flex-col items-center text-center lg:flex-row lg:items-center lg:text-left gap-2 lg:gap-4 bg-white/8 hover:bg-white/12 border border-white/10 hover:border-[#FF6700]/40 rounded-2xl p-2 md:p-5 transition-all duration-300 group"
+                            className="flex flex-col items-center text-center lg:flex-row lg:items-center lg:text-left gap-3 lg:gap-4 bg-card border border-border hover:border-primary/60 rounded-2xl p-4 md:p-5 transition-all duration-300 group shadow-xs hover:shadow-md"
                         >
                             {/* Icon circle */}
-                            <div className={`${iconBg} w-10 h-10 lg:w-16 lg:h-16 rounded-full flex items-center justify-center shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-300`}>
-                                <Icon className="w-5 h-5 lg:w-7 lg:h-7 text-white" strokeWidth={1.8} />
+                            <div className={`${iconBg} w-10 h-10 lg:w-14 lg:h-14 rounded-xl flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform duration-300`}>
+                                <Icon className="w-5 h-5 lg:w-6 lg:h-6" strokeWidth={2} />
                             </div>
 
                             {/* Text + CTA */}
-                            <div className="flex flex-col items-center lg:items-start gap-1 md:gap-2 min-w-0 w-full">
+                            <div className="flex flex-col items-center lg:items-start gap-2 min-w-0 w-full">
                                 <div>
-                                    <h3 className="text-white font-medium md:font-bold text-xs md:text-base lg:text-lg leading-tight">{title}</h3>
-                                    <p className="text-white/60 text-xs mt-0.5 leading-snug">{subtitle}</p>
+                                    <h3 className="text-foreground font-bold text-sm md:text-base lg:text-base leading-tight">{title}</h3>
+                                    <p className="text-body-text text-xs mt-0.5 leading-snug">{subtitle}</p>
                                 </div>
                                 <Link
                                     href={href}

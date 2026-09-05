@@ -45,13 +45,13 @@ const Features = () => {
             <div className="container mx-auto px-4">
                 {/* Section Header */}
                 <div className="text-center max-w-2xl mx-auto mb-8 md:mb-12">
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/15 border border-primary/30 text-accent text-xs font-semibold uppercase tracking-wider mb-3">
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider mb-3">
                         Why Choose Us
                     </div>
-                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight mb-3">
-                        Why Shop & Book With <span className="text-accent">Us</span>
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground tracking-tight mb-3">
+                        Why Shop & Book With <span className="text-primary">Us</span>
                     </h2>
-                    <p className="text-sm text-zinc-300 font-medium leading-relaxed">
+                    <p className="text-sm text-body-text font-medium leading-relaxed">
                         We prioritize your safety, convenience, and complete satisfaction with every product purchase and service booking.
                     </p>
                 </div>
@@ -63,18 +63,18 @@ const Features = () => {
                             <Link
                                 key={feature.id}
                                 href={feature.href}
-                                className="bg-white/8 hover:bg-card/80 border border-card-border hover:border-primary/50 p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col items-center text-center group hover:-translate-y-1 transition-all duration-300 shadow-lg cursor-pointer select-none"
+                                className="bg-card border border-border hover:border-primary/60 p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col items-center text-center group hover:-translate-y-1 transition-all duration-300 shadow-xs hover:shadow-md cursor-pointer select-none"
                             >
                                 {/* Circular Icon Container */}
-                                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-105 group-hover:bg-primary transition-all duration-300">
+                                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-105 group-hover:bg-primary transition-all duration-300">
                                     <Icon className="w-5 h-5 sm:w-7 sm:h-7 text-primary group-hover:text-white transition-colors" strokeWidth={1.8} />
                                 </div>
 
                                 {/* Text Content */}
-                                <h3 className="text-white font-bold text-xs sm:text-sm md:text-base leading-tight mb-1 group-hover:text-accent transition-colors">
+                                <h3 className="text-foreground font-bold text-xs sm:text-sm md:text-base leading-tight mb-1 group-hover:text-primary transition-colors">
                                     {feature.title}
                                 </h3>
-                                <p className="text-muted-text text-[11px] sm:text-xs font-medium leading-snug">
+                                <p className="text-body-text text-[11px] sm:text-xs font-medium leading-snug">
                                     {feature.description}
                                 </p>
                             </Link>

@@ -1,24 +1,52 @@
 @import "tailwindcss";
 
 :root {
-  /* Brand Core Colors */
-  --background: #4f2c1d;
-  --foreground: #ffffff;
-  --primary: #FF6700;
-  --primary-hover: #e05b00;
-  --secondary: #99a0fd;
-  --accent: #FFDDA5;
-  --inputBg: #353535;
+  /* Brand Core Tokens (Orange + Brown + White + Light Neutral) */
+  --primary: #E87524;            /* Primary / Brand Orange */
+  --primary-hover: #C85D16;      /* Primary Hover Dark Orange */
+  --primary-foreground: #FFFFFF; /* Primary Text: White */
 
-  /* Card & Content Tokens */
-  --card: #3b1f11;
-  --card-foreground: #ffffff;
-  --card-border: rgba(255, 255, 255, 0.10);
-  --card-hover-border: rgba(255, 103, 0, 0.50);
+  --secondary: #6B4226;          /* Secondary / Accent Brown */
+  --secondary-hover: #54331C;    /* Secondary Hover */
+  --secondary-foreground: #FFFFFF;/* Secondary Text: White */
 
-  /* Typography Tokens */
-  --muted-text: rgba(255, 255, 255, 0.70);
-  --subtle-text: rgba(255, 255, 255, 0.50);
+  --dark-brown: #3E2723;         /* Deep Brown */
+
+  --background: #FFFCF8;         /* Main Page Background: Warm White */
+  --section-bg: #F8F3ED;         /* Section Background: Light Cream */
+  --card: #FFFFFF;               /* Card Background: Pure White */
+  --card-foreground: #2F241F;    /* Card Text */
+  --card-border: #E8DED3;
+  --card-hover-border: #E87524;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #2F241F;
+
+  --border: #E8DED3;             /* Border: Light Beige */
+  --input: #E8DED3;
+  --inputBg: #FFFFFF;
+  --ring: #E87524;
+  --focus-ring: #F6C7A3;         /* Soft Orange Focus Ring */
+
+  --foreground: #2F241F;         /* Primary Text: Dark Brown */
+  --sub-heading: #3E2723;        /* Sub Heading: Deep Brown */
+  --body-text: #75675E;          /* Secondary Text / Body Text: Muted Brown */
+  --muted: #F8F3ED;              /* Muted Background: Light Cream */
+  --muted-foreground: #75675E;   /* Muted Text: Muted Brown */
+  --muted-text: #A79B93;         /* Disabled / Soft Gray */
+
+  --link-color: #C85D16;         /* Links Color */
+  --link-hover: #E87524;         /* Link Hover */
+
+  --accent: #E87524;             /* Accent Orange */
+  --accent-foreground: #FFFFFF;
+
+  --success: #4F7A5A;            /* Muted Green */
+  --error: #C94A3A;              /* Warm Red */
+  --destructive: #C94A3A;
+  --destructive-foreground: #FFFFFF;
+
+  --radius: 0.75rem;
 }
 
 @theme inline {
@@ -29,30 +57,54 @@
 
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
-  --color-secondary: var(--secondary);
-  --color-accent: var(--accent);
-  --color-inputBg: var(--inputBg);
+  --color-primary-foreground: var(--primary-foreground);
 
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-dark-brown: var(--dark-brown);
+
+  --color-section-bg: var(--section-bg);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-card-border: var(--card-border);
   --color-card-hover-border: var(--card-hover-border);
 
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-inputBg: var(--inputBg);
+  --color-ring: var(--ring);
+  --color-focus-ring: var(--focus-ring);
+
+  --color-sub-heading: var(--sub-heading);
+  --color-body-text: var(--body-text);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
   --color-muted-text: var(--muted-text);
-  --color-subtle-text: var(--subtle-text);
+  --color-link: var(--link-color);
+  --color-link-hover: var(--link-hover);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
 }
 
 @layer utilities {
-  .auth-title {
-    @apply text-xl sm:text-2xl lg:text-3xl font-semibold text-foreground mb-10.5;
+  .title {
+    @apply text-xl sm:text-2xl lg:text-3xl font-bold text-foreground mb-4;
   }
 
-  .title {
-    @apply text-xl sm:text-2xl lg:text-3xl font-semibold text-white mb-10.5;
+  .auth-title {
+    @apply text-xl sm:text-2xl lg:text-3xl font-bold text-foreground mb-6;
   }
 
   .section-subtitle {
-    @apply text-foreground text-[16px] lg:text-lg leading-relaxed;
+    @apply text-body-text text-sm sm:text-base leading-relaxed;
   }
 
   .container {
@@ -71,17 +123,21 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 0px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #f1eeee;
+  background-color: var(--border);
   border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--secondary);
 }
 
 ::-webkit-scrollbar-track {
   background: transparent;
-
 }
 
 /* Swiper Pagination Custom Styles */
@@ -101,7 +157,6 @@ body {
   width: 30px !important;
   border-radius: 5px !important;
   background: var(--primary) !important;
-  /* Tan/Orange color from image */
 }
 
 /* Marquee Animation */

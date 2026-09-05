@@ -36,8 +36,8 @@ export default function UserAuthMenu({ isLoggedIn, logout }: UserAuthMenuProps) 
         return (
             <AuthModal
                 trigger={
-                    <button className="text-sm font-bold bg-primary px-6 py-2.5 rounded-lg transition-colors cursor-pointer text-white hover:bg-orange-500">
-                        Login
+                    <button className="text-xs font-bold bg-primary px-5 py-2 rounded-xl transition-all cursor-pointer text-white hover:bg-primary-hover shadow-xs">
+                        Login / Sign Up
                     </button>
                 }
             />
@@ -48,7 +48,7 @@ export default function UserAuthMenu({ isLoggedIn, logout }: UserAuthMenuProps) 
         <div className="group relative shrink-0">
             <Link
                 href="/profile"
-                className="block w-10 h-10 rounded-full overflow-hidden border border-zinc-700 cursor-pointer hover:border-orange-500 transition-colors bg-zinc-800"
+                className="block w-10 h-10 rounded-full overflow-hidden border border-border cursor-pointer hover:border-primary transition-colors bg-section-bg shadow-2xs"
             >
                 <img
                     src={profileImage}
@@ -58,24 +58,24 @@ export default function UserAuthMenu({ isLoggedIn, logout }: UserAuthMenuProps) 
             </Link>
 
             {/* Dropdown Menu on Hover */}
-            <div className="absolute right-0 top-full pt-2 hidden group-hover:block z-50 min-w-[170px]">
-                <div className="bg-[#1f1f1f] border border-zinc-800 rounded-xl shadow-xl p-1.5 flex flex-col gap-1 text-sm">
-                    <div className="px-3 py-2 border-b border-zinc-800">
-                        <p className="text-xs text-zinc-400">Signed in as</p>
-                        <p className="font-semibold text-white truncate text-xs">{userName}</p>
+            <div className="absolute right-0 top-full pt-2 hidden group-hover:block z-50 min-w-[180px]">
+                <div className="bg-card border border-border rounded-2xl shadow-xl p-1.5 flex flex-col gap-1 text-sm">
+                    <div className="px-3 py-2 border-b border-border">
+                        <p className="text-[10px] text-body-text uppercase font-bold tracking-wider">Signed in as</p>
+                        <p className="font-bold text-foreground truncate text-xs mt-0.5">{userName}</p>
                     </div>
 
                     <Link
                         href="/profile"
-                        className="flex items-center gap-2.5 px-3 py-2 text-zinc-300 hover:text-white hover:bg-zinc-800/80 rounded-lg transition-colors cursor-pointer"
+                        className="flex items-center gap-2.5 px-3 py-2 text-body-text hover:text-foreground hover:bg-section-bg rounded-xl transition-colors cursor-pointer text-xs font-medium"
                     >
-                        <User className="w-4 h-4 text-zinc-400" />
+                        <User className="w-4 h-4 text-primary" />
                         <span>My Profile</span>
                     </Link>
 
                     <button
                         onClick={logout}
-                        className="flex items-center gap-2.5 px-3 py-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors cursor-pointer w-full text-left"
+                        className="flex items-center gap-2.5 px-3 py-2 text-error hover:bg-error/10 rounded-xl transition-colors cursor-pointer w-full text-left text-xs font-semibold"
                     >
                         <LogOut className="w-4 h-4" />
                         <span>Logout</span>
