@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { User, Store, Briefcase, Car } from 'lucide-react';
+import { User, Store, Briefcase, Truck } from 'lucide-react';
 
 const userTypes = [
     {
@@ -36,12 +36,12 @@ const userTypes = [
     },
     {
         id: 'driver',
-        icon: Car,
+        icon: Truck,
         iconBg: 'bg-card',
         title: 'Driver',
-        subtitle: 'Deliver & earn on your schedule',
-        cta: 'Download App',
-        href: '/driver/app',
+        subtitle: 'Deliver with us',
+        cta: 'Join as Driver',
+        href: '/driver/register',
         btnStyle: 'bg-card hover:bg-card/80 text-white border border-primary/40',
     },
 ];
