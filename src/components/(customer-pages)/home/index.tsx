@@ -8,6 +8,7 @@ import FeaturedCategories from "./components/FeaturedCategories";
 import Features from "./components/Features";
 import NewArrival from "./components/NewArrival";
 import Services from "./components/Services";
+import AppDownloadSection from "./components/AppDownloadSection";
 import { getActiveCategories } from "../../../../helpers/categoryService";
 import { myFetch } from "../../../../helpers/myFetch";
 
@@ -65,6 +66,7 @@ const Home = async () => {
             </Suspense>
             <NewArrival initialProducts={newArrivalProducts} />
             <Services initialServices={servicesList} />
+            <AppDownloadSection />
             <Features />
         </main>
     );
