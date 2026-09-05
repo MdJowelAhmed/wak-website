@@ -18,14 +18,16 @@ export interface HeroData {
 interface BannerProps {
     initialBanners?: HeroData[];
     loading?: boolean;
+    count?: number;
 }
 
-export const BannerSkeleton = () => {
+export const BannerSkeleton = ({ count = 4 }: { count?: number }) => {
+    const itemCount = count > 0 ? count : 4;
     return (
         <div className="w-full bg-background py-6 md:py-10">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-                    {[1, 2, 3, 4].map((i) => (
+                    {Array.from({ length: itemCount }).map((_, i) => (
                         <div
                             key={i}
                             className="w-full min-h-[280px] sm:min-h-[320px] lg:min-h-[350px] rounded-2xl bg-card/60 border border-card-border p-6 md:p-8 flex flex-col justify-end gap-3 animate-pulse"
@@ -49,11 +51,11 @@ export const BannerSkeleton = () => {
     );
 };
 
-const Banner = ({ initialBanners, loading = false }: BannerProps) => {
+const Banner = ({ initialBanners, loading = false, count }: BannerProps) => {
     const router = useRouter();
 
     if (loading) {
-        return <BannerSkeleton />;
+        return <BannerSkeleton count={count || initialBanners?.length || 4} />;
     }
 
     const banners = initialBanners || [];

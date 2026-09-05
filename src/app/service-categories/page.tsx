@@ -63,11 +63,14 @@ export default function ServiceCategoriesPage() {
                 {/* Loading state */}
                 {loading ? (
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6">
-                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => (
+                        {Array.from({ length: 12 }).map((_, i) => (
                             <div
                                 key={i}
-                                className="h-44 rounded-2xl bg-card/60 border border-card-border animate-pulse"
-                            />
+                                className="flex flex-col items-center justify-between gap-3 p-3.5 rounded-2xl bg-card/60 border border-card-border animate-pulse"
+                            >
+                                <div className="w-full aspect-square bg-white/10 rounded-xl" />
+                                <div className="h-4 w-3/4 bg-white/15 rounded-md" />
+                            </div>
                         ))}
                     </div>
                 ) : activeCategories.length > 0 ? (
