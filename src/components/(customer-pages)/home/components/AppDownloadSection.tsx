@@ -117,7 +117,7 @@ const AppDownloadSection = () => {
                 </div>
 
                 {/* Compact Glassmorphism Showcase Card */}
-                <div className="bg-card/70 backdrop-blur-xl border border-card-border rounded-2xl p-5 sm:p-7 shadow-xl relative overflow-hidden">
+                <div className="bg-white/8 backdrop-blur-xl border border-card-border rounded-2xl p-5 sm:p-7 shadow-xl relative overflow-hidden">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
                         {/* Left Side: App Details */}
                         <div className="lg:col-span-8 flex flex-col items-start gap-4">
