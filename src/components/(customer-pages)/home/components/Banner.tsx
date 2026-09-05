@@ -2,12 +2,10 @@
 
 import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { myFetch } from '../../../../../helpers/myFetch';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
 
-interface HeroData {
+export interface HeroData {
     _id: string;
     header: string;
     description: string;
@@ -17,27 +15,50 @@ interface HeroData {
     link?: string;
 }
 
-const Banner = () => {
+interface BannerProps {
+    initialBanners?: HeroData[];
+    loading?: boolean;
+}
+
+export const BannerSkeleton = () => {
+    return (
+        <div className="w-full bg-background py-6 md:py-10">
+            <div className="container mx-auto px-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                    {[1, 2, 3, 4].map((i) => (
+                        <div
+                            key={i}
+                            className="w-full min-h-[280px] sm:min-h-[320px] lg:min-h-[350px] rounded-2xl bg-card/60 border border-card-border p-6 md:p-8 flex flex-col justify-end gap-3 animate-pulse"
+                        >
+                            {/* Title Skeleton */}
+                            <div className="h-6 sm:h-7 w-3/4 bg-white/15 rounded-lg" />
+                            
+                            {/* Description Skeleton */}
+                            <div className="space-y-1.5 w-full">
+                                <div className="h-3.5 w-full bg-white/10 rounded-md" />
+                                <div className="h-3.5 w-4/5 bg-white/10 rounded-md" />
+                            </div>
+
+                            {/* Button Skeleton */}
+                            <div className="mt-2 h-9 sm:h-10 w-28 sm:w-32 rounded-full bg-primary/40" />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const Banner = ({ initialBanners, loading = false }: BannerProps) => {
     const router = useRouter();
-    const [banners, setBanners] = useState<HeroData[]>([]);
-    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchBanners = async () => {
-            try {
-                const res = await myFetch('/hero-section');
-                if (res?.data && res.data.length > 0) {
-                    setBanners(res.data);
-                }
-            } catch (error) {
-                console.error("Failed to fetch banners:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    if (loading) {
+        return <BannerSkeleton />;
+    }
 
-        fetchBanners();
-    }, []);
+    const banners = initialBanners || [];
+
+    if (banners.length === 0) return null;
 
     const handleShopNow = (item: HeroData) => {
         if (item.product?.slug) {
@@ -51,44 +72,11 @@ const Banner = () => {
         }
     };
 
-    if (loading) {
-        return (
-            <div className="w-full bg-background py-6 md:py-10">
-                <div className="container mx-auto px-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-                        {[1, 2, 3, 4].map((i) => (
-                            <div
-                                key={i}
-                                className="w-full min-h-[280px] sm:min-h-[320px] lg:min-h-[350px] rounded-2xl bg-card/60 border border-card-border p-6 md:p-8 flex flex-col justify-end gap-3 animate-pulse"
-                            >
-                                {/* Title Skeleton */}
-                                <div className="h-6 sm:h-7 w-3/4 bg-white/15 rounded-lg" />
-                                
-                                {/* Description Skeleton */}
-                                <div className="space-y-1.5 w-full">
-                                    <div className="h-3.5 w-full bg-white/10 rounded-md" />
-                                    <div className="h-3.5 w-4/5 bg-white/10 rounded-md" />
-                                </div>
-
-                                {/* Button Skeleton */}
-                                <div className="mt-2 h-9 sm:h-10 w-28 sm:w-32 rounded-full bg-primary/40" />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    const displayBanners = banners.length > 0 ? banners : [];
-
-    if (displayBanners.length === 0) return null;
-
     return (
         <section className="w-full bg-background py-6 md:py-10">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-                    {displayBanners.map((item) => (
+                    {banners.map((item) => (
                         <div
                             key={item._id}
                             onClick={() => handleShopNow(item)}

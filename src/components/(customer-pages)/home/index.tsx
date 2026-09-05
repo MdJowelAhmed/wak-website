@@ -1,7 +1,8 @@
+import { Suspense } from "react";
 import UserModeReset from "./components/UserModeReset";
 import UserTypes from "./components/UserTypes";
 import AllBrands from "./components/AllBrands";
-import Banner from "./components/Banner";
+import Banner, { BannerSkeleton } from "./components/Banner";
 import BestSelling from "./components/BestSelling";
 import FeaturedCategories from "./components/FeaturedCategories";
 import Features from "./components/Features";
@@ -18,6 +19,7 @@ const Home = async () => {
         bestSellingRes,
         newArrivalsRes,
         servicesRes,
+        heroRes,
     ] = await Promise.all([
         getActiveCategories({ type: 'product' }),
         getActiveCategories({ type: 'service' }),
@@ -33,6 +35,10 @@ const Home = async () => {
             cache: 'force-cache',
             next: { revalidate: 3600, tags: ['services'] },
         }),
+        myFetch('/hero-section', {
+            cache: 'force-cache',
+            next: { revalidate: 3600, tags: ['hero-section'] },
+        }),
     ]);
 
     const productCategories = prodRes?.data || [];
@@ -40,11 +46,14 @@ const Home = async () => {
     const bestSellingProducts = bestSellingRes?.data || [];
     const newArrivalProducts = newArrivalsRes?.data || [];
     const servicesList = servicesRes?.data || [];
+    const heroBanners = heroRes?.data || [];
 
     return (
         <main className="w-full">
             <UserModeReset />
-            <Banner />
+            <Suspense fallback={<BannerSkeleton />}>
+                <Banner initialBanners={heroBanners} />
+            </Suspense>
             <UserTypes />
             <AllBrands
                 productCategories={productCategories}
