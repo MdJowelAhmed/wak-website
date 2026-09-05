@@ -1,17 +1,11 @@
 "use client"
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination } from 'swiper/modules';
 import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { myFetch } from '../../../../../helpers/myFetch';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
-
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
 
 interface HeroData {
     _id: string;
@@ -22,27 +16,6 @@ interface HeroData {
     service?: { slug: string };
     link?: string;
 }
-
-const bannerData = [
-    {
-        id: 1,
-        title: "Explore Mother's Day deals",
-        subtitle: "Up to 50% OFF",
-        image: "/banner.png",
-    },
-    {
-        id: 2,
-        title: "Spring Collection 2026",
-        subtitle: "New Arrivals Now In",
-        image: "/banner.png",
-    },
-    {
-        id: 3,
-        title: "Premium Tech Gadgets",
-        subtitle: "Best Sellers Selection",
-        image: "/banner.png",
-    }
-];
 
 const Banner = () => {
     const router = useRouter();
@@ -80,8 +53,17 @@ const Banner = () => {
 
     if (loading) {
         return (
-            <div className="w-full relative group bg-[#4f2c1d] flex flex-col justify-center items-center aspect-2.5/1 sm:aspect-3/1 lg:aspect-4/1 min-h-[520px]">
-                <div className="text-[#FFDDA5]">Loading banners...</div>
+            <div className="w-full bg-[#4f2c1d] py-6 md:py-10">
+                <div className="container mx-auto px-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                        {[1, 2, 3].map((i) => (
+                            <div
+                                key={i}
+                                className="w-full min-h-[280px] sm:min-h-[320px] lg:min-h-[350px] rounded-2xl bg-white/5 animate-pulse border border-white/10"
+                            />
+                        ))}
+                    </div>
+                </div>
             </div>
         );
     }
@@ -91,55 +73,55 @@ const Banner = () => {
     if (displayBanners.length === 0) return null;
 
     return (
-        <div className="w-full relative group bg-[#4f2c1d]  flex flex-col items-center">
-            <Swiper
-                modules={[Autoplay, Pagination]}
-                pagination={{
-                    el: '.banner-pagination',
-                    clickable: true,
-                }}
-                autoplay={{ delay: 5000, disableOnInteraction: false }}
-                className="w-full aspect-2.5/1 sm:aspect-3/1 lg:aspect-4/1 overflow-hidden min-h-[520px] rounded-none"
-            >
-                {displayBanners.map((item) => (
-                    <SwiperSlide key={item._id} className="relative w-full h-full">
-                        {/* Background Image */}
-                        <div className="absolute inset-0 w-full h-full">
-                            <Image
-                                src={resolveImageUrl(item.image) || "/banner.png"}
-                                alt={item.header}
-                                fill
-                                unoptimized={true}
-                                className="object-cover"
-                                priority
-                            />
-                        </div>
+        <section className="w-full bg-[#4f2c1d] py-6 md:py-10">
+            <div className="container mx-auto px-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    {displayBanners.map((item) => (
+                        <div
+                            key={item._id}
+                            onClick={() => handleShopNow(item)}
+                            className="group relative overflow-hidden rounded-2xl bg-zinc-900 border border-white/10 hover:border-[#FF6700]/50 transition-all duration-300 min-h-[280px] sm:min-h-[320px] lg:min-h-[350px] flex flex-col justify-end p-6 md:p-8 cursor-pointer shadow-lg hover:shadow-xl"
+                        >
+                            {/* Background Image */}
+                            <div className="absolute inset-0 w-full h-full">
+                                <Image
+                                    src={resolveImageUrl(item.image) || "/banner.png"}
+                                    alt={item.header}
+                                    fill
+                                    unoptimized={true}
+                                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                    priority
+                                />
+                                {/* Gradient Overlay */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                            </div>
 
-                        {/* Content Overlay */}
-                        <div className="relative z-10 h-full container mx-auto px-6 md:px-0 flex flex-col justify-center items-center">
-                            <div className="max-w-xl animate-in fade-in slide-in-from-left-8 duration-700">
-                                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#1a1a1a] leading-tight mb-4 tracking-tight">
+                            {/* Content Overlay */}
+                            <div className="relative z-10 flex flex-col items-start gap-2">
+                                <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight group-hover:text-[#FFDDA5] transition-colors line-clamp-2">
                                     {item.header}
-                                </h1>
-                                <p className="text-sm md:text-lg text-zinc-700 mb-8 font-medium">
-                                    {item.description}
-                                </p>
-                                <button 
-                                    onClick={() => handleShopNow(item)}
-                                    className="inline-flex items-center gap-2 px-6 py-2.5 border border-zinc-900 rounded-full text-zinc-900 font-semibold hover:bg-zinc-900 hover:text-white transition-all duration-300 group/btn cursor-pointer"
+                                </h3>
+                                {item.description && (
+                                    <p className="text-xs sm:text-sm text-zinc-200 font-medium line-clamp-2 leading-relaxed">
+                                        {item.description}
+                                    </p>
+                                )}
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleShopNow(item);
+                                    }}
+                                    className="mt-2 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#FF6700] hover:bg-[#e05b00] text-white text-xs sm:text-sm font-semibold transition-all duration-300 group/btn cursor-pointer shadow-md"
                                 >
                                     Shop Now
                                     <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                                 </button>
                             </div>
                         </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-
-            {/* Pagination container placed outside/below the banner */}
-            <div className="banner-pagination flex justify-center items-center gap-2 mt-8 z-10"></div>
-        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
     );
 };
 

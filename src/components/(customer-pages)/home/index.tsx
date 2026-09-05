@@ -44,8 +44,7 @@ const Home = async () => {
     return (
         <main className="w-full">
             <UserModeReset />
-
-            {/* <Banner /> */}
+            <Banner />
             <UserTypes />
             <AllBrands
                 productCategories={productCategories}
