@@ -56,11 +56,23 @@ const Banner = () => {
             <div className="w-full bg-background py-6 md:py-10">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-                        {[1, 2, 3].map((i) => (
+                        {[1, 2, 3, 4].map((i) => (
                             <div
                                 key={i}
-                                className="w-full min-h-[280px] sm:min-h-[320px] lg:min-h-[350px] rounded-2xl bg-white/5 animate-pulse border border-white/10"
-                            />
+                                className="w-full min-h-[280px] sm:min-h-[320px] lg:min-h-[350px] rounded-2xl bg-card/60 border border-card-border p-6 md:p-8 flex flex-col justify-end gap-3 animate-pulse"
+                            >
+                                {/* Title Skeleton */}
+                                <div className="h-6 sm:h-7 w-3/4 bg-white/15 rounded-lg" />
+                                
+                                {/* Description Skeleton */}
+                                <div className="space-y-1.5 w-full">
+                                    <div className="h-3.5 w-full bg-white/10 rounded-md" />
+                                    <div className="h-3.5 w-4/5 bg-white/10 rounded-md" />
+                                </div>
+
+                                {/* Button Skeleton */}
+                                <div className="mt-2 h-9 sm:h-10 w-28 sm:w-32 rounded-full bg-primary/40" />
+                            </div>
                         ))}
                     </div>
                 </div>
