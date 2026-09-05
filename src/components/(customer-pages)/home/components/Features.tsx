@@ -1,53 +1,83 @@
-import { Truck, Headset, ShieldCheck } from "lucide-react";
+import Link from "next/link";
+import { ShieldCheck, RotateCcw, Headset, Truck, BadgeCheck } from "lucide-react";
 
 const features = [
     {
-        id: 1,
-        icon: Truck,
-        title: "FREE AND FAST DELIVERY",
-        description: "Free delivery for all orders over $140"
-    },
-    {
-        id: 2,
-        icon: Headset,
-        title: "24/7 CUSTOMER SERVICE",
-        description: "Friendly 24/7 customer support"
-    },
-    {
-        id: 3,
+        id: "secure-payments",
         icon: ShieldCheck,
-        title: "MONEY BACK GUARANTEE",
-        description: "We return money within 30 days"
-    }
+        title: "Secure Payments",
+        description: "100% safe & secure.",
+        href: "/privacy-policy",
+    },
+    {
+        id: "easy-returns",
+        icon: RotateCcw,
+        title: "Easy Returns",
+        description: "Hassle-free returns.",
+        href: "/terms-of-services",
+    },
+    {
+        id: "support",
+        icon: Headset,
+        title: "24/7 Support",
+        description: "We're here to help.",
+        href: "/contact-us",
+    },
+    {
+        id: "fast-delivery",
+        icon: Truck,
+        title: "Fast Delivery",
+        description: "On-time, every time.",
+        href: "/about-us",
+    },
+    {
+        id: "verified-merchants",
+        icon: BadgeCheck,
+        title: "Verified Merchants",
+        description: "Trusted & reliable.",
+        href: "/vendor/register",
+    },
 ];
 
 const Features = () => {
     return (
-        <section className="pt-[50px]">
+        <section className="py-10 md:py-16 bg-background">
             <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Section Header */}
+                <div className="text-center max-w-2xl mx-auto mb-8 md:mb-12">
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/15 border border-primary/30 text-accent text-xs font-semibold uppercase tracking-wider mb-3">
+                        Why Choose Us
+                    </div>
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight mb-3">
+                        Why Shop & Book With <span className="text-accent">Us</span>
+                    </h2>
+                    <p className="text-sm text-zinc-300 font-medium leading-relaxed">
+                        We prioritize your safety, convenience, and complete satisfaction with every product purchase and service booking.
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-5">
                     {features.map((feature) => {
                         const Icon = feature.icon;
                         return (
-                            <div
+                            <Link
                                 key={feature.id}
-                                className="bg-white backdrop-blur-lg p-8 py-12 rounded-2xl flex flex-col items-center text-center group hover:-translate-y-1.5 transition-all duration-300 shadow-xl shadow-black/10 "
+                                href={feature.href}
+                                className="bg-white/8 hover:bg-card/80 border border-card-border hover:border-primary/50 p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col items-center text-center group hover:-translate-y-1 transition-all duration-300 shadow-lg cursor-pointer select-none"
                             >
-                                {/* Concentric Circular Golden Icon Container */}
-                                <div className="w-20 h-20 rounded-full bg-primary/30 border border-primary/50 flex items-center justify-center mb-6 group-hover:scale-105 transition-all duration-300">
-                                    <div className="w-14 h-14 rounded-full bg-primary border border-primary flex items-center justify-center shadow-md">
-                                        <Icon className="w-6 h-6 text-[#f3f2f1]" strokeWidth={1.5} />
-                                    </div>
+                                {/* Circular Icon Container */}
+                                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-105 group-hover:bg-primary transition-all duration-300">
+                                    <Icon className="w-5 h-5 sm:w-7 sm:h-7 text-primary group-hover:text-white transition-colors" strokeWidth={1.8} />
                                 </div>
 
-                                {/* Text content */}
-                                <h3 className="text-zinc-700 font-bold text-base tracking-wider mb-2 uppercase">
+                                {/* Text Content */}
+                                <h3 className="text-white font-bold text-xs sm:text-sm md:text-base leading-tight mb-1 group-hover:text-accent transition-colors">
                                     {feature.title}
                                 </h3>
-                                <p className="text-zinc-500 text-sm font-normal max-w-60">
+                                <p className="text-muted-text text-[11px] sm:text-xs font-medium leading-snug">
                                     {feature.description}
                                 </p>
-                            </div>
+                            </Link>
                         );
                     })}
                 </div>
