@@ -7,48 +7,48 @@ const userTypes = [
     {
         id: 'customer',
         icon: User,
-        iconBg: 'bg-[#FF6700]',
+        iconBg: 'bg-primary',
         title: 'Customer',
         subtitle: 'Shop products & book services',
         cta: 'Shop Now',
         href: '/shop',
-        btnStyle: 'bg-[#FF6700] hover:bg-[#FF6700]/90 text-white',
+        btnStyle: 'bg-primary hover:bg-primary-hover text-white',
     },
     {
         id: 'vendor',
         icon: Store,
-        iconBg: 'bg-[#3b1f11]',
+        iconBg: 'bg-card',
         title: 'Vendor / Merchant',
         subtitle: 'Sell your products',
         cta: 'Join as Merchant',
         href: '/vendor/register',
-        btnStyle: 'bg-[#3b1f11] hover:bg-[#2a1609] text-white border border-[#FF6700]/40',
+        btnStyle: 'bg-card hover:bg-card/80 text-white border border-primary/40',
     },
     {
         id: 'provider',
         icon: Briefcase,
-        iconBg: 'bg-[#FF6700]',
+        iconBg: 'bg-primary',
         title: 'Service Provider',
         subtitle: 'Offer your services',
         cta: 'Join as Provider',
         href: '/provider/register',
-        btnStyle: 'bg-[#FF6700] hover:bg-[#FF6700]/90 text-white',
+        btnStyle: 'bg-primary hover:bg-primary-hover text-white',
     },
     {
         id: 'driver',
         icon: Car,
-        iconBg: 'bg-[#3b1f11]',
+        iconBg: 'bg-card',
         title: 'Driver',
         subtitle: 'Deliver & earn on your schedule',
         cta: 'Download App',
         href: '/driver/app',
-        btnStyle: 'bg-[#3b1f11] hover:bg-[#2a1609] text-white border border-[#FF6700]/40',
+        btnStyle: 'bg-card hover:bg-card/80 text-white border border-primary/40',
     },
 ];
 
 const UserTypes = () => {
     return (
-        <section className="bg-[#4f2c1d] py-8 md:pt-12 pb-0">
+        <section className="bg-background py-8 md:pt-12 pb-0">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
                     {userTypes.map(({ id, icon: Icon, iconBg, title, subtitle, cta, href, btnStyle }) => (

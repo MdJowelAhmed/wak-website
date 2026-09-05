@@ -9,7 +9,7 @@ import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
 const CategoryCard = ({ cat, hrefBase, type }: { cat: any; hrefBase: string; type: string }) => (
     <Link
         href={`${hrefBase}?category=${encodeURIComponent(cat.name)}`}
-        className="inline-flex flex-col items-center justify-between gap-2 group cursor-pointer shrink-0 p-2 sm:p-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#FF6700]/60 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-30 sm:w-48 h-[158px] sm:h-[165px] select-none"
+        className="inline-flex flex-col items-center justify-between gap-2 group cursor-pointer shrink-0 p-2 sm:p-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary/60 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-30 sm:w-48 h-[158px] sm:h-[165px] select-none"
     >
         <div className="w-full h-24 sm:h-28 relative rounded-xl overflow-hidden bg-white p-2 shadow-inner flex items-center justify-center shrink-0">
             <Image
@@ -20,7 +20,7 @@ const CategoryCard = ({ cat, hrefBase, type }: { cat: any; hrefBase: string; typ
                 className="object-cover p-1.5 group-hover:scale-110 transition-transform duration-300"
             />
         </div>
-        <span className="text-xs sm:text-sm font-semibold text-white group-hover:text-[#FF6700] transition-colors text-center w-full line-clamp-2 leading-tight px-1 break-words whitespace-normal">
+        <span className="text-xs sm:text-sm font-semibold text-white group-hover:text-primary transition-colors text-center w-full line-clamp-2 leading-tight px-1 break-words whitespace-normal">
             {cat.name}
         </span>
     </Link>
@@ -40,14 +40,14 @@ const CategoryDisplay = ({
     if (loading) {
         return (
             <div className="w-full flex justify-center py-6">
-                <span className="text-[#FFDDA5] text-sm sm:text-base font-medium">Loading categories...</span>
+                <span className="text-accent text-sm sm:text-base font-medium">Loading categories...</span>
             </div>
         );
     }
 
     if (!categories || categories.length === 0) {
         return (
-            <div className="w-full flex justify-center py-6 text-[#FFDDA5] text-sm sm:text-base font-medium">{emptyMessage}</div>
+            <div className="w-full flex justify-center py-6 text-accent text-sm sm:text-base font-medium">{emptyMessage}</div>
         );
     }
 
@@ -93,7 +93,7 @@ const AllBrands = ({
     const activeServiceCategories = serviceTab === 'all' ? serviceCategories : featuredServiceCategories;
 
     return (
-        <section className="py-6 md:pb-12 pb-3 bg-[#4f2c1d] space-y-3">
+        <section className="py-6 md:pb-12 pb-3 bg-background space-y-3">
             {/* 1. Product Categories Section */}
             <div className="container mx-auto px-4">
                 <div className="w-full">
@@ -104,7 +104,7 @@ const AllBrands = ({
                                 onClick={() => setProductTab('all')}
                                 className={`px-3 py-2 sm:py-2 rounded-l-xl text-xs sm:text-sm md:text-base font-semibold transition-all cursor-pointer select-none whitespace-nowrap ${
                                     productTab === 'all'
-                                        ? 'bg-[#FF6700] text-white shadow-md'
+                                        ? 'bg-primary text-white shadow-md'
                                         : 'text-white/90 hover:text-white hover:bg-white/10'
                                 }`}
                             >
@@ -115,7 +115,7 @@ const AllBrands = ({
                                 onClick={() => setProductTab('featured')}
                                 className={`px-3 py-2 sm:py-2 rounded-r-xl text-xs sm:text-sm md:text-base font-semibold transition-all cursor-pointer select-none whitespace-nowrap ${
                                     productTab === 'featured'
-                                        ? 'bg-[#FF6700] text-white shadow-md'
+                                        ? 'bg-primary text-white shadow-md'
                                         : 'text-white/90 hover:text-white hover:bg-white/10'
                                 }`}
                             >
@@ -149,7 +149,7 @@ const AllBrands = ({
                                 onClick={() => setServiceTab('all')}
                                 className={`px-3 py-2 sm:py-2 rounded-l-xl text-xs sm:text-sm md:text-base font-semibold transition-all cursor-pointer select-none whitespace-nowrap ${
                                     serviceTab === 'all'
-                                        ? 'bg-[#FF6700] text-white shadow-md'
+                                        ? 'bg-primary text-white shadow-md'
                                         : 'text-white/90 hover:text-white hover:bg-white/10'
                                 }`}
                             >
@@ -160,7 +160,7 @@ const AllBrands = ({
                                 onClick={() => setServiceTab('featured')}
                                 className={`px-3 py-2 sm:py-2 rounded-r-xl text-xs sm:text-sm md:text-base font-semibold transition-all cursor-pointer select-none whitespace-nowrap ${
                                     serviceTab === 'featured'
-                                        ? 'bg-[#FF6700] text-white shadow-md'
+                                        ? 'bg-primary text-white shadow-md'
                                         : 'text-white/90 hover:text-white hover:bg-white/10'
                                 }`}
                             >

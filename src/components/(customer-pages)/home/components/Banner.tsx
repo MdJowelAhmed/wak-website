@@ -53,9 +53,9 @@ const Banner = () => {
 
     if (loading) {
         return (
-            <div className="w-full bg-[#4f2c1d] py-6 md:py-10">
+            <div className="w-full bg-background py-6 md:py-10">
                 <div className="container mx-auto px-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                         {[1, 2, 3].map((i) => (
                             <div
                                 key={i}
@@ -73,14 +73,14 @@ const Banner = () => {
     if (displayBanners.length === 0) return null;
 
     return (
-        <section className="w-full bg-[#4f2c1d] py-6 md:py-10">
+        <section className="w-full bg-background py-6 md:py-10">
             <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                     {displayBanners.map((item) => (
                         <div
                             key={item._id}
                             onClick={() => handleShopNow(item)}
-                            className="group relative overflow-hidden rounded-2xl bg-zinc-900 border border-white/10 hover:border-[#FF6700]/50 transition-all duration-300 min-h-[280px] sm:min-h-[320px] lg:min-h-[350px] flex flex-col justify-end p-6 md:p-8 cursor-pointer shadow-lg hover:shadow-xl"
+                            className="group relative overflow-hidden rounded-2xl bg-card border border-card-border hover:border-primary/50 transition-all duration-300 min-h-[280px] sm:min-h-[320px] lg:min-h-[350px] flex flex-col justify-end p-6 md:p-8 cursor-pointer shadow-lg hover:shadow-xl"
                         >
                             {/* Background Image */}
                             <div className="absolute inset-0 w-full h-full">
@@ -98,7 +98,7 @@ const Banner = () => {
 
                             {/* Content Overlay */}
                             <div className="relative z-10 flex flex-col items-start gap-2">
-                                <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight group-hover:text-[#FFDDA5] transition-colors line-clamp-2">
+                                <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight group-hover:text-accent transition-colors line-clamp-2">
                                     {item.header}
                                 </h3>
                                 {item.description && (
@@ -111,7 +111,7 @@ const Banner = () => {
                                         e.stopPropagation();
                                         handleShopNow(item);
                                     }}
-                                    className="mt-2 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#FF6700] hover:bg-[#e05b00] text-white text-xs sm:text-sm font-semibold transition-all duration-300 group/btn cursor-pointer shadow-md"
+                                    className="mt-2 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary-hover text-white text-xs sm:text-sm font-semibold transition-all duration-300 group/btn cursor-pointer shadow-md"
                                 >
                                     Shop Now
                                     <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />

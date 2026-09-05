@@ -37,7 +37,7 @@ const NewArrival = ({ initialProducts = [] }: NewArrivalProps) => {
     };
 
     return (
-        <section className="py-[50px] bg-[#4f2c1d]">
+        <section className="py-[50px] bg-background">
             <div className="container mx-auto px-4">
                 {/* Header */}
                 <div className="mb-12">
@@ -47,7 +47,7 @@ const NewArrival = ({ initialProducts = [] }: NewArrivalProps) => {
                     </div>
                     <div className="flex justify-between items-end">
                         <h2 className="title mb-0!">Shop From New Arrival</h2>
-                        <button className="flex items-center gap-2 text-[#FFDDA5] px-6 py-3 rounded-md font-medium hover:underline underline-offset-4 transition-all group cursor-pointer" onClick={handleClick}>
+                        <button className="flex items-center gap-2 text-accent px-6 py-3 rounded-md font-medium hover:underline underline-offset-4 transition-all group cursor-pointer" onClick={handleClick}>
                             View All
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </button>
@@ -72,7 +72,7 @@ const NewArrival = ({ initialProducts = [] }: NewArrivalProps) => {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center text-[#FFDDA5] py-10">No new arrivals found.</div>
+                        <div className="text-center text-accent py-10">No new arrivals found.</div>
                     )}
                 </div>
             </div>

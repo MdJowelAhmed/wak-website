@@ -1,11 +1,24 @@
 @import "tailwindcss";
 
 :root {
+  /* Brand Core Colors */
   --background: #4f2c1d;
-  --foreground: #302f2f;
+  --foreground: #ffffff;
   --primary: #FF6700;
+  --primary-hover: #e05b00;
   --secondary: #99a0fd;
+  --accent: #FFDDA5;
   --inputBg: #353535;
+
+  /* Card & Content Tokens */
+  --card: #3b1f11;
+  --card-foreground: #ffffff;
+  --card-border: rgba(255, 255, 255, 0.10);
+  --card-hover-border: rgba(255, 103, 0, 0.50);
+
+  /* Typography Tokens */
+  --muted-text: rgba(255, 255, 255, 0.70);
+  --subtle-text: rgba(255, 255, 255, 0.50);
 }
 
 @theme inline {
@@ -13,8 +26,20 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
+
   --color-primary: var(--primary);
-  --color-inputBg: var(--inputBg)
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-inputBg: var(--inputBg);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-card-border: var(--card-border);
+  --color-card-hover-border: var(--card-hover-border);
+
+  --color-muted-text: var(--muted-text);
+  --color-subtle-text: var(--subtle-text);
 }
 
 @layer utilities {
