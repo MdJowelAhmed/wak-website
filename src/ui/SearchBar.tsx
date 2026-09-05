@@ -7,6 +7,13 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { myFetch } from '../../helpers/myFetch';
 import { resolveImageUrl } from '../../helpers/resolveImageUrl';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/ui/select';
 
 interface SearchResult {
     _id: string;
@@ -148,16 +155,19 @@ export default function SearchBar({
         <div className={containerClassName} ref={containerRef}>
             {/* Input Row with Category Dropdown & Search Button */}
             <div className="flex items-center w-full bg-card border border-border focus-within:border-primary rounded-xl shadow-2xs overflow-hidden transition-all">
-                {/* Category Dropdown */}
-                <select
-                    value={categoryFilter}
-                    onChange={(e) => setCategoryFilter(e.target.value)}
-                    className="hidden sm:block bg-section-bg border-r border-border text-foreground text-xs font-semibold px-3 py-2.5 outline-none cursor-pointer hover:bg-section-bg/80 transition-colors"
-                >
-                    <option value="all">All Categories</option>
-                    <option value="product">Products</option>
-                    <option value="service">Services</option>
-                </select>
+                {/* Category Select Component */}
+                <div className="hidden sm:block shrink-0">
+                    <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                        <SelectTrigger className="border-0 border-r border-border rounded-none bg-section-bg hover:bg-section-bg/80 text-foreground text-xs font-semibold h-full px-3 py-2.5 focus:ring-0 focus:ring-offset-0 shadow-none cursor-pointer">
+                            <SelectValue placeholder="All Categories" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-card border border-border text-foreground shadow-xl rounded-xl z-[250]">
+                            <SelectItem value="all" className="text-xs font-medium cursor-pointer focus:bg-primary/10 focus:text-primary">All Categories</SelectItem>
+                            <SelectItem value="product" className="text-xs font-medium cursor-pointer focus:bg-primary/10 focus:text-primary">Products</SelectItem>
+                            <SelectItem value="service" className="text-xs font-medium cursor-pointer focus:bg-primary/10 focus:text-primary">Services</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
 
                 {/* Search Input */}
                 <div className="relative flex-1 flex items-center">
