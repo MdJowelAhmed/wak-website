@@ -61,7 +61,7 @@ const BestSelling = ({ initialProducts = [], loading = false }: BestSellingProps
     }
 
     // Display max 8 products (show 6 on mobile/large, 8 on XL)
-    const products = initialProducts.slice(0, 8);
+    const products = initialProducts;
 
     const handleClick = () => {
         const cookies = document.cookie;
@@ -96,7 +96,7 @@ const BestSelling = ({ initialProducts = [], loading = false }: BestSellingProps
                 {/* Products Grid */}
                 <div>
                     {products.length > 0 ? (
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
                             {products.map((product, index) => (
                                 <div
                                     key={product._id}
