@@ -7,6 +7,7 @@ import Footer from "@/shared/Footer";
 import { Toaster } from "sonner";
 import { CartProvider } from "@/context/CartContext";
 import { AuthProvider } from "@/context/AuthContext";
+import ChatwootWidget from "@/components/ChatwootWidget";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -42,6 +43,7 @@ export default async function RootLayout({
               {children}
             </div>
             <Footer />
+            <ChatwootWidget />
           </CartProvider>
         </AuthProvider>
       </body>

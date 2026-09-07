@@ -54,7 +54,7 @@ const UserTypes = () => {
                     {userTypes.map(({ id, icon: Icon, iconBg, title, subtitle, cta, href, btnStyle }) => (
                         <div
                             key={id}
-                            className="flex flex-col items-center text-center lg:flex-row lg:items-center lg:text-left gap-3 lg:gap-4 bg-card border border-border hover:border-primary/60 rounded-2xl p-4 md:p-5 transition-all duration-300 group shadow-xs hover:shadow-md"
+                            className="flex flex-col items-center text-center lg:flex-row lg:items-center lg:text-left gap-3 lg:gap-4 bg-primary/10 border border-border hover:border-primary/60 rounded-2xl p-4 md:p-5 transition-all duration-300 group shadow-xs hover:shadow-md"
                         >
                             {/* Icon circle */}
                             <div className={`${iconBg} w-10 h-10 lg:w-14 lg:h-14 rounded-xl flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform duration-300`}>

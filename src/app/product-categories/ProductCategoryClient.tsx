@@ -23,7 +23,7 @@ export default function ProductCategoryClient({ initialCategories = [] }: { init
                     <div>
                         <div className="flex items-center gap-3 mb-2">
                             <div className="w-4 h-9 bg-primary rounded-xs" />
-                            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary tracking-tight">
                                 Product Categories
                             </h1>
                         </div>

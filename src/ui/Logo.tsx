@@ -7,9 +7,9 @@ export default function Logo() {
             className="inline-flex flex-col items-start shrink-0 cursor-pointer group"
         >
             <div className="flex items-center gap-1.5">
-                <span className="bg-primary text-white font-extrabold px-2.5 py-0.5 rounded-lg text-base sm:text-lg tracking-wider shadow-xs group-hover:bg-primary-hover transition-colors">
+                {/* <span className="bg-primary text-white font-extrabold px-2.5 py-0.5 rounded-lg text-base sm:text-lg tracking-wider shadow-xs group-hover:bg-primary-hover transition-colors">
                     WAK
-                </span>
+                </span> */}
                 <span className="text-foreground font-extrabold text-base sm:text-lg tracking-tight group-hover:text-primary transition-colors">
                     WorthWorld
                 </span>

@@ -122,7 +122,7 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
 
                     {/* Action Icons */}
                     <div className="ml-auto flex items-center gap-2.5 sm:gap-4 shrink-0">
-                        <WishlistButton />
+                        {/* <WishlistButton /> */}
                         <CartButton />
                         <UserAuthMenu isLoggedIn={isLoggedIn} logout={logout} />
 

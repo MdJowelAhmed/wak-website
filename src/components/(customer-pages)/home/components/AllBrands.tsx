@@ -8,9 +8,9 @@ import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
 const CategoryCard = ({ cat, hrefBase }: { cat: any; hrefBase: string }) => (
     <Link
         href={`${hrefBase}?category=${encodeURIComponent(cat.name)}`}
-        className="inline-flex flex-col items-center justify-between gap-2 group cursor-pointer shrink-0 p-2 sm:p-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-card-border hover:border-primary/60 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-32 sm:w-48 h-[150px] sm:h-[165px] select-none"
+        className="inline-flex flex-col items-center justify-between gap-2 group cursor-pointer shrink-0 p-2 sm:p-2.5 rounded-2xl bg-primary/10 hover:bg-white/10  hover:border-primary/60 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-32 sm:w-48 h-[150px] sm:h-[165px] select-none"
     >
-        <div className="w-full h-24 sm:h-28 relative rounded-xl overflow-hidden bg-white p-2 shadow-inner flex items-center justify-center shrink-0">
+        <div className="w-full h-24 sm:h-28 relative rounded-xl overflow-hidden   shadow-inner flex items-center justify-center shrink-0">
             <Image
                 src={resolveImageUrl(cat.image) || "/placeholder.jpg"}
                 alt={cat.name}
@@ -19,7 +19,7 @@ const CategoryCard = ({ cat, hrefBase }: { cat: any; hrefBase: string }) => (
                 className="object-cover p-1.5 group-hover:scale-110 transition-transform duration-300"
             />
         </div>
-        <span className="text-xs sm:text-sm  text-white group-hover:text-primary transition-colors text-center w-full line-clamp-2 leading-tight px-1 break-words whitespace-normal">
+        <span className="text-xs sm:text-sm  text-foreground group-hover:text-primary transition-colors text-center w-full line-clamp-2 leading-tight px-1 break-words whitespace-normal">
             {cat.name}
         </span>
     </Link>
@@ -41,7 +41,7 @@ const AllBrands = ({
                 <div className="flex justify-between items-center mb-6">
                     <div className="flex items-center gap-3">
                         <div className="w-4 h-9 bg-primary rounded-xs" />
-                        <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight">
+                        <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground tracking-tight">
                             Product Categories
                         </h2>
                     </div>
@@ -70,7 +70,7 @@ const AllBrands = ({
                 <div className="flex justify-between items-center mb-6">
                     <div className="flex items-center gap-3">
                         <div className="w-4 h-9 bg-primary rounded-xs" />
-                        <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight">
+                        <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground tracking-tight">
                             Service Categories
                         </h2>
                     </div>
