@@ -73,25 +73,37 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
 
                     {/* Right: Quick Links & Language/Region Selector */}
                     <div className="flex items-center gap-4 sm:gap-6 shrink-0">
-                        {/* Language & Region Selector Trigger */}
-                        <button
-                            onClick={() => setIsLangOpen(true)}
-                            className="flex items-center gap-1.5 hover:text-accent-foreground transition-colors cursor-pointer text-accent-foreground font-semibold"
-                        >
-                            <span>{activeCountryObj.flag}</span>
-                            <span>{activeCountryObj.code}</span>
-                            <span className="text-border">|</span>
-                            <span>{activeLangObj.name}</span>
-                            <ChevronDown className="w-3 h-3 text-body-text" />
-                        </button>
+                        {/* Language & Region Selector Trigger + Dropdown */}
+                        <div className="relative">
+                            <button
+                                onClick={() => setIsLangOpen(!isLangOpen)}
+                                className="flex items-center gap-1.5 hover:text-accent-foreground transition-colors cursor-pointer text-accent-foreground font-semibold py-0.5"
+                                aria-label="Change Language and Country"
+                            >
+                                <span>{activeCountryObj.flag}</span>
+                                <span>{activeCountryObj.code}</span>
+                                <span className="text-border">|</span>
+                                <span>{activeLangObj.name}</span>
+                                <ChevronDown className={`w-3 h-3 text-accent-foreground/70 transition-transform duration-200 ${isLangOpen ? 'rotate-180' : ''}`} />
+                            </button>
 
-                        <Link
+                            <LanguageRegionModal
+                                isOpen={isLangOpen}
+                                onClose={() => setIsLangOpen(false)}
+                                currentLang={currentLang}
+                                currentCountry={currentCountry}
+                                onSelectLanguage={setCurrentLang}
+                                onSelectCountry={setCurrentCountry}
+                            />
+                        </div>
+
+                        {/* <Link
                             href="/profile"
                             className="hidden md:flex items-center gap-1 text-accent-foreground transition-colors"
                         >
                             <Truck className="w-3.5 h-3.5 text-accent-foreground" />
                             <span>Track Order</span>
-                        </Link>
+                        </Link> */}
 
                         <Link
                             href="/contact-us"
@@ -144,15 +156,6 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
                 onClose={() => setIsLocationOpen(false)}
                 currentLocation={currentLocation}
                 onSelectLocation={handleSelectLocation}
-            />
-
-            <LanguageRegionModal
-                isOpen={isLangOpen}
-                onClose={() => setIsLangOpen(false)}
-                currentLang={currentLang}
-                currentCountry={currentCountry}
-                onSelectLanguage={setCurrentLang}
-                onSelectCountry={setCurrentCountry}
             />
 
             {isMenuOpen && (
