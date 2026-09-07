@@ -1,48 +1,48 @@
 @import "tailwindcss";
 
 :root {
-  /* Brand Core Tokens (Orange + Brown + White + Light Neutral) */
-  --primary: #E87524;            /* Primary / Brand Orange */
-  --primary-hover: #C85D16;      /* Primary Hover Dark Orange */
-  --primary-foreground: #FFFFFF; /* Primary Text: White */
+ 
+  --primary: #E87524;           
+  --primary-hover: #C85D16;     
+  --primary-foreground: #FFFFFF; 
 
-  --secondary: #6B4226;          /* Secondary / Accent Brown */
-  --secondary-hover: #54331C;    /* Secondary Hover */
-  --secondary-foreground: #FFFFFF;/* Secondary Text: White */
+  --secondary: #281100;          
+  --secondary-hover: #54331C;   
+  --secondary-foreground: #FFFFFF;
 
-  --dark-brown: #3E2723;         /* Deep Brown */
+  --dark-brown: #3E2723;        
 
-  --background: #FFFCF8;         /* Main Page Background: Warm White */
-  --section-bg: #F8F3ED;         /* Section Background: Light Cream */
-  --card: #FFFFFF;               /* Card Background: Pure White */
-  --card-foreground: #2F241F;    /* Card Text */
+  --background: #FFFCF8;         
+  --section-bg: #F8F3ED;         
+  --card: #FFFFFF;               
+  --card-foreground: #2F241F;    
   --card-border: #E8DED3;
   --card-hover-border: #E87524;
 
   --popover: #FFFFFF;
   --popover-foreground: #2F241F;
 
-  --border: #E8DED3;             /* Border: Light Beige */
+  --border: #E8DED3;           
   --input: #E8DED3;
   --inputBg: #FFFFFF;
   --ring: #E87524;
-  --focus-ring: #F6C7A3;         /* Soft Orange Focus Ring */
+  --focus-ring: #F6C7A3;         
 
-  --foreground: #2F241F;         /* Primary Text: Dark Brown */
-  --sub-heading: #3E2723;        /* Sub Heading: Deep Brown */
-  --body-text: #75675E;          /* Secondary Text / Body Text: Muted Brown */
-  --muted: #F8F3ED;              /* Muted Background: Light Cream */
-  --muted-foreground: #75675E;   /* Muted Text: Muted Brown */
-  --muted-text: #A79B93;         /* Disabled / Soft Gray */
+  --foreground: #2F241F;       
+  --sub-heading: #3E2723;        
+  --body-text: #75675E;          
+  --muted: #F8F3ED;              
+  --muted-foreground: #75675E;   
+  --muted-text: #A79B93;         
 
-  --link-color: #C85D16;         /* Links Color */
-  --link-hover: #E87524;         /* Link Hover */
+  --link-color: #C85D16;        
+  --link-hover: #E87524;         
 
-  --accent: #E87524;             /* Accent Orange */
+  --accent: #E87524;             
   --accent-foreground: #FFFFFF;
 
-  --success: #4F7A5A;            /* Muted Green */
-  --error: #C94A3A;              /* Warm Red */
+  --success: #4F7A5A;            
+  --error: #C94A3A;              
   --destructive: #C94A3A;
   --destructive-foreground: #FFFFFF;
 

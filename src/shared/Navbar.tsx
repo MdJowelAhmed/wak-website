@@ -54,18 +54,18 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
     return (
         <header className="sticky top-0 z-50 w-full shadow-sm">
             {/* 1. Top Utility Navigation Bar */}
-            <div className="bg-section-bg border-b border-border py-1.5 px-4 sm:px-6 text-xs text-body-text font-medium">
+            <div className="bg-secondary border-b border-border py-1.5 px-4 sm:px-6 text-xs text-body-text font-medium">
                 <div className="container mx-auto flex items-center justify-between gap-4">
                     {/* Left: Deliver to Location Control */}
                     <div className="flex items-center gap-2">
-                        <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
-                        <span className="hidden sm:inline">Deliver to:</span>
+                        <MapPin className="w-3.5 h-3.5 text-accent-foreground shrink-0" />
+                        <span className="hidden sm:inline text-accent-foreground">Deliver to:</span>
                         <button
                             onClick={() => setIsLocationOpen(true)}
-                            className="font-bold text-foreground hover:text-primary transition-colors cursor-pointer flex items-center gap-1"
+                            className="font-bold text-accent-foreground hover:text-accent-foreground transition-colors cursor-pointer flex items-center gap-1"
                         >
                             <span>{currentLocation}</span>
-                            <span className="text-[10px] text-primary underline ml-1 font-semibold">
+                            <span className="text-[10px] text-accent-foreground underline ml-1 font-semibold">
                                 (Update Location)
                             </span>
                         </button>
@@ -76,7 +76,7 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
                         {/* Language & Region Selector Trigger */}
                         <button
                             onClick={() => setIsLangOpen(true)}
-                            className="flex items-center gap-1.5 hover:text-primary transition-colors cursor-pointer text-foreground font-semibold"
+                            className="flex items-center gap-1.5 hover:text-accent-foreground transition-colors cursor-pointer text-accent-foreground font-semibold"
                         >
                             <span>{activeCountryObj.flag}</span>
                             <span>{activeCountryObj.code}</span>
@@ -87,17 +87,17 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
 
                         <Link
                             href="/profile"
-                            className="hidden md:flex items-center gap-1 hover:text-primary transition-colors"
+                            className="hidden md:flex items-center gap-1 text-accent-foreground transition-colors"
                         >
-                            <Truck className="w-3.5 h-3.5 text-primary" />
+                            <Truck className="w-3.5 h-3.5 text-accent-foreground" />
                             <span>Track Order</span>
                         </Link>
 
                         <Link
                             href="/contact-us"
-                            className="hidden sm:flex items-center gap-1 hover:text-primary transition-colors"
+                            className="hidden sm:flex items-center gap-1 text-accent-foreground transition-colors"
                         >
-                            <HelpCircle className="w-3.5 h-3.5 text-primary" />
+                            <HelpCircle className="w-3.5 h-3.5 text-accent-foreground" />
                             <span>Support</span>
                         </Link>
                     </div>

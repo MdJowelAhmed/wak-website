@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Search, X, ShoppingBag, Wrench, Loader2 } from 'lucide-react';
+import { Search, X, ShoppingBag, Wrench } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { myFetch } from '../../helpers/myFetch';
@@ -40,8 +40,6 @@ function formatPrice(price: number) {
 export default function SearchBar({
     placeholder = 'Search...',
     containerClassName = 'relative w-full',
-    inputClassName = 'w-full bg-white/10 border border-white/15 focus:border-[#FF6700]/70 focus:bg-white/15 rounded-full py-2.5 pl-11 pr-4 text-sm text-white outline-none transition-all placeholder:text-white/50 backdrop-blur-sm',
-    iconClassName = 'absolute left-3.5 top-1/2 -translate-y-1/2 text-white/50 w-4.5 h-4.5',
     onClose,
 }: SearchBarProps) {
     const [query, setQuery] = useState('');
@@ -49,32 +47,46 @@ export default function SearchBar({
     const [isLoading, setIsLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [activeIndex, setActiveIndex] = useState(-1);
+    const [categoryFilter, setCategoryFilter] = useState('all');
 
     const router = useRouter();
     const containerRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const cacheRef = useRef<Map<string, SearchResult[]>>(new Map());
 
-    // Debounced search
+    // Debounced search API call with caching
     const performSearch = useCallback(async (term: string) => {
-        if (!term.trim()) {
+        const trimmed = term.trim().toLowerCase();
+        if (!trimmed) {
             setResults([]);
             setIsOpen(false);
+            setIsLoading(false);
             return;
         }
 
-        setIsLoading(true);
+        // Return cached results if available
+        if (cacheRef.current.has(trimmed)) {
+            setResults(cacheRef.current.get(trimmed)!);
+            setIsLoading(false);
+            setIsOpen(true);
+            return;
+        }
+
         try {
             const res = await myFetch(`/search/?searchTerm=${encodeURIComponent(term.trim())}`);
-            if (res.success && Array.isArray(res.data)) {
-                setResults(res.data);
-            } else {
-                setResults([]);
+            const data: SearchResult[] = res.success && Array.isArray(res.data) ? res.data : [];
+
+            // Store in cache (maintain max 50 items to keep memory lightweight)
+            if (cacheRef.current.size >= 50) {
+                const firstKey = cacheRef.current.keys().next().value;
+                if (firstKey) cacheRef.current.delete(firstKey);
             }
-            setIsOpen(true);
+            cacheRef.current.set(trimmed, data);
+
+            setResults(data);
         } catch {
             setResults([]);
-            setIsOpen(true);
         } finally {
             setIsLoading(false);
         }
@@ -82,15 +94,32 @@ export default function SearchBar({
 
     useEffect(() => {
         if (debounceRef.current) clearTimeout(debounceRef.current);
-        if (!query.trim()) {
+        const trimmed = query.trim().toLowerCase();
+
+        if (!trimmed) {
             setResults([]);
             setIsOpen(false);
+            setIsLoading(false);
             setActiveIndex(-1);
             return;
         }
+
+        // Instant response from cache without skeleton or network delay
+        if (cacheRef.current.has(trimmed)) {
+            setResults(cacheRef.current.get(trimmed)!);
+            setIsLoading(false);
+            setIsOpen(true);
+            return;
+        }
+
+        // If not cached, show skeleton and fetch with debounce
+        setIsLoading(true);
+        setIsOpen(true);
+
         debounceRef.current = setTimeout(() => {
             performSearch(query);
         }, 350);
+
         return () => {
             if (debounceRef.current) clearTimeout(debounceRef.current);
         };
@@ -108,6 +137,10 @@ export default function SearchBar({
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    const filteredResults = results.filter(
+        (item) => categoryFilter === 'all' || item.type === categoryFilter
+    );
+
     const navigateTo = (item: SearchResult) => {
         const path = item.type === 'product' ? `/shop/${item.slug}` : `/services/${item.slug}`;
         setIsOpen(false);
@@ -119,18 +152,18 @@ export default function SearchBar({
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (!isOpen || results.length === 0) return;
+        if (!isOpen || filteredResults.length === 0) return;
 
         if (e.key === 'ArrowDown') {
             e.preventDefault();
-            setActiveIndex((prev) => (prev < results.length - 1 ? prev + 1 : 0));
+            setActiveIndex((prev) => (prev < filteredResults.length - 1 ? prev + 1 : 0));
         } else if (e.key === 'ArrowUp') {
             e.preventDefault();
-            setActiveIndex((prev) => (prev > 0 ? prev - 1 : results.length - 1));
+            setActiveIndex((prev) => (prev > 0 ? prev - 1 : filteredResults.length - 1));
         } else if (e.key === 'Enter') {
             e.preventDefault();
-            if (activeIndex >= 0 && results[activeIndex]) {
-                navigateTo(results[activeIndex]);
+            if (activeIndex >= 0 && filteredResults[activeIndex]) {
+                navigateTo(filteredResults[activeIndex]);
             }
         } else if (e.key === 'Escape') {
             setIsOpen(false);
@@ -143,17 +176,16 @@ export default function SearchBar({
         setQuery('');
         setResults([]);
         setIsOpen(false);
+        setIsLoading(false);
         setActiveIndex(-1);
         inputRef.current?.focus();
     };
 
     const showDropdown = isOpen && query.trim().length > 0;
 
-    const [categoryFilter, setCategoryFilter] = useState('all');
-
     return (
         <div className={containerClassName} ref={containerRef}>
-            {/* Input Row with Category Dropdown & Search Button */}
+            {/* Input Row with Category Dropdown */}
             <div className="flex items-center w-full bg-card border border-border focus-within:border-primary rounded-xl shadow-2xs overflow-hidden transition-all">
                 {/* Category Select Component */}
                 <div className="hidden sm:block shrink-0">
@@ -169,8 +201,9 @@ export default function SearchBar({
                     </Select>
                 </div>
 
-                {/* Search Input */}
-                <div className="relative flex-1 flex items-center">
+                {/* Search Input with Left Search Icon */}
+                <div className="relative flex-1 flex items-center pl-3 sm:pl-3.5">
+                    <Search className="w-4 h-4 text-muted-text shrink-0 mr-2" />
                     <input
                         ref={inputRef}
                         type="text"
@@ -179,16 +212,16 @@ export default function SearchBar({
                         onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={handleKeyDown}
                         onFocus={() => {
-                            if (query.trim() && results.length > 0) setIsOpen(true);
+                            if (query.trim()) setIsOpen(true);
                         }}
-                        className="w-full bg-transparent py-2.5 px-3 sm:px-4 text-xs sm:text-sm text-foreground placeholder:text-muted-text outline-none"
+                        className="w-full bg-transparent py-2.5 pr-3 text-xs sm:text-sm text-foreground placeholder:text-muted-text outline-none"
                         autoComplete="off"
                         aria-label="Search products and services"
                     />
                     {query && (
                         <button
                             onClick={clearQuery}
-                            className="mr-2 text-muted-text hover:text-foreground transition-colors cursor-pointer"
+                            className="mr-3 text-muted-text hover:text-foreground transition-colors cursor-pointer shrink-0"
                             aria-label="Clear search"
                             type="button"
                         >
@@ -196,20 +229,6 @@ export default function SearchBar({
                         </button>
                     )}
                 </div>
-
-                {/* Search Button */}
-                <button
-                    onClick={() => performSearch(query)}
-                    className="bg-primary hover:bg-primary-hover text-white px-4 py-2.5 flex items-center justify-center gap-1.5 text-xs font-bold transition-colors shrink-0 cursor-pointer"
-                    aria-label="Search"
-                >
-                    {isLoading ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                        <Search className="w-4 h-4" />
-                    )}
-                    <span className="hidden md:inline">Search</span>
-                </button>
             </div>
 
             {/* Dropdown */}
@@ -220,7 +239,25 @@ export default function SearchBar({
                     className="absolute left-0 right-0 top-full mt-2 z-[200] bg-white rounded-xl shadow-2xl shadow-black/20 border border-gray-100 overflow-hidden"
                     style={{ maxHeight: '420px', overflowY: 'auto' }}
                 >
-                    {results.length === 0 ? (
+                    {isLoading ? (
+                        <div className="p-3 space-y-2">
+                            <div className="px-2 pt-1 pb-1">
+                                <div className="h-3 bg-gray-200 rounded w-28 animate-pulse" />
+                            </div>
+                            {[1, 2, 3].map((i) => (
+                                <div key={i} className="flex items-center gap-3 px-3 py-2 rounded-lg animate-pulse">
+                                    <div className="w-12 h-12 rounded-lg bg-gray-200 shrink-0" />
+                                    <div className="flex-1 min-w-0 space-y-2">
+                                        <div className="h-3.5 bg-gray-200 rounded w-3/4" />
+                                        <div className="flex items-center gap-2">
+                                            <div className="h-3 bg-gray-200 rounded-full w-14" />
+                                            <div className="h-3 bg-gray-200 rounded w-10" />
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : filteredResults.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-10 text-gray-400">
                             <Search className="w-8 h-8 mb-2 opacity-30" />
                             <p className="text-sm font-medium">No results for &ldquo;{query}&rdquo;</p>
@@ -230,11 +267,11 @@ export default function SearchBar({
                         <>
                             <div className="px-4 pt-3 pb-1">
                                 <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                                    {results.length} result{results.length !== 1 ? 's' : ''}
+                                    {filteredResults.length} result{filteredResults.length !== 1 ? 's' : ''}
                                 </span>
                             </div>
                             <ul className="divide-y divide-gray-50 pb-2">
-                                {results.map((item, index) => (
+                                {filteredResults.map((item, index) => (
                                     <li
                                         key={item._id}
                                         role="option"
@@ -313,3 +350,4 @@ export default function SearchBar({
         </div>
     );
 }
+
