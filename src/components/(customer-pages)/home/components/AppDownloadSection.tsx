@@ -122,7 +122,7 @@ const AppDownloadSection = () => {
                 </div>
 
                 {/* Showcase Card */}
-                <div className="bg-section-bg border border-border rounded-2xl p-5 sm:p-8 md:p-10 shadow-sm relative overflow-hidden">
+                <div className="bg-section-bg border border-border rounded-2xl p-5 sm:p-8 md:p-8 shadow-sm relative overflow-hidden">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
                         {/* Left Side: App Details */}
                         <div className="lg:col-span-7 flex flex-col items-start gap-4">
@@ -189,7 +189,7 @@ const AppDownloadSection = () => {
 
                         {/* Right Side: High-res Phone Mockup */}
                         <div className="lg:col-span-5 flex justify-center items-center">
-                            <div className="relative w-full max-w-[280px] sm:max-w-[330px] md:max-w-[360px] lg:max-w-[380px] h-[460px] sm:h-[530px] md:h-[580px] flex items-center justify-center">
+                            <div className="relative w-full max-w-[280px] sm:max-w-[330px] md:max-w-[360px] lg:max-w-[380px] h-[400px] sm:h-[460px] md:h-[580px] flex items-center justify-center">
                                 <Image
                                     key={currentApp.id}
                                     src={currentApp.screenImage}
