@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { User, Store, Briefcase, Truck, QrCode, CheckCircle2, Sparkles } from 'lucide-react';
+import Image from 'next/image';
+import { User, Store, Briefcase, Truck, CheckCircle2, Sparkles } from 'lucide-react';
 
 const apps = [
     {
@@ -14,8 +15,9 @@ const apps = [
         features: ['Live Order Tracking', 'Multi-payment Support', 'Exclusive Deals'],
         appStoreUrl: 'https://apple.com',
         playStoreUrl: 'https://google.com',
-        qrValue: 'WAK Customer App',
         activeTabBg: 'bg-primary text-white shadow-md shadow-primary/20',
+        screenImage: '/app-screens/customer-phone.png',
+        screenAlt: 'Customer App Screen',
     },
     {
         id: 'merchant',
@@ -27,8 +29,9 @@ const apps = [
         features: ['Inventory Control', 'Batch Fulfillment', 'Instant Payouts'],
         appStoreUrl: 'https://apple.com',
         playStoreUrl: 'https://google.com',
-        qrValue: 'WAK Merchant App',
         activeTabBg: 'bg-secondary text-white shadow-md shadow-secondary/20',
+        screenImage: '/app-screens/dashboard-phone.png',
+        screenAlt: 'Merchant Dashboard Overview',
     },
     {
         id: 'provider',
@@ -40,8 +43,9 @@ const apps = [
         features: ['Booking Calendar', 'Direct Client Messaging', 'Earnings Cashout'],
         appStoreUrl: 'https://apple.com',
         playStoreUrl: 'https://google.com',
-        qrValue: 'WAK Provider App',
         activeTabBg: 'bg-primary text-white shadow-md shadow-primary/20',
+        screenImage: '/app-screens/dashboard-phone.png',
+        screenAlt: 'Provider Dashboard Overview',
     },
     {
         id: 'driver',
@@ -53,8 +57,9 @@ const apps = [
         features: ['Route Navigation', 'Weekly Earnings Tracker', '24/7 Delivery Support'],
         appStoreUrl: 'https://apple.com',
         playStoreUrl: 'https://google.com',
-        qrValue: 'WAK Driver App',
         activeTabBg: 'bg-secondary text-white shadow-md shadow-secondary/20',
+        screenImage: '/app-screens/driver-phone.png',
+        screenAlt: 'Driver App Screen',
     },
 ];
 
@@ -85,7 +90,7 @@ const AppDownloadSection = () => {
                 {/* Section Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 md:mb-8">
                     <div>
-                        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[11px] font-bold uppercase tracking-wider mb-2">
+                        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary/5 border border-primary/20 text-primary text-[11px] font-bold uppercase tracking-wider mb-2">
                             <Sparkles className="w-3.5 h-3.5 text-primary" />
                             Mobile Apps Ecosystem
                         </div>
@@ -117,10 +122,10 @@ const AppDownloadSection = () => {
                 </div>
 
                 {/* Showcase Card */}
-                <div className="bg-section-bg border border-border rounded-2xl p-5 sm:p-8 shadow-sm relative overflow-hidden">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+                <div className="bg-section-bg border border-border rounded-2xl p-5 sm:p-8 md:p-10 shadow-sm relative overflow-hidden">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
                         {/* Left Side: App Details */}
-                        <div className="lg:col-span-8 flex flex-col items-start gap-4">
+                        <div className="lg:col-span-7 flex flex-col items-start gap-4">
                             <div className="flex items-center gap-3">
                                 <div className={`${currentApp.iconBg} w-11 h-11 rounded-xl flex items-center justify-center shadow-sm shrink-0`}>
                                     <Icon className="w-5 h-5" />
@@ -152,13 +157,13 @@ const AppDownloadSection = () => {
                                 ))}
                             </div>
 
-                            {/* Download Buttons + QR Code */}
+                            {/* Download Buttons */}
                             <div className="w-full pt-4 border-t border-border flex flex-wrap items-center gap-3">
                                 <a
                                     href={currentApp.appStoreUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-dark-brown hover:bg-black text-white transition-all duration-300 shadow-sm hover:scale-105 cursor-pointer text-xs"
+                                    className="flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-dark-brown hover:bg-black text-white transition-all duration-300 shadow-sm hover:scale-105 cursor-pointer text-xs"
                                 >
                                     <AppleIcon />
                                     <div className="flex flex-col items-start text-left leading-none">
@@ -171,7 +176,7 @@ const AppDownloadSection = () => {
                                     href={currentApp.playStoreUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-dark-brown hover:bg-black text-white transition-all duration-300 shadow-sm hover:scale-105 cursor-pointer text-xs"
+                                    className="flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-dark-brown hover:bg-black text-white transition-all duration-300 shadow-sm hover:scale-105 cursor-pointer text-xs"
                                 >
                                     <PlayStoreIcon />
                                     <div className="flex flex-col items-start text-left leading-none">
@@ -179,61 +184,21 @@ const AppDownloadSection = () => {
                                         <span className="text-xs font-bold mt-0.5">Get it on</span>
                                     </div>
                                 </a>
-
-                                <div className="hidden sm:flex items-center gap-2.5 ml-auto px-3.5 py-2 rounded-xl bg-card border border-border shadow-2xs">
-                                    <QrCode className="w-6 h-6 text-primary" />
-                                    <div className="flex flex-col text-left">
-                                        <span className="text-xs font-bold text-foreground">Scan QR Code</span>
-                                        <span className="text-[10px] text-body-text">Desktop quick install</span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
-                        {/* Right Side: Smartphone Mockup */}
-                        <div className="lg:col-span-4 flex justify-center items-center">
-                            <div className="relative w-full max-w-[190px] sm:max-w-[210px] aspect-[9/16] bg-dark-brown border-[4px] border-secondary/40 rounded-[32px] shadow-xl p-3 flex flex-col justify-between overflow-hidden">
-                                {/* Smartphone Notch */}
-                                <div className="w-20 h-3 bg-secondary/40 rounded-full mx-auto mb-2 shrink-0" />
-
-                                {/* Simulated App Screen */}
-                                <div className="w-full h-full bg-card rounded-[22px] p-3 flex flex-col justify-between border border-border overflow-hidden relative">
-                                    {/* App UI Header */}
-                                    <div className="flex justify-between items-center pb-2 border-b border-border">
-                                        <div className="flex items-center gap-1.5">
-                                            <div className={`${currentApp.iconBg} w-5 h-5 rounded-md flex items-center justify-center shrink-0`}>
-                                                <Icon className="w-3 h-3" />
-                                            </div>
-                                            <span className="text-[10px] font-bold text-foreground tracking-wide truncate max-w-[80px]">WAK App</span>
-                                        </div>
-                                        <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-primary/15 text-primary font-bold">
-                                            Active
-                                        </span>
-                                    </div>
-
-                                    {/* Content Preview */}
-                                    <div className="my-auto py-2 space-y-2">
-                                        <div className="p-2 rounded-lg bg-section-bg border border-border space-y-1">
-                                            <div className="h-2 w-1/2 bg-body-text/30 rounded" />
-                                            <div className="h-2 w-3/4 bg-body-text/20 rounded" />
-                                        </div>
-
-                                        <div className="p-2 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-between">
-                                            <span className="text-[9px] font-bold text-primary">Live Service</span>
-                                            <div className="w-2 h-2 rounded-full bg-primary animate-ping" />
-                                        </div>
-                                    </div>
-
-                                    {/* Bottom Nav */}
-                                    <div className="pt-2 border-t border-border flex justify-around items-center">
-                                        <div className="w-3.5 h-3.5 rounded-full bg-primary" />
-                                        <div className="w-3.5 h-3.5 rounded-full bg-border" />
-                                        <div className="w-3.5 h-3.5 rounded-full bg-border" />
-                                    </div>
-                                </div>
-
-                                {/* Home Bar */}
-                                <div className="w-20 h-1 bg-secondary/60 rounded-full mx-auto mt-2 shrink-0" />
+                        {/* Right Side: High-res Phone Mockup */}
+                        <div className="lg:col-span-5 flex justify-center items-center">
+                            <div className="relative w-full max-w-[280px] sm:max-w-[330px] md:max-w-[360px] lg:max-w-[380px] h-[460px] sm:h-[530px] md:h-[580px] flex items-center justify-center">
+                                <Image
+                                    key={currentApp.id}
+                                    src={currentApp.screenImage}
+                                    alt={currentApp.screenAlt}
+                                    fill
+                                    className="object-contain drop-shadow-2xl hover:scale-[1.03] transition-all duration-500 animate-in fade-in zoom-in-95"
+                                    unoptimized={true}
+                                    priority
+                                />
                             </div>
                         </div>
                     </div>

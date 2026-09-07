@@ -8,7 +8,7 @@ import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
 const CategoryCard = ({ cat, hrefBase }: { cat: any; hrefBase: string }) => (
     <Link
         href={`${hrefBase}?category=${encodeURIComponent(cat.name)}`}
-        className="inline-flex flex-col items-center justify-between gap-2 group cursor-pointer shrink-0 p-2 sm:p-2.5 rounded-2xl bg-primary/10 hover:bg-white/10  hover:border-primary/60 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-32 sm:w-48 h-[150px] sm:h-[165px] select-none"
+        className="inline-flex flex-col items-center justify-between gap-2 group cursor-pointer shrink-0 p-2 sm:p-2.5 rounded-2xl bg-primary/5 hover:bg-white/10  hover:border-primary/60 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-32 sm:w-48 h-[150px] sm:h-[165px] select-none"
     >
         <div className="w-full h-24 sm:h-28 relative rounded-xl overflow-hidden   shadow-inner flex items-center justify-center shrink-0">
             <Image
@@ -16,7 +16,7 @@ const CategoryCard = ({ cat, hrefBase }: { cat: any; hrefBase: string }) => (
                 alt={cat.name}
                 fill
                 unoptimized={true}
-                className="object-cover p-1.5 group-hover:scale-110 transition-transform duration-300"
+                className="object-cover  group-hover:scale-110 transition-transform duration-300"
             />
         </div>
         <span className="text-xs sm:text-sm  text-foreground group-hover:text-primary transition-colors text-center w-full line-clamp-2 leading-tight px-1 break-words whitespace-normal">

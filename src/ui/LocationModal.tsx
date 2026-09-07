@@ -116,7 +116,7 @@ export default function LocationModal({
                     <button
                         onClick={handleDetectLocation}
                         disabled={detecting}
-                        className="w-full flex items-center justify-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 py-2.5 px-4 rounded-xl font-semibold text-xs transition-all cursor-pointer shadow-2xs"
+                        className="w-full flex items-center justify-center gap-2 bg-primary/5 hover:bg-primary/20 text-primary border border-primary/30 py-2.5 px-4 rounded-xl font-semibold text-xs transition-all cursor-pointer shadow-2xs"
                     >
                         <Navigation className={`w-4 h-4 ${detecting ? 'animate-spin' : ''}`} />
                         {detecting ? 'Detecting location...' : 'Use current location'}
@@ -136,7 +136,7 @@ export default function LocationModal({
                                         onClick={() => handleSelectAddress(addr)}
                                         className={`p-3 rounded-xl border transition-all cursor-pointer flex items-start justify-between gap-3 ${
                                             isSelected
-                                                ? 'bg-primary/10 border-primary shadow-2xs'
+                                                ? 'bg-primary/5 border-primary shadow-2xs'
                                                 : 'bg-section-bg border-border hover:border-primary/50'
                                         }`}
                                     >

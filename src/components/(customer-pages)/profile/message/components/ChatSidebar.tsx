@@ -69,7 +69,7 @@ export default function ChatSidebar({
                 key={chat._id}
                 onClick={() => setSelectedContact(chat._id)}
                 className={`flex items-center gap-3.5 p-3 rounded-xl cursor-pointer transition-colors ${selectedContact === chat._id
-                    ? "bg-primary/10 border border-primary/20"
+                    ? "bg-primary/5 border border-primary/20"
                     : "bg-white hover:bg-zinc-100/50 border border-zinc-200/50"
                   }`}
               >

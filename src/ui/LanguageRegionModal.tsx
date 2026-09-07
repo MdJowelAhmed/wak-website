@@ -114,7 +114,7 @@ export default function LanguageRegionModal({
                                         onClick={() => setSelectedCountry(country.code)}
                                         className={`p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
                                             isSelected
-                                                ? 'bg-primary/10 border-primary shadow-2xs'
+                                                ? 'bg-primary/5 border-primary shadow-2xs'
                                                 : 'bg-section-bg border-border hover:border-primary/50'
                                         }`}
                                     >
@@ -159,7 +159,7 @@ export default function LanguageRegionModal({
                                         onClick={() => setSelectedLang(lang.code)}
                                         className={`p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
                                             isSelected
-                                                ? 'bg-primary/10 border-primary shadow-2xs'
+                                                ? 'bg-primary/5 border-primary shadow-2xs'
                                                 : 'bg-section-bg border-border hover:border-primary/50'
                                         }`}
                                     >
