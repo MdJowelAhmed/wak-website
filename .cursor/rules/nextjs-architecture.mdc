@@ -1,0 +1,67 @@
+---
+description: Next.js server-first architecture — RSC, fetching, SSG/ISR/SSR, caching, Server Actions
+alwaysApply: true
+---
+
+# Next.js Server-First Architecture
+
+Prefer Server Components by default. Do not add `"use client"` unless the component needs state, effects, browser APIs, events, interactive UI, realtime, or client-only libraries.
+
+Do not convert an entire page to a Client Component because one section is interactive. Keep the page as a Server Component and extract a small Client Component.
+
+```text
+Server Page → server fetch → Server Components → small Client Components (interactive only)
+```
+
+Hierarchy: Server Component → server fetching → SSG/ISR/SSR decision → small Client Component only when needed → caching/revalidation → bug review.
+
+## Data fetching
+
+Fetch initial page data on the server. Do not use `useEffect` + `fetch` for data that can be fetched on the server.
+
+Keep fetching close to the Server Component that needs it, or in the project's existing data/service layer. Never duplicate API fetching logic.
+
+```tsx
+export default async function Page() {
+  const data = await getData();
+  return <PageContent data={data} />;
+}
+```
+
+Page components should not contain large API/business logic. Prefer `const products = await getProducts()` over request logic in JSX.
+
+## Rendering — choose intentionally
+
+- **SSG / static**: rarely changing content (landing, about, docs, marketing). Do not force dynamic rendering without a reason.
+- **ISR**: periodic updates, cached content is acceptable. Use `export const revalidate = 3600` or fetch-level revalidation. Do not use unnecessarily short intervals.
+- **SSR / dynamic**: must be fresh every request, or depends on auth, cookies, headers, or request-specific data.
+
+Always pick the simplest strategy that satisfies the requirement.
+
+## Caching and revalidation
+
+Prefer Next.js/server caching. Do not add Redis, in-memory, custom, or client caches without a real requirement. Avoid accidentally disabling cache.
+
+```tsx
+fetch(url, { next: { revalidate: 3600 } });
+```
+
+After create/update/delete, invalidate with `revalidatePath()` or `revalidateTag()` when needed. Do not revalidate the whole app when one resource changed.
+
+## Server Actions
+
+Use for create/update/delete, forms, authenticated mutations.
+
+```text
+Client Component → Server Action → Service / business logic → DB / external API
+```
+
+Keep actions focused. Do not put large business logic in the action. Validate all inputs on the server. Never trust client-side validation alone.
+
+## Avoid request waterfalls
+
+Independent requests must run in parallel with `Promise.all`. Sequential fetch only when one request genuinely depends on another.
+
+## Loading, error, not-found
+
+Use `loading.tsx`, `error.tsx`, `not-found.tsx`, and `notFound()` when appropriate. Use `Suspense` for independently loading sections — not by default.

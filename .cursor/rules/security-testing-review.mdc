@@ -1,0 +1,70 @@
+---
+description: Auth, security, bugs, edge cases, performance, testing, and mandatory final review
+alwaysApply: true
+---
+
+# Security, Testing, and Final Review
+
+## Auth and security
+
+Handle auth-sensitive work server-side. Never rely only on frontend route protection. Always verify authorization on the server.
+
+Do not expose sensitive data or private fields to Client Components unless needed.
+
+Never trust client-provided user IDs, roles, permissions, prices, ownership, or subscription status.
+
+Never hardcode secrets, expose tokens, commit credentials, trust client input, disable security checks, or bypass auth. Do not render unsanitized HTML without understanding XSS risk.
+
+Use env vars for secrets. Never expose server-only env vars or private credentials in Client Components.
+
+## Bug prevention
+
+Verify the change does not break existing features, auth, navigation, APIs, state, forms, layouts, permissions, SEO, caching, or rendering.
+
+For every bug: find root cause, fix the underlying problem (not a symptom patch), check related paths and regressions, then verify.
+
+Do not use hacks unless there is genuinely no better solution.
+
+## Edge cases
+
+Consider null/undefined, empty arrays/strings, invalid IDs and input, slow network, failed APIs, expired/unauthorized auth, missing permissions, duplicate submit/requests, large datasets, mobile/screen sizes, refresh, back button, stale data. Do not assume ideal input.
+
+## Performance
+
+Make it correct and maintainable first. Then check unnecessary renders, expensive work, large lists, duplicate APIs, waterfalls, large client bundles/Client Components, unnecessary effects/state, images, lazy loading, code splitting.
+
+Do not blindly use `useMemo`, `useCallback`, or `React.memo` without a reason.
+
+## Production quality
+
+Do not leave `console.log`, debug/hack/commented-out/dead code, unused vars/imports, fake data, hardcoded credentials, unnecessary TODOs, TypeScript errors, warnings, or broken imports/links.
+
+## Testing
+
+Before considering a task complete, run the project's existing lint, typecheck, unit/integration/E2E tests, and production build as appropriate. Do not ignore test or TypeScript failures. "It compiles" does not mean "it works." Add tests for critical untested business rules when appropriate.
+
+If the change is UI (layout, styling, routing, client state, rendered data), verify in the browser end-to-end — not just a screenshot.
+
+## Next.js architecture check
+
+- Page is a Server Component unless client is required; `"use client"` is as small as possible.
+- Initial data fetched server-side; no duplicate or sequential-independent requests.
+- SSG/ISR/SSR and cache/revalidation chosen intentionally.
+- Components small and reused; no unnecessary abstraction.
+
+## Final review (mandatory)
+
+Review the complete change as a senior engineer reviewing someone else's PR:
+
+- Correctness, edge cases, unexpected failures
+- Clean code, small units, clear names, no extra complexity
+- Reused existing code; no duplicate logic; no needless abstractions
+- Follows existing architecture; server/client split correct
+- Server-first fetching; correct SSG/ISR/SSR/cache
+- No `any`/unsafe casts; typed APIs; null handled
+- No extra renders, waterfalls, or oversized Client Components
+- Secrets, server authz, input validation, sensitive data
+- Loading/error/empty/responsive/accessible
+- Cleanup: logs, unused imports, dead/temp code
+
+Fix all errors introduced by the change. Do not mark complete until reviewed and verified.

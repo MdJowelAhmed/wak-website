@@ -115,6 +115,15 @@
   .flex-center {
     @apply flex justify-center items-center;
   }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 body {

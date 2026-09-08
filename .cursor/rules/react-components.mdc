@@ -1,0 +1,54 @@
+---
+description: Small focused React components, composition, state, UX states, a11y, SEO, images
+globs: "**/*.{tsx,jsx}"
+alwaysApply: false
+---
+
+# Components and React
+
+Create small, focused components with one clear responsibility. Do not put API calls, business logic, forms, tables, modals, filters, and multiple UI sections in one huge page.
+
+Extract only when it improves readability. Do **not** split ~10 lines of simple JSX into a new component. Not everything must be a component.
+
+Prefer composition over giant configurable components with many boolean flags (`showHeader`, `isAdmin`, `isMobile`). Keep component APIs simple. Avoid excessive props.
+
+## React
+
+Functional components. Follow Rules of Hooks — never call hooks conditionally. Avoid unnecessary `useEffect` and state. Prefer derived values.
+
+```tsx
+// BAD
+const [filtered, setFiltered] = useState([]);
+useEffect(() => { setFiltered(users.filter(...)); }, [users]);
+
+// GOOD
+const filtered = users.filter(...);
+```
+
+Keep state local. Lift only when required. Do not add Redux, Zustand, Context, or React Query without a reason. One authoritative source of truth — do not duplicate server data in client state.
+
+## Server → Client payloads
+
+Pass only the fields the Client Component needs. Do not send entire database objects across the boundary.
+
+## Client-side fetching
+
+Not the default. Use client fetch (useEffect, SWR, React Query) only for live updates, polling, infinite scroll, user-triggered fetch, client-only or realtime data.
+
+## Forms
+
+Validate input (reuse existing schemas). Handle loading, prevent duplicate submit, show meaningful errors, disable actions when appropriate. Critical validation must also run on the server.
+
+## UI states
+
+Every important UI: loading, error, empty, disabled, success, hover, focus, responsive, mobile, accessibility. Lists/tables need loading, empty, error, and success separately when necessary.
+
+## Accessibility and SEO
+
+Semantic HTML (`button`, `a`, `nav`, `main`, `section`, `header`, `footer`, `form`, `label`). Labels on inputs, keyboard access, real links, alt text, visible focus. Color is not the only signal.
+
+Public pages: Server Components, static/ISR when appropriate, Metadata API, server-rendered SEO content, meaningful titles/descriptions.
+
+## Images
+
+Use `next/image` with width, height, sizes, priority, and quality when suitable. Do not load huge images unnecessarily.

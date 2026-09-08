@@ -1,0 +1,55 @@
+---
+description: TypeScript, naming, imports, async, errors, constants, no duplicate logic
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# TypeScript and Code Quality
+
+Use TypeScript strictly. Never use `any` to silence errors. Never bypass TypeScript without a strong reason.
+
+Create proper types, interfaces, unions, generics, and API response types. Reuse existing types — do not duplicate the same data structure. Handle null/undefined explicitly.
+
+```ts
+// BAD
+const data: any = response.data;
+
+// GOOD
+const data: UserResponse = response.data;
+```
+
+## Naming
+
+Prefer `getUserProfile`, `isLoading`, `isOpen`, `hasPermission`, `canEdit`, `handleSubmit`, `fetchProducts`.
+
+Avoid `getData`, `doStuff`, `temp`, `obj`, `x`, `res`, `data2`. Booleans must communicate intent (`isActive`, `shouldRedirect`).
+
+## Files and imports
+
+Follow existing structure, naming, and path aliases. Search for the correct location before creating a file. Do not create unnecessary folders or reorganize the project unless asked.
+
+Remove unused/duplicate imports. After refactoring, verify none remain.
+
+## Comments
+
+Explain WHY, not obvious WHAT. Prefer clear code. Remove outdated comments. Avoid excessive comments.
+
+## Constants
+
+Avoid repeated magic strings/numbers. Use existing constants, enums, config, and types. Do not extract trivial values that are clearer inline.
+
+## No duplicate logic
+
+Search for similar functions, components, hooks, API calls, validation, formatting, and constants before implementing. If the same business rule exists in multiple places, extract it.
+
+## Async and errors
+
+For every async operation consider loading, error, race conditions, duplicate requests, stale data, cancellation, lifecycle, and retry. Do not create unnecessary requests.
+
+Always handle success, loading, error, empty, invalid response, network failure, auth failure. Never empty `catch {}`. Use the project's error/notification system. Do not expose sensitive backend errors to users.
+
+## Refactoring and dependencies
+
+Refactor only when it improves readability, maintainability, reusability, correctness, testability, or performance — and only in the area you are changing.
+
+Before installing a package: check existing deps, native APIs, bundle size, and maintenance cost. Do not add a library for a trivial problem.

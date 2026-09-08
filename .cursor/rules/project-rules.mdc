@@ -1,0 +1,44 @@
+---
+description: Core engineering workflow — understand, reuse, keep quality, review before complete
+alwaysApply: true
+---
+
+# Project Engineering Rules
+
+Production-quality Next.js app. Goals in order: correctness, clean code, reusability, maintainability, performance, security, type safety, accessibility, consistent architecture, production reliability.
+
+Never optimize for implementation speed at the cost of code quality.
+
+## Understand before changing
+
+- Inspect structure, architecture, data flow, auth, and server/client boundaries.
+- Search for existing implementations (components, hooks, services, utilities, types, APIs, state).
+- Follow existing conventions. Never invent a new pattern when one already solves the problem.
+- Do not rewrite architecture without a strong technical reason.
+- Do not modify unrelated files.
+
+Non-trivial features: identify affected files, dependencies, data flow, side effects, and edge cases. Implement the smallest appropriate change. Review the full flow after.
+
+## Clean code
+
+Write simple, readable, predictable, explicit, maintainable, testable code.
+
+Prefer: small functions, small components, single responsibility, early returns, clear naming, composition, reuse, strong typing, existing utilities.
+
+Avoid: deep nesting, huge functions/components, duplicate logic, magic values, unclear names, dead/commented-out code, hacks, unnecessary abstractions, premature optimization, clever code.
+
+## Reusability
+
+Search before creating a component, hook, utility, API function, service, schema, type, or UI pattern. Reuse or extend existing code.
+
+Extract shared logic only when it is genuinely reusable. Do not create `useSomething()` hooks, wrappers, generic components, utilities, service layers, or context providers just for abstraction.
+
+## Git safety
+
+Do not delete unrelated files, overwrite user changes, reset the repo, or run destructive Git commands unless explicitly requested. Keep changes focused and reviewable.
+
+## Development flow
+
+Understand → Reuse → Plan → Implement → Keep components small → Keep server logic on the server → Choose SSG/ISR/SSR intentionally → Handle loading/error/empty → Check edge cases → Review bugs → Lint/typecheck/tests/build → Clean up → Complete
+
+Final code must be clean, small, reusable, type-safe, server-first, cache-aware, performant, secure, accessible, maintainable, and production-ready.
