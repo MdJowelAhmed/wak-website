@@ -64,7 +64,7 @@ export default function ShopProductGrid({ products = [], pagination }: ShopProdu
         <div className="flex-1 flex flex-col gap-6">
             {/* Product Grid */}
             {products.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+                <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                     {products.map((product) => (
                         <ProductCard key={product._id} product={{
                             id: product.slug || (product._id as string),

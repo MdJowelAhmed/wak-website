@@ -2,19 +2,28 @@
 
 import { useState } from "react";
 import { Star } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface RatingFilterProps {
     selectedRating: number | null;
     setSelectedRating: (val: number | null) => void;
+    variant?: "light" | "dark";
 }
 
-export default function RatingFilter({ selectedRating, setSelectedRating }: RatingFilterProps) {
+export default function RatingFilter({
+    selectedRating,
+    setSelectedRating,
+    variant = "light",
+}: RatingFilterProps) {
     const [hoveredRating, setHoveredRating] = useState<number | null>(null);
     const activeRating = hoveredRating || selectedRating || 0;
+    const isDark = variant === "dark";
 
     return (
         <div>
-            <h3 className="mb-4 text-sm font-bold text-card-foreground">Ratings</h3>
+            <h3 className={cn("mb-4 text-sm font-bold", isDark ? "text-white" : "text-card-foreground")}>
+                Ratings
+            </h3>
             <div className="flex items-center gap-3">
                 <div
                     className="flex items-center gap-1"
@@ -31,16 +40,26 @@ export default function RatingFilter({ selectedRating, setSelectedRating }: Rati
                             className="rounded-md p-0.5 transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                         >
                             <Star
-                                className={`h-5 w-5 ${
+                                className={cn(
+                                    "h-5 w-5",
                                     star <= activeRating
                                         ? "fill-primary text-primary"
-                                        : "fill-transparent text-border"
-                                }`}
+                                        : isDark
+                                            ? "fill-transparent text-white/30"
+                                            : "fill-transparent text-border",
+                                )}
                             />
                         </button>
                     ))}
                 </div>
-                <span className={`text-sm font-medium ${selectedRating ? "text-card-foreground" : "text-muted-foreground"}`}>
+                <span
+                    className={cn(
+                        "text-sm font-medium",
+                        selectedRating
+                            ? isDark ? "text-white" : "text-card-foreground"
+                            : isDark ? "text-white/50" : "text-muted-foreground",
+                    )}
+                >
                     {selectedRating ? "& Up" : "Any"}
                 </span>
             </div>
