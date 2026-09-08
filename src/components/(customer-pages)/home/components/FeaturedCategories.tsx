@@ -65,7 +65,7 @@ const FeaturedCategories = () => {
                             {featuredCategories.map((category) => {
                                 const href = category.type === 'product' || category.type === 'products'
                                     ? `/shop?category=${category.slug || category._id}`
-                                    : `/services?category=${encodeURIComponent(category.name)}`;
+                                    : `/services?category=${category.slug || category.name}`;
                                 return (
                                     <SwiperSlide key={category._id} className="group cursor-pointer">
                                         <Link href={href} className="block relative w-full h-[200px] rounded-2xl overflow-hidden shadow-sm border border-border transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">

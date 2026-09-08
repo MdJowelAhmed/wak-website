@@ -1,11 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { Star } from 'lucide-react';
-import { myFetch } from '../../../../../helpers/myFetch';
-import { getActiveCategories } from '../../../../../helpers/categoryService';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
+import { PaginationData } from '../index';
 
 const HorizontalServiceCard = ({
     id,
@@ -45,7 +43,7 @@ const HorizontalServiceCard = ({
     return (
         <div
             onClick={handleClick}
-            className="flex gap-4 bg-white/5 border border-white/10 hover:border-[#FF6700]/30 hover:bg-white/10 rounded-2xl p-4 transition-all duration-350 hover:-translate-y-0.5 cursor-pointer group"
+            className="flex gap-4 bg-secondary border border-white/10 hover:border-[#FF6700]/30 hover:bg-white/10 rounded-2xl p-4 transition-all duration-350 hover:-translate-y-0.5 cursor-pointer group"
         >
             {/* Cover Image (Left Side) */}
             <div className="w-28 h-20 sm:w-32 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-white/10">
@@ -96,54 +94,57 @@ const HorizontalServiceCard = ({
     );
 };
 
-export default function ServiceList() {
-    const searchParams = useSearchParams();
-    const categoryQuery = searchParams.get('category');
-    const [selectedCategory, setSelectedCategory] = useState('All');
-    
-    const [categories, setCategories] = useState<{name: string, value: string}[]>([{ name: "All", value: "All" }]);
-    const [servicesData, setServicesData] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+interface ServiceListProps {
+    services?: any[];
+    pagination?: PaginationData;
+    categoriesList?: any[];
+    searchParams?: { [key: string]: string | string[] | undefined };
+}
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Fetch categories
-                const catRes = await getActiveCategories({ type: 'service' });
-                if (catRes?.data) {
-                    const mappedCats = catRes.data.map((c: any) => ({ name: c.name, value: c.name }));
-                    setCategories([{ name: "All", value: "All" }, ...mappedCats]);
-                }
+export default function ServiceList({
+    services = [],
+    pagination,
+    categoriesList = [],
+    searchParams = {},
+}: ServiceListProps) {
+    const router = useRouter();
+    const pathname = usePathname();
+    const currentSearchParams = useSearchParams();
 
-                // Fetch services
-                const srvRes = await myFetch("/services");
-                if (srvRes?.data) {
-                    setServicesData(srvRes.data);
-                }
-            } catch (error) {
-                console.error("Failed to fetch data:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchData();
-    }, []);
+    const selectedCategory = (searchParams?.category ?? currentSearchParams.get('category')) as string || 'All';
 
-    // Sync selected tab with URL query category param if present
-    useEffect(() => {
-        if (categoryQuery) {
-            setSelectedCategory(categoryQuery);
+    // Construct Category options from categoriesList prop
+    const categories = [
+        { name: "All", value: "All" },
+        ...categoriesList.map((c: any) => ({
+            name: c.name,
+            value: c.slug || c._id || c.name,
+        })),
+    ];
+
+    const handleCategoryClick = (val: string) => {
+        const params = new URLSearchParams(currentSearchParams.toString());
+        if (val === 'All') {
+            params.delete('category');
         } else {
-            setSelectedCategory('All');
+            params.set('category', val);
         }
-    }, [categoryQuery]);
+        params.set('page', '1');
+
+        const queryStr = params.toString();
+        router.push(queryStr ? `${pathname}?${queryStr}` : pathname);
+    };
 
     const filteredServices = selectedCategory === 'All'
-        ? servicesData
-        : servicesData.filter(service => service.category?.name === selectedCategory);
+        ? services
+        : services.filter((service) =>
+            service.category?.slug === selectedCategory ||
+            service.category?.name === selectedCategory ||
+            service.category?._id === selectedCategory
+        );
 
     return (
-        <section className="pb-16 md:py-20 bg-[#4f2c1d]">
+        <section className="pb-16 md:py-20 ">
             <div className="container mx-auto px-4">
                 {/* Section Header */}
                 <div className="mb-8">
@@ -165,11 +166,11 @@ export default function ServiceList() {
                 {/* Category Tabs */}
                 <div className="flex flex-wrap gap-2.5 mb-12">
                     {categories.map((category) => {
-                        const isActive = selectedCategory === category.value;
+                        const isActive = selectedCategory === category.value || (selectedCategory === 'All' && category.value === 'All');
                         return (
                             <button
                                 key={category.value}
-                                onClick={() => setSelectedCategory(category.value)}
+                                onClick={() => handleCategoryClick(category.value)}
                                 className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer ${isActive
                                     ? 'bg-[#FF6700] text-white shadow-lg shadow-orange-600/10'
                                     : 'bg-white/5 hover:bg-primary/80 border border-white/10 text-white hover:text-white'
@@ -181,11 +182,7 @@ export default function ServiceList() {
                     })}
                 </div>
 
-                {loading ? (
-                    <div className="py-20 text-center border border-dashed border-zinc-800 rounded-2xl bg-[#2a2a2a]/10 animate-in fade-in duration-300">
-                        <p className="text-[#FFDDA5] font-medium">Loading services...</p>
-                    </div>
-                ) : filteredServices.length === 0 ? (
+                {filteredServices.length === 0 ? (
                     <div key={selectedCategory} className="py-20 text-center border border-dashed border-zinc-800 rounded-2xl bg-[#2a2a2a]/10 animate-in fade-in duration-300">
                         <p className="text-zinc-500 text-sm">No services found in this category.</p>
                     </div>
@@ -195,12 +192,12 @@ export default function ServiceList() {
                             <HorizontalServiceCard 
                                 key={service._id} 
                                 id={service.slug || service._id}
-                                name={service.creator?.name || "Unknown"}
+                                name={service.creator?.name || service.name || "Unknown"}
                                 avatar={resolveImageUrl(service.creator?.profileImage) || `https://ui-avatars.com/api/?name=${encodeURIComponent(service.creator?.name || 'User')}&background=random`}
                                 rating={service.ratingAverage || 0}
                                 reviewCount={service.ratingCount || 0}
                                 category={service.category?.name || "Service"}
-                                description={service.name || ""}
+                                description={service.description || service.name || ""}
                                 price={service.price || 0}
                                 coverImage={resolveImageUrl(service.image) || "/placeholder.jpg"}
                             />

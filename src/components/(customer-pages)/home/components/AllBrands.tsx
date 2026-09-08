@@ -6,7 +6,7 @@ import { ArrowRight } from 'lucide-react';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
 
 const CategoryCard = ({ cat, hrefBase }: { cat: any; hrefBase: string }) => {
-    const categoryParam = hrefBase === '/shop' ? (cat.slug || cat._id || cat.name) : cat.name;
+    const categoryParam = cat.slug || cat._id || cat.name;
     return (
         <Link
             href={`${hrefBase}?category=${encodeURIComponent(categoryParam)}`}

@@ -84,7 +84,7 @@ export default function BrowseCategoriesButton() {
                             {(activeTab === 'products' ? productCategories : serviceCategories).map((category) => {
                                 const href = activeTab === 'products'
                                     ? `/shop?category=${category.slug || category._id || category.name}`
-                                    : `/services?category=${category.name}`;
+                                    : `/services?category=${category.slug || category.name}`;
                                 return (
                                     <Link
                                         key={category._id}

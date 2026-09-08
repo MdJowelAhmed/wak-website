@@ -39,8 +39,8 @@ export const nextFetch = async <T = any>(
     tags,
     token,
     headers = {},
-    cache,
-    next = {},
+    cache = method === "GET" ? "force-cache" : undefined,
+    next = method === "GET" ? { revalidate: 3600 } : {},
   }: FetchOptions = {}
 ): Promise<FetchResponse<T>> => {
   const accessToken = await getAccessToken();

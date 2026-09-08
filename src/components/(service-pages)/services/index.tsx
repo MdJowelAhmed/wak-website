@@ -1,18 +1,28 @@
-import { Suspense } from 'react';
-import Banner from "./components/Banner";
 import ServicesList from "./components/ServiceList";
 
-const Services = () => {
+export interface PaginationData {
+    total: number;
+    page: number;
+    limit: number;
+    totalPage: number;
+}
+
+interface ServicesProps {
+    services: any[];
+    pagination?: PaginationData;
+    categoriesList: any[];
+    searchParams?: { [key: string]: string | string[] | undefined };
+}
+
+const Services = ({ services, pagination, categoriesList, searchParams }: ServicesProps) => {
     return (
         <main className="w-full">
-            {/* <Banner />  */}
-            <Suspense fallback={
-                <div className="py-10 text-center text-zinc-500 font-medium">
-                    Loading services...
-                </div>
-            }>
-                <ServicesList />
-            </Suspense>
+            <ServicesList
+                services={services}
+                pagination={pagination}
+                categoriesList={categoriesList}
+                searchParams={searchParams}
+            />
         </main>
     );
 };

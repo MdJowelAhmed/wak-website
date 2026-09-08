@@ -41,7 +41,10 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     params.append("page", page);
     params.append("limit", "12");
 
-    const productsRes = await nextFetch<Product[]>(`/products?${params.toString()}`);
+    const productsRes = await nextFetch<Product[]>(`/products?${params.toString()}`, {
+        cache: 'force-cache',
+        next: { revalidate: 3600, tags: ['products'] },
+    });
 
     const products = productsRes?.data || [];
     const pagination = productsRes?.pagination || {
