@@ -83,7 +83,7 @@ export default function BrowseCategoriesButton() {
                         <div className="grid grid-cols-1 gap-1">
                             {(activeTab === 'products' ? productCategories : serviceCategories).map((category) => {
                                 const href = activeTab === 'products'
-                                    ? `/shop?category=${category.name}`
+                                    ? `/shop?category=${category.slug || category._id || category.name}`
                                     : `/services?category=${category.name}`;
                                 return (
                                     <Link

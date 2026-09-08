@@ -5,25 +5,28 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
 
-const CategoryCard = ({ cat, hrefBase }: { cat: any; hrefBase: string }) => (
-    <Link
-        href={`${hrefBase}?category=${encodeURIComponent(cat.name)}`}
-        className="inline-flex flex-col items-center justify-between gap-2 group cursor-pointer shrink-0 p-2 sm:p-2.5 rounded-2xl bg-secondary hover:bg-secondary/90  transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-32 sm:w-48 h-[150px] sm:h-[165px] select-none"
-    >
-        <div className="w-full h-24 sm:h-28 relative rounded-xl overflow-hidden   shadow-inner flex items-center justify-center shrink-0">
-            <Image
-                src={resolveImageUrl(cat.image) || "/placeholder.jpg"}
-                alt={cat.name}
-                fill
-                unoptimized={true}
-                className="object-cover  group-hover:scale-110 transition-transform duration-300"
-            />
-        </div>
-        <span className="text-xs sm:text-sm  text-foreground group-hover:text-foreground/90 transition-colors text-center w-full line-clamp-2 leading-tight px-1 break-words whitespace-normal">
-            {cat.name}
-        </span>
-    </Link>
-);
+const CategoryCard = ({ cat, hrefBase }: { cat: any; hrefBase: string }) => {
+    const categoryParam = hrefBase === '/shop' ? (cat.slug || cat._id || cat.name) : cat.name;
+    return (
+        <Link
+            href={`${hrefBase}?category=${encodeURIComponent(categoryParam)}`}
+            className="inline-flex flex-col items-center justify-between gap-2 group cursor-pointer shrink-0 p-2 sm:p-2.5 rounded-2xl bg-secondary hover:bg-secondary/90  transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-32 sm:w-48 h-[150px] sm:h-[165px] select-none"
+        >
+            <div className="w-full h-24 sm:h-28 relative rounded-xl overflow-hidden   shadow-inner flex items-center justify-center shrink-0">
+                <Image
+                    src={resolveImageUrl(cat.image) || "/placeholder.jpg"}
+                    alt={cat.name}
+                    fill
+                    unoptimized={true}
+                    className="object-cover  group-hover:scale-110 transition-transform duration-300"
+                />
+            </div>
+            <span className="text-xs sm:text-sm  text-foreground group-hover:text-foreground/90 transition-colors text-center w-full line-clamp-2 leading-tight px-1 break-words whitespace-normal">
+                {cat.name}
+            </span>
+        </Link>
+    );
+};
 
 interface AllBrandsProps {
     productCategories?: any[];

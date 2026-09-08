@@ -82,7 +82,7 @@ const AppDownloadSection = () => {
     const Icon = currentApp.icon;
 
     return (
-        <section className="py-8 sm:py-10 bg-background relative overflow-hidden">
+        <section className="py-8 sm:py-10  relative overflow-hidden">
             {/* Subtle Ambient Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[320px] bg-primary/8 rounded-full blur-[100px] pointer-events-none" />
 
@@ -90,8 +90,8 @@ const AppDownloadSection = () => {
                 {/* Section Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 md:mb-8">
                     <div>
-                        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary/5 border border-primary/20 text-primary text-[11px] font-bold uppercase tracking-wider mb-2">
-                            <Sparkles className="w-3.5 h-3.5 text-primary" />
+                        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary/5 border border-primary/20 text-foreground/80 text-[11px] font-bold uppercase tracking-wider mb-2">
+                            <Sparkles className="w-3.5 h-3.5 text-foreground" />
                             Mobile Apps Ecosystem
                         </div>
                         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground tracking-tight leading-tight">
@@ -122,7 +122,7 @@ const AppDownloadSection = () => {
                 </div>
 
                 {/* Showcase Card */}
-                <div className="bg-section-bg border border-border rounded-2xl p-5 sm:p-8 md:p-8 shadow-sm relative overflow-hidden">
+                <div className="shadow-xl rounded-2xl relative overflow-hidden p-2 md:p-4 lg:p-6">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
                         {/* Left Side: App Details */}
                         <div className="lg:col-span-7 flex flex-col items-start gap-4">
@@ -131,16 +131,16 @@ const AppDownloadSection = () => {
                                     <Icon className="w-5 h-5" />
                                 </div>
                                 <div>
-                                    <span className="text-[11px] font-bold uppercase tracking-wider text-primary block leading-none mb-1">
+                                    <span className="text-[11px] font-bold uppercase tracking-wider text-foreground/80 block leading-none mb-1">
                                         {currentApp.badge}
                                     </span>
-                                    <h3 className="text-xl sm:text-2xl font-bold text-accent leading-tight">
+                                    <h3 className="text-xl sm:text-2xl font-bold text-foreground leading-tight">
                                         {currentApp.title}
                                     </h3>
                                 </div>
                             </div>
 
-                            <p className="text-sm text-body-text leading-relaxed font-medium">
+                            <p className="text-sm text-foreground/80 leading-relaxed font-medium">
                                 {currentApp.description}
                             </p>
 

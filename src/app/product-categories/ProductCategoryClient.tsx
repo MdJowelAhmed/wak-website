@@ -64,7 +64,7 @@ export default function ProductCategoryClient({ initialCategories = [] }: { init
                         {activeCategories.map((cat) => (
                             <Link
                                 key={cat._id}
-                                href={`/shop?category=${encodeURIComponent(cat.name)}`}
+                                href={`/shop?category=${encodeURIComponent(cat.slug || cat._id || cat.name)}`}
                                 className="group flex flex-col items-center justify-between gap-3 p-3.5 rounded-2xl bg-card border border-card-border hover:border-primary/60 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 cursor-pointer select-none"
                             >
                                 <div className="w-full aspect-square relative rounded-xl overflow-hidden bg-white p-3 shadow-inner flex items-center justify-center">

@@ -20,7 +20,7 @@ interface ShopProps {
 
 export default function Shop({ products, pagination, categoriesList, searchParams }: ShopProps) {
     return (
-        <div className="min-h-[calc(100vh-180px)] bg-[#4f2c1d] py-[50px]">
+        <div className="min-h-[calc(100vh-180px)]  py-[50px]">
             <div className="container mx-auto px-4">
 
                 {/* Layout: Sidebar + Grid */}

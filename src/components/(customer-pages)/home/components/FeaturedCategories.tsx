@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 
 // Import Swiper styles
@@ -61,33 +62,38 @@ const FeaturedCategories = () => {
                             }}
                             className="w-full"
                         >
-                            {featuredCategories.map((category) => (
-                                <SwiperSlide key={category._id} className="group cursor-pointer">
-                                    <div className="relative w-full h-[200px] rounded-2xl overflow-hidden shadow-sm border border-border transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
-                                        <div className="absolute inset-0 z-0">
-                                            <Image
-                                                src={resolveImageUrl(category.image) || ""}
-                                                alt={category.name}
-                                                fill
-                                                unoptimized={true}
-                                                className="object-cover transition-transform duration-500 group-hover:scale-110"
-                                            />
-                                        </div>
-                                        {/* Dark gradient overlay for text readability */}
-                                        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300" />
-                                        
-                                        {/* Text content at bottom left */}
-                                        <div className="absolute bottom-5 left-5 z-20 flex flex-col">
-                                            <span className="text-white font-bold text-lg leading-tight mb-1">
-                                                {category.name}
-                                            </span>
-                                            <span className="text-zinc-200 text-xs font-semibold tracking-wider uppercase group-hover:text-primary-foreground transition-colors">
-                                                EXPLORE {category.type}S
-                                            </span>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-                            ))}
+                            {featuredCategories.map((category) => {
+                                const href = category.type === 'product' || category.type === 'products'
+                                    ? `/shop?category=${category.slug || category._id}`
+                                    : `/services?category=${encodeURIComponent(category.name)}`;
+                                return (
+                                    <SwiperSlide key={category._id} className="group cursor-pointer">
+                                        <Link href={href} className="block relative w-full h-[200px] rounded-2xl overflow-hidden shadow-sm border border-border transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+                                            <div className="absolute inset-0 z-0">
+                                                <Image
+                                                    src={resolveImageUrl(category.image) || ""}
+                                                    alt={category.name}
+                                                    fill
+                                                    unoptimized={true}
+                                                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                                />
+                                            </div>
+                                            {/* Dark gradient overlay for text readability */}
+                                            <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300" />
+                                            
+                                            {/* Text content at bottom left */}
+                                            <div className="absolute bottom-5 left-5 z-20 flex flex-col">
+                                                <span className="text-white font-bold text-lg leading-tight mb-1">
+                                                    {category.name}
+                                                </span>
+                                                <span className="text-zinc-200 text-xs font-semibold tracking-wider uppercase group-hover:text-primary-foreground transition-colors">
+                                                    EXPLORE {category.type}S
+                                                </span>
+                                            </div>
+                                        </Link>
+                                    </SwiperSlide>
+                                );
+                            })}
                         </Swiper>
                     ) : (
                         <div className="w-full py-20 flex justify-center items-center">

@@ -11,6 +11,9 @@ interface ShopPageProps {
 export default async function ShopPage({ searchParams }: ShopPageProps) {
     const resolvedSearchParams = await searchParams;
 
+    const categoriesRes = await getActiveCategories();
+    const categoriesList = categoriesRes?.data || [];
+
     const params = new URLSearchParams();
 
     if (resolvedSearchParams?.minPrice) {
@@ -20,7 +23,12 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
         params.append("maxPrice", String(resolvedSearchParams.maxPrice));
     }
     if (resolvedSearchParams?.category) {
-        params.append("category", String(resolvedSearchParams.category));
+        const categoryVal = String(resolvedSearchParams.category);
+        const matchedCategory = categoriesList.find(
+            (c) => c.slug === categoryVal || c._id === categoryVal || c.name.toLowerCase() === categoryVal.toLowerCase()
+        );
+        const finalCategoryParam = matchedCategory?._id || categoryVal;
+        params.append("category", finalCategoryParam);
     }
     if (resolvedSearchParams?.minRating) {
         params.append("minRating", String(resolvedSearchParams.minRating));
@@ -33,12 +41,8 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     params.append("page", page);
     params.append("limit", "12");
 
-    const [categoriesRes, productsRes] = await Promise.all([
-        getActiveCategories(),
-        nextFetch<Product[]>(`/products?${params.toString()}`),
-    ]);
+    const productsRes = await nextFetch<Product[]>(`/products?${params.toString()}`);
 
-    const categoriesList = categoriesRes?.data || [];
     const products = productsRes?.data || [];
     const pagination = productsRes?.pagination || {
         total: 0,

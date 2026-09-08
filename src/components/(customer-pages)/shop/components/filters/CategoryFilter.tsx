@@ -25,7 +25,7 @@ export default function CategoryFilter({ categoriesList, selectedCategories, set
             >
                 <option value="">All Categories</option>
                 {categoriesList.map((cat) => (
-                    <option key={cat._id} value={cat._id}>
+                    <option key={cat._id} value={cat.slug || cat._id}>
                         {cat.name}
                     </option>
                 ))}
