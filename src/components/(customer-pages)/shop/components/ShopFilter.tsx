@@ -19,6 +19,7 @@ export interface FilterState {
 export interface Category {
     _id: string;
     name: string;
+    slug?: string;
 }
 
 interface ShopFilterProps {
@@ -42,9 +43,25 @@ export default function ShopFilter({ categoriesList = [], searchParams }: ShopFi
 
     const [priceMin, setPriceMin] = useState(initialMinPrice);
     const [priceMax, setPriceMax] = useState(initialMaxPrice);
-    const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCategory ? [initialCategory] : []);
     const [selectedRating, setSelectedRating] = useState<number | null>(initialRating);
     const [selectedOffers, setSelectedOffers] = useState<string[]>(initialOffers);
+
+    const selectedCategories = initialCategory ? [initialCategory] : [];
+
+    const handleCategoryChange = (nextCategories: string[]) => {
+        const params = new URLSearchParams(currentSearchParams.toString());
+        const categoryParam = nextCategories[0];
+
+        if (categoryParam) {
+            params.set("category", categoryParam);
+        } else {
+            params.delete("category");
+        }
+        params.set("page", "1");
+
+        const queryStr = params.toString();
+        router.push(queryStr ? `${pathname}?${queryStr}` : pathname);
+    };
 
     const toggleItem = (
         list: string[],
@@ -76,7 +93,6 @@ export default function ShopFilter({ categoriesList = [], searchParams }: ShopFi
     const handleReset = () => {
         setPriceMin(0);
         setPriceMax(1000);
-        setSelectedCategories([]);
         setSelectedRating(null);
         setSelectedOffers([]);
 
@@ -94,10 +110,10 @@ export default function ShopFilter({ categoriesList = [], searchParams }: ShopFi
 
             <div className="border-t border-white/5" />
 
-            <CategoryFilter 
-                categoriesList={categoriesList} 
-                selectedCategories={selectedCategories} 
-                setSelectedCategories={setSelectedCategories} 
+            <CategoryFilter
+                categoriesList={categoriesList}
+                selectedCategories={selectedCategories}
+                setSelectedCategories={handleCategoryChange}
             />
 
             <div className="border-t border-white/5" />

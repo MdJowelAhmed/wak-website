@@ -3,6 +3,7 @@
 interface Category {
     _id: string;
     name: string;
+    slug?: string;
 }
 
 interface CategoryFilterProps {
@@ -16,6 +17,7 @@ export default function CategoryFilter({ categoriesList, selectedCategories, set
         <div>
             <h3 className="text-gray-900 font-medium text-sm mb-4">Category</h3>
             <select
+                aria-label="Filter products by category"
                 value={selectedCategories[0] || ""}
                 onChange={(e) => {
                     const val = e.target.value;
@@ -25,7 +27,7 @@ export default function CategoryFilter({ categoriesList, selectedCategories, set
             >
                 <option value="">All Categories</option>
                 {categoriesList.map((cat) => (
-                    <option key={cat._id} value={cat.slug || cat._id}>
+                    <option key={cat._id} value={cat.slug || cat._id || cat.name}>
                         {cat.name}
                     </option>
                 ))}

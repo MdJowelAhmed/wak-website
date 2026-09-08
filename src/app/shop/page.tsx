@@ -11,7 +11,7 @@ interface ShopPageProps {
 export default async function ShopPage({ searchParams }: ShopPageProps) {
     const resolvedSearchParams = await searchParams;
 
-    const categoriesRes = await getActiveCategories();
+    const categoriesRes = await getActiveCategories({ type: 'product' });
     const categoriesList = categoriesRes?.data || [];
 
     const params = new URLSearchParams();
