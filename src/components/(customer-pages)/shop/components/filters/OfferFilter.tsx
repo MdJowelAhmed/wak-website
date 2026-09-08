@@ -1,5 +1,7 @@
 "use client";
 
+import { Checkbox } from "@/ui/checkbox";
+
 const DISCOUNT_OPTIONS = [
     { label: "Regular Products", value: "regular" },
     { label: "Discounted Products", value: "discounted" },
@@ -14,21 +16,30 @@ interface OfferFilterProps {
 export default function OfferFilter({ selectedOffers, toggleItem, setSelectedOffers }: OfferFilterProps) {
     return (
         <div>
-            <h3 className="text-gray-900 font-medium text-sm mb-4">Discount Filter</h3>
+            <h3 className="mb-4 text-sm font-bold text-card-foreground">Discount Filter</h3>
             <div className="space-y-3">
-                {DISCOUNT_OPTIONS.map((option) => (
-                    <label key={option.value} className="flex items-center gap-3 cursor-pointer group">
-                        <input
-                            type="checkbox"
-                            checked={selectedOffers.includes(option.value)}
-                            onChange={() => toggleItem(selectedOffers, setSelectedOffers, option.value)}
-                            className="w-4 h-4 rounded border-white/20 accent-[#FF6700] cursor-pointer"
-                        />
-                        <span className="text-gray-700 text-sm group-hover:text-gray-900 transition-colors">
-                            {option.label}
-                        </span>
-                    </label>
-                ))}
+                {DISCOUNT_OPTIONS.map((option) => {
+                    const checkboxId = `offer-${option.value}`;
+                    return (
+                        <label
+                            key={option.value}
+                            htmlFor={checkboxId}
+                            className="flex cursor-pointer items-center gap-3 rounded-xl border border-border bg-muted/60 px-3 py-2.5 transition-colors hover:border-primary/40"
+                        >
+                            <Checkbox
+                                id={checkboxId}
+                                checked={selectedOffers.includes(option.value)}
+                                onCheckedChange={() =>
+                                    toggleItem(selectedOffers, setSelectedOffers, option.value)
+                                }
+                                className="border-primary data-[state=checked]:bg-primary"
+                            />
+                            <span className="text-sm font-medium text-card-foreground">
+                                {option.label}
+                            </span>
+                        </label>
+                    );
+                })}
             </div>
         </div>
     );

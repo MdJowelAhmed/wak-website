@@ -1,5 +1,13 @@
 "use client";
 
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/ui/select";
+
 interface Category {
     _id: string;
     name: string;
@@ -12,26 +20,47 @@ interface CategoryFilterProps {
     setSelectedCategories: (val: string[]) => void;
 }
 
-export default function CategoryFilter({ categoriesList, selectedCategories, setSelectedCategories }: CategoryFilterProps) {
+export default function CategoryFilter({
+    categoriesList,
+    selectedCategories,
+    setSelectedCategories,
+}: CategoryFilterProps) {
+    const selectedValue = selectedCategories[0] || "all";
+
     return (
         <div>
-            <h3 className="text-gray-900 font-medium text-sm mb-4">Category</h3>
-            <select
-                aria-label="Filter products by category"
-                value={selectedCategories[0] || ""}
-                onChange={(e) => {
-                    const val = e.target.value;
-                    setSelectedCategories(val ? [val] : []);
-                }}
-                className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 rounded-xl px-4 py-2.5 outline-none focus:border-primary transition-colors cursor-pointer text-sm"
+            <h3 className="mb-4 text-sm font-bold text-card-foreground">Category</h3>
+            <Select
+                value={selectedValue}
+                onValueChange={(val) => setSelectedCategories(val && val !== "all" ? [val] : [])}
             >
-                <option value="">All Categories</option>
-                {categoriesList.map((cat) => (
-                    <option key={cat._id} value={cat.slug || cat._id || cat.name}>
-                        {cat.name}
-                    </option>
-                ))}
-            </select>
+                <SelectTrigger
+                    aria-label="Filter products by category"
+                    className="h-11 rounded-xl border-border bg-muted text-card-foreground shadow-none focus:ring-primary"
+                >
+                    <SelectValue placeholder="All Categories" />
+                </SelectTrigger>
+                <SelectContent className="z-[80] rounded-xl border-border bg-card text-card-foreground">
+                    <SelectItem
+                        value="all"
+                        className="cursor-pointer focus:bg-primary focus:text-white"
+                    >
+                        All Categories
+                    </SelectItem>
+                    {categoriesList.map((cat) => {
+                        const value = cat.slug || cat._id || cat.name;
+                        return (
+                            <SelectItem
+                                key={cat._id}
+                                value={value}
+                                className="cursor-pointer focus:bg-primary focus:text-white"
+                            >
+                                {cat.name}
+                            </SelectItem>
+                        );
+                    })}
+                </SelectContent>
+            </Select>
         </div>
     );
 }
