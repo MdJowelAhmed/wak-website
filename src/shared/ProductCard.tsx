@@ -39,7 +39,7 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
     return (
         <div
             onClick={handleClick}
-            className={`group relative h-full overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between  hover:border-primary/60 shadow-xs hover:shadow-md  bg-primary/5`}
+            className={`group relative h-full overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between  hover:border-primary/60 shadow-xs hover:shadow-md  bg-primary/10`}
         >
             {/* Cover Image with Badges */}
             <div className="relative w-full h-32 sm:h-48 overflow-hidden bg-section-bg">

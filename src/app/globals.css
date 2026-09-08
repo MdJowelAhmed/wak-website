@@ -12,7 +12,8 @@
 
   --dark-brown: #3E2723;        
 
-  --background: #FFFCF8;         
+  /* --background: #FFFCF8;          */
+  --background: #E87524;         
   --section-bg: #F8F3ED;         
   --card: #FFFFFF;               
   --card-foreground: #2F241F;    
@@ -28,7 +29,7 @@
   --ring: #E87524;
   --focus-ring: #F6C7A3;         
 
-  --foreground: #2F241F;       
+  --foreground: #FFFFFF;       
   --sub-heading: #3E2723;        
   --body-text: #75675E;          
   --muted: #F8F3ED;              
