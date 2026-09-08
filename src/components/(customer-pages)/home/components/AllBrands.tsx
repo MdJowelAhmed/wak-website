@@ -8,7 +8,7 @@ import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
 const CategoryCard = ({ cat, hrefBase }: { cat: any; hrefBase: string }) => (
     <Link
         href={`${hrefBase}?category=${encodeURIComponent(cat.name)}`}
-        className="inline-flex flex-col items-center justify-between gap-2 group cursor-pointer shrink-0 p-2 sm:p-2.5 rounded-2xl bg-secondary hover:bg-white/10  hover:border-primary/60 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-32 sm:w-48 h-[150px] sm:h-[165px] select-none"
+        className="inline-flex flex-col items-center justify-between gap-2 group cursor-pointer shrink-0 p-2 sm:p-2.5 rounded-2xl bg-secondary hover:bg-secondary/90  transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 w-32 sm:w-48 h-[150px] sm:h-[165px] select-none"
     >
         <div className="w-full h-24 sm:h-28 relative rounded-xl overflow-hidden   shadow-inner flex items-center justify-center shrink-0">
             <Image
@@ -19,7 +19,7 @@ const CategoryCard = ({ cat, hrefBase }: { cat: any; hrefBase: string }) => (
                 className="object-cover  group-hover:scale-110 transition-transform duration-300"
             />
         </div>
-        <span className="text-xs sm:text-sm  text-foreground group-hover:text-primary transition-colors text-center w-full line-clamp-2 leading-tight px-1 break-words whitespace-normal">
+        <span className="text-xs sm:text-sm  text-foreground group-hover:text-foreground/90 transition-colors text-center w-full line-clamp-2 leading-tight px-1 break-words whitespace-normal">
             {cat.name}
         </span>
     </Link>
@@ -35,19 +35,19 @@ const AllBrands = ({
     serviceCategories = [],
 }: AllBrandsProps) => {
     return (
-        <section className="py-8 md:py-12 bg-background space-y-10">
+        <section className=" bg-background  mb-3 md:mb-6">
             {/* 1. Product Categories Section */}
-            <div className="container mx-auto px-4">
-                <div className="flex justify-between items-center mb-6">
+            <div className="container mx-auto  mb-2 md:mb-4">
+                <div className="flex justify-between items-center mb-2 md:mb-4">
                     <div className="flex items-center gap-3">
-                        <div className="w-4 h-9 bg-primary rounded-xs" />
+                        {/* <div className="w-4 h-9 bg-secondary rounded-xs" /> */}
                         <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground tracking-tight">
                             Product Categories
                         </h2>
                     </div>
                     <Link
                         href="/product-categories"
-                        className="flex items-center gap-2 text-accent text-xs sm:text-sm font-semibold hover:underline underline-offset-4 transition-all group cursor-pointer"
+                        className="flex items-center gap-2 text-foreground text-xs sm:text-sm font-semibold hover:underline underline-offset-4 transition-all group cursor-pointer"
                     >
                         View All
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -66,17 +66,17 @@ const AllBrands = ({
             </div>
 
             {/* 2. Service Categories Section */}
-            <div className="container mx-auto px-4">
-                <div className="flex justify-between items-center mb-6">
+            <div className="container mx-auto  mb-2 md:mb-4">
+                <div className="flex justify-between items-center mb-2 md:mb-4">
                     <div className="flex items-center gap-3">
-                        <div className="w-4 h-9 bg-primary rounded-xs" />
+                        {/* <div className="w-4 h-9 bg-secondary rounded-xs" /> */}
                         <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground tracking-tight">
                             Service Categories
                         </h2>
                     </div>
                     <Link
                         href="/service-categories"
-                        className="flex items-center gap-2 text-accent text-xs sm:text-sm font-semibold hover:underline underline-offset-4 transition-all group cursor-pointer"
+                        className="flex items-center gap-2 text-foreground text-xs sm:text-sm font-semibold hover:underline underline-offset-4 transition-all group cursor-pointer"
                     >
                         View All
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

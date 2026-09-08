@@ -54,7 +54,7 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
     return (
         <header className="sticky top-0 z-50 w-full shadow-sm">
             {/* 1. Top Utility Navigation Bar */}
-            <div className="bg-secondary border-b border-border py-1.5 px-4 sm:px-6 text-xs text-body-text font-medium">
+            <div className="bg-secondary border-b border-border/20 py-1.5 px-4 sm:px-6 text-xs text-body-text font-medium">
                 <div className="container mx-auto flex items-center justify-between gap-4">
                     {/* Left: Deliver to Location Control */}
                     <div className="flex items-center gap-2">
@@ -117,7 +117,7 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
             </div>
 
             {/* 2. Main Header Bar */}
-            <div className="bg-card/95 backdrop-blur-md border-b border-border py-3 px-4 sm:px-6">
+            <div className="bg-secondary  py-3 px-4 sm:px-6">
                 <div className="container mx-auto flex items-center justify-between gap-4 lg:gap-6">
                     {/* Logo & Tagline */}
                     <Logo />

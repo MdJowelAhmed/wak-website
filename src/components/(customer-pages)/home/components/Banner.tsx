@@ -75,14 +75,14 @@ const Banner = ({ initialBanners, loading = false, count }: BannerProps) => {
     };
 
     return (
-        <section className="w-full bg-background py-6 md:py-10">
+        <section className="w-full bg-background py-3 md:py-6">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-6">
                     {banners.map((item) => (
                         <div
                             key={item._id}
                             onClick={() => handleShopNow(item)}
-                            className="group relative overflow-hidden rounded-2xl bg-card border border-card-border hover:border-primary/50 transition-all duration-300 min-h-[280px] sm:min-h-[320px] lg:min-h-[350px] flex flex-col justify-end p-6 md:p-8 cursor-pointer shadow-lg hover:shadow-xl"
+                            className="group relative overflow-hidden rounded-2xl transition-all duration-300 min-h-[280px] sm:min-h-[320px] lg:min-h-[350px] flex flex-col justify-end p-6 md:p-8 cursor-pointer shadow-lg hover:shadow-xl"
                         >
                             {/* Background Image */}
                             <div className="absolute inset-0 w-full h-full">
