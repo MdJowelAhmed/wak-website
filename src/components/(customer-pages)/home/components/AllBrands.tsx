@@ -37,7 +37,7 @@ const AllBrands = ({
     return (
         <section className=" bg-background  mb-3 md:mb-6">
             {/* 1. Product Categories Section */}
-            <div className="container mx-auto  mb-2 md:mb-4">
+            <div className="container mx-auto  mb-2 md:mb-3">
                 <div className="flex justify-between items-center mb-2 md:mb-4">
                     <div className="flex items-center gap-3">
                         {/* <div className="w-4 h-9 bg-secondary rounded-xs" /> */}
@@ -66,7 +66,7 @@ const AllBrands = ({
             </div>
 
             {/* 2. Service Categories Section */}
-            <div className="container mx-auto  mb-2 md:mb-4">
+            <div className="container mx-auto  mb-2 md:mb-3">
                 <div className="flex justify-between items-center mb-2 md:mb-4">
                     <div className="flex items-center gap-3">
                         {/* <div className="w-4 h-9 bg-secondary rounded-xs" /> */}

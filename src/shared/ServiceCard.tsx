@@ -1,5 +1,6 @@
 'use client';
 import { Star } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface service {
@@ -32,13 +33,14 @@ const ServiceCard = ({ id, name, coverImage, category, price, rating, reviewCoun
     return (
         <div
             onClick={handleClick}
-            className="group relative h-full overflow-hidden rounded-xl sm:rounded-2xl bg-primary/5  transition-all duration-300 hover:border-white/20 hover:shadow-2xl hover:-translate-y-1 cursor-pointer flex flex-col justify-between"
+            className="group relative h-full overflow-hidden rounded-xl sm:rounded-2xl bg-secondary  transition-all duration-300 hover:border-white/20 hover:shadow-2xl hover:-translate-y-1 cursor-pointer flex flex-col justify-between"
         >
             {/* Cover Image */}
             <div className="relative w-full h-24 sm:h-48 overflow-hidden">
-                <img
+                <Image
                     src={coverImage}
                     alt={name}
+                    fill
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 {/* Gradient Overlay */}

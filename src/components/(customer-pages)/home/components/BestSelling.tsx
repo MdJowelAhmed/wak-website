@@ -76,17 +76,17 @@ const BestSelling = ({ initialProducts = [], loading = false }: BestSellingProps
     };
 
     return (
-        <section className="py-[50px] bg-background">
+        <section className="py- bg-background">
             <div className="container mx-auto px-4">
                 {/* Header */}
-                <div className="mb-10">
+                <div className="mb-3 md:mb-6">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="w-4 h-8 bg-primary rounded-xs"></div>
-                        <span className="text-body-text font-semibold text-sm uppercase tracking-wider">This Month</span>
+                        {/* <div className="w-4 h-8 bg-primary rounded-xs"></div> */}
+                        <span className="text-foreground/80 font-semibold text-sm uppercase tracking-wider">This Month</span>
                     </div>
                     <div className="flex justify-between items-end">
                         <h2 className="title mb-0!">Best Selling Products</h2>
-                        <button className="flex items-center gap-2 text-primary font-semibold hover:text-primary-hover transition-colors group cursor-pointer" onClick={handleClick}>
+                        <button className="flex items-center gap-2 text-foreground font-semibold hover:text-primary-hover transition-colors group cursor-pointer" onClick={handleClick}>
                             View All
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </button>

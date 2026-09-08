@@ -1,6 +1,7 @@
 'use client';
 
 import { Star, ShoppingCart } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
@@ -39,13 +40,14 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
     return (
         <div
             onClick={handleClick}
-            className={`group relative h-full overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between  hover:border-primary/60 shadow-xs hover:shadow-md  bg-primary/10`}
+            className={`group relative h-full overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between  hover:border-primary/60 shadow-xs hover:shadow-md  bg-secondary`}
         >
             {/* Cover Image with Badges */}
             <div className="relative w-full h-32 sm:h-48 overflow-hidden bg-section-bg">
-                <img
+                <Image
                     src={image}
                     alt={name}
+                    fill
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 {/* Gradient Overlay */}
@@ -71,12 +73,12 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
             {/* Product Info */}
             <div className="p-2.5 sm:p-4 space-y-1.5 sm:space-y-2 flex-1 flex flex-col justify-between">
                 <div>
-                    <h3 className="text-foreground font-semibold text-xs sm:text-base truncate group-hover:text-primary transition-colors">
+                    <h3 className="text-foreground font-semibold text-xs sm:text-base truncate group-hover:text-foreground/80 transition-colors">
                         {name}
                     </h3>
 
                     <div className="flex items-center gap-1.5 sm:gap-3 mt-1">
-                        <span className="text-primary font-bold text-xs sm:text-base">${currentPrice}</span>
+                        <span className="text-[#FFC107] font-bold text-xs sm:text-base">${currentPrice}</span>
                         {originalPrice && (
                             <span className="text-muted-text line-through text-[10px] sm:text-sm">${originalPrice}</span>
                         )}

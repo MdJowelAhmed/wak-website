@@ -48,7 +48,7 @@ const userTypes = [
 
 const UserTypes = () => {
     return (
-        <section className="bg-background mb-3 md:mb-6 ">
+        <section className="bg-background mb-3 md:mb-4 ">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
                     {userTypes.map(({ id, icon: Icon, iconBg, title, subtitle, cta, href, btnStyle }) => (

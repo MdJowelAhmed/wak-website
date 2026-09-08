@@ -190,13 +190,13 @@ export default function SearchBar({
                 {/* Category Select Component */}
                 <div className="hidden sm:block shrink-0">
                     <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                        <SelectTrigger className="border-0 border-r border-border rounded-none bg-section-bg hover:bg-section-bg/80 text-foreground text-xs font-semibold h-full px-3 py-2.5 focus:ring-0 focus:ring-offset-0 shadow-none cursor-pointer">
+                        <SelectTrigger className="border-0 border-r border-border rounded-none bg-primary hover:bg-primary/90 text-foreground text-xs font-semibold h-full px-3 py-3 focus:ring-0 focus:ring-offset-0 shadow-none cursor-pointer">
                             <SelectValue placeholder="All Categories" />
                         </SelectTrigger>
-                        <SelectContent className="bg-card border border-border text-foreground shadow-xl rounded-xl z-[250]">
-                            <SelectItem value="all" className="text-xs font-medium cursor-pointer focus:bg-primary/10 focus:text-primary">All Categories</SelectItem>
-                            <SelectItem value="product" className="text-xs font-medium cursor-pointer focus:bg-primary/10 focus:text-primary">Products</SelectItem>
-                            <SelectItem value="service" className="text-xs font-medium cursor-pointer focus:bg-primary/10 focus:text-primary">Services</SelectItem>
+                        <SelectContent className="bg-primary text-foreground shadow-xl rounded-xl z-[250]">
+                            <SelectItem value="all" className="text-xs font-medium cursor-pointer focus:bg-secondary focus:text-foreground">All Categories</SelectItem>
+                            <SelectItem value="product" className="text-xs font-medium cursor-pointer focus:bg-secondary focus:text-foreground">Products</SelectItem>
+                            <SelectItem value="service" className="text-xs font-medium cursor-pointer focus:bg-secondary focus:text-foreground">Services</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
@@ -207,14 +207,14 @@ export default function SearchBar({
                     <input
                         ref={inputRef}
                         type="text"
-                        placeholder={placeholder || "Search products, services & categories..."}
+                        placeholder={placeholder || "Search products, services..."}
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={handleKeyDown}
                         onFocus={() => {
                             if (query.trim()) setIsOpen(true);
                         }}
-                        className="w-full bg-transparent py-2.5 pr-3 text-xs sm:text-sm text-foreground placeholder:text-muted-text outline-none"
+                        className="w-full bg-transparent py-2.5 pr-3 text-xs sm:text-sm text-secondary placeholder:text-muted-text outline-none"
                         autoComplete="off"
                         aria-label="Search products and services"
                     />

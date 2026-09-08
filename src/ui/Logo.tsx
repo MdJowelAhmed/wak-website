@@ -14,7 +14,7 @@ export default function Logo() {
                     WorthWorld
                 </span>
             </div>
-            <span className="hidden sm:block text-[9px] font-semibold text-body-text tracking-widest uppercase mt-0.5">
+            <span className="hidden sm:block text-[9px] font-semibold text-foreground/80 tracking-widest uppercase mt-0.5">
                 Shop. Book. Deliver. Worldwide.
             </span>
         </Link>
