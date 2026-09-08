@@ -24,12 +24,12 @@ const apps = [
         title: 'Merchant App',
         badge: 'For Merchants',
         icon: Store,
-        iconBg: 'bg-secondary text-white',
+        iconBg: 'bg-primary text-white',
         description: 'Manage store inventory, process customer orders, and view sales analytics on the go.',
         features: ['Inventory Control', 'Batch Fulfillment', 'Instant Payouts'],
         appStoreUrl: 'https://apple.com',
         playStoreUrl: 'https://google.com',
-        activeTabBg: 'bg-secondary text-white shadow-md shadow-secondary/20',
+        activeTabBg: 'bg-primary text-white shadow-md shadow-primary/20',
         screenImage: '/app-screens/dashboard-phone.png',
         screenAlt: 'Merchant Dashboard Overview',
     },
@@ -52,12 +52,12 @@ const apps = [
         title: 'Driver App',
         badge: 'For Drivers',
         icon: Truck,
-        iconBg: 'bg-secondary text-white',
+        iconBg: 'bg-primary text-white',
         description: 'Accept delivery requests, navigate optimized routes, and earn money on your schedule.',
         features: ['Route Navigation', 'Weekly Earnings Tracker', '24/7 Delivery Support'],
         appStoreUrl: 'https://apple.com',
         playStoreUrl: 'https://google.com',
-        activeTabBg: 'bg-secondary text-white shadow-md shadow-secondary/20',
+        activeTabBg: 'bg-primary text-white shadow-md shadow-primary/20',
         screenImage: '/app-screens/driver-phone.png',
         screenAlt: 'Driver App Screen',
     },
@@ -82,7 +82,7 @@ const AppDownloadSection = () => {
     const Icon = currentApp.icon;
 
     return (
-        <section className="py-8 sm:py-10 md:py-14 bg-background relative overflow-hidden">
+        <section className="py-8 sm:py-10 bg-background relative overflow-hidden">
             {/* Subtle Ambient Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[320px] bg-primary/8 rounded-full blur-[100px] pointer-events-none" />
 
@@ -110,7 +110,7 @@ const AppDownloadSection = () => {
                                     onClick={() => setActiveTab(app.id)}
                                     className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-300 cursor-pointer whitespace-nowrap ${isActive
                                             ? app.activeTabBg
-                                            : 'text-body-text hover:text-foreground hover:bg-section-bg'
+                                            : 'text-body-text hover:text-accent '
                                         }`}
                                 >
                                     <TabIcon className="w-3.5 h-3.5" />
@@ -134,7 +134,7 @@ const AppDownloadSection = () => {
                                     <span className="text-[11px] font-bold uppercase tracking-wider text-primary block leading-none mb-1">
                                         {currentApp.badge}
                                     </span>
-                                    <h3 className="text-xl sm:text-2xl font-bold text-foreground leading-tight">
+                                    <h3 className="text-xl sm:text-2xl font-bold text-accent leading-tight">
                                         {currentApp.title}
                                     </h3>
                                 </div>
@@ -149,9 +149,9 @@ const AppDownloadSection = () => {
                                 {currentApp.features.map((feat, idx) => (
                                     <div
                                         key={idx}
-                                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-card border border-border text-foreground text-xs font-medium shadow-2xs"
+                                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-card border border-border text-body-text text-xs font-medium shadow-2xs"
                                     >
-                                        <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0" />
+                                        <CheckCircle2 className="w-3.5 h-3.5 bg-primary text-foreground rounded-full shrink-0" />
                                         <span>{feat}</span>
                                     </div>
                                 ))}
@@ -163,7 +163,7 @@ const AppDownloadSection = () => {
                                     href={currentApp.appStoreUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-dark-brown hover:bg-black text-white transition-all duration-300 shadow-sm hover:scale-105 cursor-pointer text-xs"
+                                    className="flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-secondary hover:bg-secondary-80 text-white transition-all duration-300 shadow-sm hover:scale-105 cursor-pointer text-xs"
                                 >
                                     <AppleIcon />
                                     <div className="flex flex-col items-start text-left leading-none">
@@ -176,7 +176,7 @@ const AppDownloadSection = () => {
                                     href={currentApp.playStoreUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-dark-brown hover:bg-black text-white transition-all duration-300 shadow-sm hover:scale-105 cursor-pointer text-xs"
+                                    className="flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-secondary hover:bg-secondary-80 text-white transition-all duration-300 shadow-sm hover:scale-105 cursor-pointer text-xs"
                                 >
                                     <PlayStoreIcon />
                                     <div className="flex flex-col items-start text-left leading-none">

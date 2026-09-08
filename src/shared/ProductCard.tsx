@@ -95,7 +95,7 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
                             />
                         ))}
                     </div>
-                    <span className="text-body-text text-[10px] sm:text-xs ml-0.5 sm:ml-1">({reviews})</span>
+                    <span className="text-muted-text text-[10px] sm:text-xs ml-0.5 sm:ml-1">({reviews})</span>
                 </div>
             </div>
         </div>

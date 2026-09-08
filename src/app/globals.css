@@ -31,7 +31,7 @@
 
   --foreground: #FFFFFF;       
   --sub-heading: #3E2723;        
-  --body-text: #75675E;          
+  --body-text: #3E2713;          
   --muted: #F8F3ED;              
   --muted-foreground: #75675E;   
   --muted-text: #A79B93;         
@@ -39,7 +39,7 @@
   --link-color: #C85D16;        
   --link-hover: #E87524;         
 
-  --accent: #E87524;             
+  --accent: #3E2723;             
   --accent-foreground: #FFFFFF;
 
   --success: #4F7A5A;            

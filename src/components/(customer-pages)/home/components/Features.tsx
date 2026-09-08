@@ -45,13 +45,13 @@ const Features = () => {
             <div className="container mx-auto px-4">
                 {/* Section Header */}
                 <div className="text-center max-w-2xl mx-auto mb-8 md:mb-12">
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider mb-3">
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/5 border border-primary/20 text-foreground text-xs font-bold uppercase tracking-wider mb-3">
                         Why Choose Us
                     </div>
                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground tracking-tight mb-3">
                         Why Shop & Book With <span className="text-primary">Us</span>
                     </h2>
-                    <p className="text-sm text-body-text font-medium leading-relaxed">
+                    <p className="text-sm text-foreground/80 font-medium leading-relaxed">
                         We prioritize your safety, convenience, and complete satisfaction with every product purchase and service booking.
                     </p>
                 </div>

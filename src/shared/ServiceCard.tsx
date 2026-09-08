@@ -57,20 +57,22 @@ const ServiceCard = ({ id, name, coverImage, category, price, rating, reviewCoun
                 {/* Author Row */}
                 <div className="flex items-center justify-between gap-1 sm:gap-3">
                     <div className="flex items-center gap-1.5 sm:gap-3 flex-1 min-w-0">
-                        <img
+                        <Image
                             src={avatar}
                             alt={name}
+                            width={40}
+                            height={40}
                             className="w-6 h-6 sm:w-9 sm:h-9 rounded-full object-cover border-2 border-white/2 shrink-0"
                         />
-                        <span className="text-xs sm:text-sm font-semibold text-gray-800 truncate">
+                        <span className="text-xs sm:text-sm font-semibold text-foreground truncate">
                             {name}
                         </span>
                     </div>
                     <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
-                        <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400 text-amber-400" />
-                        <span className="text-[10px] sm:text-xs font-semibold text-gray-700">
+                        <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-[#FFC107] text-[#FFC107]" />
+                        <span className="text-[10px] sm:text-xs font-semibold text-foreground">
                             {rating.toFixed(1)}{" "}
-                            <span className="text-gray-500 font-normal hidden sm:inline">
+                            <span className="text-foreground/50 font-normal hidden sm:inline">
                                 ({reviewCount})
                             </span>
                         </span>
@@ -78,13 +80,13 @@ const ServiceCard = ({ id, name, coverImage, category, price, rating, reviewCoun
                 </div>
 
                 {/* Description */}
-                <p className="text-xs sm:text-sm text-gray-700 line-clamp-2 leading-tight sm:leading-relaxed">
+                <p className="text-xs sm:text-sm text-foreground/80 line-clamp-2 leading-tight sm:leading-relaxed">
                     {description}
                 </p>
 
                 {/* Price */}
                 <p className="text-xs sm:text-sm font-bold text-primary tracking-wide">
-                    From: ${price}
+                    From: <span className="text-[#FFC107]">${price}</span>
                 </p>
             </div>
         </div>

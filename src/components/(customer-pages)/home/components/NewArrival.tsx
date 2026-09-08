@@ -47,7 +47,7 @@ const NewArrival = ({ initialProducts = [] }: NewArrivalProps) => {
                     </div>
                     <div className="flex justify-between items-end">
                         <h2 className="title mb-0!">Shop From New Arrival</h2>
-                        <button className="flex items-center gap-2 text-primary font-semibold hover:text-primary-hover transition-colors group cursor-pointer" onClick={handleClick}>
+                        <button className="flex items-center gap-2 text-foreground font-semibold hover:text-primary-hover transition-colors group cursor-pointer" onClick={handleClick}>
                             View All
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </button>
