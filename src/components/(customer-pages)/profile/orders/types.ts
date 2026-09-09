@@ -112,6 +112,15 @@ export function formatDate(value?: string | null): string {
   });
 }
 
+export const SERVICE_ORDER_TABS = ["order-details", "activity", "delivery"] as const;
+export type ServiceOrderTab = (typeof SERVICE_ORDER_TABS)[number];
+
+export function resolveServiceOrderTab(tab?: string | string[]): ServiceOrderTab {
+  const value = Array.isArray(tab) ? tab[0] : tab;
+  if (value === "activity" || value === "delivery") return value;
+  return "order-details";
+}
+
 export function formatAddress(address?: OrderAddress): string {
   if (!address) return "";
   return [address.address, address.city, address.state, address.postalCode, address.country]
