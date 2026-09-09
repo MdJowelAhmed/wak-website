@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { myFetch } from "../../../../../../helpers/myFetch";
 import { resolveImageUrl } from "../../../../../../helpers/resolveImageUrl";
-import { ApiChat, ChatMessage } from "../types";
+import { toast } from "sonner";
+import { ApiChat, ChatMessage, OfferPaymentMethod, mapCustomOffer } from "../types";
 
 const initialMessages: Record<string, ChatMessage[]> = {};
 
@@ -41,7 +42,7 @@ export function useMessageHistory({ selectedContact, chats }: UseMessageHistoryP
 
           const mapped: ChatMessage[] = res.data.map((m: any) => {
             const isUser = otherId ? m.sender?._id !== otherId : false;
-            let text = m.text;
+            const text = m.text;
 
             return {
               id: m._id,
@@ -51,7 +52,7 @@ export function useMessageHistory({ selectedContact, chats }: UseMessageHistoryP
               avatar: m.sender?.profileImage ? resolveImageUrl(m.sender.profileImage) : "/user.svg",
               type: m.type,
               attachment: m.attachment,
-              customOffer: m.customOffer,
+              customOffer: mapCustomOffer(m.customOffer),
             };
           });
           
@@ -77,8 +78,8 @@ export function useMessageHistory({ selectedContact, chats }: UseMessageHistoryP
             setMessageHasMore(res.data.length === 15);
           }
         }
-      } catch (error) {
-        console.error("Failed to fetch messages:", error);
+      } catch {
+        toast.error("Could not load messages.");
       } finally {
         setIsLoadingMessages(false);
         setIsLoadingMoreMessages(false);
@@ -91,43 +92,54 @@ export function useMessageHistory({ selectedContact, chats }: UseMessageHistoryP
 
   const currentMessages = (selectedContact && messageHistories[selectedContact]) || [];
 
-  const handleAcceptOffer = async (offerId: string) => {
+  const handleAcceptOffer = async (offerId: string, paymentMethod: OfferPaymentMethod) => {
     try {
-      const res = await myFetch(`/custom-offers/${offerId}/accept`, { method: "POST" });
-      if (res?.success && res.data?.checkoutUrl) {
-        window.location.href = res.data.checkoutUrl;
-      } else {
-        // Fallback or error
-        console.error("Accept offer failed", res?.message);
+      const res = await myFetch(`/custom-offers/${offerId}/accept`, {
+        method: "POST",
+        body: { paymentMethod },
+      });
+      const checkoutUrl =
+        res?.success && typeof res.data?.checkoutUrl === "string"
+          ? res.data.checkoutUrl
+          : null;
+
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+        return;
       }
-    } catch (error) {
-      console.error(error);
+
+      toast.error(res?.message || "Could not start payment. Please try again.");
+    } catch {
+      toast.error("Could not accept this offer.");
     }
   };
 
   const handleRejectOffer = async (offerId: string, messageId: string | number) => {
     try {
       const res = await myFetch(`/custom-offers/${offerId}/reject`, { method: "POST" });
-      if (res?.success) {
-        if (!selectedContact) return;
-        setMessageHistories(prev => {
-          const chatHistory = prev[selectedContact] || [];
-          return {
-            ...prev,
-            [selectedContact]: chatHistory.map(msg => {
-              if (msg.id === messageId && msg.customOffer) {
-                return {
-                  ...msg,
-                  customOffer: { ...msg.customOffer, status: 'rejected' }
-                };
-              }
-              return msg;
-            })
-          };
-        });
+      if (!res?.success) {
+        toast.error(res?.message || "Could not reject this offer.");
+        return;
       }
-    } catch (error) {
-      console.error(error);
+      if (!selectedContact) return;
+      setMessageHistories((prev) => {
+        const chatHistory = prev[selectedContact] || [];
+        return {
+          ...prev,
+          [selectedContact]: chatHistory.map((msg) => {
+            if (msg.id === messageId && msg.customOffer) {
+              return {
+                ...msg,
+                customOffer: { ...msg.customOffer, status: "rejected" },
+              };
+            }
+            return msg;
+          }),
+        };
+      });
+      toast.success("Offer rejected.");
+    } catch {
+      toast.error("Could not reject this offer.");
     }
   };
 

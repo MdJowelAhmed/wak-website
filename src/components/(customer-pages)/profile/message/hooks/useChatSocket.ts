@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import Cookies from "js-cookie";
 import { resolveImageUrl } from "../../../../../../helpers/resolveImageUrl";
-import { ApiChat, ChatMessage } from "../types";
+import { ApiChat, ChatMessage, mapCustomOffer } from "../types";
 
 interface UseChatSocketProps {
   selectedContact: string | null;
@@ -29,7 +29,7 @@ export function useChatSocket({ selectedContact, setMessageHistories, setChats }
     });
 
     socketInstance.on("message:new", (m: any) => {
-      let text = m.text;
+      const text = m.text;
       
       const chatId = typeof m.chat === 'object' ? m.chat._id : m.chat;
 
@@ -55,7 +55,7 @@ export function useChatSocket({ selectedContact, setMessageHistories, setChats }
           avatar: finalAvatar,
           type: m.type,
           attachment: m.attachment,
-          customOffer: m.customOffer,
+          customOffer: mapCustomOffer(m.customOffer),
         };
         
         if (currentMsgs.some(existing => existing.id === newMsg.id)) {

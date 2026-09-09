@@ -1,7 +1,8 @@
 import { Paperclip, Send, Loader2, X, Image as ImageIcon } from "lucide-react";
 import { useRef, useEffect } from "react";
-import { ChatMessage } from "../types";
+import { ChatMessage, OfferPaymentMethod } from "../types";
 import { resolveImageUrl } from "../../../../../../helpers/resolveImageUrl";
+import CustomOfferCard from "./CustomOfferCard";
 
 interface ChatAreaProps {
   currentMessages: ChatMessage[];
@@ -17,8 +18,8 @@ interface ChatAreaProps {
   messageHasMore?: boolean;
   isLoadingMoreMessages?: boolean;
   onLoadMoreMessages?: () => void;
-  handleAcceptOffer?: (offerId: string) => void;
-  handleRejectOffer?: (offerId: string, messageId: string | number) => void;
+  handleAcceptOffer: (offerId: string, paymentMethod: OfferPaymentMethod) => Promise<void>;
+  handleRejectOffer: (offerId: string, messageId: string | number) => Promise<void>;
 }
 
 export default function ChatArea({
@@ -134,43 +135,13 @@ export default function ChatArea({
                         </a>
                       )}
                       {m.type === 'custom_offer' && m.customOffer && (
-                        <div className={`mb-2 p-4 rounded-xl border w-72 max-w-full ${isUser ? "bg-white/40 border-white/50" : "bg-orange-50 border-orange-200 shadow-sm"}`}>
-                          <div className="font-bold text-sm flex items-center gap-2 mb-2 text-zinc-800">
-                            <span>💰 Custom Offer</span>
-                          </div>
-                          <div className="text-sm font-semibold mb-1 leading-tight text-zinc-900">{m.customOffer.title}</div>
-                          {m.customOffer.description && (
-                            <div className="text-xs text-zinc-600 mt-1 mb-3 line-clamp-3 leading-relaxed">{m.customOffer.description}</div>
-                          )}
-                          <div className="font-bold text-lg text-primary mb-4">${m.customOffer.price}</div>
-                          
-                          {m.customOffer.status === 'pending' && !isUser && (
-                            <div className="flex gap-3">
-                              <button 
-                                onClick={() => handleAcceptOffer?.(m.customOffer.offer)}
-                                className="flex-1 py-1.5 px-3 bg-primary text-white text-xs font-semibold rounded hover:bg-orange-600 transition-colors shadow-sm"
-                              >
-                                Accept
-                              </button>
-                              <button 
-                                onClick={() => handleRejectOffer?.(m.customOffer.offer, m.id)}
-                                className="flex-1 py-1.5 px-3 bg-white border border-primary text-primary text-xs font-semibold rounded hover:bg-orange-50 transition-colors shadow-sm"
-                              >
-                                Reject
-                              </button>
-                            </div>
-                          )}
-                          {m.customOffer.status === 'rejected' && (
-                            <div className="text-xs font-semibold text-red-500 bg-red-50 px-2 py-1 rounded inline-block">
-                              Offer Rejected
-                            </div>
-                          )}
-                          {m.customOffer.status === 'accepted' && (
-                            <div className="text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded inline-block">
-                              Offer Accepted
-                            </div>
-                          )}
-                        </div>
+                        <CustomOfferCard
+                          offer={m.customOffer}
+                          messageId={m.id}
+                          canRespond={!isUser}
+                          onAccept={handleAcceptOffer}
+                          onReject={handleRejectOffer}
+                        />
                       )}
                       
                       {m.text && m.text !== '📎 Attached a file' && m.text !== '🖼️ Attached an image' && !m.text.startsWith('💰 Sent a custom offer:') && (

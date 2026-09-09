@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { myFetch } from "../../../../../../helpers/myFetch";
 import { resolveImageUrl } from "../../../../../../helpers/resolveImageUrl";
-import { ApiChat, ChatMessage } from "../types";
+import { ApiChat, ChatMessage, mapCustomOffer } from "../types";
 
 interface UseSendMessageProps {
   selectedContact: string | null;
@@ -53,8 +53,7 @@ export function useSendMessage({ selectedContact, chats, setMessageHistories, se
         const currentChat = chats.find((c) => c._id === selectedContact);
         const otherId = currentChat?.participants?.[0]?._id;
         const isUser = otherId ? m.sender?._id !== otherId : false;
-        
-        let text = m.text;
+        const text = m.text;
 
         setMessageHistories(prev => {
           const currentMsgs = prev[selectedContact] || [];
@@ -75,7 +74,7 @@ export function useSendMessage({ selectedContact, chats, setMessageHistories, se
             avatar: finalAvatar,
             type: m.type,
             attachment: m.attachment,
-            customOffer: m.customOffer,
+            customOffer: mapCustomOffer(m.customOffer),
           };
 
           return {
