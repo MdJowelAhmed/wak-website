@@ -1,16 +1,14 @@
 'use client';
 
 import { useState } from "react";
-import { MessageCircle, CheckCircle2, ArrowLeft, Loader2 } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 import { toast } from "sonner";
 import DashboardCard from "../../../../shared/DashboardCard";
-import OrderTimeline from "./OrderTimeline";
 import type { Order } from "./types";
 import OrdersTable from "./OrdersTable";
+import OrderDetails from "./OrderDetails";
 import ReviewModal from "./ReviewModal";
 import { myFetch } from "../../../../../helpers/myFetch";
-import { Button } from "@/ui/button";
 
 export interface OrdersPagination {
   total: number;
@@ -71,8 +69,7 @@ export default function OrdersPage({
       } else {
         toast.error(res?.message || "Failed to initiate chat");
       }
-    } catch (error) {
-      console.error("Error creating chat:", error);
+    } catch {
       toast.error("An error occurred while initiating chat");
     } finally {
       setIsCreatingChat(false);
@@ -104,46 +101,14 @@ export default function OrdersPage({
 
   return (
     <DashboardCard className="border-white/10 bg-secondary p-6 md:p-8">
-      <button
-        type="button"
-        onClick={() => setSelectedOrder(null)}
-        className="group mb-8 flex items-center gap-2 text-xs font-semibold text-white/70 transition-colors hover:text-white"
-      >
-        <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-        Back to {title}
-      </button>
-
-      <div className="mb-8 flex flex-col justify-between gap-4 border-b border-white/15 pb-6 sm:flex-row sm:items-center">
-        <div>
-          <p className="text-xs font-medium tracking-wide text-white/60">
-            Active {type === "product" ? "Product" : "Service"} Order {selectedOrder.id}
-          </p>
-          <h1 className="mt-1 text-2xl font-bold text-white">{selectedOrder.title}</h1>
-        </div>
-
-        <Button
-          type="button"
-          onClick={handleMessageSeller}
-          disabled={isCreatingChat}
-          className="shrink-0 self-start rounded-xl shadow-md shadow-primary/20 sm:self-auto"
-        >
-          {isCreatingChat ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <MessageCircle className="h-4 w-4" />
-          )}
-          Message Seller
-        </Button>
-      </div>
-
-      <div className="mb-8 flex items-center gap-2">
-        <CheckCircle2 className="h-4 w-4 text-primary" />
-        <span className="text-sm font-semibold text-white/80">
-          {type === "product" ? "Product" : "Service"} Delivery Milestones
-        </span>
-      </div>
-
-      <OrderTimeline statusLog={selectedOrder.statusLog} />
+      <OrderDetails
+        order={selectedOrder}
+        type={type}
+        listTitle={title}
+        isCreatingChat={isCreatingChat}
+        onBack={() => setSelectedOrder(null)}
+        onMessageSeller={handleMessageSeller}
+      />
     </DashboardCard>
   );
 }

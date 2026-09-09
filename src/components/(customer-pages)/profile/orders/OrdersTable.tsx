@@ -1,5 +1,6 @@
 'use client';
 
+import Image from "next/image";
 import { Eye, Star } from "lucide-react";
 import {
   Pagination,
@@ -10,7 +11,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/ui/pagination";
-import type { Order } from "./types";
+import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
+import { formatLabel, statusBadgeClass, type Order } from "./types";
 
 export type { Order } from "./types";
 
@@ -90,20 +92,26 @@ export default function OrdersTable({
             orders.map((order) => (
               <div key={`${order.id}-${order.dbId || order.title}`}>
                 <div className="hidden grid-cols-12 items-center px-6 py-4 transition-colors hover:bg-white/10 md:grid">
-                  <div className="col-span-4 pr-4">
-                    <p className="text-sm font-semibold text-white">{order.title}</p>
-                    <p className="mt-0.5 text-xs text-white/55">
-                      ID: {order.id} • {order.date}
-                    </p>
+                  <div className="col-span-4 flex items-center gap-3 pr-4">
+                    <OrderThumb order={order} />
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-semibold text-white">{order.title}</p>
+                      <p className="mt-0.5 text-xs text-white/55">
+                        {order.id} · {order.date}
+                      </p>
+                    </div>
                   </div>
                   <div className="col-span-3 pr-4">
                     <span className="text-sm font-semibold text-white/90">{order.sellerName}</span>
                   </div>
                   <div className="col-span-2">
                     <span className="text-sm font-bold text-primary">{order.amount}</span>
+                    {order.paymentStatus && (
+                      <p className="mt-0.5 text-[11px] text-white/50">{formatLabel(order.paymentStatus)}</p>
+                    )}
                   </div>
                   <div className="col-span-1 flex justify-center">
-                    <StatusBadge status={order.status} />
+                    <StatusBadge status={order.orderStatus || order.status} />
                   </div>
                   <div className="col-span-2 flex justify-center gap-2">
                     <OrderActions
@@ -116,13 +124,16 @@ export default function OrdersTable({
 
                 <div className="space-y-3 p-4 md:hidden">
                   <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="text-sm font-semibold text-white">{order.title}</p>
-                      <p className="mt-0.5 text-xs text-white/55">
-                        ID: {order.id} • {order.date}
-                      </p>
+                    <div className="flex min-w-0 items-start gap-3">
+                      <OrderThumb order={order} />
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-white">{order.title}</p>
+                        <p className="mt-0.5 text-xs text-white/55">
+                          {order.id} · {order.date}
+                        </p>
+                      </div>
                     </div>
-                    <StatusBadge status={order.status} />
+                    <StatusBadge status={order.orderStatus || order.status} />
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-white/80">{order.sellerName}</span>
@@ -197,18 +208,21 @@ export default function OrdersTable({
   );
 }
 
-function StatusBadge({ status }: { status: Order["status"] }) {
+function OrderThumb({ order }: { order: Order }) {
+  const src = resolveImageUrl(order.items?.[0]?.image || order.sellerAvatar, "/placeholder.jpg") || "/placeholder.jpg";
+  return (
+    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-white/10">
+      <Image src={src} alt={order.title} fill sizes="48px" unoptimized className="object-cover" />
+    </div>
+  );
+}
+
+function StatusBadge({ status }: { status: string }) {
   return (
     <span
-      className={`whitespace-nowrap rounded-full border px-3 py-1 text-[11px] font-bold ${
-        status === "In Progress"
-          ? "border-amber-300/40 bg-amber-400/15 text-amber-200"
-          : status === "Completed"
-            ? "border-green-300/40 bg-green-400/15 text-green-200"
-            : "border-red-300/40 bg-red-400/15 text-red-200"
-      }`}
+      className={`whitespace-nowrap rounded-full border px-3 py-1 text-[11px] font-bold ${statusBadgeClass(status)}`}
     >
-      {status}
+      {formatLabel(status)}
     </span>
   );
 }
