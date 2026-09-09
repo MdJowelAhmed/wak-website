@@ -1,9 +1,16 @@
 import { getActiveCategories } from "../../../helpers/categoryService";
-import ServiceCategoryClient from "./ServiceCategoryClient";
+import CategoryListPage from "@/shared/CategoryListPage";
 
 export default async function ServiceCategoriesPage() {
-    const res = await getActiveCategories({ type: 'service' });
+    const res = await getActiveCategories({ type: "service" });
     const categories = res?.data || [];
 
-    return <ServiceCategoryClient initialCategories={categories} />;
+    return (
+        <CategoryListPage
+            title="Service Categories"
+            description="Browse all available service categories or filter by featured categories."
+            kind="service"
+            initialCategories={categories}
+        />
+    );
 }

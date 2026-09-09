@@ -1,8 +1,9 @@
 "use client";
+
 import { useState, useRef } from "react";
 import { Camera } from "lucide-react";
-
 import { Input } from "@/ui/input";
+import { Button } from "@/ui/button";
 import {
   Select,
   SelectContent,
@@ -10,16 +11,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/ui/select";
+import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
+import type { PersonalInfoUser } from "./PersonalInfoView";
+
+export type PersonalInfoSavePayload = {
+  username: string;
+  email: string;
+  phone: string;
+  country: string;
+  profileImageFile?: File;
+};
 
 interface PersonalInfoFormProps {
-  userData: {
-    username: string;
-    email: string;
-    phone: string;
-    country: string;
-    profileImage?: string;
-  };
-  onSave: (data: any) => void;
+  userData: PersonalInfoUser;
+  onSave: (data: PersonalInfoSavePayload) => void;
   onCancel: () => void;
 }
 
@@ -38,13 +43,19 @@ const countries = [
   "United Arab Emirates",
 ];
 
+const fieldLabel = "text-sm font-semibold text-white/80";
+const fieldControl =
+  "h-12 rounded-xl border-white/10 bg-white text-card-foreground placeholder:text-muted-foreground focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary";
+
 export default function PersonalInfoForm({
   userData,
   onSave,
   onCancel,
 }: PersonalInfoFormProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [country, setCountry] = useState(userData.country || "");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const currentImage = previewUrl || resolveImageUrl(userData.profileImage, "/user.svg") || "/user.svg";
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -56,14 +67,14 @@ export default function PersonalInfoForm({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const data: any = {
+    const data: PersonalInfoSavePayload = {
       username: formData.get("username") as string,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
-      country: formData.get("country") as string,
+      country,
     };
 
-    const file = formData.get("profileImage") as File;
+    const file = formData.get("profileImage") as File | null;
     if (file && file.size > 0) {
       data.profileImageFile = file;
     }
@@ -74,33 +85,40 @@ export default function PersonalInfoForm({
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-8 flex justify-center">
-        <div
-          className="w-24 h-24 rounded-full overflow-hidden border-2 border-dashed border-zinc-300 flex items-center justify-center cursor-pointer hover:border-primary transition-colors relative group"
-          onClick={() => fileInputRef.current?.click()}
-        >
-          {previewUrl || userData.profileImage ? (
-            <>
-              <img src={previewUrl || userData.profileImage} className="w-full h-full object-fit" alt="Preview" />
-              <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <Camera className="text-white w-6 h-6" />
-              </div>
-            </>
-          ) : (
-            <div className="text-zinc-400 text-sm flex flex-col items-center">
-              <Camera className="w-6 h-6 mb-1" />
-              Upload
-            </div>
-          )}
-          <input type="file" ref={fileInputRef} name="profileImage" accept="image/*" className="hidden" onChange={handleImageChange} />
+        <div className="relative">
+          <div className="absolute inset-0 rounded-full bg-primary/40 blur-xl" />
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            aria-label="Change profile photo"
+            className="group relative h-28 w-28 overflow-hidden rounded-full border-4 border-primary shadow-lg shadow-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          >
+            <img
+              src={currentImage}
+              alt="Profile preview"
+              className="h-full w-full object-cover"
+            />
+            <span className="absolute inset-0 flex items-center justify-center bg-black/45 opacity-0 transition-opacity group-hover:opacity-100">
+              <Camera className="h-6 w-6 text-white" aria-hidden />
+            </span>
+          </button>
+          <span className="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full border-2 border-secondary bg-primary text-white shadow-md">
+            <Camera className="h-3.5 w-3.5" aria-hidden />
+          </span>
+          <input
+            type="file"
+            ref={fileInputRef}
+            name="profileImage"
+            accept="image/*"
+            className="hidden"
+            onChange={handleImageChange}
+          />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* User Name */}
+
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <label
-            htmlFor="profile-username"
-            className="text-sm font-semibold text-zinc-700"
-          >
+          <label htmlFor="profile-username" className={fieldLabel}>
             User Name
           </label>
           <Input
@@ -108,16 +126,12 @@ export default function PersonalInfoForm({
             name="username"
             defaultValue={userData.username}
             placeholder="Enter full name"
-            className="h-12 bg-zinc-50 border border-zinc-200 text-zinc-900 mt-2 rounded-xl placeholder:text-zinc-400 focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary"
+            className={fieldControl}
           />
         </div>
 
-        {/* Email */}
         <div className="space-y-2">
-          <label
-            htmlFor="profile-email"
-            className="text-sm font-semibold text-zinc-700"
-          >
+          <label htmlFor="profile-email" className={fieldLabel}>
             Email
           </label>
           <Input
@@ -126,16 +140,12 @@ export default function PersonalInfoForm({
             type="email"
             defaultValue={userData.email}
             placeholder="Enter email address"
-            className="h-12 bg-zinc-50 border border-zinc-200 text-zinc-900 mt-2 rounded-xl placeholder:text-zinc-400 focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary"
+            className={fieldControl}
           />
         </div>
 
-        {/* Contact Number */}
         <div className="space-y-2">
-          <label
-            htmlFor="profile-phone"
-            className="text-sm font-semibold text-zinc-700"
-          >
+          <label htmlFor="profile-phone" className={fieldLabel}>
             Contact Number
           </label>
           <Input
@@ -143,25 +153,27 @@ export default function PersonalInfoForm({
             name="phone"
             defaultValue={userData.phone}
             placeholder="+9 018674512001"
-            className="h-12 bg-zinc-50 border border-zinc-200 text-zinc-900 mt-2 rounded-xl placeholder:text-zinc-400 focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary"
+            className={fieldControl}
           />
         </div>
 
-        {/* Choose Country */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-zinc-700">
-            Choose country
+          <label htmlFor="profile-country" className={fieldLabel}>
+            Country
           </label>
-          <Select name="country" defaultValue={userData.country || undefined}>
-            <SelectTrigger className="h-12 bg-zinc-50 border border-zinc-200 text-zinc-900 mt-2 rounded-xl placeholder:text-zinc-400 focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary">
+          <Select value={country || undefined} onValueChange={setCountry}>
+            <SelectTrigger
+              id="profile-country"
+              className={`${fieldControl} shadow-none`}
+            >
               <SelectValue placeholder="Select country name" />
             </SelectTrigger>
-            <SelectContent className="bg-white border border-zinc-200 text-zinc-950">
+            <SelectContent className="rounded-xl border-border bg-card text-card-foreground">
               {countries.map((country) => (
                 <SelectItem
                   key={country}
                   value={country}
-                  className="focus:bg-zinc-100 focus:text-zinc-950 cursor-pointer"
+                  className="cursor-pointer focus:bg-primary focus:text-white"
                 >
                   {country}
                 </SelectItem>
@@ -171,21 +183,18 @@ export default function PersonalInfoForm({
         </div>
       </div>
 
-      {/* Actions */}
-      <div className="flex items-center justify-end gap-4 mt-10">
-        <button
+      <div className="mt-10 flex items-center justify-end gap-3">
+        <Button
           type="button"
+          variant="outline"
           onClick={onCancel}
-          className="px-8 py-3 bg-red-50 hover:bg-red-100 text-red-650 text-sm font-semibold rounded-xl transition-colors cursor-pointer"
+          className="rounded-xl border-white/30 bg-transparent px-8 text-white hover:bg-white/10 hover:text-white"
         >
           Cancel
-        </button>
-        <button
-          type="submit"
-          className="px-8 py-3 bg-primary hover:bg-orange-500 text-white text-sm font-semibold rounded-xl transition-colors cursor-pointer shadow-md shadow-orange-500/10"
-        >
+        </Button>
+        <Button type="submit" className="rounded-xl px-8 shadow-md shadow-primary/25">
           Save
-        </button>
+        </Button>
       </div>
     </form>
   );

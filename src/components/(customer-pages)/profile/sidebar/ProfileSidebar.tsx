@@ -21,11 +21,11 @@ export default async function ProfileSidebar() {
     <aside className="bg-white border border-zinc-200/50 shadow-md rounded-2xl overflow-hidden flex flex-col h-fit lg:sticky lg:top-6">
       {/* Profile Header */}
       <div className="flex flex-col items-center gap-2 pt-8 pb-6 px-6 border-b border-zinc-100">
-        <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-zinc-200 ring-2 ring-zinc-100">
+        <div className="h-20 w-20 overflow-hidden rounded-full border-2 border-primary ring-2 ring-primary/30">
           <img
             src={imageUrl}
             alt="Profile"
-            className="w-full h-full object-fit"
+            className="h-full w-full object-cover"
           />
         </div>
         <h3 className="text-zinc-900 font-bold text-lg mt-1">

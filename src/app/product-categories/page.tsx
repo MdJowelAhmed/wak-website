@@ -1,9 +1,16 @@
 import { getActiveCategories } from "../../../helpers/categoryService";
-import ProductCategoryClient from "./ProductCategoryClient";
+import CategoryListPage from "@/shared/CategoryListPage";
 
 export default async function ProductCategoriesPage() {
-    const res = await getActiveCategories({ type: 'product' });
+    const res = await getActiveCategories({ type: "product" });
     const categories = res?.data || [];
 
-    return <ProductCategoryClient initialCategories={categories} />;
+    return (
+        <CategoryListPage
+            title="Product Categories"
+            description="Browse all available product categories or filter by featured categories."
+            kind="product"
+            initialCategories={categories}
+        />
+    );
 }

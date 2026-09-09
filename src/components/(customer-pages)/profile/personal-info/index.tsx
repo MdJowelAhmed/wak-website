@@ -3,14 +3,13 @@
 import { useEffect, useState } from "react";
 import DashboardCard from "../../../../shared/DashboardCard";
 import ProfileHeader from "./ProfileHeader";
-import PersonalInfoView from "./PersonalInfoView";
-import PersonalInfoForm from "./PersonalInfoForm";
+import PersonalInfoView, { type PersonalInfoUser } from "./PersonalInfoView";
+import PersonalInfoForm, { type PersonalInfoSavePayload } from "./PersonalInfoForm";
 import getProfile from "../../../../../helpers/getProfile";
 import { myFetch } from "../../../../../helpers/myFetch";
 import { toast } from "sonner";
 
-// Mock user data — replace with real API data later
-const defaultUserData: any = {
+const defaultUserData: PersonalInfoUser = {
   username: "",
   email: "",
   phone: "",
@@ -36,7 +35,7 @@ export default function PersonalInfoPage() {
     }).catch(console.error);
   }, []);
 
-  const handleSave = async (data: any) => {
+  const handleSave = async (data: PersonalInfoSavePayload) => {
     const formData = new FormData();
     formData.append("name", data.username);
     formData.append("address", data.country);
@@ -79,7 +78,7 @@ export default function PersonalInfoPage() {
   };
 
   return (
-    <DashboardCard>
+    <DashboardCard className="border-white/10 bg-secondary">
       <ProfileHeader
         title={isEditing ? "Edit Personal Information" : "Personal Information"}
         isEditing={isEditing}
