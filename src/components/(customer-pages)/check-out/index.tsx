@@ -1,308 +1,302 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Link from "next/link";
+import { toast } from "sonner";
 import { myFetch } from "../../../../helpers/myFetch";
-import { resolveImageUrl } from "../../../../helpers/resolveImageUrl";
-import ShippingForm, { Address } from "./components/ShippingForm";
+import CheckoutChoices from "./CheckoutChoices";
+import ShippingForm from "./components/ShippingForm";
 import CheckoutSummary from "./components/CheckoutSummary";
+import type {
+    Address,
+    CartItem,
+    CheckoutAddressForm,
+    Country,
+    DeliveryOption,
+    PaymentMethod,
+    ShippingEstimate,
+} from "./types";
+import { readEstimate } from "./types";
 
-interface CartItem {
-    id: string;
-    productId: string;
-    name: string;
-    price: number;
-    image: string;
-    quantity: number;
+interface CheckoutProps {
+    cartItems: CartItem[];
+    addresses: Address[];
+    countries: Country[];
+    initialForm: CheckoutAddressForm;
+    initialAddressId: string | null;
+    initialEstimate: ShippingEstimate | null;
 }
 
-export default function Checkout() {
-    const [cartItems, setCartItems] = useState<CartItem[]>([]);
-    const [addresses, setAddresses] = useState<Address[]>([]);
-    const [countries, setCountries] = useState<any[]>([]);
-    const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
-    
-    // API Totals
-    const [apiSubTotal, setApiSubTotal] = useState<number | null>(null);
-    const [apiShippingFee, setApiShippingFee] = useState<number | null>(null);
-    const [apiGrandTotal, setApiGrandTotal] = useState<number | null>(null);
+export default function Checkout({
+    cartItems,
+    addresses: initialAddresses,
+    countries,
+    initialForm,
+    initialAddressId,
+    initialEstimate,
+}: CheckoutProps) {
+    const [addresses, setAddresses] = useState(initialAddresses);
+    const [selectedAddressId, setSelectedAddressId] = useState(initialAddressId);
+    const [formData, setFormData] = useState(initialForm);
+    const [deliveryOption, setDeliveryOption] = useState<DeliveryOption>("delivery");
+    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("stripe");
+    const [estimate, setEstimate] = useState(initialEstimate);
     const [isCalculating, setIsCalculating] = useState(false);
     const [isPlacingOrder, setIsPlacingOrder] = useState(false);
-    
-    // Form state
-    const [formData, setFormData] = useState({
-        fullName: '',
-        phone: '',
-        email: '',
-        city: '',
-        state: '',
-        address: '',
-        country: 'Bangladesh',
-        countryCode: 'BD',
-        postalCode: '',
-        latitude: 23.7465,
-        longitude: 90.3760,
-        saveAddress: false,
-        notes: ''
-    });
 
-    const [loading, setLoading] = useState(true);
-    
-    // Constants from design (Fallback)
-    const fallbackShippingFee = 0;
-    
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Fetch Profile for Email
-                const profileRes = await myFetch('/users/profile', { cache: 'no-store' });
-                const profileEmail = profileRes?.data?.email || '';
+    const fallbackSubtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const subtotal = estimate?.grandSubTotal ?? fallbackSubtotal;
+    const shippingFee = deliveryOption === "pickup" ? 0 : (estimate?.grandShippingTotal ?? 0);
+    const grandTotal = deliveryOption === "pickup" ? subtotal : (estimate?.grandTotal ?? fallbackSubtotal);
 
-                // Fetch Countries
-                const countriesRes = await myFetch('/meta/countries', { cache: 'no-store' });
-                if (countriesRes?.data && Array.isArray(countriesRes.data)) {
-                    setCountries(countriesRes.data);
-                }
+    const applyAddress = (address: Address) => {
+        setFormData((prev) => ({
+            ...prev,
+            fullName: address.fullName || "",
+            phone: address.phone || "",
+            city: address.city || "",
+            state: address.state || "",
+            address: address.address || "",
+            country: address.country || "Bangladesh",
+            countryCode: address.countryCode || "BD",
+            postalCode: address.postalCode || "",
+            latitude: address.latitude ?? 23.7465,
+            longitude: address.longitude ?? 90.376,
+        }));
+    };
 
-                // Fetch Cart
-                const cartRes = await myFetch('/carts/', { cache: 'no-store' });
-                if (cartRes?.data?.items) {
-                    const mappedItems = cartRes.data.items.map((item: any) => ({
-                        id: item._id,
-                        productId: item.product?._id,
-                        name: item.product?.name || "Unknown Product",
-                        price: item.product?.discountPrice || item.product?.price || 0,
-                        image: resolveImageUrl(item.product?.images?.[0]) || "/placeholder.jpg",
-                        quantity: item.quantity || 1
-                    }));
-                    setCartItems(mappedItems);
-                }
-                
-                // Fetch Addresses
-                const addressRes = await myFetch('/shipping-addresses', { cache: 'no-store' });
-                if (addressRes?.data && Array.isArray(addressRes.data)) {
-                    setAddresses(addressRes.data);
-                    // Find default address
-                    const defaultAddr = addressRes.data.find((a: Address) => a.isDefault) || addressRes.data[0];
-                    if (defaultAddr) {
-                        setSelectedAddressId(defaultAddr._id);
-                        setFormData(prev => ({
-                            ...prev,
-                            email: profileEmail,
-                            fullName: defaultAddr.fullName || '',
-                            phone: defaultAddr.phone || '',
-                            city: defaultAddr.city || '',
-                            state: defaultAddr.state || '',
-                            address: defaultAddr.address || '',
-                            country: defaultAddr.country || 'Bangladesh',
-                            countryCode: defaultAddr.countryCode || 'BD',
-                            postalCode: defaultAddr.postalCode || '',
-                            latitude: defaultAddr.latitude || 23.7465,
-                            longitude: defaultAddr.longitude || 90.3760,
-                        }));
+    const fetchEstimate = async (addressId: string) => {
+        const estimateRes = await myFetch(
+            `/product-orders/shipping-estimate?shippingAddressId=${addressId}`,
+            { cache: "no-store" },
+        );
+        const nextEstimate = readEstimate(estimateRes?.data);
+        if (nextEstimate) setEstimate(nextEstimate);
+    };
 
-                        // Fetch initial shipping estimate
-                        try {
-                            const estimateRes = await myFetch(`/product-orders/shipping-estimate?shippingAddressId=${defaultAddr._id}`, { cache: 'no-store' });
-                            if (estimateRes?.data) {
-                                setApiSubTotal(estimateRes.data.grandSubTotal);
-                                setApiShippingFee(estimateRes.data.grandShippingTotal);
-                                setApiGrandTotal(estimateRes.data.grandTotal);
-                            }
-                        } catch (err) {
-                            console.error("Failed to fetch initial estimate", err);
-                        }
-                    } else {
-                        setFormData(prev => ({ ...prev, email: profileEmail }));
-                    }
-                } else {
-                    setFormData(prev => ({ ...prev, email: profileEmail }));
-                }
-            } catch (error) {
-                console.error("Failed to fetch checkout data", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchData();
-    }, []);
+    const handleDeliveryChange = async (option: DeliveryOption) => {
+        setDeliveryOption(option);
+        if (option === "pickup") return;
+        if (!selectedAddressId) return;
+        setIsCalculating(true);
+        try {
+            await fetchEstimate(selectedAddressId);
+        } catch {
+            toast.error("Could not calculate shipping for this address.");
+        } finally {
+            setIsCalculating(false);
+        }
+    };
 
     const handleAddressSelect = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedId = e.target.value;
         setSelectedAddressId(selectedId || null);
         if (!selectedId) {
-            setApiSubTotal(null);
-            setApiShippingFee(0);
-            setApiGrandTotal(null);
+            setEstimate(null);
             return;
         }
-        const selected = addresses.find(a => a._id === selectedId);
-        if (selected) {
-            setFormData(prev => ({
-                ...prev,
-                fullName: selected.fullName || '',
-                phone: selected.phone || '',
-                city: selected.city || '',
-                state: selected.state || '',
-                address: selected.address || '',
-                country: selected.country || 'Bangladesh',
-                countryCode: selected.countryCode || 'BD',
-                postalCode: selected.postalCode || '',
-                latitude: selected.latitude || 23.7465,
-                longitude: selected.longitude || 90.3760,
-            }));
 
-            // Fetch estimate for newly selected address
-            setIsCalculating(true);
-            try {
-                const estimateRes = await myFetch(`/product-orders/shipping-estimate?shippingAddressId=${selectedId}`, { cache: 'no-store' });
-                if (estimateRes?.data) {
-                    setApiSubTotal(estimateRes.data.grandSubTotal);
-                    setApiShippingFee(estimateRes.data.grandShippingTotal);
-                    setApiGrandTotal(estimateRes.data.grandTotal);
-                }
-            } catch (err) {
-                console.error("Failed to fetch estimate for selected address", err);
-            } finally {
-                setIsCalculating(false);
-            }
+        const selected = addresses.find((address) => address._id === selectedId);
+        if (selected) applyAddress(selected);
+        if (deliveryOption === "pickup") return;
+
+        setIsCalculating(true);
+        try {
+            await fetchEstimate(selectedId);
+        } catch {
+            toast.error("Could not calculate shipping for this address.");
+        } finally {
+            setIsCalculating(false);
         }
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
         const checked = (e.target as HTMLInputElement).checked;
-        
-        let updatedData: any = {
-            [name]: type === 'checkbox' ? checked : value
-        };
 
-        // If country changes, update countryCode automatically
-        if (name === 'country') {
-            const selectedCountryObj = countries.find(c => c.name === value);
-            if (selectedCountryObj) {
-                updatedData.countryCode = selectedCountryObj.countryCode;
+        setFormData((prev) => {
+            const next = {
+                ...prev,
+                [name]: type === "checkbox" ? checked : value,
+            };
+
+            if (name === "country") {
+                const selectedCountry = countries.find((country) => country.name === value);
+                if (selectedCountry) next.countryCode = selectedCountry.countryCode;
             }
-        }
 
-        setFormData(prev => ({
-            ...prev,
-            ...updatedData
-        }));
+            return next;
+        });
     };
 
-    const handleCalculateShipping = async () => {
+    const handleSaveAddress = async () => {
+        if (!formData.fullName || !formData.phone || !formData.address || !formData.city) {
+            toast.error("Please fill in the required address fields.");
+            return;
+        }
+
         setIsCalculating(true);
         try {
             let savedAddressId = selectedAddressId;
-
-            // Prepare payload
             const payload = { ...formData };
-            // Remove non-address fields if needed, but usually APIs ignore extra fields like 'notes', 'saveAddress', 'email'
 
             if (savedAddressId) {
-                // PATCH existing
                 const res = await myFetch(`/shipping-addresses/${savedAddressId}`, {
-                    method: 'PATCH',
-                    body: payload
+                    method: "PATCH",
+                    body: payload,
                 });
-                if (res?.success && res.data?._id) savedAddressId = res.data._id; 
-
-                console.log("Updated Address Id",res);
+                if (res?.success && typeof res.data?._id === "string") {
+                    savedAddressId = res.data._id;
+                } else if (!res?.success) {
+                    toast.error(res?.message || "Could not update address.");
+                    return;
+                }
             } else {
-                // POST new
-                const res = await myFetch(`/shipping-addresses`, {
-                    method: 'POST',
-                    body: payload
+                const res = await myFetch("/shipping-addresses", {
+                    method: "POST",
+                    body: payload,
                 });
-                if (res?.data?._id) {
+                if (typeof res?.data?._id === "string") {
                     savedAddressId = res.data._id;
                     setSelectedAddressId(savedAddressId);
+                    setAddresses((prev) => [
+                        ...prev,
+                        {
+                            _id: res.data._id,
+                            fullName: formData.fullName,
+                            phone: formData.phone,
+                            address: formData.address,
+                            city: formData.city,
+                            state: formData.state,
+                            country: formData.country,
+                            countryCode: formData.countryCode,
+                            postalCode: formData.postalCode,
+                            isDefault: false,
+                            latitude: formData.latitude,
+                            longitude: formData.longitude,
+                        },
+                    ]);
+                } else {
+                    toast.error(res?.message || "Could not save address.");
+                    return;
                 }
             }
 
-            if (savedAddressId) {
-                // Fetch Estimate
-                const estimateRes = await myFetch(`/product-orders/shipping-estimate?shippingAddressId=${savedAddressId}`, { cache: 'no-store' });
-                if (estimateRes?.data) {
-                    setApiSubTotal(estimateRes.data.grandSubTotal);
-                    setApiShippingFee(estimateRes.data.grandShippingTotal);
-                    setApiGrandTotal(estimateRes.data.grandTotal);
-                }
+            if (savedAddressId && deliveryOption === "delivery") {
+                await fetchEstimate(savedAddressId);
             }
-        } catch (error) {
-            console.error("Failed to calculate shipping", error);
+            toast.success("Address saved.");
+        } catch {
+            toast.error("Could not save the address.");
         } finally {
             setIsCalculating(false);
         }
     };
 
     const handlePlaceOrder = async () => {
-        if (!selectedAddressId) {
-            alert("Please select or calculate shipping for an address first.");
+        if (cartItems.length === 0) {
+            toast.error("Your cart is empty.");
+            return;
+        }
+        if (deliveryOption === "delivery" && !selectedAddressId) {
+            toast.error("Please select or save a shipping address.");
             return;
         }
 
         setIsPlacingOrder(true);
         try {
-            const res = await myFetch('/product-orders/checkout', {
-                method: 'POST',
-                body: { shippingAddressId: selectedAddressId }
+            const body: {
+                deliveryOption: DeliveryOption;
+                paymentMethod: PaymentMethod;
+                shippingAddressId?: string;
+            } = {
+                deliveryOption,
+                paymentMethod,
+            };
+            if (deliveryOption === "delivery" && selectedAddressId) {
+                body.shippingAddressId = selectedAddressId;
+            }
+
+            const res = await myFetch("/product-orders/checkout", {
+                method: "POST",
+                body,
             });
 
-            if (res?.success && res?.data?.checkoutUrl) {
-                window.open(res.data.checkoutUrl, '_blank');
-            } else {
-                alert(res?.message || "Failed to initiate checkout. Please try again.");
+            const checkoutUrl =
+                res?.success && typeof res.data?.checkoutUrl === "string"
+                    ? res.data.checkoutUrl
+                    : null;
+
+            if (checkoutUrl) {
+                window.location.href = checkoutUrl;
+                return;
             }
-        } catch (error) {
-            console.error("Failed to place order", error);
-            alert("Something went wrong while placing your order.");
+
+            toast.error(res?.message || "Failed to start checkout. Please try again.");
+        } catch {
+            toast.error("Something went wrong while placing your order.");
         } finally {
             setIsPlacingOrder(false);
         }
     };
-    
-    // Derived state (used before API calculation is done)
-    const fallbackSubtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const fallbackGrandTotal = fallbackSubtotal > 0 ? fallbackSubtotal + fallbackShippingFee : 0;
 
-    const subtotal = apiSubTotal !== null ? apiSubTotal : fallbackSubtotal;
-    const shippingFee = apiShippingFee !== null ? apiShippingFee : fallbackShippingFee;
-    const grandTotal = apiGrandTotal !== null ? apiGrandTotal : fallbackGrandTotal;
-
-    if (loading) {
+    if (cartItems.length === 0) {
         return (
-            <div className="min-h-[calc(100vh-180px)] bg-zinc-50 flex items-center justify-center">
-                <p className="text-zinc-500 font-medium text-lg">Loading Checkout...</p>
+            <div className="container mx-auto max-w-3xl px-4 py-16 text-center">
+                <h1 className="text-2xl font-bold text-foreground">Your cart is empty</h1>
+                <p className="mt-2 text-sm text-white/80">Add products before checking out.</p>
+                <Link
+                    href="/shop"
+                    className="mt-6 inline-flex rounded-xl bg-secondary px-5 py-2.5 text-sm font-semibold text-white hover:bg-secondary/90"
+                >
+                    Browse products
+                </Link>
             </div>
         );
     }
 
     return (
-        <div className="min-h-[calc(100vh-180px)] bg-zinc-50 py-10">
-            <div className="container mx-auto px-4 max-w-7xl">
-                <div className="flex flex-col lg:flex-row gap-8">
-                    
-                    <ShippingForm 
-                        formData={formData}
-                        addresses={addresses}
-                        countries={countries}
-                        handleInputChange={handleInputChange}
-                        handleAddressSelect={handleAddressSelect}
-                        handleCalculateShipping={handleCalculateShipping}
-                        isCalculating={isCalculating}
-                        shippingFee={shippingFee}
-                    />
+        <div className="px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+            <div className="container mx-auto max-w-7xl">
+                <header className="mb-8">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">Checkout</p>
+                    <h1 className="mt-2 text-3xl font-bold tracking-tight text-foreground">Complete your order</h1>
+                </header>
 
-                    <CheckoutSummary 
+                <div className="flex flex-col gap-8 lg:flex-row">
+                    <div className="min-w-0 flex-1 space-y-6">
+                        <CheckoutChoices
+                            deliveryOption={deliveryOption}
+                            paymentMethod={paymentMethod}
+                            onDeliveryChange={handleDeliveryChange}
+                            onPaymentChange={setPaymentMethod}
+                        />
+                        {deliveryOption === "delivery" && (
+                            <ShippingForm
+                                formData={formData}
+                                addresses={addresses}
+                                countries={countries}
+                                selectedAddressId={selectedAddressId}
+                                deliveryOption={deliveryOption}
+                                handleInputChange={handleInputChange}
+                                handleAddressSelect={handleAddressSelect}
+                                handleSaveAddress={handleSaveAddress}
+                                isCalculating={isCalculating}
+                                shippingFee={shippingFee}
+                            />
+                        )}
+                    </div>
+
+                    <CheckoutSummary
                         cartItems={cartItems}
                         subtotal={subtotal}
                         shippingFee={shippingFee}
                         grandTotal={grandTotal}
-                        handlePlaceOrder={handlePlaceOrder}
+                        deliveryOption={deliveryOption}
+                        paymentMethod={paymentMethod}
+                        onPlaceOrder={handlePlaceOrder}
                         isPlacingOrder={isPlacingOrder}
                     />
-
                 </div>
             </div>
         </div>

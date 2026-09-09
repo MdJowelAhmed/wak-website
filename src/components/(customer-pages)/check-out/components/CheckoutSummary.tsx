@@ -1,84 +1,94 @@
 "use client";
 
-import React from 'react';
-
-interface CartItem {
-    id: string;
-    productId: string;
-    name: string;
-    price: number;
-    image: string;
-    quantity: number;
-}
+import Image from "next/image";
+import { Button } from "@/ui/button";
+import type { CartItem, DeliveryOption, PaymentMethod } from "../types";
+import { formatCheckoutMoney } from "../types";
 
 interface CheckoutSummaryProps {
     cartItems: CartItem[];
     subtotal: number;
     shippingFee: number;
     grandTotal: number;
-    handlePlaceOrder: () => void;
-    isPlacingOrder?: boolean;
+    deliveryOption: DeliveryOption;
+    paymentMethod: PaymentMethod;
+    onPlaceOrder: () => void;
+    isPlacingOrder: boolean;
 }
 
-export default function CheckoutSummary({ cartItems, subtotal, shippingFee, grandTotal, handlePlaceOrder, isPlacingOrder }: CheckoutSummaryProps) {
+export default function CheckoutSummary({
+    cartItems,
+    subtotal,
+    shippingFee,
+    grandTotal,
+    deliveryOption,
+    paymentMethod,
+    onPlaceOrder,
+    isPlacingOrder,
+}: CheckoutSummaryProps) {
+    const paymentLabel = paymentMethod === "stripe" ? "Stripe" : "PayChangu";
+
     return (
-        <div className="w-full lg:w-[420px] space-y-6">
-            {/* Order Summary Card */}
-            <div className="bg-sky-50/50 rounded-xl border border-sky-100 p-6 shadow-sm">
-                <h2 className="text-lg font-bold text-zinc-900 mb-6">Your Order Summary</h2>
-                
-                {/* Items List */}
-                <div className="space-y-4 mb-6">
-                    {cartItems.map(item => (
-                        <div key={item.id} className="flex gap-4 items-center">
-                            <div className="w-12 h-12 rounded-md bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden p-1.5 shadow-sm">
-                                <img
+        <aside className="w-full space-y-6 lg:w-[400px]">
+            <section className="rounded-2xl border border-white/10 bg-secondary p-5 shadow-lg sm:p-6">
+                <h2 className="mb-5 text-lg font-bold text-white">Order summary</h2>
+                <div className="space-y-4">
+                    {cartItems.map((item) => (
+                        <div key={item.id} className="flex items-center gap-3">
+                            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-white/10">
+                                <Image
                                     src={item.image}
                                     alt={item.name}
-                                    className="w-full h-full object-contain"
+                                    fill
+                                    sizes="48px"
+                                    unoptimized
+                                    className="object-cover"
                                 />
                             </div>
-                            <div className="flex-1 min-w-0">
-                                <p className="text-sm text-zinc-700 line-clamp-1 mb-1">{item.name}</p>
-                                <p className="text-xs text-zinc-500">Qty: {item.quantity}</p>
+                            <div className="min-w-0 flex-1">
+                                <p className="truncate text-sm font-medium text-white">{item.name}</p>
+                                <p className="text-xs text-white/55">Qty {item.quantity}</p>
                             </div>
-                            <div className="text-sm font-bold text-zinc-900 whitespace-nowrap">
-                                ${(item.price * item.quantity).toLocaleString()}
-                            </div>
+                            <p className="text-sm font-semibold text-white">
+                                {formatCheckoutMoney(item.price * item.quantity)}
+                            </p>
                         </div>
                     ))}
                 </div>
 
-                {/* Totals */}
-                <div className="space-y-3 pt-4 border-t border-zinc-200/60">
-                    <div className="flex justify-between items-center text-sm">
-                        <span className="text-zinc-600 font-medium">Items Subtotal</span>
-                        <span className="text-zinc-900 font-bold">${subtotal.toLocaleString()}</span>
+                <dl className="mt-5 space-y-2.5 border-t border-white/10 pt-4 text-sm">
+                    <div className="flex justify-between gap-4">
+                        <dt className="text-white/65">Subtotal</dt>
+                        <dd className="font-medium text-white">{formatCheckoutMoney(subtotal)}</dd>
                     </div>
-                    <div className="flex justify-between items-center text-sm">
-                        <span className="text-zinc-600 font-medium">Shipping Fee</span>
-                        <span className="text-zinc-900 font-bold">${shippingFee}</span>
+                    <div className="flex justify-between gap-4">
+                        <dt className="text-white/65">
+                            {deliveryOption === "pickup" ? "Pickup" : "Shipping"}
+                        </dt>
+                        <dd className="font-medium text-white">
+                            {deliveryOption === "pickup" ? "Free" : formatCheckoutMoney(shippingFee)}
+                        </dd>
                     </div>
-                    <div className="flex justify-between items-center text-base pt-3 mt-3 border-t border-zinc-200/60">
-                        <span className="text-zinc-900 font-bold">Grand Total</span>
-                        <span className="text-zinc-900 font-bold">${grandTotal.toLocaleString()}</span>
+                    <div className="flex justify-between gap-4 border-t border-white/10 pt-2.5">
+                        <dt className="font-semibold text-white">Total</dt>
+                        <dd className="font-bold text-primary">{formatCheckoutMoney(grandTotal)}</dd>
                     </div>
-                </div>
-            </div>
+                    <div className="flex justify-between gap-4">
+                        <dt className="text-white/65">Pay with</dt>
+                        <dd className="font-medium text-white">{paymentLabel}</dd>
+                    </div>
+                </dl>
+            </section>
 
-            {/* Place Order Button */}
-            <div className="bg-sky-50/50 rounded-xl border border-sky-100 p-6 shadow-sm flex flex-col gap-4">
-                 <button 
-                    onClick={handlePlaceOrder}
-                    disabled={isPlacingOrder}
-                    className={`w-full font-bold py-3.5 rounded-lg shadow-md shadow-orange-500/20 active:scale-95 transition-all ${
-                        isPlacingOrder ? 'bg-zinc-400 text-white cursor-not-allowed' : 'bg-primary hover:bg-orange-500 text-white'
-                    }`}
-                >
-                    {isPlacingOrder ? 'Processing...' : 'Place Order'}
-                 </button>
-            </div>
-
-        </div>
+            <Button
+                type="button"
+                size="lg"
+                onClick={onPlaceOrder}
+                disabled={isPlacingOrder || cartItems.length === 0}
+                className="w-full rounded-xl shadow-md shadow-primary/20"
+            >
+                {isPlacingOrder ? "Redirecting..." : `Continue with ${paymentLabel}`}
+            </Button>
+        </aside>
     );
 }

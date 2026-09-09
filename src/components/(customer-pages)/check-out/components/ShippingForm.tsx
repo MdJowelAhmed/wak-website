@@ -1,217 +1,233 @@
 "use client";
 
-import React from 'react';
+import { Button } from "@/ui/button";
+import { Input } from "@/ui/input";
+import { Label } from "@/ui/label";
+import type {
+    Address,
+    CheckoutAddressForm,
+    Country,
+    DeliveryOption,
+} from "../types";
+import { formatCheckoutMoney } from "../types";
 
-export interface Address {
-    _id: string;
-    fullName: string;
-    phone: string;
-    address: string;
-    city: string;
-    state: string;
-    country: string;
-    countryCode?: string;
-    postalCode?: string;
-    isDefault: boolean;
-    latitude?: number;
-    longitude?: number;
-}
+const fieldClass =
+    "h-12 rounded-xl border-card-border bg-section-bg text-card-foreground placeholder:text-muted-foreground focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary";
 
 interface ShippingFormProps {
-    formData: any;
+    formData: CheckoutAddressForm;
     addresses: Address[];
-    countries: any[];
-    handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
+    countries: Country[];
+    selectedAddressId: string | null;
+    deliveryOption: DeliveryOption;
+    handleInputChange: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    ) => void;
     handleAddressSelect: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-    handleCalculateShipping: () => void;
+    handleSaveAddress: () => void;
     isCalculating: boolean;
     shippingFee: number;
 }
 
-export default function ShippingForm({ formData, addresses, countries, handleInputChange, handleAddressSelect, handleCalculateShipping, isCalculating, shippingFee }: ShippingFormProps) {
+export default function ShippingForm({
+    formData,
+    addresses,
+    countries,
+    selectedAddressId,
+    deliveryOption,
+    handleInputChange,
+    handleAddressSelect,
+    handleSaveAddress,
+    isCalculating,
+    shippingFee,
+}: ShippingFormProps) {
+    const isPickup = deliveryOption === "pickup";
+    const title = isPickup ? "Pickup address" : "Shipping address";
+    const saveLabel = isPickup ? "Save address" : "Save address & calculate shipping";
+
     return (
-        <div className="flex-1 space-y-6">
-            <div className="bg-white rounded-xl shadow-sm border border-zinc-100 p-6 md:p-8">
-                <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-                    <h1 className="text-xl font-bold text-zinc-900">Shipping Information</h1>
-                    {addresses.length > 0 && (
-                        <div className="w-full md:w-64">
-                            <select 
-                                onChange={handleAddressSelect}
-                                className="w-full rounded-md border border-zinc-200 px-3 py-2 text-sm text-zinc-700 bg-white focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                            >
-                                <option value="">Select previous address...</option>
-                                {addresses.map(addr => (
-                                    <option key={addr._id} value={addr._id}>
-                                        {addr.address}, {addr.city}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                    )}
+        <section className="rounded-2xl border border-card-border bg-card p-5 shadow-lg sm:p-7">
+            <div className="mb-6">
+                <h2 className="text-lg font-bold text-card-foreground">{title}</h2>
+                {addresses.length > 0 && (
+                    <select
+                        value={selectedAddressId || ""}
+                        onChange={handleAddressSelect}
+                        className="mt-4 h-12 w-full rounded-xl border border-card-border bg-section-bg px-3 text-sm text-card-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                    >
+                        <option value="">Select a saved address...</option>
+                        {addresses.map((addr) => (
+                            <option key={addr._id} value={addr._id}>
+                                {addr.address}, {addr.city}
+                            </option>
+                        ))}
+                    </select>
+                )}
+            </div>
+
+            <p className="mb-6 text-sm text-muted-foreground">
+                {isPickup
+                    ? "Choose or save the address you will use for pickup."
+                    : "Choose or save the address where this order should be delivered."}
+            </p>
+
+            <div className="space-y-5">
+                <div className="space-y-2">
+                    <Label htmlFor="checkout-fullName" className="font-semibold text-card-foreground">
+                        Full name<span className="text-destructive"> *</span>
+                    </Label>
+                    <Input
+                        id="checkout-fullName"
+                        name="fullName"
+                        value={formData.fullName}
+                        onChange={handleInputChange}
+                        placeholder="Enter your full name"
+                        required
+                        autoComplete="name"
+                        className={fieldClass}
+                    />
                 </div>
 
-                <form className="space-y-6">
-                    {/* Full Name */}
-                    <div>
-                        <label className="block text-sm font-medium text-zinc-700 mb-1.5">
-                            Full Name <span className="text-red-500">*</span>
-                        </label>
-                        <input 
-                            type="text"
-                            name="fullName"
-                            value={formData.fullName}
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                    <div className="space-y-2">
+                        <Label htmlFor="checkout-phone" className="font-semibold text-card-foreground">
+                            Phone number<span className="text-destructive"> *</span>
+                        </Label>
+                        <Input
+                            id="checkout-phone"
+                            name="phone"
+                            type="tel"
+                            value={formData.phone}
                             onChange={handleInputChange}
-                            className="w-full rounded-md border border-zinc-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                            placeholder="Enter your full name"
+                            placeholder="Enter phone number"
+                            required
+                            autoComplete="tel"
+                            className={fieldClass}
                         />
                     </div>
-
-                    {/* Phone & Email */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label className="block text-sm font-medium text-zinc-700 mb-1.5">
-                                Phone Number <span className="text-red-500">*</span>
-                            </label>
-                            <input 
-                                type="text"
-                                name="phone"
-                                value={formData.phone}
-                                onChange={handleInputChange}
-                                className="w-full rounded-md border border-zinc-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                                placeholder="Enter phone number"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-zinc-700 mb-1.5">
-                                Email (Optional)
-                            </label>
-                            <input 
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                                className="w-full rounded-md border border-zinc-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                                placeholder="Enter email address"
-                            />
-                        </div>
-                    </div>
-
-                    {/* City & Zone */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label className="block text-sm font-medium text-zinc-700 mb-1.5">
-                                City <span className="text-red-500">*</span>
-                            </label>
-                            <input 
-                                type="text"
-                                name="city"
-                                value={formData.city}
-                                onChange={handleInputChange}
-                                className="w-full rounded-md border border-zinc-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                                placeholder="e.g. Dhaka"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-zinc-700 mb-1.5">
-                                Zone <span className="text-red-500">*</span>
-                            </label>
-                            <input 
-                                type="text"
-                                name="state"
-                                value={formData.state}
-                                onChange={handleInputChange}
-                                className="w-full rounded-md border border-zinc-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                                placeholder="e.g. Mohakhali"
-                            />
-                        </div>
-                    </div>
-
-                    {/* Country & Postal Code */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label className="block text-sm font-medium text-zinc-700 mb-1.5">
-                                Country <span className="text-red-500">*</span>
-                            </label>
-                            <select 
-                                name="country"
-                                value={formData.country}
-                                onChange={handleInputChange}
-                                className="w-full rounded-md border border-zinc-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary bg-white"
-                            >
-                                <option value="">Select country...</option>
-                                {countries.map((c, i) => (
-                                    <option key={i} value={c.name}>{c.name}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-zinc-700 mb-1.5">
-                                Postal Code <span className="text-red-500">*</span>
-                            </label>
-                            <input 
-                                type="text"
-                                name="postalCode"
-                                value={formData.postalCode}
-                                onChange={handleInputChange}
-                                className="w-full rounded-md border border-zinc-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                                placeholder="e.g. 1209"
-                            />
-                        </div>
-                    </div>
-
-                    {/* Address */}
-                    <div>
-                        <label className="block text-sm font-medium text-zinc-700 mb-1.5">
-                            Address <span className="text-red-500">*</span>
-                        </label>
-                        <input 
-                            type="text"
-                            name="address"
-                            value={formData.address}
+                    <div className="space-y-2">
+                        <Label htmlFor="checkout-email" className="font-semibold text-card-foreground">
+                            Email
+                        </Label>
+                        <Input
+                            id="checkout-email"
+                            name="email"
+                            type="email"
+                            value={formData.email}
                             onChange={handleInputChange}
-                            className="w-full rounded-md border border-zinc-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                            placeholder="House, Road, Block, etc."
+                            placeholder="Enter email address"
+                            autoComplete="email"
+                            className={fieldClass}
                         />
                     </div>
+                </div>
 
-                    {/* Save Information & Calculate Shipping */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                        <div className="flex items-center gap-2">
-                            <input 
-                                type="checkbox"
-                                id="saveAddress"
-                                name="saveAddress"
-                                checked={formData.saveAddress}
-                                onChange={handleInputChange}
-                                className="w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary"
-                            />
-                            <label htmlFor="saveAddress" className="text-sm text-zinc-600 cursor-pointer">
-                                Save this information for next time
-                            </label>
-                        </div>
-                        
-                        {/* Calculate Shipping Button */}
-                        <button 
-                            type="button"
-                            onClick={handleCalculateShipping}
-                            disabled={isCalculating}
-                            className={`px-6 py-2.5 rounded-lg font-semibold text-white shadow-sm transition-all ${isCalculating ? 'bg-zinc-400 cursor-not-allowed' : 'bg-primary hover:bg-orange-500 active:scale-95'}`}
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                    <div className="space-y-2">
+                        <Label htmlFor="checkout-city" className="font-semibold text-card-foreground">
+                            City<span className="text-destructive"> *</span>
+                        </Label>
+                        <Input
+                            id="checkout-city"
+                            name="city"
+                            value={formData.city}
+                            onChange={handleInputChange}
+                            placeholder="e.g. Dhaka"
+                            required
+                            className={fieldClass}
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="checkout-state" className="font-semibold text-card-foreground">
+                            Zone<span className="text-destructive"> *</span>
+                        </Label>
+                        <Input
+                            id="checkout-state"
+                            name="state"
+                            value={formData.state}
+                            onChange={handleInputChange}
+                            placeholder="e.g. Dhanmondi"
+                            required
+                            className={fieldClass}
+                        />
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                    <div className="space-y-2">
+                        <Label htmlFor="checkout-country" className="font-semibold text-card-foreground">
+                            Country<span className="text-destructive"> *</span>
+                        </Label>
+                        <select
+                            id="checkout-country"
+                            name="country"
+                            value={formData.country}
+                            onChange={handleInputChange}
+                            className="h-12 w-full rounded-xl border border-card-border bg-section-bg px-3 text-sm text-card-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                         >
-                            {isCalculating ? 'Calculating...' : 'Save Address & Calculate Shipping'}
-                        </button>
+                            <option value="">Select country...</option>
+                            {countries.map((country) => (
+                                <option key={country.countryCode || country.name} value={country.name}>
+                                    {country.name}
+                                </option>
+                            ))}
+                        </select>
                     </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="checkout-postalCode" className="font-semibold text-card-foreground">
+                            Postal code<span className="text-destructive"> *</span>
+                        </Label>
+                        <Input
+                            id="checkout-postalCode"
+                            name="postalCode"
+                            value={formData.postalCode}
+                            onChange={handleInputChange}
+                            placeholder="e.g. 1209"
+                            required
+                            className={fieldClass}
+                        />
+                    </div>
+                </div>
 
-                    {/* Shipping Fee Section */}
-                    <div className="pt-6 border-t border-zinc-100">
-                        <h3 className="text-base font-bold text-zinc-900 mb-4">Shipping Fee</h3>
-                        <div className="flex items-center gap-3">
-                            <div className="w-5 h-5 rounded-full border-[5px] border-primary bg-white"></div>
-                            <span className="text-sm font-medium text-zinc-700">Shipping charge: ${shippingFee}</span>
-                        </div>
+                <div className="space-y-2">
+                    <Label htmlFor="checkout-address" className="font-semibold text-card-foreground">
+                        Address<span className="text-destructive"> *</span>
+                    </Label>
+                    <Input
+                        id="checkout-address"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleInputChange}
+                        placeholder="House, road, block"
+                        required
+                        className={fieldClass}
+                    />
+                </div>
+
+                <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+                    <label className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
+                        <input
+                            type="checkbox"
+                            name="saveAddress"
+                            checked={formData.saveAddress}
+                            onChange={handleInputChange}
+                            className="h-4 w-4 rounded border-card-border text-primary focus:ring-primary"
+                        />
+                        Save this address for next time
+                    </label>
+                    <Button type="button" onClick={handleSaveAddress} disabled={isCalculating}>
+                        {isCalculating ? "Saving..." : saveLabel}
+                    </Button>
+                </div>
+
+                {!isPickup && (
+                    <div className="border-t border-card-border pt-5">
+                        <p className="text-sm font-semibold text-card-foreground">
+                            Shipping charge: {formatCheckoutMoney(shippingFee)}
+                        </p>
                     </div>
-                </form>
+                )}
             </div>
-        </div>
+        </section>
     );
 }
