@@ -75,6 +75,7 @@ export default function ShopDetails({ slug }: ShopDetailsProps) {
 
     const relatedProductsMapped = relatedProductsData.map((rp: any) => ({
         id: rp.slug || rp._id,
+        productId: rp._id,
         name: rp.name,
         image: resolveImageUrl(rp.images?.[0]) || "/placeholder.jpg",
         currentPrice: rp.discountPrice || rp.price,

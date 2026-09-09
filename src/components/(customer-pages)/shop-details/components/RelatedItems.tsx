@@ -45,6 +45,7 @@ export default function RelatedItems({ products }: RelatedItemsProps) {
                         <ProductCard
                             product={{
                                 id: product.id,
+                                productId: product.productId,
                                 name: product.name,
                                 image: product.image,
                                 currentPrice: product.currentPrice,

@@ -103,7 +103,8 @@ const BestSelling = ({ initialProducts = [], loading = false }: BestSellingProps
                                     className={index >= 6 ? 'hidden xl:block' : 'block'}
                                 >
                                     <ProductCard product={{
-                                        id: product.slug || (product._id as any),
+                                        id: product.slug || product._id,
+                                        productId: product._id,
                                         name: product.name,
                                         image: resolveImageUrl(product.images?.[0]) || "/placeholder.jpg",
                                         currentPrice: product.discountPrice || product.price,

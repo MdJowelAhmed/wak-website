@@ -60,7 +60,8 @@ const NewArrival = ({ initialProducts = [] }: NewArrivalProps) => {
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
                             {products.map((product) => (
                                 <ProductCard key={product._id} product={{
-                                    id: product.slug || (product._id as any),
+                                    id: product.slug || product._id,
+                                    productId: product._id,
                                     name: product.name,
                                     image: resolveImageUrl(product.images?.[0]) || "/placeholder.jpg",
                                     currentPrice: product.discountPrice || product.price,

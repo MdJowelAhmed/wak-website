@@ -15,7 +15,8 @@ export interface ProductDetail {
 }
 
 export interface RelatedProduct {
-    id: number;
+    id: string | number;
+    productId?: string;
     name: string;
     image: string;
     currentPrice: number;

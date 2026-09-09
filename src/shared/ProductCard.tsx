@@ -1,11 +1,16 @@
 'use client';
 
-import { Star, ShoppingCart } from "lucide-react";
+import { useState } from "react";
+import { Star, ShoppingCart, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { useCart } from "@/context/CartContext";
+import { myFetch } from "../../helpers/myFetch";
 
 interface ProductCardProps {
     id: string | number;
+    productId?: string;
     name: string;
     image: string;
     currentPrice: number;
@@ -16,8 +21,10 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: { product: ProductCardProps }) => {
-    const { id, name, image, currentPrice, originalPrice, discount, rating, reviews } = product as ProductCardProps;
+    const { id, productId, name, image, currentPrice, originalPrice, discount, rating, reviews } = product;
     const router = useRouter();
+    const { refreshCart } = useCart();
+    const [addingToCart, setAddingToCart] = useState(false);
 
     const handleClick = () => {
         const cookies = document.cookie;
@@ -31,10 +38,28 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
         router.refresh();
     };
 
-    const handleCartClick = (e: React.MouseEvent) => {
+    const handleCartClick = async (e: React.MouseEvent) => {
+        e.preventDefault();
         e.stopPropagation();
-        router.push(`/cart`);
-        router.refresh();
+        if (addingToCart) return;
+
+        setAddingToCart(true);
+        try {
+            const res = await myFetch("/carts/", {
+                method: "POST",
+                body: { product: productId || String(id), quantity: 1 },
+            });
+            if (res?.success) {
+                toast.success("Added to cart");
+                await refreshCart();
+            } else {
+                toast.error(res?.message || "Failed to add to cart");
+            }
+        } catch {
+            toast.error("Could not add this product to cart");
+        } finally {
+            setAddingToCart(false);
+        }
     };
 
     return (
@@ -62,11 +87,17 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
 
                 {/* Cart Button */}
                 <button
+                    type="button"
                     onClick={handleCartClick}
-                    className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white bg-secondary/80 hover:bg-primary transition-all duration-200 cursor-pointer shadow-md hover:scale-105"
+                    disabled={addingToCart}
+                    className="absolute top-2 right-2 z-10 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-secondary/80 text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-primary disabled:cursor-not-allowed disabled:opacity-70 sm:top-3 sm:right-3 sm:h-8 sm:w-8"
                     aria-label="Add to cart"
                 >
-                    <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    {addingToCart ? (
+                        <Loader2 className="h-3.5 w-3.5 animate-spin sm:h-4 sm:w-4" />
+                    ) : (
+                        <ShoppingCart className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                    )}
                 </button>
             </div>
 

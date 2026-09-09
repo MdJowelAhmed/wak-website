@@ -67,7 +67,8 @@ export default function ShopProductGrid({ products = [], pagination }: ShopProdu
                 <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                     {products.map((product) => (
                         <ProductCard key={product._id} product={{
-                            id: product.slug || (product._id as string),
+                            id: product.slug || product._id,
+                            productId: product._id,
                             name: product.name,
                             image: resolveImageUrl(product.images?.[0]) || "/placeholder.jpg",
                             currentPrice: product.discountPrice || product.price,
