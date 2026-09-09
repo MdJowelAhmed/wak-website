@@ -209,7 +209,9 @@ export default function OrdersTable({
 }
 
 function OrderThumb({ order }: { order: Order }) {
-  const src = resolveImageUrl(order.items?.[0]?.image || order.sellerAvatar, "/placeholder.jpg") || "/placeholder.jpg";
+  const src =
+    resolveImageUrl(order.items?.[0]?.image || order.thumbnail || order.sellerAvatar, "/placeholder.jpg") ||
+    "/placeholder.jpg";
   return (
     <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-white/10">
       <Image src={src} alt={order.title} fill sizes="48px" unoptimized className="object-cover" />

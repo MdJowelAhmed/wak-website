@@ -39,6 +39,14 @@ export default function OrdersPage({
   const currentPage = pagination?.page ?? 1;
   const totalPages = pagination?.totalPage ?? 1;
 
+  const handleSelectOrder = (order: Order) => {
+    if (type === "service" && order.dbId) {
+      router.push(`/profile/service-orders/${order.dbId}`);
+      return;
+    }
+    setSelectedOrder(order);
+  };
+
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams();
     if (page > 1) params.set("page", String(page));
@@ -83,7 +91,7 @@ export default function OrdersPage({
           title={title}
           type={type}
           orders={initialOrders}
-          onSelectOrder={setSelectedOrder}
+          onSelectOrder={handleSelectOrder}
           onReviewOrder={setReviewOrder}
           currentPage={currentPage}
           totalPages={totalPages}

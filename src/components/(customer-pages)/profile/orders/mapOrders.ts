@@ -56,8 +56,24 @@ type ApiOrder = {
       logo?: string;
     };
   };
-  service?: { _id?: string; name?: string };
-  provider?: { _id?: string; name?: string };
+  service?: {
+    _id?: string;
+    name?: string;
+    price?: number;
+    image?: string;
+    description?: string;
+  };
+  provider?: { _id?: string; name?: string; email?: string };
+  deliveryDate?: string;
+  completedAt?: string | null;
+  cancelledAt?: string | null;
+  charge?: number;
+  netAmount?: number;
+  deliveryDescription?: string | null;
+  deliveryAttachments?: string[];
+  alreadyReviewed?: boolean;
+  canReview?: boolean;
+  updatedAt?: string;
   statusLog?: { status: string; timestamp: string; note: string }[];
 };
 
@@ -81,6 +97,86 @@ function mapAddress(address?: ApiAddress): OrderAddress | undefined {
   };
 }
 
+function serviceStatusLog(apiOrder: ApiOrder): NonNullable<Order["statusLog"]> {
+  if (Array.isArray(apiOrder.statusLog) && apiOrder.statusLog.length > 0) {
+    return apiOrder.statusLog;
+  }
+
+  const createdAt = apiOrder.createdAt || new Date().toISOString();
+  const logs: NonNullable<Order["statusLog"]> = [
+    { status: "pending", timestamp: createdAt, note: "Service requested" },
+  ];
+
+  if (apiOrder.orderStatus === "cancelled") {
+    logs.push({
+      status: "cancelled",
+      timestamp: apiOrder.cancelledAt || apiOrder.updatedAt || createdAt,
+      note: "Order was cancelled",
+    });
+  } else if (apiOrder.orderStatus === "completed") {
+    logs.push({
+      status: "completed",
+      timestamp: apiOrder.completedAt || apiOrder.updatedAt || createdAt,
+      note: "Order completed",
+    });
+  } else if (apiOrder.orderStatus && apiOrder.orderStatus !== "pending") {
+    logs.push({
+      status: apiOrder.orderStatus,
+      timestamp: apiOrder.updatedAt || createdAt,
+      note: apiOrder.orderStatus.replace(/_/g, " "),
+    });
+  }
+
+  return logs;
+}
+
+export function mapServiceOrder(apiOrder: ApiOrder): Order {
+  const currency = apiOrder.paymentCurrency || apiOrder.baseCurrency || "USD";
+  const servicePrice = apiOrder.service?.price ?? apiOrder.price ?? 0;
+  const charge = apiOrder.charge ?? 0;
+  const total = apiOrder.netAmount ?? servicePrice + charge;
+  const date = apiOrder.createdAt
+    ? new Date(apiOrder.createdAt).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      })
+    : "Unknown Date";
+
+  return {
+    id: apiOrder.orderId || apiOrder._id,
+    dbId: apiOrder._id,
+    itemId: apiOrder.service?._id || "",
+    title: apiOrder.service?.name || "Service Order",
+    date,
+    sellerName: apiOrder.provider?.name || "Provider",
+    sellerAvatar: "/user.svg",
+    sellerId: apiOrder.provider?._id || "",
+    amount: formatMoney(total, currency),
+    status: toUiStatus(apiOrder.orderStatus || ""),
+    statusLog: serviceStatusLog(apiOrder),
+    orderStatus: apiOrder.orderStatus,
+    paymentStatus: apiOrder.paymentStatus,
+    paymentMethod: apiOrder.paymentMethod,
+    currency,
+    subTotal: servicePrice,
+    grandTotal: total,
+    thumbnail: apiOrder.service?.image,
+    serviceDescription: apiOrder.service?.description,
+    serviceHref: apiOrder.service?._id ? `/services/${apiOrder.service._id}` : undefined,
+    deliveryDate: apiOrder.deliveryDate,
+    completedAt: apiOrder.completedAt || undefined,
+    cancelledAt: apiOrder.cancelledAt || undefined,
+    servicePrice,
+    serviceCharge: charge,
+    netAmount: total,
+    deliveryDescription: apiOrder.deliveryDescription,
+    deliveryAttachments: apiOrder.deliveryAttachments || [],
+    canReview: apiOrder.canReview === true,
+    alreadyReviewed: apiOrder.alreadyReviewed === true,
+  };
+}
+
 function mapItems(items: ApiItem[] = []): OrderLineItem[] {
   return items.map((item) => ({
     id: item._id || item.product?._id || "",
@@ -101,12 +197,16 @@ export function mapOrders(
   type: "product" | "service",
 ): Order[] {
   return apiOrders.map((apiOrder) => {
+    if (type === "service") {
+      return mapServiceOrder(apiOrder);
+    }
+
     const currency = apiOrder.paymentCurrency || apiOrder.baseCurrency || "USD";
     const fallbackLog = [
       {
         status: apiOrder.orderStatus || "pending",
         timestamp: apiOrder.createdAt || new Date().toISOString(),
-        note: type === "product" ? "Order placed" : "Service requested",
+        note: "Order placed",
       },
     ];
     const statusLog =
@@ -121,28 +221,6 @@ export function mapOrders(
           year: "numeric",
         })
       : "Unknown Date";
-
-    if (type === "service") {
-      const amount = apiOrder.price || apiOrder.grandTotal || 0;
-      return {
-        id: apiOrder.orderId || apiOrder._id,
-        dbId: apiOrder._id,
-        itemId: apiOrder.service?._id || "",
-        title: apiOrder.service?.name || "Service Order",
-        date,
-        sellerName: apiOrder.provider?.name || "Provider",
-        sellerAvatar: "/user.svg",
-        sellerId: apiOrder.provider?._id || "",
-        amount: formatMoney(amount, currency),
-        status: toUiStatus(apiOrder.orderStatus || ""),
-        statusLog,
-        orderStatus: apiOrder.orderStatus,
-        paymentStatus: apiOrder.paymentStatus,
-        paymentMethod: apiOrder.paymentMethod,
-        currency,
-        grandTotal: amount,
-      };
-    }
 
     const items = mapItems(apiOrder.items);
     const firstItem = items[0];

@@ -8,7 +8,7 @@ const statusStyles: Record<string, string> = {
   pending: "bg-white/10 text-white/70 border-white/20",
   confirmed: "bg-amber-400/15 text-amber-200 border-amber-300/40",
   in_progress: "bg-blue-400/15 text-blue-200 border-blue-300/40",
-  delivered: "bg-green-400/15 text-green-200 border-green-300/40",
+  delivered: "bg-primary text-white border-primary shadow-md shadow-primary/30",
   completed: "bg-primary/20 text-primary border-primary/40",
   cancelled: "bg-red-400/15 text-red-200 border-red-300/40",
 };

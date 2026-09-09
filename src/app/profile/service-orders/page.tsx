@@ -16,7 +16,7 @@ export default async function ServiceOrdersRoute({ searchParams }: ServiceOrders
 
   const ordersRes = await myFetch(`/service-orders/?page=${page}&limit=10`, {
     cache: "force-cache",
-    next: { revalidate: 3600, tags: ["service-orders"] },
+    next: { tags: ["service-orders"] },
   });
 
   const orders = Array.isArray(ordersRes?.data)

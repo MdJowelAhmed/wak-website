@@ -48,6 +48,19 @@ export interface Order {
   items?: OrderLineItem[];
   shippingAddress?: OrderAddress;
   pickupAddress?: OrderAddress;
+  thumbnail?: string;
+  serviceDescription?: string;
+  serviceHref?: string;
+  deliveryDate?: string;
+  completedAt?: string;
+  cancelledAt?: string;
+  servicePrice?: number;
+  serviceCharge?: number;
+  netAmount?: number;
+  deliveryDescription?: string | null;
+  deliveryAttachments?: string[];
+  canReview?: boolean;
+  alreadyReviewed?: boolean;
 }
 
 export function formatMoney(amount: number, currency = "USD"): string {
@@ -66,11 +79,17 @@ export function formatLabel(value?: string): string {
   return value.replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
+export function isDeliveredStatus(status?: string): boolean {
+  return (status || "").toLowerCase() === "delivered";
+}
+
 export function statusBadgeClass(status?: string): string {
   const value = (status || "").toLowerCase();
+  if (value === "delivered") {
+    return "border-primary bg-primary text-white shadow-lg shadow-primary/40 ring-2 ring-white/30";
+  }
   if (
     value === "completed" ||
-    value === "delivered" ||
     value === "paid" ||
     value === "confirmed"
   ) {
@@ -80,6 +99,17 @@ export function statusBadgeClass(status?: string): string {
     return "border-red-300/40 bg-red-400/15 text-red-200";
   }
   return "border-amber-300/40 bg-amber-400/15 text-amber-200";
+}
+
+export function formatDate(value?: string | null): string {
+  if (!value) return "—";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "—";
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 }
 
 export function formatAddress(address?: OrderAddress): string {
