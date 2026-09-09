@@ -85,7 +85,7 @@ export default function CheckoutSummary({
                 size="lg"
                 onClick={onPlaceOrder}
                 disabled={isPlacingOrder || cartItems.length === 0}
-                className="w-full rounded-xl shadow-md shadow-primary/20"
+                className="w-full rounded-xl shadow-md bg-secondary text-foreground hover:bg-secondary/80"
             >
                 {isPlacingOrder ? "Redirecting..." : `Continue with ${paymentLabel}`}
             </Button>
