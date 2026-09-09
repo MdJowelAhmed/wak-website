@@ -1,55 +1,87 @@
-import { Phone, Mail } from "lucide-react";
+import { Clock, Mail, Phone } from "lucide-react";
 import ContactUsForm from "@/shared/ContactUsForm";
 
-const contactInfo = [
+const PHONE = "+8801611112222";
+const EMAIL = "support@gmail.com";
+
+const contactMethods = [
     {
         id: "call",
         icon: Phone,
-        title: "Call To Us",
-        description: "We are available 24/7, 7 days a week.",
-        details: "Phone: +8801611112222",
+        title: "Call us",
+        description: "Available 24/7, every day of the week.",
+        href: `tel:${PHONE}`,
+        label: PHONE,
     },
     {
         id: "write",
         icon: Mail,
-        title: "Write To Us",
-        description: "Fill out our form and we will contact you within 24 hours.",
-        details: "Emails: support@gmail.com",
-    }
-];
+        title: "Email us",
+        description: "Send the form and we will reply within 24 hours.",
+        href: `mailto:${EMAIL}`,
+        label: EMAIL,
+    },
+] as const;
 
 export default function ContactUsPage() {
     return (
-        <div className="container mx-auto py-12 px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                {/* Left Side: Contact Info */}
-                <div className="lg:col-span-4 bg-white p-8 rounded-xl shadow-xl flex flex-col gap-10">
-                    {contactInfo.map((item, index) => (
-                        <div key={item.id} className="w-full">
-                            <div className="space-y-4">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 bg-[#FF6700] rounded-full flex items-center justify-center">
-                                        <item.icon className="w-5 h-5 text-white" />
-                                    </div>
-                                    <h3 className="text-zinc-900 font-bold text-lg">{item.title}</h3>
-                                </div>
-                                <div className="space-y-2 text-zinc-600 text-sm leading-relaxed">
-                                    <p>{item.description}</p>
-                                    <p className="font-semibold text-zinc-800">{item.details}</p>
-                                </div>
-                            </div>
-                            
-                            {/* Divider - only between items */}
-                            {index < contactInfo.length - 1 && (
-                                <div className="border-t border-zinc-200 w-full mt-10"></div>
-                            )}
-                        </div>
-                    ))}
-                </div>
+        <div className="min-h-[70vh] px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+            <div className="container mx-auto max-w-6xl">
+                <header className="mb-8 max-w-2xl md:mb-10">
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+                        Support
+                    </p>
+                    <h1 className="mb-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                        Get in touch
+                    </h1>
+                    <p className="text-sm leading-relaxed text-white/85 sm:text-base">
+                        Questions about orders, bookings, or partnerships? Reach us anytime — we typically respond within 24 hours.
+                    </p>
+                </header>
 
-                {/* Right Side: Contact Form */}
-                <div className="lg:col-span-8 h-full">
-                    <ContactUsForm />
+                <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-8">
+                    <aside className="flex flex-col justify-between rounded-2xl border border-white/10 bg-secondary p-6 shadow-lg sm:p-8 lg:col-span-4">
+                        <div>
+                            <h2 className="mb-6 text-lg font-bold text-white">Contact details</h2>
+                            <ul className="space-y-6">
+                                {contactMethods.map((item, index) => (
+                                    <li key={item.id}>
+                                        {index > 0 && (
+                                            <div className="mb-6 border-t border-white/10" />
+                                        )}
+                                        <div className="flex items-start gap-4">
+                                            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-white">
+                                                <item.icon className="h-5 w-5" aria-hidden />
+                                            </div>
+                                            <div className="min-w-0">
+                                                <h3 className="text-base font-semibold text-white">
+                                                    {item.title}
+                                                </h3>
+                                                <p className="mt-1 text-sm leading-relaxed text-white/70">
+                                                    {item.description}
+                                                </p>
+                                                <a
+                                                    href={item.href}
+                                                    className="mt-2 inline-block text-sm font-semibold text-white underline-offset-4 hover:underline"
+                                                >
+                                                    {item.label}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        <div className="mt-8 flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-white/80">
+                            <Clock className="h-4 w-4 shrink-0 text-primary" aria-hidden />
+                            <span>Live support around the clock</span>
+                        </div>
+                    </aside>
+
+                    <div className="lg:col-span-8">
+                        <ContactUsForm />
+                    </div>
                 </div>
             </div>
         </div>
