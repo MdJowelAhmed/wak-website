@@ -1,78 +1,51 @@
 "use client";
 
 import Link from "next/link";
-import { CartItem } from "../cart";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@/ui/button";
+import { formatCheckoutMoney, type CartItem } from "../check-out/types";
 
 interface OrderSummaryProps {
     items: CartItem[];
 }
 
 export default function OrderSummary({ items }: OrderSummaryProps) {
+    const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
     const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const total = subtotal;
 
     return (
-        <div className="h-fit sticky top-6 rounded-2xl bg-white border border-zinc-200/50 shadow-md">
-            {/* Header */}
-            <div className="px-6 py-5 pb-0!">
-                <h2 className="text-lg font-bold text-zinc-900">Summary</h2>
-            </div>
- 
-            {/* Items List */}
-            <div className="px-6 py-5 space-y-4 border-b border-zinc-100">
-                {items.map((item) => (
-                    <div key={item.id} className="flex items-start gap-3">
-                        {/* Item Image */}
-                        <div className="w-14 h-14 rounded-lg bg-zinc-50 shrink-0 overflow-hidden border border-zinc-100 flex items-center justify-center">
-                            <img
-                                src={item.image}
-                                alt={item.name}
-                                className="w-full h-full object-contain p-2"
-                            />
-                        </div>
- 
-                        {/* Item Details */}
-                        <div className="flex-1 min-w-0">
-                            <p className="text-sm font-semibold text-zinc-800 line-clamp-1">
-                                {item.name}
-                            </p>
-                            <p className="text-base font-bold text-primary mt-0.5">
-                                ${item.price.toLocaleString()}
-                            </p>
-                        </div>
+        <aside className="w-full lg:w-[400px] lg:shrink-0">
+            <div className="sticky top-6 rounded-2xl border border-white/10 bg-secondary p-5 shadow-lg sm:p-6">
+                <h2 className="text-lg font-bold text-white">Order summary</h2>
+                <p className="mt-1 text-sm text-white/60">
+                    {itemCount} {itemCount === 1 ? "item" : "items"}
+                </p>
+
+                <dl className="mt-5 space-y-3 border-t border-white/10 pt-4 text-sm">
+                    <div className="flex justify-between gap-4">
+                        <dt className="text-white/65">Subtotal</dt>
+                        <dd className="font-medium text-white">{formatCheckoutMoney(subtotal)}</dd>
                     </div>
-                ))}
-            </div>
- 
-            {/* Pricing Details */}
-            <div className="px-6 py-5 space-y-3">
-                <div className="flex justify-between items-center">
-                    <span className="text-sm text-zinc-500">Subtotal Amount</span>
-                    <span className="font-semibold text-zinc-800">
-                        ${subtotal.toLocaleString()}
-                    </span>
-                </div>
-            </div>
- 
-            {/* Total */}
-            <div className="px-6 py-5 border-t border-zinc-100">
-                <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-zinc-700">Total Amount</span>
-                    <span className="text-2xl font-bold text-primary">
-                        ${total.toLocaleString()}
-                    </span>
-                </div>
-            </div>
- 
-            {/* Checkout Button */}
-            <div className="px-6 pb-5">
+                    <p className="text-xs text-white/50">Shipping is calculated at checkout.</p>
+                    <div className="flex justify-between gap-4 border-t border-white/10 pt-3">
+                        <dt className="font-semibold text-white">Total</dt>
+                        <dd className="text-xl font-bold text-primary">{formatCheckoutMoney(subtotal)}</dd>
+                    </div>
+                </dl>
+
+                <Button asChild size="lg" className="mt-6 w-full rounded-xl shadow-md shadow-primary/20">
+                    <Link href="/check-out">
+                        Checkout
+                        <ArrowRight className="h-4 w-4" />
+                    </Link>
+                </Button>
                 <Link
-                    href="/check-out"
-                    className="w-full px-6 py-3.5 rounded-xl bg-primary hover:bg-orange-500 text-white font-semibold text-center transition-all duration-300 shadow-md shadow-orange-500/10 block cursor-pointer"
+                    href="/shop"
+                    className="mt-3 block text-center text-sm font-semibold text-white/70 transition-colors hover:text-white"
                 >
-                    Check out
+                    Continue shopping
                 </Link>
             </div>
-        </div>
+        </aside>
     );
 }

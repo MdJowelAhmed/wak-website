@@ -26,6 +26,7 @@ export interface Country {
 export interface CartItem {
     id: string;
     productId: string;
+    slug?: string;
     name: string;
     price: number;
     image: string;
@@ -69,6 +70,7 @@ export function mapCartItems(items: unknown): CartItem[] {
             quantity?: number;
             product?: {
                 _id?: string;
+                slug?: string;
                 name?: string;
                 discountPrice?: number;
                 price?: number;
@@ -79,6 +81,7 @@ export function mapCartItems(items: unknown): CartItem[] {
         return {
             id: row._id || "",
             productId: row.product?._id || "",
+            slug: row.product?.slug,
             name: row.product?.name || "Unknown Product",
             price: row.product?.discountPrice || row.product?.price || 0,
             image: resolveImageUrl(row.product?.images?.[0], "/placeholder.jpg") || "/placeholder.jpg",
