@@ -37,8 +37,8 @@ const Home = async () => {
             next: { revalidate: 3600, tags: ['services'] },
         }),
         myFetch('/hero-section', {
-            cache: 'force-cache',
-            next: { revalidate: 3600, tags: ['hero-section'] },
+            cache: 'no-store',
+            next: {},
         }),
     ]);
 

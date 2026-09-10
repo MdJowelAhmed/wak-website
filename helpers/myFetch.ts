@@ -39,10 +39,15 @@ export const nextFetch = async <T = any>(
     tags,
     token,
     headers = {},
-    cache = method === "GET" ? "force-cache" : undefined,
-    next = method === "GET" ? { revalidate: 3600 } : {},
+    cache,
+    next,
   }: FetchOptions = {}
 ): Promise<FetchResponse<T>> => {
+  const isGet = method === "GET";
+  const resolvedCache = cache ?? (isGet ? "force-cache" : undefined);
+  const resolvedNext =
+    next ??
+    (isGet && resolvedCache !== "no-store" ? { revalidate: 3600 } : {});
   const accessToken = await getAccessToken();
   const isFormData = body instanceof FormData;
   const hasBody = body !== undefined && method !== "GET";
@@ -62,9 +67,9 @@ export const nextFetch = async <T = any>(
       ...(hasBody && {
         body: isFormData ? body : JSON.stringify(body),
       }),
-      cache: method === "GET" ? cache : "no-store",
+      cache: isGet ? resolvedCache : "no-store",
       next: {
-        ...next,
+        ...resolvedNext,
         ...(tags && { tags }),
       },
     });

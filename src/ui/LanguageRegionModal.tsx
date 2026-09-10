@@ -99,7 +99,7 @@ export default function LanguageRegionModal({
     return (
         <div
             ref={popoverRef}
-            className="absolute right-0 top-full mt-2.5 w-64 sm:w-72 bg-card border border-border rounded-2xl shadow-2xl p-4 sm:p-5 z-[300] text-foreground animate-in fade-in zoom-in-95 duration-150"
+            className="absolute right-0 top-full mt-2.5 w-64 sm:w-72 rounded-2xl border border-card-border bg-card p-4 text-card-foreground shadow-2xl sm:p-5 z-[300] animate-in fade-in zoom-in-95 duration-150"
             role="menu"
             aria-label="Language and Currency Settings"
         >
@@ -108,7 +108,7 @@ export default function LanguageRegionModal({
 
             {/* 1. Language Section */}
             <div>
-                <span className="text-[11px] font-bold text-muted-text uppercase tracking-wider block mb-2">
+                <span className="mb-2 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                     Change language
                 </span>
 
@@ -135,8 +135,8 @@ export default function LanguageRegionModal({
                                 <span
                                     className={`text-xs ${
                                         isSelected
-                                            ? 'font-bold text-foreground'
-                                            : 'font-medium text-body-text group-hover:text-foreground'
+                                            ? 'font-bold text-card-foreground'
+                                            : 'font-medium text-body-text group-hover:text-card-foreground'
                                     }`}
                                 >
                                     {lang.name} - {lang.code.toUpperCase()}
@@ -152,12 +152,12 @@ export default function LanguageRegionModal({
 
             {/* 2. Currency Section */}
             <div>
-                <span className="text-[11px] font-bold text-muted-text uppercase tracking-wider block mb-1.5">
+                <span className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                     Change currency
                 </span>
 
-                <div className="flex items-center justify-between py-1 px-2 rounded-lg hover:bg-section-bg/60 transition-colors">
-                    <span className="text-xs font-semibold text-foreground">
+                <div className="flex items-center justify-between rounded-lg px-2 py-1 transition-colors hover:bg-section-bg/60">
+                    <span className="text-xs font-semibold text-card-foreground">
                         {activeCountryObj.symbol} - {activeCountryObj.currency} - {activeCountryObj.name}
                     </span>
                     <button
@@ -178,10 +178,10 @@ export default function LanguageRegionModal({
                                 <div
                                     key={c.code}
                                     onClick={() => handleSelectCountry(c.code)}
-                                    className={`flex items-center justify-between py-1.5 px-2 rounded-lg cursor-pointer text-xs transition-colors ${
+                                    className={`flex cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-xs transition-colors ${
                                         isSelected
-                                            ? 'bg-primary/10 text-primary font-bold'
-                                            : 'hover:bg-card text-foreground'
+                                            ? 'bg-primary/10 font-bold text-primary'
+                                            : 'text-card-foreground hover:bg-card'
                                     }`}
                                 >
                                     <span className="flex items-center gap-1.5">
@@ -206,7 +206,10 @@ export default function LanguageRegionModal({
                 <div className="flex items-center gap-2 px-2 text-xs text-body-text">
                     <span className="text-base">{activeCountryObj.flag}</span>
                     <span className="leading-snug">
-                        You are shopping on <strong className="text-foreground font-semibold">WAK {activeCountryObj.name}</strong>
+                        You are shopping on{" "}
+                        <strong className="font-semibold text-card-foreground">
+                            WAK {activeCountryObj.name}
+                        </strong>
                     </span>
                 </div>
 
