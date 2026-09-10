@@ -1,47 +1,41 @@
 "use client";
 
+import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { ArrowRight } from "lucide-react";
 import ProductCard from "@/shared/ProductCard";
-import type { RelatedProduct } from "./data";
+import type { RelatedProduct } from "../types";
 
 import "swiper/css";
 
-interface RelatedItemsProps {
-    products: RelatedProduct[];
-}
-
-export default function RelatedItems({ products }: RelatedItemsProps) {
+export default function RelatedItems({ products }: { products: RelatedProduct[] }) {
     return (
-        <section className="pt-[50px]">
-            {/* Header */}
-            <div className="flex items-center justify-between mb-10">
-                <div className="flex items-center gap-4">
-                    <div className="w-5 h-10 bg-[#FF6700] rounded-sm" />
-                    <h2 className="text-lg font-medium text-white">Related Item</h2>
-                </div>
-                <button className="flex items-center gap-2 text-[#FFDDA5] font-medium text-sm hover:underline underline-offset-4 transition-all group">
-                    View All
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </button>
+        <section className="pt-4">
+            <div className="mb-6 flex items-center justify-between gap-4">
+                <h2 className="text-lg font-bold text-white">Related products</h2>
+                <Link
+                    href="/shop"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-white/80 hover:text-white"
+                >
+                    View all
+                    <ArrowRight className="h-4 w-4" />
+                </Link>
             </div>
-
-            {/* Swiper Slider */}
             <Swiper
                 modules={[Autoplay]}
-                spaceBetween={20}
-                autoplay={{ delay: 3500, disableOnInteraction: false }}
+                spaceBetween={16}
+                autoplay={{ delay: 3500, disableOnInteraction: false, pauseOnMouseEnter: true }}
                 breakpoints={{
-                    320: { slidesPerView: 1.2, spaceBetween: 16 },
-                    640: { slidesPerView: 2.2, spaceBetween: 20 },
-                    1024: { slidesPerView: 3, spaceBetween: 20 },
-                    1280: { slidesPerView: 4, spaceBetween: 20 },
+                    320: { slidesPerView: 1.15, spaceBetween: 12 },
+                    640: { slidesPerView: 2.2, spaceBetween: 16 },
+                    1024: { slidesPerView: 3, spaceBetween: 16 },
+                    1280: { slidesPerView: 4, spaceBetween: 16 },
                 }}
                 className="w-full"
             >
                 {products.map((product) => (
-                    <SwiperSlide key={product.id}>
+                    <SwiperSlide key={product.productId}>
                         <ProductCard
                             product={{
                                 id: product.id,

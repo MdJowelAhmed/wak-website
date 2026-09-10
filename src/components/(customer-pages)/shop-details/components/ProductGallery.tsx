@@ -8,82 +8,95 @@ interface ProductGalleryProps {
     images: string[];
     name: string;
     inStock: boolean;
+    discount?: number;
 }
 
-export default function ProductGallery({ images, name }: ProductGalleryProps) {
+export default function ProductGallery({ images, name, inStock, discount }: ProductGalleryProps) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [isZoomed, setIsZoomed] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
+    const activeImage = images[activeIndex] || images[0];
 
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
+    const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width) * 100;
+        const y = ((event.clientY - rect.top) / rect.height) * 100;
         setMousePos({ x, y });
     };
 
     return (
-        <div className="flex flex-col md:flex-row gap-4">
-            {/* Thumbnail Strip — vertical on desktop, horizontal scroll on mobile */}
-            <div className="flex md:flex-col gap-3 shrink-0 order-2 md:order-1 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0">
-                {images.map((img, idx) => (
-                    <button
-                        key={idx}
-                        onClick={() => setActiveIndex(idx)}
-                        className={`relative w-20 h-20 rounded-xl border-2 overflow-hidden shrink-0 transition-all duration-200 cursor-pointer group bg-white
-                            ${activeIndex === idx
-                                ? "border-[#FF6700] shadow-lg shadow-orange-950/20 scale-105"
-                                : "border-white/8 hover:border-[#FF6700]/50"
+        <div className="rounded-2xl border border-white/10 bg-secondary p-4 shadow-lg sm:p-5">
+            <div className="flex flex-col gap-4 md:flex-row">
+                <div className="order-2 flex shrink-0 gap-3 overflow-x-auto pb-1 md:order-1 md:flex-col md:overflow-x-visible md:pb-0">
+                    {images.map((image, index) => (
+                        <button
+                            key={`${image}-${index}`}
+                            type="button"
+                            onClick={() => setActiveIndex(index)}
+                            className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border-2 bg-white transition-all ${
+                                activeIndex === index
+                                    ? "border-primary shadow-md"
+                                    : "border-white/10 hover:border-primary/50"
                             }`}
-                    >
-                        <div className={`absolute inset-0 transition-opacity duration-200 ${activeIndex === idx ? "opacity-0" : "opacity-0 group-hover:opacity-100"} bg-[#FF6700]/5`} />
-                        <Image
-                            src={img}
-                            alt={`${name} view ${idx + 1}`}
-                            fill
-                            className="object-contain p-2"
-                            unoptimized={true}
-                        />
-                    </button>
-                ))}
-            </div>
+                        >
+                            <Image
+                                src={image}
+                                alt={`${name} view ${index + 1}`}
+                                fill
+                                unoptimized
+                                className="object-contain p-1.5"
+                                sizes="80px"
+                            />
+                        </button>
+                    ))}
+                </div>
 
-            {/* Main Image */}
-            <div className="flex-1 flex flex-col gap-3 order-1 md:order-2">
-                <div
-                    className="relative w-full aspect-square bg-white rounded-2xl border border-white/8 overflow-hidden cursor-zoom-in"
-                    onMouseMove={handleMouseMove}
-                    onMouseEnter={() => setIsZoomed(true)}
-                    onMouseLeave={() => setIsZoomed(false)}
-                >
-
-                    {/* Zoom icon hint */}
-                    <div className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm border border-white/10 flex items-center justify-center opacity-60">
-                        <ZoomIn className="w-4 h-4 text-white" />
-                    </div>
-
-                    {/* Subtle radial glow behind product */}
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,103,0,0.06)_0%,_transparent_70%)] pointer-events-none" />
-
-                    {/* Image */}
+                <div className="order-1 min-w-0 flex-1 md:order-2">
                     <div
-                        className="relative w-full h-full transition-transform duration-100 ease-out"
-                        style={isZoomed ? {
-                            transform: "scale(1.5)",
-                            transformOrigin: `${mousePos.x}% ${mousePos.y}%`,
-                        } : {}}
+                        className="relative aspect-square w-full cursor-zoom-in overflow-hidden rounded-2xl bg-white"
+                        onMouseMove={handleMouseMove}
+                        onMouseEnter={() => setIsZoomed(true)}
+                        onMouseLeave={() => setIsZoomed(false)}
                     >
-                        <Image
-                            src={images[activeIndex]}
-                            alt={name}
-                            fill
-                            className="object-contain p-8 drop-shadow-2xl"
-                            priority
-                            unoptimized={true}
-                        />
+                        {discount ? (
+                            <span className="absolute top-4 left-4 z-20 rounded-md bg-primary px-2.5 py-1 text-xs font-bold text-white shadow-md">
+                                -{discount}%
+                            </span>
+                        ) : null}
+                        <span
+                            className={`absolute top-4 right-14 z-20 rounded-full px-2.5 py-1 text-[11px] font-semibold ${
+                                inStock ? "bg-success/15 text-success" : "bg-destructive/15 text-destructive"
+                            }`}
+                        >
+                            {inStock ? "In stock" : "Out of stock"}
+                        </span>
+                        <div className="absolute top-4 right-4 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white">
+                            <ZoomIn className="h-4 w-4" />
+                        </div>
+                        <div
+                            className="relative h-full w-full transition-transform duration-100 ease-out"
+                            style={
+                                isZoomed
+                                    ? {
+                                          transform: "scale(1.5)",
+                                          transformOrigin: `${mousePos.x}% ${mousePos.y}%`,
+                                      }
+                                    : undefined
+                            }
+                        >
+                            <Image
+                                src={activeImage}
+                                alt={name}
+                                fill
+                                unoptimized
+                                priority
+                                className="object-contain p-8"
+                                sizes="(min-width: 1024px) 40vw, 100vw"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     );
 }

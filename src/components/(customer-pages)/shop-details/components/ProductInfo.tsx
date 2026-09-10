@@ -1,195 +1,179 @@
 "use client";
 
 import { useState } from "react";
-import { Star, ShoppingCart, Zap, Truck, RotateCcw, Shield } from "lucide-react";
-import Link from "next/link";
-import { myFetch } from "../../../../../helpers/myFetch";
+import { useRouter } from "next/navigation";
+import { Loader2, Minus, Plus, Shield, ShoppingCart, Star, Truck, Zap } from "lucide-react";
 import { toast } from "sonner";
+import { Button } from "@/ui/button";
 import { useCart } from "@/context/CartContext";
+import { myFetch } from "../../../../../helpers/myFetch";
+import { formatProductPrice, type ProductDetailsData } from "../types";
 
-interface Highlight {
-    label: string;
-    value: string;
-}
-
-interface ProductInfoProps {
-    productId: string;
-    name: string;
-    price: number;
-    originalPrice?: number;
-    discount?: number;
-    rating: number;
-    reviews: number;
-    aboutItems: string[];
-    highlights: Highlight[];
-}
-
-const guarantees = [
-    { icon: Truck, label: "Free Delivery", sub: "On orders over $200" },
-    { icon: RotateCcw, label: "Easy Returns", sub: "30-day return policy" },
-    { icon: Shield, label: "2 Year Warranty", sub: "Full coverage" },
-];
-
-export default function ProductInfo({
-    productId,
-    name,
-    price,
-    originalPrice,
-    discount,
-    rating,
-    reviews,
-    aboutItems,
-    highlights,
-}: ProductInfoProps) {
-    const [qty, setQty] = useState(1);
-    const [addingToCart, setAddingToCart] = useState(false);
+export default function ProductInfo({ product }: { product: ProductDetailsData }) {
+    const router = useRouter();
     const { refreshCart } = useCart();
+    const [qty, setQty] = useState(1);
+    const [isAdding, setIsAdding] = useState(false);
+    const [isBuying, setIsBuying] = useState(false);
+    const inStock = product.stock > 0;
+    const maxQty = Math.max(1, product.stock);
+    const busy = isAdding || isBuying;
 
-    const decrement = () => setQty((q) => Math.max(1, q - 1));
-    const increment = () => setQty((q) => q + 1);
+    const addToCart = async () => {
+        const res = await myFetch("/carts/", {
+            method: "POST",
+            body: { product: product.id, quantity: qty },
+        });
+        if (!res?.success) {
+            toast.error(res?.message || "Could not add this product to cart.");
+            return false;
+        }
+        await refreshCart();
+        return true;
+    };
 
     const handleAddToCart = async () => {
-        setAddingToCart(true);
+        if (!inStock || busy) return;
+        setIsAdding(true);
         try {
-            const res = await myFetch('/carts/', {
-                method: 'POST',
-                body: { product: productId, quantity: qty }
-            });
-            if (res?.success) {
-                toast.success("Added to cart successfully!");
-                await refreshCart(); // update navbar badge instantly
-            } else {
-                toast.error(res?.message || "Failed to add to cart");
-            }
-        } catch (error) {
-            toast.error("An error occurred while adding to cart");
+            const added = await addToCart();
+            if (added) toast.success("Added to cart");
+        } catch {
+            toast.error("Could not add this product to cart.");
         } finally {
-            setAddingToCart(false);
+            setIsAdding(false);
         }
     };
 
-    const savings = originalPrice ? originalPrice - price : 0;
+    const handleBuyNow = async () => {
+        if (!inStock || busy) return;
+        setIsBuying(true);
+        try {
+            const added = await addToCart();
+            if (added) router.push("/check-out");
+        } catch {
+            toast.error("Could not start checkout.");
+        } finally {
+            setIsBuying(false);
+        }
+    };
 
     return (
-        <div className="flex flex-col h-full">
-
-            <div className=" space-y-5">
-
-                {/* ── Name ── */}
-
-                <p className="text-2xl  font-semibold text-white leading-tight tracking-tight ">
-                    {name}
+        <section className="rounded-2xl border border-white/10 bg-secondary p-5 shadow-lg sm:p-6">
+            <div className="flex flex-wrap items-end gap-3">
+                <p className="text-3xl font-bold tracking-tight text-primary">
+                    {formatProductPrice(product.price)}
                 </p>
+                {product.originalPrice ? (
+                    <p className="text-lg text-white/50 line-through">
+                        {formatProductPrice(product.originalPrice)}
+                    </p>
+                ) : null}
+            </div>
 
-
-                {/* ── Price ── */}
-                <div className="flex items-center gap-3 flex-wrap ">
-                    <span className="text-3xl font-semibold text-primary tracking-tight">
-                        ${price.toLocaleString()}
-                    </span>
-                    {originalPrice && (
-                        <span className="text-white/70 line-through text-xl">
-                            ${originalPrice.toLocaleString()}
-                        </span>
-                    )}
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+                <div className="flex gap-0.5">
+                    {Array.from({ length: 5 }).map((_, index) => (
+                        <Star
+                            key={index}
+                            className={`h-4 w-4 ${
+                                index < Math.floor(product.rating)
+                                    ? "fill-primary text-primary"
+                                    : "fill-white/15 text-white/15"
+                            }`}
+                        />
+                    ))}
                 </div>
+                <span className="text-sm font-semibold text-white">{product.rating.toFixed(1)}</span>
+                <span className="text-sm text-white/65">
+                    ({product.reviews} {product.reviews === 1 ? "review" : "reviews"})
+                </span>
+            </div>
 
-                {/* ── Rating ── */}
-                <div className="flex items-center gap-3 ">
-                    <div className="flex gap-0.5">
-                        {[...Array(5)].map((_, i) => (
-                            <Star
-                                key={i}
-                                className={`w-4 h-4 ${i < Math.floor(rating)
-                                    ? "fill-[#FFC107] text-[#FFC107]"
-                                    : "text-white/20 fill-white/20"
-                                    }`}
-                            />
-                        ))}
-                    </div>
-                    <span className="text-white font-semibold text-sm">{rating}</span>
-                    <span className="text-white/90 text-sm">({reviews} reviews)</span>
+            <dl className="mt-5 grid grid-cols-2 gap-3 text-sm">
+                <div>
+                    <dt className="text-white/55">Stock</dt>
+                    <dd className="mt-0.5 font-semibold text-white">
+                        {inStock ? `${product.stock} available` : "Out of stock"}
+                    </dd>
                 </div>
-
-                <div className="flex flex-col gap-4 ">
-                    {/* Qty row */}
-                    <div className="flex items-center gap-4">
-                        <span className="text-white text-sm">Quantity</span>
-                        <div className="flex items-center bg-white/10 backdrop-blur-sm border border-white/80 rounded-xl overflow-hidden">
-                            <button
-                                onClick={decrement}
-                                className="w-10 h-10 text-white hover:text-white hover:bg-[#FF6700]/20 transition-all font-semibold text-xl cursor-pointer"
-                            >
-                                −
-                            </button>
-                            <span className="w-12 text-center text-white font-bold text-base border-x border-white/8">
-                                {qty}
-                            </span>
-                            <button
-                                onClick={increment}
-                                className="w-10 h-10 text-white hover:text-white hover:bg-[#FF6700]/20 transition-all font-semibold text-xl cursor-pointer"
-                            >
-                                +
-                            </button>
-                        </div>
+                {product.sku ? (
+                    <div>
+                        <dt className="text-white/55">SKU</dt>
+                        <dd className="mt-0.5 font-semibold text-white">{product.sku}</dd>
                     </div>
+                ) : null}
+            </dl>
 
-                    {/* CTA Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-3">
-                        <button 
-                            onClick={handleAddToCart}
-                            disabled={addingToCart}
-                            className="w-full sm:flex-1 flex items-center justify-center gap-2 bg-transparent hover:bg-primary border border-white/75  text-white font-semibold py-3.5 rounded-xl text-sm transition-all active:scale-95 cursor-pointer disabled:opacity-50"
+            <div className="mt-6 flex flex-col gap-4">
+                <div className="flex items-center gap-4">
+                    <span className="text-sm font-medium text-white">Quantity</span>
+                    <div className="flex items-center rounded-xl border border-white/15 bg-white/10">
+                        <button
+                            type="button"
+                            onClick={() => setQty((value) => Math.max(1, value - 1))}
+                            disabled={!inStock || qty <= 1}
+                            className="flex h-10 w-10 cursor-pointer items-center justify-center text-white transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+                            aria-label="Decrease quantity"
                         >
-                            <ShoppingCart className="w-4 h-4" />
-                            {addingToCart ? "Adding..." : "Add to Cart"}
+                            <Minus className="h-4 w-4" />
                         </button>
-                        <Link
-                            href="/check-out"
-                            className="w-full sm:flex-1 flex items-center justify-center gap-2 bg-[#FF6700] hover:bg-orange-500 text-white font-semibold py-3.5 rounded-xl text-sm transition-all active:scale-95 shadow-xl shadow-orange-900/40 cursor-pointer"
+                        <span className="min-w-10 text-center text-sm font-bold text-white">{qty}</span>
+                        <button
+                            type="button"
+                            onClick={() => setQty((value) => Math.min(maxQty, value + 1))}
+                            disabled={!inStock || qty >= maxQty}
+                            className="flex h-10 w-10 cursor-pointer items-center justify-center text-white transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+                            aria-label="Increase quantity"
                         >
-                            <Zap className="w-4 h-4 fill-white" />
-                            Buy Now
-                        </Link>
+                            <Plus className="h-4 w-4" />
+                        </button>
                     </div>
+                </div>
 
-
+                <div className="flex flex-col gap-3 sm:flex-row">
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={handleAddToCart}
+                        disabled={!inStock || busy}
+                        className="flex-1 rounded-xl border-white/20 text-white hover:bg-white/10 hover:text-white"
+                    >
+                        {isAdding ? <Loader2 className="h-4 w-4 animate-spin" /> : <ShoppingCart className="h-4 w-4" />}
+                        Add to cart
+                    </Button>
+                    <Button
+                        type="button"
+                        onClick={handleBuyNow}
+                        disabled={!inStock || busy}
+                        className="flex-1 rounded-xl shadow-md shadow-primary/20"
+                    >
+                        {isBuying ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
+                        Buy now
+                    </Button>
                 </div>
             </div>
 
-            {/* ── Divider ── */}
-            <div className="border-t border-white/5 pt-4" />
-
-            {/* ── About this item ── */}
-            <div className="my-4">
-                <h3 className="text-sm font-medium text-white   mb-2">
-                    About this item
-                </h3>
-                <ul className="space-y-2.5">
-                    {aboutItems.map((item, idx) => (
-                        <li key={idx} className="text-sm text-white/85 leading-relaxed font-light">
-                            {item}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className="border-t border-white/5 pt-4" />
-            {/* ── Top Highlights ── */}
-            <div className="">
-                <h3 className="text-sm font-medium text-white  mb-4">
-                    Specifications
-                </h3>
-                <div className="grid grid-cols-1 gap-y-3">
-                    {highlights?.map(({ label, value }) => (
-                        <div key={label} className="flex items-start gap-2 text-sm">
-                            <span className="w-40 text-white/70 shrink-0">{label}</span>
-                            <span className="text-white/95 ">{value}</span>
-                        </div>
-                    ))}
+            <div className="mt-6 grid gap-3 border-t border-white/10 pt-5 sm:grid-cols-2">
+                <div className="flex items-start gap-3">
+                    <Truck className="mt-0.5 h-4 w-4 text-primary" />
+                    <div>
+                        <p className="text-sm font-semibold text-white">Delivery</p>
+                        <p className="text-xs text-white/65">
+                            {product.localDeliveryFee != null
+                                ? `Local delivery ${formatProductPrice(product.localDeliveryFee)}`
+                                : "Calculated at checkout"}
+                        </p>
+                    </div>
+                </div>
+                <div className="flex items-start gap-3">
+                    <Shield className="mt-0.5 h-4 w-4 text-primary" />
+                    <div>
+                        <p className="text-sm font-semibold text-white">Secure checkout</p>
+                        <p className="text-xs text-white/65">Protected payment</p>
+                    </div>
                 </div>
             </div>
-
-
-        </div>
+        </section>
     );
 }
