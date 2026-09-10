@@ -93,38 +93,40 @@ export function mapCartItems(items: unknown): CartItem[] {
 export function mapAddresses(data: unknown): Address[] {
     if (!Array.isArray(data)) return [];
 
-    return data
-        .map((item) => {
-            const row = item as Partial<Address> & { _id?: string };
-            if (!row._id) return null;
-            return {
-                _id: row._id,
-                fullName: row.fullName || "",
-                phone: row.phone || "",
-                address: row.address || "",
-                city: row.city || "",
-                state: row.state || "",
-                country: row.country || "",
-                countryCode: row.countryCode,
-                postalCode: row.postalCode,
-                isDefault: Boolean(row.isDefault),
-                latitude: row.latitude,
-                longitude: row.longitude,
-            };
-        })
-        .filter((address): address is Address => address !== null);
+    const addresses: Address[] = [];
+    for (const item of data) {
+        const row = item as Partial<Address> & { _id?: string };
+        if (!row._id) continue;
+
+        const address: Address = {
+            _id: row._id,
+            fullName: row.fullName || "",
+            phone: row.phone || "",
+            address: row.address || "",
+            city: row.city || "",
+            state: row.state || "",
+            country: row.country || "",
+            isDefault: Boolean(row.isDefault),
+        };
+        if (row.countryCode) address.countryCode = row.countryCode;
+        if (row.postalCode) address.postalCode = row.postalCode;
+        if (typeof row.latitude === "number") address.latitude = row.latitude;
+        if (typeof row.longitude === "number") address.longitude = row.longitude;
+        addresses.push(address);
+    }
+    return addresses;
 }
 
 export function mapCountries(data: unknown): Country[] {
     if (!Array.isArray(data)) return [];
 
-    return data
-        .map((item) => {
-            const row = item as { name?: string; countryCode?: string };
-            if (!row.name) return null;
-            return { name: row.name, countryCode: row.countryCode || "" };
-        })
-        .filter((country): country is Country => country !== null);
+    const countries: Country[] = [];
+    for (const item of data) {
+        const row = item as { name?: string; countryCode?: string };
+        if (!row.name) continue;
+        countries.push({ name: row.name, countryCode: row.countryCode || "" });
+    }
+    return countries;
 }
 
 export function formFromAddress(
