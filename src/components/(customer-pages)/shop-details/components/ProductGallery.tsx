@@ -97,7 +97,7 @@ export default function ProductGallery({ images, name, inStock, discount }: Prod
                         </div>
                         <span
                             className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${
-                                inStock ? "bg-success/15 text-success" : "bg-destructive/15 text-destructive"
+                                inStock ? "bg-success/15 text-foreground" : "bg-destructive/15 text-foreground/70"
                             }`}
                         >
                             {inStock ? "In stock" : "Out of stock"}
