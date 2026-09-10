@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { ZoomIn } from "lucide-react";
+
+const LENS_SIZE = 200;
 
 interface ProductGalleryProps {
     images: string[];
@@ -11,18 +12,42 @@ interface ProductGalleryProps {
     discount?: number;
 }
 
+type ZoomLevel = 2 | 3;
+
+function clamp(value: number, min: number, max: number) {
+    return Math.min(Math.max(value, min), max);
+}
+
 export default function ProductGallery({ images, name, inStock, discount }: ProductGalleryProps) {
     const [activeIndex, setActiveIndex] = useState(0);
-    const [isZoomed, setIsZoomed] = useState(false);
-    const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
+    const [zoomLevel, setZoomLevel] = useState<ZoomLevel>(2);
+    const [pointer, setPointer] = useState<{ x: number; y: number } | null>(null);
+    const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
+    const stageRef = useRef<HTMLDivElement>(null);
     const activeImage = images[activeIndex] || images[0];
 
-    const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-        const rect = event.currentTarget.getBoundingClientRect();
-        const x = ((event.clientX - rect.left) / rect.width) * 100;
-        const y = ((event.clientY - rect.top) / rect.height) * 100;
-        setMousePos({ x, y });
+    const updatePointer = (clientX: number, clientY: number) => {
+        const stage = stageRef.current;
+        if (!stage) return;
+        const rect = stage.getBoundingClientRect();
+        setStageSize({ width: rect.width, height: rect.height });
+        setPointer({
+            x: clamp(clientX - rect.left, 0, rect.width),
+            y: clamp(clientY - rect.top, 0, rect.height),
+        });
     };
+
+    const canShowLens =
+        pointer !== null &&
+        stageSize.width >= LENS_SIZE &&
+        stageSize.height >= LENS_SIZE;
+
+    const lensLeft = canShowLens
+        ? clamp(pointer.x - LENS_SIZE / 2, 0, stageSize.width - LENS_SIZE)
+        : 0;
+    const lensTop = canShowLens
+        ? clamp(pointer.y - LENS_SIZE / 2, 0, stageSize.height - LENS_SIZE)
+        : 0;
 
     return (
         <div className="rounded-2xl border border-white/10 bg-secondary p-4 shadow-lg sm:p-5">
@@ -33,7 +58,7 @@ export default function ProductGallery({ images, name, inStock, discount }: Prod
                             key={`${image}-${index}`}
                             type="button"
                             onClick={() => setActiveIndex(index)}
-                            className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border-2 bg-white transition-all ${
+                            className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border-2 bg-black/20 transition-all ${
                                 activeIndex === index
                                     ? "border-primary shadow-md"
                                     : "border-white/10 hover:border-primary/50"
@@ -44,7 +69,7 @@ export default function ProductGallery({ images, name, inStock, discount }: Prod
                                 alt={`${name} view ${index + 1}`}
                                 fill
                                 unoptimized
-                                className="object-contain p-1.5"
+                                className="object-cover"
                                 sizes="80px"
                             />
                         </button>
@@ -52,48 +77,90 @@ export default function ProductGallery({ images, name, inStock, discount }: Prod
                 </div>
 
                 <div className="order-1 min-w-0 flex-1 md:order-2">
-                    <div
-                        className="relative aspect-square w-full cursor-zoom-in overflow-hidden rounded-2xl bg-white"
-                        onMouseMove={handleMouseMove}
-                        onMouseEnter={() => setIsZoomed(true)}
-                        onMouseLeave={() => setIsZoomed(false)}
-                    >
-                        {discount ? (
-                            <span className="absolute top-4 left-4 z-20 rounded-md bg-primary px-2.5 py-1 text-xs font-bold text-white shadow-md">
-                                -{discount}%
-                            </span>
-                        ) : null}
+                    <div className="mb-3 flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-2">
+                            <span className="text-xs font-semibold text-white/70">Zoom</span>
+                            {([2, 3] as const).map((level) => (
+                                <button
+                                    key={level}
+                                    type="button"
+                                    onClick={() => setZoomLevel(level)}
+                                    className={`h-8 min-w-12 cursor-pointer rounded-full px-3 text-xs font-bold transition-colors ${
+                                        zoomLevel === level
+                                            ? "bg-primary text-white"
+                                            : "bg-white/10 text-white hover:bg-white/15"
+                                    }`}
+                                >
+                                    {level}x
+                                </button>
+                            ))}
+                        </div>
                         <span
-                            className={`absolute top-4 right-14 z-20 rounded-full px-2.5 py-1 text-[11px] font-semibold ${
+                            className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${
                                 inStock ? "bg-success/15 text-success" : "bg-destructive/15 text-destructive"
                             }`}
                         >
                             {inStock ? "In stock" : "Out of stock"}
                         </span>
-                        <div className="absolute top-4 right-4 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white">
-                            <ZoomIn className="h-4 w-4" />
-                        </div>
-                        <div
-                            className="relative h-full w-full transition-transform duration-100 ease-out"
-                            style={
-                                isZoomed
-                                    ? {
-                                          transform: "scale(1.5)",
-                                          transformOrigin: `${mousePos.x}% ${mousePos.y}%`,
-                                      }
-                                    : undefined
-                            }
-                        >
-                            <Image
-                                src={activeImage}
-                                alt={name}
-                                fill
-                                unoptimized
-                                priority
-                                className="object-contain p-8"
-                                sizes="(min-width: 1024px) 40vw, 100vw"
-                            />
-                        </div>
+                    </div>
+
+                    <div
+                        ref={stageRef}
+                        className="relative aspect-square w-full overflow-hidden rounded-2xl bg-black/20"
+                        style={{ cursor: canShowLens ? "none" : "crosshair" }}
+                        onPointerEnter={(event) => updatePointer(event.clientX, event.clientY)}
+                        onPointerMove={(event) => updatePointer(event.clientX, event.clientY)}
+                        onPointerLeave={() => setPointer(null)}
+                    >
+                        {discount ? (
+                            <span className="pointer-events-none absolute top-4 left-4 z-20 rounded-md bg-primary px-2.5 py-1 text-xs font-bold text-white shadow-md">
+                                -{discount}%
+                            </span>
+                        ) : null}
+
+                        <Image
+                            src={activeImage}
+                            alt={name}
+                            fill
+                            unoptimized
+                            priority
+                            draggable={false}
+                            className="pointer-events-none object-cover"
+                            sizes="(min-width: 1024px) 40vw, 100vw"
+                        />
+
+                        {canShowLens && pointer && (
+                            <div
+                                aria-hidden
+                                className="pointer-events-none absolute z-30 overflow-hidden rounded-full border-[3px] border-white shadow-2xl ring-2 ring-primary/50"
+                                style={{
+                                    left: lensLeft,
+                                    top: lensTop,
+                                    width: LENS_SIZE,
+                                    height: LENS_SIZE,
+                                }}
+                            >
+                                <div
+                                    className="absolute"
+                                    style={{
+                                        width: stageSize.width,
+                                        height: stageSize.height,
+                                        transform: `translate(${LENS_SIZE / 2 - pointer.x * zoomLevel}px, ${LENS_SIZE / 2 - pointer.y * zoomLevel}px) scale(${zoomLevel})`,
+                                        transformOrigin: "0 0",
+                                    }}
+                                >
+                                    <Image
+                                        src={activeImage}
+                                        alt=""
+                                        fill
+                                        unoptimized
+                                        draggable={false}
+                                        className="object-cover"
+                                        sizes="(min-width: 1024px) 40vw, 100vw"
+                                    />
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
