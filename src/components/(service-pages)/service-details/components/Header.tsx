@@ -1,68 +1,51 @@
-'use client';
+import Image from "next/image";
+import { Star } from "lucide-react";
+import type { ServiceDetailsData } from "../types";
 
-import Image from 'next/image';
-import { Star } from 'lucide-react';
-import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
-
-
-export default function Header({ service }: { service: any }) {
-    if (!service) return null;
-
-    const avatarUrl = resolveImageUrl(service.creator?.profileImage) || `https://ui-avatars.com/api/?name=${encodeURIComponent(service.creator?.name || 'User')}&background=random`;
-    const heroImageUrl = resolveImageUrl(service.image) || "/placeholder.jpg";
-
+export default function Header({ service }: { service: ServiceDetailsData }) {
     return (
-        <div className="">
-            <div className="container mx-auto px-4 ">
-                <div className="grid grid-cols-1 gap-8 items-start">
-                    {/* Left Content */}
-                    <div>
-                        <h1 className="text-3xl md:text-4xl font-semibold text-white mb-6">
-                            {service.name}
-                        </h1>
+        <section className="overflow-hidden rounded-2xl border border-white/10 bg-secondary shadow-lg">
+            <div className="relative h-64 w-full sm:h-80 md:h-96">
+                <Image
+                    src={service.image}
+                    alt={service.name}
+                    fill
+                    unoptimized
+                    priority
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 66vw, 100vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary via-black/20 to-transparent" />
+            </div>
 
-                        {/* Professional Info */}
-                        <div className="flex items-center gap-4 pb-2">
-                            <div className='flex items-center gap-4 border-e-2 border-white/50 pe-6'>
-                                <Image
-                                    src={avatarUrl}
-                                    alt={service.creator?.name || "Professional"}
-                                    width={50}
-                                    height={50}
-                                    className="rounded-full object-cover"
-                                    unoptimized={true}
-                                />
-                                <div className="flex-1 space-y-1.5">
-                                    <h3 className="text-white font-semibold text-lg">{service.creator?.name}</h3>
-                                    <p className="text-xs text-orange-400 font-normal">TOP RATED SELLER</p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-2 text-sm">
-                                <div className="flex items-center">
-                                    <Star className="w-4 h-4 fill-orange-400 text-orange-400" />
-                                    <span className="text-white font-semibold ml-1">{service.averageRating || service.ratingAverage || 0}</span>
-                                </div>
-                                <span className="text-white/70">({service.ratingCount || 0} REVIEWS)</span>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    {/* Right Hero Image */}
-                    <div className="relative h-80 md:h-96 rounded-2xl overflow-hidden">
+            <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+                <div className="flex items-center gap-3">
+                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border border-white/15 bg-white/10">
                         <Image
-                            src={heroImageUrl}
-                            alt={service.name}
+                            src={service.creator.profileImage}
+                            alt={service.creator.name}
                             fill
+                            unoptimized
                             className="object-cover"
-                            unoptimized={true}
-                            priority
+                            sizes="48px"
                         />
-                        <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent"></div>
+                    </div>
+                    <div>
+                        <p className="text-sm font-semibold text-white">{service.creator.name}</p>
+                        <p className="text-xs font-medium uppercase tracking-wide text-primary">
+                            {service.categoryName}
+                        </p>
                     </div>
                 </div>
+
+                <div className="flex items-center gap-2 text-sm">
+                    <Star className="h-4 w-4 fill-primary text-primary" />
+                    <span className="font-semibold text-white">{service.rating.toFixed(1)}</span>
+                    <span className="text-white/65">
+                        ({service.reviewCount} {service.reviewCount === 1 ? "review" : "reviews"})
+                    </span>
+                </div>
             </div>
-        </div>
+        </section>
     );
 }

@@ -1,26 +1,19 @@
-'use client';
-
-interface Reason {
-    id: string;
-    title: string;
-}
-
-const reasonsData: Reason[] = [
-    { id: '1', title: 'Quality Work & On-time Delivery' },
-    { id: '2', title: '100% Satisfaction' },
-    { id: '3', title: '24/7 Ongoing Support' },
-    { id: '4', title: '30 Days of Free Support After Completion' }
+const reasons = [
+    "Quality work and on-time delivery",
+    "100% satisfaction focus",
+    "Ongoing support during the project",
+    "30 days of free support after completion",
 ];
 
 export default function WhyChooseUs() {
     return (
-        <section>
-            <h2 className="text-xl font-medium text-white mb-3">Why Choose Us</h2>
-            <ul className="space-y-1.5">
-                {reasonsData.map((reason) => (
-                    <li key={reason.id} className="flex items-start gap-3">
-                        <span className="text-primary font-medium text-base leading-none mt-1">•</span>
-                        <span className="text-white/80 text-sm">{reason.title}</span>
+        <section className="rounded-2xl border border-white/10 bg-secondary p-5 shadow-lg sm:p-6">
+            <h2 className="mb-4 text-lg font-bold text-white">Why choose this gig</h2>
+            <ul className="space-y-2.5">
+                {reasons.map((reason) => (
+                    <li key={reason} className="flex items-start gap-3 text-sm text-white/85">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                        <span>{reason}</span>
                     </li>
                 ))}
             </ul>

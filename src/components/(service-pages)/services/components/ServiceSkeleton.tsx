@@ -2,7 +2,7 @@
 
 export function ServiceSkeletonCard() {
     return (
-        <div className="flex gap-4 bg-white/5 border border-white/10 rounded-2xl p-4 animate-pulse">
+        <div className="flex animate-pulse gap-4 rounded-2xl border border-white/10 bg-secondary p-4">
             {/* Image Skeleton */}
             <div className="w-28 h-20 sm:w-32 sm:h-24 rounded-xl bg-white/10 shrink-0" />
 

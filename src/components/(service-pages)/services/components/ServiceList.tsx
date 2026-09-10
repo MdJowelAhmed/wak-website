@@ -44,7 +44,7 @@ const HorizontalServiceCard = ({
     return (
         <div
             onClick={handleClick}
-            className="flex gap-4 bg-secondary border border-white/10 hover:border-[#FF6700]/30 hover:bg-secondary/90 rounded-2xl p-4 transition-all duration-350 hover:-translate-y-0.5 cursor-pointer group"
+            className="group flex cursor-pointer gap-4 rounded-2xl border border-white/10 bg-secondary p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:bg-secondary/90"
         >
             {/* Cover Image (Left Side) */}
             <div className="w-28 h-20 sm:w-32 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-white/10">
@@ -85,11 +85,12 @@ const HorizontalServiceCard = ({
                     <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                         <div className="flex items-center gap-0.5 text-amber-400">
                             <Star size={11} className="fill-amber-400 text-amber-400" />
-                            <span className="text-[11px] font-semibold text-white ml-0.5">
-                                {rating.toFixed(1)} <span className="text-zinc-500 font-normal">({reviewCount})</span>
+                            <span className="ml-0.5 text-[11px] font-semibold text-white">
+                                {rating.toFixed(1)}{" "}
+                                <span className="font-normal text-white/50">({reviewCount})</span>
                             </span>
                         </div>
-                        <span className="text-[11px] font-bold text-[#FF6700]">
+                        <span className="text-[11px] font-bold text-primary">
                             From: ${price}
                         </span>
                     </div>
@@ -155,7 +156,7 @@ export default function ServiceList({
                 <div className="mb-8">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                         <div className="flex items-center gap-4">
-                            <div className="w-1 h-10 bg-[#FF6700] rounded-full"></div>
+                            <div className="h-10 w-1 rounded-full bg-primary"></div>
                             <div>
                                 <h2 className="text-3xl md:text-4xl font-semibold text-white">
                                     Our Services
@@ -188,8 +189,8 @@ export default function ServiceList({
                 </div>
 
                 {filteredServices.length === 0 ? (
-                    <div key={selectedCategory} className="py-20 text-center border border-dashed border-zinc-800 rounded-2xl bg-[#2a2a2a]/10 animate-in fade-in duration-300">
-                        <p className="text-zinc-500 text-sm">No services found in this category.</p>
+                    <div key={selectedCategory} className="rounded-2xl border border-dashed border-white/20 bg-secondary/40 py-20 text-center animate-in fade-in duration-300">
+                        <p className="text-sm text-white/70">No services found in this category.</p>
                     </div>
                 ) : (
                     <div key={selectedCategory} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-3 duration-500">
@@ -197,7 +198,7 @@ export default function ServiceList({
                             <HorizontalServiceCard 
                                 key={service._id} 
                                 id={service.slug || service._id}
-                                name={service.creator?.name || service.name || "Unknown"}
+                                name={service.name || "Untitled service"}
                                 avatar={resolveImageUrl(service.creator?.profileImage) || `https://ui-avatars.com/api/?name=${encodeURIComponent(service.creator?.name || 'User')}&background=random`}
                                 rating={service.ratingAverage || 0}
                                 reviewCount={service.ratingCount || 0}

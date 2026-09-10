@@ -2,7 +2,7 @@ import ServiceSkeletonGrid from "@/components/(service-pages)/services/component
 
 export default function ServicesLoading() {
     return (
-        <main className="w-full pb-16 md:py-20 bg-[#4f2c1d]">
+        <main className="w-full pb-16 md:py-20">
             <div className="container mx-auto px-4">
                 {/* Header Skeleton */}
                 <div className="mb-8">

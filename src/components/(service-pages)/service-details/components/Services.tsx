@@ -1,16 +1,18 @@
-'use client';
+import { Check } from "lucide-react";
 
 export default function Services({ serviceIncludes }: { serviceIncludes: string[] }) {
-    if (!serviceIncludes || serviceIncludes.length === 0) return null;
+    if (serviceIncludes.length === 0) return null;
 
     return (
-        <section>
-            <h2 className="text-xl font-medium text-white mb-3">Services We Offer</h2>
-            <ul className="space-y-1.5">
-                {serviceIncludes.map((service, index) => (
-                    <li key={index} className="flex items-start gap-3 text-white/80">
-                        <span className="text-white font-bold text-lg leading-none mt-1">•</span>
-                        <span className="text-sm">{service}</span>
+        <section className="rounded-2xl border border-white/10 bg-secondary p-5 shadow-lg sm:p-6">
+            <h2 className="mb-4 text-lg font-bold text-white">What&apos;s included</h2>
+            <ul className="grid gap-2.5 sm:grid-cols-2">
+                {serviceIncludes.map((item) => (
+                    <li key={item} className="flex items-start gap-2.5 text-sm text-white/85">
+                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
+                            <Check className="h-3.5 w-3.5" />
+                        </span>
+                        <span>{item}</span>
                     </li>
                 ))}
             </ul>

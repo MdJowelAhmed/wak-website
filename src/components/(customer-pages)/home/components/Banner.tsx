@@ -90,7 +90,7 @@ function BannerCard({ item, priority }: { item: HeroData; priority?: boolean }) 
             </div>
 
             <div className="relative z-10 flex flex-col items-start gap-2">
-                <h3 className="line-clamp-2 text-xl leading-tight font-bold text-white transition-colors group-hover:text-accent sm:text-2xl">
+                <h3 className="line-clamp-2 text-xl leading-tight font-bold text-foreground transition-colors group-hover:text-foreground/80 sm:text-2xl">
                     {item.header}
                 </h3>
                 {item.description && (
