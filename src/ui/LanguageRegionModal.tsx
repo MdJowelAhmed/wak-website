@@ -26,20 +26,19 @@ export default function LanguageRegionModal({
     isOpen,
     onClose,
     currentLang,
-    currentCountry,
+    currentCountry: _currentCountry,
     onSelectLanguage,
     onSelectCountry,
 }: LanguageRegionDropdownProps) {
     const [selectedLang, setSelectedLang] = useState(currentLang);
-    const [selectedCountry, setSelectedCountry] = useState(currentCountry);
     const [isChangingCurrency, setIsChangingCurrency] = useState(false);
+    const [currencyQuery, setCurrencyQuery] = useState("");
     const popoverRef = useRef<HTMLDivElement>(null);
-    const { rateLabel, setCountry } = useCurrency();
+    const { rateLabel, currency, country, availableCurrencies, setCurrencyCode } = useCurrency();
 
     useEffect(() => {
         setSelectedLang(currentLang);
-        setSelectedCountry(currentCountry);
-    }, [currentLang, currentCountry]);
+    }, [currentLang]);
 
     // Close on outside click
     useEffect(() => {
@@ -57,7 +56,7 @@ export default function LanguageRegionModal({
 
     if (!isOpen) return null;
 
-    const activeCountryObj = countriesList.find((c) => c.code === selectedCountry) || countriesList[0];
+    const activeCountryObj = country;
 
     const handleSelectLang = (code: string) => {
         setSelectedLang(code);
@@ -68,12 +67,22 @@ export default function LanguageRegionModal({
         }
     };
 
-    const handleSelectCountry = (code: string) => {
-        setSelectedCountry(code);
-        setCountry(code);
-        onSelectCountry(code);
+    const handleSelectCurrency = (nextCurrency: string, countryCode: string) => {
+        setCurrencyCode(nextCurrency);
+        onSelectCountry(countryCode);
         setIsChangingCurrency(false);
+        setCurrencyQuery("");
     };
+
+    const filteredCurrencies = availableCurrencies.filter((item) => {
+        const query = currencyQuery.trim().toLowerCase();
+        if (!query) return true;
+        return (
+            item.currency.toLowerCase().includes(query) ||
+            item.name.toLowerCase().includes(query) ||
+            item.symbol.toLowerCase().includes(query)
+        );
+    });
 
     return (
         <div
@@ -137,7 +146,7 @@ export default function LanguageRegionModal({
 
                 <div className="flex items-center justify-between rounded-lg px-2 py-1 transition-colors hover:bg-section-bg/60">
                     <span className="text-xs font-semibold text-card-foreground">
-                        {activeCountryObj.symbol} - {activeCountryObj.currency} - {activeCountryObj.name}
+                        {activeCountryObj.symbol} - {currency} - {activeCountryObj.name}
                         <span className="mt-0.5 block text-[10px] font-medium text-muted-foreground">
                             {rateLabel}
                         </span>
@@ -153,29 +162,42 @@ export default function LanguageRegionModal({
 
                 {/* Inline Currency / Country Picker when "Change" is clicked */}
                 {isChangingCurrency && (
-                    <div className="mt-2 p-1.5 rounded-xl bg-section-bg border border-border space-y-1 max-h-56 overflow-y-auto animate-in fade-in slide-in-from-top-1 duration-150">
-                        {countriesList.map((c) => {
-                            const isSelected = selectedCountry === c.code;
-                            return (
-                                <div
-                                    key={c.code}
-                                    onClick={() => handleSelectCountry(c.code)}
-                                    className={`flex cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-xs transition-colors ${
-                                        isSelected
-                                            ? 'bg-primary/10 font-bold text-primary'
-                                            : 'text-card-foreground hover:bg-card'
-                                    }`}
-                                >
-                                    <span className="flex items-center gap-1.5">
-                                        <span>{c.flag}</span>
-                                        <span>{c.name}</span>
-                                    </span>
-                                    <span className="text-body-text text-[11px]">
-                                        {c.symbol} ({c.currency})
-                                    </span>
-                                </div>
-                            );
-                        })}
+                    <div className="mt-2 rounded-xl border border-border bg-section-bg p-1.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                        <input
+                            type="search"
+                            value={currencyQuery}
+                            onChange={(event) => setCurrencyQuery(event.target.value)}
+                            placeholder="Search currency..."
+                            className="mb-1.5 w-full rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-card-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
+                        />
+                        <div className="max-h-56 space-y-1 overflow-y-auto">
+                            {filteredCurrencies.length === 0 ? (
+                                <p className="px-2 py-2 text-[11px] text-muted-foreground">No currency found</p>
+                            ) : (
+                                filteredCurrencies.map((item) => {
+                                    const isSelected = currency === item.currency;
+                                    return (
+                                        <div
+                                            key={item.currency}
+                                            onClick={() => handleSelectCurrency(item.currency, item.code)}
+                                            className={`flex cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-xs transition-colors ${
+                                                isSelected
+                                                    ? 'bg-primary/10 font-bold text-primary'
+                                                    : 'text-card-foreground hover:bg-card'
+                                            }`}
+                                        >
+                                            <span className="flex items-center gap-1.5">
+                                                <span>{item.flag}</span>
+                                                <span>{item.name}</span>
+                                            </span>
+                                            <span className="text-[11px] text-body-text">
+                                                {item.symbol} ({item.currency})
+                                            </span>
+                                        </div>
+                                    );
+                                })
+                            )}
+                        </div>
                     </div>
                 )}
             </div>

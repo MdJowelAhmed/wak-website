@@ -23,8 +23,10 @@ import {
   type ExchangeRatesPayload,
 } from "../../helpers/currency";
 import {
+  countriesList,
   countryByCode,
-  countryByCurrency,
+  currenciesFromRates,
+  currencyToOption,
   type CountryOption,
 } from "../../helpers/regions";
 
@@ -35,9 +37,11 @@ interface CurrencyContextValue {
   rate: number;
   rates: Record<string, number>;
   country: CountryOption;
+  availableCurrencies: CountryOption[];
   formatPrice: (amountUsd: number) => string;
   rateLabel: string;
   setCountry: (countryCode: string) => void;
+  setCurrencyCode: (currencyCode: string) => void;
 }
 
 const defaultCountry = countryByCode(DEFAULT_COUNTRY);
@@ -49,9 +53,11 @@ const CurrencyContext = createContext<CurrencyContextValue>({
   rate: 1,
   rates: { USD: 1 },
   country: defaultCountry,
+  availableCurrencies: countriesList,
   formatPrice: (amountUsd) => formatConvertedPrice(amountUsd, DEFAULT_CURRENCY, 1),
   rateLabel: formatExchangeRate(1, DEFAULT_CURRENCY),
   setCountry: () => {},
+  setCurrencyCode: () => {},
 });
 
 interface CurrencyProviderProps {
@@ -67,24 +73,25 @@ export function CurrencyProvider({
   initialCountry = DEFAULT_COUNTRY,
   initialCurrency = DEFAULT_CURRENCY,
 }: CurrencyProviderProps) {
-  const startingCountry = countryByCode(initialCountry);
-  const startingCurrency = startingCountry.currency || initialCurrency || DEFAULT_CURRENCY;
+  const startingOption = initialCurrency
+    ? currencyToOption(initialCurrency)
+    : countryByCode(initialCountry);
+  const startingCurrency = startingOption.currency || DEFAULT_CURRENCY;
   const startingRates = initialRates?.rates ?? { USD: 1 };
 
   const [rates, setRates] = useState<Record<string, number>>(startingRates);
-  const [countryCode, setCountryCode] = useState(startingCountry.code);
+  const [countryCode, setCountryCode] = useState(startingOption.code);
   const [currency, setCurrency] = useState(startingCurrency);
   const [rate, setRate] = useState(resolveRate(startingRates, startingCurrency));
 
-  const applyPreference = useCallback(
-    (nextCountryCode: string, nextRates: Record<string, number>, storedRate?: number) => {
-      const country = countryByCode(nextCountryCode);
-      const nextCurrency = country.currency;
-      const nextRate = resolveRate(nextRates, nextCurrency, storedRate);
-      setCountryCode(country.code);
-      setCurrency(nextCurrency);
+  const applyCurrency = useCallback(
+    (nextCurrency: string, nextRates: Record<string, number>, storedRate?: number) => {
+      const option = currencyToOption(nextCurrency);
+      const nextRate = resolveRate(nextRates, option.currency, storedRate);
+      setCountryCode(option.code);
+      setCurrency(option.currency);
       setRate(nextRate);
-      persistCurrencyPreference(country.code, nextCurrency, nextRate);
+      persistCurrencyPreference(option.code, option.currency, nextRate);
     },
     [],
   );
@@ -93,11 +100,11 @@ export function CurrencyProvider({
     const savedCountry = localStorage.getItem(STORAGE_COUNTRY);
     const savedCurrency = localStorage.getItem(STORAGE_CURRENCY);
     const savedRate = Number(localStorage.getItem(STORAGE_RATE));
-    const country = savedCountry
-      ? countryByCode(savedCountry)
-      : countryByCurrency(savedCurrency || undefined) || countryByCode(DEFAULT_COUNTRY);
-    applyPreference(
-      country.code,
+    const option = savedCurrency
+      ? currencyToOption(savedCurrency)
+      : countryByCode(savedCountry || DEFAULT_COUNTRY);
+    applyCurrency(
+      option.currency,
       startingRates,
       Number.isFinite(savedRate) && savedRate > 0 ? savedRate : undefined,
     );
@@ -129,12 +136,24 @@ export function CurrencyProvider({
 
   const setCountry = useCallback(
     (nextCountryCode: string) => {
-      applyPreference(nextCountryCode, rates);
+      applyCurrency(countryByCode(nextCountryCode).currency, rates);
     },
-    [applyPreference, rates],
+    [applyCurrency, rates],
   );
 
-  const country = countryByCode(countryCode);
+  const setCurrencyCode = useCallback(
+    (nextCurrency: string) => {
+      applyCurrency(nextCurrency, rates);
+    },
+    [applyCurrency, rates],
+  );
+
+  const country = currencyToOption(currency);
+  const availableCurrencies = useMemo(
+    () => (Object.keys(rates).length > 1 ? currenciesFromRates(rates) : countriesList),
+    [rates],
+  );
+
   const value = useMemo<CurrencyContextValue>(
     () => ({
       countryCode,
@@ -143,11 +162,13 @@ export function CurrencyProvider({
       rate,
       rates,
       country,
+      availableCurrencies,
       formatPrice: (amountUsd: number) => formatConvertedPrice(amountUsd, currency, rate),
       rateLabel: formatExchangeRate(rate, currency),
       setCountry,
+      setCurrencyCode,
     }),
-    [country, countryCode, currency, rate, rates, setCountry],
+    [availableCurrencies, country, countryCode, currency, rate, rates, setCountry, setCurrencyCode],
   );
 
   return <CurrencyContext.Provider value={value}>{children}</CurrencyContext.Provider>;

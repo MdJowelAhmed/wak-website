@@ -61,7 +61,7 @@ export default function FooterPayments() {
 
     return (
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+            <p className="text-xs font-semibold uppercase tracking-wider text-foreground/80">
                 Payments in {country.name}
             </p>
             <ul className="flex flex-wrap items-center gap-2">
@@ -72,9 +72,9 @@ export default function FooterPayments() {
                             key={method}
                             title={label}
                             aria-label={label}
-                            className="flex h-9 min-w-12 items-center justify-center rounded-md bg-white px-2.5 text-zinc-800"
+                            className="flex h-9 min-w-12 items-center justify-center rounded-md bg-primary text-foregorund"
                         >
-                            <Icon className="h-6 w-6" aria-hidden />
+                            <Icon className="h-9 w-9 text-foreground" aria-hidden />
                             <span className="sr-only">{label}</span>
                         </li>
                     );
