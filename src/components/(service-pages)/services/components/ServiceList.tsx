@@ -2,6 +2,7 @@
 
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { Star } from 'lucide-react';
+import { useCurrency } from '@/hooks/use-currency';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
 import { PaginationData } from '../index';
 import Image from 'next/image';
@@ -28,6 +29,7 @@ const HorizontalServiceCard = ({
     coverImage: string;
 }) => {
     const router = useRouter();
+    const { formatPrice } = useCurrency();
 
     const handleClick = () => {
         const cookies = document.cookie;
@@ -91,7 +93,7 @@ const HorizontalServiceCard = ({
                             </span>
                         </div>
                         <span className="text-[11px] font-bold text-primary">
-                            From: ${price}
+                            From: {formatPrice(price)}
                         </span>
                     </div>
                 </div>

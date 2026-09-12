@@ -12,7 +12,8 @@ import UserAuthMenu from '@/ui/UserAuthMenu';
 import SearchBar from '@/ui/SearchBar';
 import CustomerMobileMenu from '@/ui/CustomerMobileMenu';
 import LocationModal from '@/ui/LocationModal';
-import LanguageRegionModal, { countriesList, languagesList } from '@/ui/LanguageRegionModal';
+import LanguageRegionModal, { languagesList } from '@/ui/LanguageRegionModal';
+import { useCurrency } from '@/hooks/use-currency';
 
 interface NavbarProps {
     userMode?: string;
@@ -25,18 +26,16 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
 
     const [currentLocation, setCurrentLocation] = useState('Lilongwe, 20100');
     const [currentLang, setCurrentLang] = useState('en');
-    const [currentCountry, setCurrentCountry] = useState('MW');
 
     const { isLoggedIn, logout } = useAuth();
+    const { country, currency, rate, setCountry } = useCurrency();
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const savedLang = localStorage.getItem('user_language');
-            const savedCountry = localStorage.getItem('user_country');
             const savedLoc = localStorage.getItem('user_location');
 
             if (savedLang) setCurrentLang(savedLang);
-            if (savedCountry) setCurrentCountry(savedCountry);
             if (savedLoc) setCurrentLocation(savedLoc);
         }
     }, []);
@@ -48,7 +47,6 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
         }
     };
 
-    const activeCountryObj = countriesList.find((c) => c.code === currentCountry) || countriesList[0];
     const activeLangObj = languagesList.find((l) => l.code === currentLang) || languagesList[0];
 
     return (
@@ -78,10 +76,13 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
                             <button
                                 onClick={() => setIsLangOpen(!isLangOpen)}
                                 className="flex items-center gap-1.5 hover:text-accent-foreground transition-colors cursor-pointer text-accent-foreground font-semibold py-0.5"
-                                aria-label="Change Language and Country"
+                                aria-label="Change Language and Currency"
                             >
-                                <span>{activeCountryObj.flag}</span>
-                                <span>{activeCountryObj.code}</span>
+                                <span>{country.flag}</span>
+                                <span>{currency}</span>
+                                <span className="hidden sm:inline text-accent-foreground/80 font-medium">
+                                    {rate.toLocaleString("en-US", { maximumFractionDigits: 2 })}
+                                </span>
                                 <span className="text-border">|</span>
                                 <span>{activeLangObj.name}</span>
                                 <ChevronDown className={`w-3 h-3 text-accent-foreground/70 transition-transform duration-200 ${isLangOpen ? 'rotate-180' : ''}`} />
@@ -91,9 +92,9 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
                                 isOpen={isLangOpen}
                                 onClose={() => setIsLangOpen(false)}
                                 currentLang={currentLang}
-                                currentCountry={currentCountry}
+                                currentCountry={country.code}
                                 onSelectLanguage={setCurrentLang}
-                                onSelectCountry={setCurrentCountry}
+                                onSelectCountry={setCountry}
                             />
                         </div>
 
@@ -168,6 +169,8 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
                     currentLocation={currentLocation}
                     onOpenLocationModal={() => setIsLocationOpen(true)}
                     onOpenLangModal={() => setIsLangOpen(true)}
+                    currentCurrencyLabel={`${country.flag} ${currency}`}
+                    currentLangName={activeLangObj.name}
                 />
             )}
         </header>

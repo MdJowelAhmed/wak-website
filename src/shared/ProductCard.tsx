@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useCart } from "@/context/CartContext";
+import { useCurrency } from "@/hooks/use-currency";
 import { myFetch } from "../../helpers/myFetch";
 
 interface ProductCardProps {
@@ -24,6 +25,7 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
     const { id, productId, name, image, currentPrice, originalPrice, discount, rating, reviews } = product;
     const router = useRouter();
     const { refreshCart } = useCart();
+    const { formatPrice } = useCurrency();
     const [addingToCart, setAddingToCart] = useState(false);
 
     const handleClick = () => {
@@ -109,9 +111,9 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
                     </h3>
 
                     <div className="flex items-center gap-1.5 sm:gap-3 mt-1">
-                        <span className="text-primary font-bold text-xs sm:text-base">${currentPrice}</span>
+                        <span className="text-primary font-bold text-xs sm:text-base">{formatPrice(currentPrice)}</span>
                         {originalPrice && (
-                            <span className="text-muted-text line-through text-[10px] sm:text-sm">${originalPrice}</span>
+                            <span className="text-muted-text line-through text-[10px] sm:text-sm">{formatPrice(originalPrice)}</span>
                         )}
                     </div>
                 </div>

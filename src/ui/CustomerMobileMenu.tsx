@@ -16,6 +16,8 @@ interface CustomerMobileMenuProps {
     currentLocation?: string;
     onOpenLocationModal?: () => void;
     onOpenLangModal?: () => void;
+    currentCurrencyLabel?: string;
+    currentLangName?: string;
 }
 
 export default function CustomerMobileMenu({
@@ -27,6 +29,8 @@ export default function CustomerMobileMenu({
     currentLocation = 'Lilongwe, 20100',
     onOpenLocationModal,
     onOpenLangModal,
+    currentCurrencyLabel = '🇲🇼 MWK',
+    currentLangName = 'English',
 }: CustomerMobileMenuProps) {
     if (!isOpen) return null;
 
@@ -74,7 +78,9 @@ export default function CustomerMobileMenu({
                             <Globe className="w-4 h-4 text-primary" />
                             <span>Language & Country</span>
                         </div>
-                        <span className="text-[10px] bg-primary/5 text-primary px-2 py-0.5 rounded font-bold">🇲🇼 MW / EN</span>
+                        <span className="text-[10px] bg-primary/5 text-primary px-2 py-0.5 rounded font-bold">
+                            {currentCurrencyLabel} / {currentLangName}
+                        </span>
                     </button>
 
                     <Link href="/profile" onClick={onClose} className="flex items-center gap-2 py-2 text-foreground hover:text-primary transition-colors">

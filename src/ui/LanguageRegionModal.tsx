@@ -2,35 +2,16 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { ChevronRight } from 'lucide-react';
+import { useCurrency } from '@/hooks/use-currency';
+import {
+    countriesList,
+    languagesList,
+    type CountryOption,
+    type LanguageOption,
+} from '../../helpers/regions';
 
-export interface LanguageOption {
-    code: string;
-    name: string;
-    nativeName: string;
-}
-
-export interface CountryOption {
-    code: string;
-    name: string;
-    flag: string;
-    currency: string;
-    symbol: string;
-}
-
-export const languagesList: LanguageOption[] = [
-    { code: 'en', name: 'English', nativeName: 'English' },
-    { code: 'ny', name: 'Chichewa', nativeName: 'Chinyanja' },
-    { code: 'sw', name: 'Swahili', nativeName: 'Kiswahili' },
-    { code: 'fr', name: 'French', nativeName: 'Français' },
-    { code: 'pt', name: 'Portuguese', nativeName: 'Português' },
-];
-
-export const countriesList: CountryOption[] = [
-    { code: 'MW', name: 'Malawi', flag: '🇲🇼', currency: 'MWK', symbol: 'MK' },
-    { code: 'TZ', name: 'Tanzania', flag: '🇹🇿', currency: 'TZS', symbol: 'TSh' },
-    { code: 'ZA', name: 'South Africa', flag: '🇿🇦', currency: 'ZAR', symbol: 'R' },
-    { code: 'US', name: 'United States', flag: '🇺🇸', currency: 'USD', symbol: '$' },
-];
+export type { CountryOption, LanguageOption };
+export { countriesList, languagesList };
 
 interface LanguageRegionDropdownProps {
     isOpen: boolean;
@@ -53,6 +34,7 @@ export default function LanguageRegionModal({
     const [selectedCountry, setSelectedCountry] = useState(currentCountry);
     const [isChangingCurrency, setIsChangingCurrency] = useState(false);
     const popoverRef = useRef<HTMLDivElement>(null);
+    const { rateLabel, setCountry } = useCurrency();
 
     useEffect(() => {
         setSelectedLang(currentLang);
@@ -88,11 +70,8 @@ export default function LanguageRegionModal({
 
     const handleSelectCountry = (code: string) => {
         setSelectedCountry(code);
+        setCountry(code);
         onSelectCountry(code);
-        if (typeof window !== 'undefined') {
-            localStorage.setItem('user_country', code);
-            document.cookie = `user_country=${code}; path=/; max-age=31536000`;
-        }
         setIsChangingCurrency(false);
     };
 
@@ -159,6 +138,9 @@ export default function LanguageRegionModal({
                 <div className="flex items-center justify-between rounded-lg px-2 py-1 transition-colors hover:bg-section-bg/60">
                     <span className="text-xs font-semibold text-card-foreground">
                         {activeCountryObj.symbol} - {activeCountryObj.currency} - {activeCountryObj.name}
+                        <span className="mt-0.5 block text-[10px] font-medium text-muted-foreground">
+                            {rateLabel}
+                        </span>
                     </span>
                     <button
                         type="button"
@@ -171,7 +153,7 @@ export default function LanguageRegionModal({
 
                 {/* Inline Currency / Country Picker when "Change" is clicked */}
                 {isChangingCurrency && (
-                    <div className="mt-2 p-1.5 rounded-xl bg-section-bg border border-border space-y-1 max-h-36 overflow-y-auto animate-in fade-in slide-in-from-top-1 duration-150">
+                    <div className="mt-2 p-1.5 rounded-xl bg-section-bg border border-border space-y-1 max-h-56 overflow-y-auto animate-in fade-in slide-in-from-top-1 duration-150">
                         {countriesList.map((c) => {
                             const isSelected = selectedCountry === c.code;
                             return (

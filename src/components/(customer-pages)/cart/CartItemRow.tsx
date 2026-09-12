@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { formatCheckoutMoney, type CartItem } from "../check-out/types";
+import { useCurrency } from "@/hooks/use-currency";
+import { type CartItem } from "../check-out/types";
 
 interface CartItemRowProps {
     item: CartItem;
@@ -18,6 +19,7 @@ export default function CartItemRow({
     onRemove,
     onQuantityChange,
 }: CartItemRowProps) {
+    const { formatPrice } = useCurrency();
     const lineTotal = item.price * item.quantity;
     const href = `/shop/${item.slug || item.productId}`;
 
@@ -46,10 +48,10 @@ export default function CartItemRow({
                         {item.name}
                     </Link>
                     <p className="mt-1 text-sm text-white/70">
-                        {formatCheckoutMoney(item.price)} each
+                        {formatPrice(item.price)} each
                     </p>
                     <p className="mt-1 text-base font-bold text-primary sm:text-lg">
-                        {formatCheckoutMoney(lineTotal)}
+                        {formatPrice(lineTotal)}
                     </p>
                 </div>
 

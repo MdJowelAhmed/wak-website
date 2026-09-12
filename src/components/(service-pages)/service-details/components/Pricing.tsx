@@ -6,10 +6,12 @@ import { Clock, Loader2, MessageCircle, Shield } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/ui/button";
 import { myFetch } from "../../../../../helpers/myFetch";
-import { formatServicePrice, type ServiceDetailsData } from "../types";
+import { useCurrency } from "@/hooks/use-currency";
+import { type ServiceDetailsData } from "../types";
 
 export default function Pricing({ service }: { service: ServiceDetailsData }) {
     const router = useRouter();
+    const { formatPrice } = useCurrency();
     const [isCheckingOut, setIsCheckingOut] = useState(false);
     const [isCreatingChat, setIsCreatingChat] = useState(false);
 
@@ -67,7 +69,7 @@ export default function Pricing({ service }: { service: ServiceDetailsData }) {
                 <div className="mb-5 flex items-start justify-between gap-3">
                     <div>
                         <p className="text-xs font-semibold uppercase tracking-wide text-white/60">Starting at</p>
-                        <p className="mt-1 text-3xl font-bold text-primary">{formatServicePrice(service.price)}</p>
+                        <p className="mt-1 text-3xl font-bold text-primary">{formatPrice(service.price)}</p>
                     </div>
                     {service.deliveryTime > 0 && (
                         <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white">
@@ -99,7 +101,7 @@ export default function Pricing({ service }: { service: ServiceDetailsData }) {
                     className="w-full rounded-xl shadow-md shadow-primary/20"
                 >
                     {isCheckingOut ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                    Continue ({formatServicePrice(service.price)})
+                    Continue ({formatPrice(service.price)})
                 </Button>
                 <Button
                     type="button"

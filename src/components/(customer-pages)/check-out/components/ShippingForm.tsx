@@ -9,7 +9,7 @@ import type {
     Country,
     DeliveryOption,
 } from "../types";
-import { formatCheckoutMoney } from "../types";
+import { useCurrency } from "@/hooks/use-currency";
 
 const fieldClass =
     "h-12 rounded-xl border-card-border bg-section-bg text-card-foreground placeholder:text-muted-foreground focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary";
@@ -41,6 +41,7 @@ export default function ShippingForm({
     isCalculating,
     shippingFee,
 }: ShippingFormProps) {
+    const { formatPrice } = useCurrency();
     const isPickup = deliveryOption === "pickup";
     const title = isPickup ? "Pickup address" : "Shipping address";
     const saveLabel = isPickup ? "Save address" : "Save address & calculate shipping";
@@ -223,7 +224,7 @@ export default function ShippingForm({
                 {!isPickup && (
                     <div className="border-t border-card-border pt-5">
                         <p className="text-sm font-semibold text-card-foreground">
-                            Shipping charge: {formatCheckoutMoney(shippingFee)}
+                            Shipping charge: {formatPrice(shippingFee)}
                         </p>
                     </div>
                 )}

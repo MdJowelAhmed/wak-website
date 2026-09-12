@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Button } from "@/ui/button";
 import type { CartItem, DeliveryOption, PaymentMethod } from "../types";
-import { formatCheckoutMoney } from "../types";
+import { useCurrency } from "@/hooks/use-currency";
 
 interface CheckoutSummaryProps {
     cartItems: CartItem[];
@@ -26,6 +26,7 @@ export default function CheckoutSummary({
     onPlaceOrder,
     isPlacingOrder,
 }: CheckoutSummaryProps) {
+    const { formatPrice } = useCurrency();
     const paymentLabel = paymentMethod === "stripe" ? "Stripe" : "PayChangu";
 
     return (
@@ -50,7 +51,7 @@ export default function CheckoutSummary({
                                 <p className="text-xs text-white/55">Qty {item.quantity}</p>
                             </div>
                             <p className="text-sm font-semibold text-white">
-                                {formatCheckoutMoney(item.price * item.quantity)}
+                                {formatPrice(item.price * item.quantity)}
                             </p>
                         </div>
                     ))}
@@ -59,19 +60,19 @@ export default function CheckoutSummary({
                 <dl className="mt-5 space-y-2.5 border-t border-white/10 pt-4 text-sm">
                     <div className="flex justify-between gap-4">
                         <dt className="text-white/65">Subtotal</dt>
-                        <dd className="font-medium text-white">{formatCheckoutMoney(subtotal)}</dd>
+                        <dd className="font-medium text-white">{formatPrice(subtotal)}</dd>
                     </div>
                     <div className="flex justify-between gap-4">
                         <dt className="text-white/65">
                             {deliveryOption === "pickup" ? "Pickup" : "Shipping"}
                         </dt>
                         <dd className="font-medium text-white">
-                            {deliveryOption === "pickup" ? "Free" : formatCheckoutMoney(shippingFee)}
+                            {deliveryOption === "pickup" ? "Free" : formatPrice(shippingFee)}
                         </dd>
                     </div>
                     <div className="flex justify-between gap-4 border-t border-white/10 pt-2.5">
                         <dt className="font-semibold text-white">Total</dt>
-                        <dd className="font-bold text-primary">{formatCheckoutMoney(grandTotal)}</dd>
+                        <dd className="font-bold text-primary">{formatPrice(grandTotal)}</dd>
                     </div>
                     <div className="flex justify-between gap-4">
                         <dt className="text-white/65">Pay with</dt>

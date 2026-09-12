@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Search, X, ShoppingBag, Wrench } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useCurrency } from '@/hooks/use-currency';
 import { myFetch } from '../../helpers/myFetch';
 import { resolveImageUrl } from '../../helpers/resolveImageUrl';
 import {
@@ -33,10 +34,6 @@ interface SearchBarProps {
     onClose?: () => void;
 }
 
-function formatPrice(price: number) {
-    return '৳' + new Intl.NumberFormat('en-US').format(price);
-}
-
 export default function SearchBar({
     placeholder = 'Search...',
     containerClassName = 'relative w-full',
@@ -50,6 +47,7 @@ export default function SearchBar({
     const [categoryFilter, setCategoryFilter] = useState('all');
 
     const router = useRouter();
+    const { formatPrice } = useCurrency();
     const containerRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);

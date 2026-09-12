@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@/ui/dialog";
 import { Button } from "@/ui/button";
+import { useCurrency } from "@/hooks/use-currency";
 import type { CustomOffer, OfferPaymentMethod } from "../types";
 
 interface CustomOfferCardProps {
@@ -28,13 +29,6 @@ const PAYMENT_LABEL: Record<OfferPaymentMethod, string> = {
   paychangu: "PayChangu",
 };
 
-function formatOfferPrice(amount: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(amount);
-}
-
 export default function CustomOfferCard({
   offer,
   messageId,
@@ -42,6 +36,7 @@ export default function CustomOfferCard({
   onAccept,
   onReject,
 }: CustomOfferCardProps) {
+  const { formatPrice } = useCurrency();
   const [step, setStep] = useState<DialogStep>("closed");
   const [paymentMethod, setPaymentMethod] = useState<OfferPaymentMethod>("stripe");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -81,7 +76,7 @@ export default function CustomOfferCard({
           {offer.description}
         </p>
       )}
-      <p className="mb-4 text-lg font-bold text-primary">{formatOfferPrice(offer.price)}</p>
+      <p className="mb-4 text-lg font-bold text-primary">{formatPrice(offer.price)}</p>
 
       {offer.status === "pending" && canRespond && (
         <div className="flex gap-2">
@@ -141,7 +136,7 @@ export default function CustomOfferCard({
               <DialogHeader>
                 <DialogTitle className="text-card-foreground">Choose payment method</DialogTitle>
                 <DialogDescription className="text-muted-foreground">
-                  Select how you want to pay {formatOfferPrice(offer.price)} for this offer.
+                  Select how you want to pay {formatPrice(offer.price)} for this offer.
                 </DialogDescription>
               </DialogHeader>
               <div className="grid grid-cols-2 gap-2 py-2">
@@ -184,7 +179,7 @@ export default function CustomOfferCard({
               <DialogHeader>
                 <DialogTitle className="text-card-foreground">Confirm payment</DialogTitle>
                 <DialogDescription className="text-muted-foreground">
-                  Accept “{offer.title}” and pay {formatOfferPrice(offer.price)} with{" "}
+                  Accept “{offer.title}” and pay {formatPrice(offer.price)} with{" "}
                   {PAYMENT_LABEL[paymentMethod]}? You will be redirected to complete payment.
                 </DialogDescription>
               </DialogHeader>

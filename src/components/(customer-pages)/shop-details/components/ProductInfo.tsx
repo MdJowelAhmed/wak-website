@@ -6,12 +6,14 @@ import { Loader2, Minus, Plus, Shield, ShoppingCart, Star, Truck, Zap } from "lu
 import { toast } from "sonner";
 import { Button } from "@/ui/button";
 import { useCart } from "@/context/CartContext";
+import { useCurrency } from "@/hooks/use-currency";
 import { myFetch } from "../../../../../helpers/myFetch";
-import { formatProductPrice, type ProductDetailsData } from "../types";
+import { type ProductDetailsData } from "../types";
 
 export default function ProductInfo({ product }: { product: ProductDetailsData }) {
     const router = useRouter();
     const { refreshCart } = useCart();
+    const { formatPrice } = useCurrency();
     const [qty, setQty] = useState(1);
     const [isAdding, setIsAdding] = useState(false);
     const [isBuying, setIsBuying] = useState(false);
@@ -62,11 +64,11 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
         <section className="rounded-2xl border border-white/10 bg-secondary p-5 shadow-lg sm:p-6">
             <div className="flex flex-wrap items-end gap-3">
                 <p className="text-3xl font-bold tracking-tight text-primary">
-                    {formatProductPrice(product.price)}
+                    {formatPrice(product.price)}
                 </p>
                 {product.originalPrice ? (
                     <p className="text-lg text-white/50 line-through">
-                        {formatProductPrice(product.originalPrice)}
+                        {formatPrice(product.originalPrice)}
                     </p>
                 ) : null}
             </div>
@@ -161,7 +163,7 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
                         <p className="text-sm font-semibold text-white">Delivery</p>
                         <p className="text-xs text-white/65">
                             {product.localDeliveryFee != null
-                                ? `Local delivery ${formatProductPrice(product.localDeliveryFee)}`
+                                ? `Local delivery ${formatPrice(product.localDeliveryFee)}`
                                 : "Calculated at checkout"}
                         </p>
                     </div>

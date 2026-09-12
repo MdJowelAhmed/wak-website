@@ -2,6 +2,7 @@
 import { Star } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useCurrency } from "@/hooks/use-currency";
 
 interface service {
     id: string | number,
@@ -17,6 +18,7 @@ interface service {
 
 const ServiceCard = ({ id, name, coverImage, category, price, rating, reviewCount, avatar, description }: service) => {
     const router = useRouter();
+    const { formatPrice } = useCurrency();
 
     const handleClick = () => {
         const cookies = document.cookie;
@@ -86,7 +88,7 @@ const ServiceCard = ({ id, name, coverImage, category, price, rating, reviewCoun
 
                 {/* Price */}
                 <p className="text-xs sm:text-sm font-bold text-primary tracking-wide">
-                    From: <span className="text-[#FFC107]">${price}</span>
+                    From: <span className="text-[#FFC107]">{formatPrice(price)}</span>
                 </p>
             </div>
         </div>

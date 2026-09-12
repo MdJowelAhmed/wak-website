@@ -7,7 +7,10 @@ import Footer from "@/shared/Footer";
 import { Toaster } from "sonner";
 import { CartProvider } from "@/context/CartContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { CurrencyProvider } from "@/context/CurrencyContext";
 import ChatwootWidget from "@/components/ChatwootWidget";
+import { getExchangeRates } from "../../helpers/getExchangeRates";
+import { DEFAULT_COUNTRY, DEFAULT_CURRENCY } from "../../helpers/currency";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,6 +29,9 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies();
   const userMode = cookieStore.get("user-mode")?.value || "customer";
+  const initialCountry = cookieStore.get("user_country")?.value || DEFAULT_COUNTRY;
+  const initialCurrency = cookieStore.get("user_currency")?.value || DEFAULT_CURRENCY;
+  const exchangeRates = await getExchangeRates();
 
   return (
     <html
@@ -36,15 +42,21 @@ export default async function RootLayout({
 
       <body className="min-h-full flex flex-col mx-auto font-sans">
         <AuthProvider>
-          <CartProvider>
-            <Toaster richColors position="top-center" />
-            <CustomerNavbar userMode={userMode} />
-            <div className="">
-              {children}
-            </div>
-            <Footer />
-            <ChatwootWidget />
-          </CartProvider>
+          <CurrencyProvider
+            initialRates={exchangeRates}
+            initialCountry={initialCountry}
+            initialCurrency={initialCurrency}
+          >
+            <CartProvider>
+              <Toaster richColors position="top-center" />
+              <CustomerNavbar userMode={userMode} />
+              <div className="">
+                {children}
+              </div>
+              <Footer />
+              <ChatwootWidget />
+            </CartProvider>
+          </CurrencyProvider>
         </AuthProvider>
       </body>
     </html>
