@@ -1,110 +1,111 @@
-import Newsletter from '@/ui/Newsletter';
-import Link from 'next/link';
+import Link from "next/link";
 import {
     FaFacebookF,
     FaInstagram,
     FaLinkedinIn,
-    FaTwitter
-} from 'react-icons/fa';
+    FaYoutube,
+} from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import Logo from "@/ui/Logo";
+import Newsletter from "@/ui/Newsletter";
+import FooterPayments from "@/ui/FooterPayments";
 
-const navigationLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Shop', href: '/shop' },
-    { name: 'About', href: '/about-us' },
-    { name: 'Contact Us', href: '/contact-us' },
+const socialLinks = [
+    { icon: FaFacebookF, href: "https://www.facebook.com/worthworld", label: "Facebook" },
+    { icon: FaInstagram, href: "https://www.instagram.com/worthworld", label: "Instagram" },
+    { icon: FaXTwitter, href: "https://x.com/worthworld", label: "X" },
+    { icon: FaLinkedinIn, href: "https://www.linkedin.com/company/worth-world", label: "LinkedIn" },
+    { icon: FaYoutube, href: "https://www.youtube.com/@worthworld", label: "YouTube" },
+];
+
+const companyLinks = [
+    { name: "About Us", href: "/about-us" },
+    { name: "Shop", href: "/shop" },
+    { name: "Services", href: "/services" },
+    { name: "Contact Us", href: "/contact-us" },
+];
+
+const customerServiceLinks = [
+    { name: "Help Center", href: "/contact-us" },
+    { name: "Track Order", href: "/profile/order-tracking" },
 ];
 
 const legalLinks = [
-    { name: 'About Us', href: '/about-us' },
-    { name: 'Privacy Policy', href: '/privacy-policy' },
-    { name: 'Terms of Services', href: '/terms-of-services' },
+    { name: "Terms & Conditions", href: "/terms-of-services" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
 ];
 
-const socialLinks = [
-    { icon: FaFacebookF, href: '#', label: 'Facebook' },
-    { icon: FaInstagram, href: '#', label: 'Instagram' },
-    { icon: FaLinkedinIn, href: '#', label: 'LinkedIn' },
-    { icon: FaTwitter, href: '#', label: 'Twitter' },
-];
+function FooterLinks({
+    title,
+    links,
+}: {
+    title: string;
+    links: { name: string; href: string }[];
+}) {
+    return (
+        <div>
+            <h3 className="mb-5 text-base font-bold text-white">{title}</h3>
+            <ul className="space-y-3 text-sm">
+                {links.map((link) => (
+                    <li key={link.name}>
+                        <Link
+                            href={link.href}
+                            className="text-zinc-300 transition-colors hover:text-primary"
+                        >
+                            {link.name}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+}
 
 export default function Footer() {
     return (
-        <footer className="bg-secondary text-white mt-16 ">
+        <footer className="mt-16 bg-secondary text-white">
             <div className="container mx-auto px-6 py-16 md:py-20">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12">
-                    {/* Logo & Description */}
-                    <div className="lg:col-span-4">
-                        <p className="max-w-xs leading-relaxed text-zinc-300 text-sm mb-8">
-                            Follow us on social media for exclusive discounts, flash deals, and the latest product drops.
+                <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-12 lg:gap-12">
+                    <div className="lg:col-span-3">
+                        <Logo />
+                        <p className="mt-5 max-w-xs text-sm leading-relaxed text-zinc-300">
+                            WorthWorld is a marketplace to shop products, book services, and
+                            get delivery worldwide — connecting Africa to the rest of the world.
                         </p>
-
-                        {/* Social Icons */}
-                        <div className="flex gap-3">
+                        <div className="mt-6 flex flex-wrap gap-3">
                             {socialLinks.map((social) => (
-                                <Link
+                                <a
                                     key={social.label}
                                     href={social.href}
-                                    className="w-10 h-10 flex items-center justify-center rounded-xl bg-primary hover:bg-primary-hover border border-primary text-white transition-all shadow-sm hover:scale-105"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex h-10 w-10 items-center justify-center rounded-xl border border-primary bg-primary text-white shadow-sm transition-all hover:scale-105 hover:bg-primary-hover"
                                     aria-label={social.label}
                                 >
-                                    <social.icon className="w-4 h-4" />
-                                </Link>
+                                    <social.icon className="h-4 w-4" />
+                                </a>
                             ))}
                         </div>
                     </div>
 
-                    {/* Navigation */}
                     <div className="lg:col-span-2">
-                        <h3 className="text-white font-bold mb-6 text-lg">Navigation</h3>
-                        <ul className="space-y-3.5 text-sm">
-                            {navigationLinks.map((link) => (
-                                <li key={link.name}>
-                                    <Link
-                                        href={link.href}
-                                        className="text-zinc-300 hover:text-primary transition-colors"
-                                    >
-                                        {link.name}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
+                        <FooterLinks title="Company" links={companyLinks} />
                     </div>
-
-                    {/* Legal */}
                     <div className="lg:col-span-2">
-                        <h3 className="text-white font-bold mb-6 text-lg">Legal</h3>
-                        <ul className="space-y-3.5 text-sm">
-                            {legalLinks.map((link) => (
-                                <li key={link.name}>
-                                    <Link
-                                        href={link.href}
-                                        className="text-zinc-300 hover:text-primary transition-colors"
-                                    >
-                                        {link.name}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
+                        <FooterLinks title="Customer Service" links={customerServiceLinks} />
                     </div>
+                    <div className="lg:col-span-2">
+                        <FooterLinks title="Legal" links={legalLinks} />
+                    </div>
+                    <div className="lg:col-span-3">
+                        <Newsletter />
+                    </div>
+                </div>
+            </div>
 
-                    {/* Contact Information */}
-                    <div className="lg:col-span-4">
-                        <h3 className="text-white font-bold mb-6 text-lg">Contact Information</h3>
-                        <ul className="space-y-3.5 text-sm text-zinc-300">
-                            <li className="flex items-start gap-3">
-                                <span className="font-semibold text-white">Phone:</span>
-                                <span>+8801611112222</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <span className="font-semibold text-white">Email:</span>
-                                <span>support@gmail.com</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <span className="font-semibold text-white">Address:</span>
-                                <span>Dhaka, Bangladesh</span>
-                            </li>
-                        </ul>
-                    </div>
+            <div className="border-t border-white/10">
+                <div className="container mx-auto px-6 py-5">
+                    <FooterPayments />
                 </div>
             </div>
         </footer>
