@@ -54,6 +54,14 @@ export interface ShippingEstimate {
     grandTotal: number;
 }
 
+export interface CheckoutFxQuote {
+    exchangeRate: number;
+    baseRate: number;
+    fxFeeRate: number;
+    quoteId: string;
+    isLocked: boolean;
+}
+
 export function formatCheckoutMoney(amount: number): string {
     return new Intl.NumberFormat("en-US", {
         style: "currency",
@@ -90,16 +98,26 @@ export function mapCartItems(items: unknown): CartItem[] {
     });
 }
 
-export function mapAddresses(data: unknown): Address[] {
-    if (!Array.isArray(data)) return [];
+function asAddressList(data: unknown): unknown[] {
+    if (Array.isArray(data)) return data;
+    if (!data || typeof data !== "object") return [];
+    const row = data as { addresses?: unknown; items?: unknown; data?: unknown };
+    if (Array.isArray(row.addresses)) return row.addresses;
+    if (Array.isArray(row.items)) return row.items;
+    if (Array.isArray(row.data)) return row.data;
+    return [];
+}
 
+export function mapAddresses(data: unknown): Address[] {
+    const list = asAddressList(data);
     const addresses: Address[] = [];
-    for (const item of data) {
-        const row = item as Partial<Address> & { _id?: string };
-        if (!row._id) continue;
+    for (const item of list) {
+        const row = item as Partial<Address> & { _id?: string; id?: string };
+        const id = row._id || row.id;
+        if (!id) continue;
 
         const address: Address = {
-            _id: row._id,
+            _id: id,
             fullName: row.fullName || "",
             phone: row.phone || "",
             address: row.address || "",
@@ -167,5 +185,26 @@ export function readEstimate(data: unknown): ShippingEstimate | null {
         grandSubTotal: row.grandSubTotal,
         grandShippingTotal: row.grandShippingTotal,
         grandTotal: row.grandTotal,
+    };
+}
+
+export function readFxQuote(data: unknown): CheckoutFxQuote | null {
+    if (!data || typeof data !== "object") return null;
+    const row = data as {
+        exchangeRate?: unknown;
+        baseRate?: unknown;
+        fxFeeRate?: unknown;
+        quoteId?: unknown;
+        isLocked?: unknown;
+    };
+    if (typeof row.exchangeRate !== "number" || !Number.isFinite(row.exchangeRate) || row.exchangeRate <= 0) {
+        return null;
+    }
+    return {
+        exchangeRate: row.exchangeRate,
+        baseRate: typeof row.baseRate === "number" ? row.baseRate : row.exchangeRate,
+        fxFeeRate: typeof row.fxFeeRate === "number" ? row.fxFeeRate : 0,
+        quoteId: typeof row.quoteId === "string" ? row.quoteId : "",
+        isLocked: Boolean(row.isLocked),
     };
 }

@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { Button } from "@/ui/button";
-import type { CartItem, DeliveryOption, PaymentMethod } from "../types";
-import { useCurrency } from "@/hooks/use-currency";
+import type { CartItem, CheckoutFxQuote, DeliveryOption, PaymentMethod } from "../types";
+import { formatExchangeRate } from "../../../../../helpers/currency";
 
 interface CheckoutSummaryProps {
     cartItems: CartItem[];
@@ -12,6 +12,9 @@ interface CheckoutSummaryProps {
     grandTotal: number;
     deliveryOption: DeliveryOption;
     paymentMethod: PaymentMethod;
+    formatMoney: (amountUsd: number) => string;
+    fxQuote: CheckoutFxQuote | null;
+    currency: string;
     onPlaceOrder: () => void;
     isPlacingOrder: boolean;
 }
@@ -23,11 +26,14 @@ export default function CheckoutSummary({
     grandTotal,
     deliveryOption,
     paymentMethod,
+    formatMoney,
+    fxQuote,
+    currency,
     onPlaceOrder,
     isPlacingOrder,
 }: CheckoutSummaryProps) {
-    const { formatPrice } = useCurrency();
     const paymentLabel = paymentMethod === "stripe" ? "Stripe" : "PayChangu";
+    const feePercent = fxQuote ? Math.round(fxQuote.fxFeeRate * 1000) / 10 : 0;
 
     return (
         <aside className="w-full space-y-6 lg:w-[400px]">
@@ -51,7 +57,7 @@ export default function CheckoutSummary({
                                 <p className="text-xs text-white/55">Qty {item.quantity}</p>
                             </div>
                             <p className="text-sm font-semibold text-white">
-                                {formatPrice(item.price * item.quantity)}
+                                {formatMoney(item.price * item.quantity)}
                             </p>
                         </div>
                     ))}
@@ -60,24 +66,39 @@ export default function CheckoutSummary({
                 <dl className="mt-5 space-y-2.5 border-t border-white/10 pt-4 text-sm">
                     <div className="flex justify-between gap-4">
                         <dt className="text-white/65">Subtotal</dt>
-                        <dd className="font-medium text-white">{formatPrice(subtotal)}</dd>
+                        <dd className="font-medium text-white">{formatMoney(subtotal)}</dd>
                     </div>
                     <div className="flex justify-between gap-4">
                         <dt className="text-white/65">
                             {deliveryOption === "pickup" ? "Pickup" : "Shipping"}
                         </dt>
                         <dd className="font-medium text-white">
-                            {deliveryOption === "pickup" ? "Free" : formatPrice(shippingFee)}
+                            {deliveryOption === "pickup" ? "Free" : formatMoney(shippingFee)}
                         </dd>
                     </div>
                     <div className="flex justify-between gap-4 border-t border-white/10 pt-2.5">
                         <dt className="font-semibold text-white">Total</dt>
-                        <dd className="font-bold text-primary">{formatPrice(grandTotal)}</dd>
+                        <dd className="font-bold text-primary">{formatMoney(grandTotal)}</dd>
                     </div>
                     <div className="flex justify-between gap-4">
                         <dt className="text-white/65">Pay with</dt>
                         <dd className="font-medium text-white">{paymentLabel}</dd>
                     </div>
+                    {paymentMethod === "stripe" && fxQuote ? (
+                        <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-xs leading-relaxed text-white/75">
+                            <p>
+                                Stripe converts at{" "}
+                                <span className="font-semibold text-white">
+                                    {formatExchangeRate(fxQuote.exchangeRate, currency)}
+                                </span>
+                                , including a {feePercent}% conversion fee.
+                            </p>
+                            <p className="mt-1">
+                                Base rate {formatExchangeRate(fxQuote.baseRate, currency)}. The total
+                                above is what you will pay in {currency}.
+                            </p>
+                        </div>
+                    ) : null}
                 </dl>
             </section>
 

@@ -3,13 +3,19 @@
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
 import { Label } from "@/ui/label";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/ui/select";
 import type {
     Address,
     CheckoutAddressForm,
     Country,
     DeliveryOption,
 } from "../types";
-import { useCurrency } from "@/hooks/use-currency";
 
 const fieldClass =
     "h-12 rounded-xl border-card-border bg-section-bg text-card-foreground placeholder:text-muted-foreground focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary";
@@ -23,10 +29,11 @@ interface ShippingFormProps {
     handleInputChange: (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     ) => void;
-    handleAddressSelect: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    handleAddressSelect: (addressId: string) => void;
     handleSaveAddress: () => void;
     isCalculating: boolean;
     shippingFee: number;
+    formatMoney: (amountUsd: number) => string;
 }
 
 export default function ShippingForm({
@@ -40,8 +47,8 @@ export default function ShippingForm({
     handleSaveAddress,
     isCalculating,
     shippingFee,
+    formatMoney,
 }: ShippingFormProps) {
-    const { formatPrice } = useCurrency();
     const isPickup = deliveryOption === "pickup";
     const title = isPickup ? "Pickup address" : "Shipping address";
     const saveLabel = isPickup ? "Save address" : "Save address & calculate shipping";
@@ -50,20 +57,26 @@ export default function ShippingForm({
         <section className="rounded-2xl border border-card-border bg-card p-5 shadow-lg sm:p-7">
             <div className="mb-6">
                 <h2 className="text-lg font-bold text-card-foreground">{title}</h2>
-                {addresses.length > 0 && (
-                    <select
-                        value={selectedAddressId || ""}
-                        onChange={handleAddressSelect}
-                        className="mt-4 h-12 w-full rounded-xl border border-card-border bg-section-bg px-3 text-sm text-card-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                <div className="mt-4 space-y-2">
+                    <Label className="font-semibold text-card-foreground">Saved address</Label>
+                    <Select
+                        value={selectedAddressId || "new"}
+                        onValueChange={(value) => handleAddressSelect(value === "new" ? "" : value)}
                     >
-                        <option value="">Select a saved address...</option>
-                        {addresses.map((addr) => (
-                            <option key={addr._id} value={addr._id}>
-                                {addr.address}, {addr.city}
-                            </option>
-                        ))}
-                    </select>
-                )}
+                        <SelectTrigger className="h-12 rounded-xl border-card-border bg-section-bg text-card-foreground focus:ring-1 focus:ring-primary focus:ring-offset-0">
+                            <SelectValue placeholder="Select a saved address..." />
+                        </SelectTrigger>
+                        <SelectContent className="z-[400] bg-white text-card-foreground">
+                            <SelectItem value="new">Use a new address</SelectItem>
+                            {addresses.map((addr) => (
+                                <SelectItem key={addr._id} value={addr._id}>
+                                    {addr.fullName ? `${addr.fullName} — ` : ""}
+                                    {addr.address}, {addr.city}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
             </div>
 
             <p className="mb-6 text-sm text-muted-foreground">
@@ -224,7 +237,7 @@ export default function ShippingForm({
                 {!isPickup && (
                     <div className="border-t border-card-border pt-5">
                         <p className="text-sm font-semibold text-card-foreground">
-                            Shipping charge: {formatPrice(shippingFee)}
+                            Shipping charge: {formatMoney(shippingFee)}
                         </p>
                     </div>
                 )}

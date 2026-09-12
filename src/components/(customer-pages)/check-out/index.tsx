@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { myFetch } from "../../../../helpers/myFetch";
+import { formatConvertedPrice } from "../../../../helpers/currency";
+import { useCurrency } from "@/hooks/use-currency";
 import CheckoutChoices from "./CheckoutChoices";
 import ShippingForm from "./components/ShippingForm";
 import CheckoutSummary from "./components/CheckoutSummary";
@@ -11,12 +13,13 @@ import type {
     Address,
     CartItem,
     CheckoutAddressForm,
+    CheckoutFxQuote,
     Country,
     DeliveryOption,
     PaymentMethod,
     ShippingEstimate,
 } from "./types";
-import { readEstimate } from "./types";
+import { readEstimate, readFxQuote } from "./types";
 
 interface CheckoutProps {
     cartItems: CartItem[];
@@ -43,6 +46,53 @@ export default function Checkout({
     const [estimate, setEstimate] = useState(initialEstimate);
     const [isCalculating, setIsCalculating] = useState(false);
     const [isPlacingOrder, setIsPlacingOrder] = useState(false);
+    const [fxQuote, setFxQuote] = useState<CheckoutFxQuote | null>(null);
+    const { currency, formatPrice } = useCurrency();
+
+    useEffect(() => {
+        if (paymentMethod !== "stripe") {
+            setFxQuote(null);
+            return;
+        }
+
+        const to = currency.toLowerCase();
+        let cancelled = false;
+
+        const loadQuote = async () => {
+            const endpoints = [
+                `/exchange-rates/quote?to=${encodeURIComponent(to)}`,
+                `/xchange-rates/quote?to=${encodeURIComponent(to)}`,
+            ];
+            for (const endpoint of endpoints) {
+                const res = await myFetch(endpoint, { cache: "no-store" });
+                const quote = readFxQuote(res?.data);
+                if (quote) return quote;
+            }
+            return null;
+        };
+
+        loadQuote()
+            .then((quote) => {
+                if (!cancelled) setFxQuote(quote);
+            })
+            .catch(() => {
+                if (!cancelled) setFxQuote(null);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [paymentMethod, currency]);
+
+    const formatMoney = useCallback(
+        (amountUsd: number) => {
+            if (paymentMethod === "stripe" && fxQuote) {
+                return formatConvertedPrice(amountUsd, currency, fxQuote.exchangeRate);
+            }
+            return formatPrice(amountUsd);
+        },
+        [currency, formatPrice, fxQuote, paymentMethod],
+    );
 
     const fallbackSubtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const subtotal = estimate?.grandSubTotal ?? fallbackSubtotal;
@@ -88,11 +138,21 @@ export default function Checkout({
         }
     };
 
-    const handleAddressSelect = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedId = e.target.value;
+    const handleAddressSelect = async (selectedId: string) => {
         setSelectedAddressId(selectedId || null);
         if (!selectedId) {
             setEstimate(null);
+            setFormData((prev) => ({
+                ...prev,
+                fullName: "",
+                phone: "",
+                city: "",
+                state: "",
+                address: "",
+                country: "",
+                countryCode: "",
+                postalCode: "",
+            }));
             return;
         }
 
@@ -283,6 +343,7 @@ export default function Checkout({
                                 handleSaveAddress={handleSaveAddress}
                                 isCalculating={isCalculating}
                                 shippingFee={shippingFee}
+                                formatMoney={formatMoney}
                             />
                         )}
                     </div>
@@ -294,6 +355,9 @@ export default function Checkout({
                         grandTotal={grandTotal}
                         deliveryOption={deliveryOption}
                         paymentMethod={paymentMethod}
+                        formatMoney={formatMoney}
+                        fxQuote={fxQuote}
+                        currency={currency}
                         onPlaceOrder={handlePlaceOrder}
                         isPlacingOrder={isPlacingOrder}
                     />
