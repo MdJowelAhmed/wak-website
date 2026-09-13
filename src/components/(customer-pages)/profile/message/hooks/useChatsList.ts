@@ -2,9 +2,13 @@ import { useState, useEffect } from "react";
 import { myFetch } from "../../../../../../helpers/myFetch";
 import { ApiChat } from "../types";
 
-export function useChatsList() {
+interface UseChatsListProps {
+  initialChatId?: string;
+}
+
+export function useChatsList({ initialChatId }: UseChatsListProps = {}) {
   const [chats, setChats] = useState<ApiChat[]>([]);
-  const [selectedContact, setSelectedContact] = useState<string | null>(null);
+  const [selectedContact, setSelectedContact] = useState<string | null>(initialChatId || null);
   const [isLoadingChats, setIsLoadingChats] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   

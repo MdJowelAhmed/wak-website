@@ -1,100 +1,117 @@
 import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import Cookies from "js-cookie";
-import { resolveImageUrl } from "../../../../../../helpers/resolveImageUrl";
-import { ApiChat, ChatMessage, mapCustomOffer } from "../types";
+import {
+  ApiChat,
+  appendUniqueMessage,
+  mapChatMessage,
+  readEntityId,
+  unwrapSocketMessage,
+  type ChatMessage,
+} from "../types";
+
+function joinChat(socket: Socket, chatId: string | null) {
+  if (!chatId) return;
+  socket.emit("join", chatId);
+  socket.emit("join", { chatId });
+  socket.emit("chat:join", chatId);
+}
 
 interface UseChatSocketProps {
   selectedContact: string | null;
+  currentUserId: string;
   setMessageHistories: React.Dispatch<React.SetStateAction<Record<string, ChatMessage[]>>>;
   setChats: React.Dispatch<React.SetStateAction<ApiChat[]>>;
 }
 
-export function useChatSocket({ selectedContact, setMessageHistories, setChats }: UseChatSocketProps) {
+export function useChatSocket({
+  selectedContact,
+  currentUserId,
+  setMessageHistories,
+  setChats,
+}: UseChatSocketProps) {
   const selectedContactRef = useRef(selectedContact);
-  useEffect(() => { selectedContactRef.current = selectedContact; }, [selectedContact]);
+  const currentUserIdRef = useRef(currentUserId);
+  const socketRef = useRef<Socket | null>(null);
+
+  useEffect(() => {
+    selectedContactRef.current = selectedContact;
+  }, [selectedContact]);
+
+  useEffect(() => {
+    currentUserIdRef.current = currentUserId;
+  }, [currentUserId]);
 
   useEffect(() => {
     const token = Cookies.get("accessToken");
+    if (!token) return;
+
     const baseUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4060";
-    
-    const socketInstance: Socket = io(baseUrl, { 
+    const socket = io(baseUrl, {
+      transports: ["websocket", "polling"],
+      auth: { token },
+      query: { token },
       extraHeaders: {
-        token: token || "",
-      }
+        token,
+        authorization: `Bearer ${token}`,
+      },
+    });
+    socketRef.current = socket;
+
+    socket.on("connect", () => {
+      joinChat(socket, selectedContactRef.current);
     });
 
-    socketInstance.on("connect", () => {
-      console.log("Connected to socket server");
-    });
+    const handleNewMessage = (payload: unknown) => {
+      const raw = unwrapSocketMessage(payload);
+      if (!raw) return;
 
-    socketInstance.on("message:new", (m: any) => {
-      const text = m.text;
-      
-      const chatId = typeof m.chat === 'object' ? m.chat._id : m.chat;
+      const chatId = readEntityId(raw.chat) || (typeof raw.chatId === "string" ? raw.chatId : "");
+      if (!chatId) return;
 
-      // Update message histories
-      setMessageHistories(prev => {
-        if (!prev[chatId]) return prev;
-        
-        const currentMsgs = prev[chatId];
-        
-        let finalAvatar = m.sender?.profileImage ? resolveImageUrl(m.sender.profileImage) : "/user.svg";
-        if (finalAvatar === "/user.svg") {
-          const existingMsg = currentMsgs.find(msg => msg.sender === 'other' && msg.avatar !== "/user.svg");
-          if (existingMsg) {
-            finalAvatar = existingMsg.avatar;
-          }
-        }
+      const mapped = mapChatMessage(raw, currentUserIdRef.current);
+      if (!mapped) return;
 
-        const newMsg: ChatMessage = {
-          id: m._id,
-          sender: 'other', 
-          text: text || '',
-          time: new Date(m.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          avatar: finalAvatar,
-          type: m.type,
-          attachment: m.attachment,
-          customOffer: mapCustomOffer(m.customOffer),
-        };
-        
-        if (currentMsgs.some(existing => existing.id === newMsg.id)) {
-          return prev;
-        }
+      setMessageHistories((prev) => ({
+        ...prev,
+        [chatId]: appendUniqueMessage(prev[chatId] || [], mapped),
+      }));
 
-        return {
-          ...prev,
-          [chatId]: [...currentMsgs, newMsg]
-        };
-      });
-
-      // Update the sidebar's lastMessage and unreadCount
-      setChats(prevChats => {
-        const updated = prevChats.map(c => {
-          if (c._id === chatId) {
-            return {
-              ...c,
-              lastMessage: { text: text || 'Attachment' },
-              updatedAt: m.createdAt || new Date().toISOString(),
-              unreadCount: selectedContactRef.current === chatId ? c.unreadCount : (c.unreadCount || 0) + 1
-            };
-          }
-          return c;
+      setChats((prevChats) => {
+        const updated = prevChats.map((chat) => {
+          if (chat._id !== chatId) return chat;
+          const isOwn = mapped.sender === "user";
+          const isOpen = selectedContactRef.current === chatId;
+          return {
+            ...chat,
+            lastMessage: { text: mapped.text || "Attachment" },
+            unreadCount: isOwn || isOpen ? chat.unreadCount : (chat.unreadCount || 0) + 1,
+          };
         });
-        
-        const chatIdx = updated.findIndex(c => c._id === chatId);
+
+        const chatIdx = updated.findIndex((chat) => chat._id === chatId);
         if (chatIdx > 0) {
-          const chatToMove = updated[chatIdx];
-          updated.splice(chatIdx, 1);
+          const [chatToMove] = updated.splice(chatIdx, 1);
           updated.unshift(chatToMove);
         }
         return updated;
       });
-    });
+    };
+
+    socket.on("message:new", handleNewMessage);
+    socket.on("newMessage", handleNewMessage);
+    socket.on("receiveMessage", handleNewMessage);
 
     return () => {
-      socketInstance.disconnect();
+      socket.removeAllListeners();
+      socket.disconnect();
+      socketRef.current = null;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setChats, setMessageHistories]);
+
+  useEffect(() => {
+    const socket = socketRef.current;
+    if (!socket?.connected) return;
+    joinChat(socket, selectedContact);
+  }, [selectedContact]);
 }

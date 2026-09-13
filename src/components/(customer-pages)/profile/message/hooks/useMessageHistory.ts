@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
 import { myFetch } from "../../../../../../helpers/myFetch";
-import { resolveImageUrl } from "../../../../../../helpers/resolveImageUrl";
 import { toast } from "sonner";
-import { ApiChat, ChatMessage, OfferPaymentMethod, mapCustomOffer } from "../types";
+import { ChatMessage, OfferPaymentMethod, mapChatMessage } from "../types";
 
 const initialMessages: Record<string, ChatMessage[]> = {};
 
 interface UseMessageHistoryProps {
   selectedContact: string | null;
-  chats: ApiChat[];
+  currentUserId: string;
 }
 
-export function useMessageHistory({ selectedContact, chats }: UseMessageHistoryProps) {
+export function useMessageHistory({ selectedContact, currentUserId }: UseMessageHistoryProps) {
   const [messageHistories, setMessageHistories] = useState(initialMessages);
   const [isLoadingMessages, setIsLoadingMessages] = useState(false);
   const [messagePage, setMessagePage] = useState(1);
@@ -24,11 +23,7 @@ export function useMessageHistory({ selectedContact, chats }: UseMessageHistoryP
   }, [selectedContact]);
 
   useEffect(() => {
-    if (!selectedContact) return;
-    
-    if (messagePage === 1 && messageHistories[selectedContact]?.length > 0) {
-      return; 
-    }
+    if (!selectedContact || !currentUserId) return;
 
     const fetchMessages = async () => {
       if (messagePage === 1) setIsLoadingMessages(true);
@@ -37,30 +32,17 @@ export function useMessageHistory({ selectedContact, chats }: UseMessageHistoryP
       try {
         const res = await myFetch(`/messages/chats/${selectedContact}?page=${messagePage}&limit=15`, { cache: "no-store" });
         if (res?.success && Array.isArray(res.data)) {
-          const currentChat = chats.find((c) => c._id === selectedContact);
-          const otherId = currentChat?.participants?.[0]?._id;
+          const mapped = res.data
+            .map((item: unknown) => mapChatMessage(item, currentUserId))
+            .filter((item): item is ChatMessage => item !== null)
+            .reverse();
 
-          const mapped: ChatMessage[] = res.data.map((m: any) => {
-            const isUser = otherId ? m.sender?._id !== otherId : false;
-            const text = m.text;
-
-            return {
-              id: m._id,
-              sender: isUser ? 'user' : 'other',
-              text: text || '',
-              time: new Date(m.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-              avatar: m.sender?.profileImage ? resolveImageUrl(m.sender.profileImage) : "/user.svg",
-              type: m.type,
-              attachment: m.attachment,
-              customOffer: mapCustomOffer(m.customOffer),
-            };
-          });
-          
-          mapped.reverse();
-
-          setMessageHistories(prev => {
+          setMessageHistories((prev) => {
+            const existing = prev[selectedContact] || [];
             if (messagePage === 1) {
-              return { ...prev, [selectedContact]: mapped };
+              const fetchedIds = new Set(mapped.map((message) => message.id));
+              const extraRealtime = existing.filter((message) => !fetchedIds.has(message.id));
+              return { ...prev, [selectedContact]: [...mapped, ...extraRealtime] };
             } else {
               const existingIds = new Set((prev[selectedContact] || []).map(m => m.id));
               const newMapped = mapped.filter(m => !existingIds.has(m.id));
@@ -88,7 +70,7 @@ export function useMessageHistory({ selectedContact, chats }: UseMessageHistoryP
 
     fetchMessages();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedContact, messagePage]);
+  }, [selectedContact, messagePage, currentUserId]);
 
   const currentMessages = (selectedContact && messageHistories[selectedContact]) || [];
 

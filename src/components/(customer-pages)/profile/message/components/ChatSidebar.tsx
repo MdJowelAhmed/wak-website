@@ -1,9 +1,10 @@
 import { Search, Loader2 } from "lucide-react";
 import { resolveImageUrl } from "../../../../../../helpers/resolveImageUrl";
-import { ApiChat } from "../types";
+import { ApiChat, getOtherParticipant } from "../types";
 
 interface ChatSidebarProps {
   chats: ApiChat[];
+  currentUserId: string;
   isLoadingChats: boolean;
   searchTerm: string;
   setSearchTerm: (term: string) => void;
@@ -16,6 +17,7 @@ interface ChatSidebarProps {
 
 export default function ChatSidebar({
   chats,
+  currentUserId,
   isLoadingChats,
   searchTerm,
   setSearchTerm,
@@ -59,7 +61,7 @@ export default function ChatSidebar({
           </div>
         ) : (
           chats.map((chat) => {
-            const participant = chat.participants?.[0];
+            const participant = getOtherParticipant(chat, currentUserId);
             const avatarUrl = participant?.profileImage ? resolveImageUrl(participant.profileImage) : "/user.svg";
             const participantName = participant?.name || "Unknown User";
             const subtitle = chat.lastMessage?.text || "No messages yet";
