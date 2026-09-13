@@ -43,25 +43,38 @@ export default function ChatArea({
   const docInputRef = useRef<HTMLInputElement>(null);
   
   const scrollRef = useRef<HTMLDivElement>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
   const prevScrollHeightRef = useRef<number>(0);
+  const stickToBottomRef = useRef(true);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    if (e.currentTarget.scrollTop === 0) {
+    const el = e.currentTarget;
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    stickToBottomRef.current = distanceFromBottom < 80;
+
+    if (el.scrollTop === 0) {
       if (messageHasMore && !isLoadingMoreMessages) {
-        prevScrollHeightRef.current = e.currentTarget.scrollHeight;
+        prevScrollHeightRef.current = el.scrollHeight;
         onLoadMoreMessages?.();
       }
     }
   };
 
   useEffect(() => {
-    if (scrollRef.current && prevScrollHeightRef.current > 0) {
-      const newScrollHeight = scrollRef.current.scrollHeight;
-      scrollRef.current.scrollTop = newScrollHeight - prevScrollHeightRef.current;
+    stickToBottomRef.current = true;
+  }, [selectedContact]);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    if (prevScrollHeightRef.current > 0) {
+      el.scrollTop = el.scrollHeight - prevScrollHeightRef.current;
       prevScrollHeightRef.current = 0;
-    } else {
-      bottomRef.current?.scrollIntoView();
+      return;
+    }
+
+    if (stickToBottomRef.current) {
+      el.scrollTop = el.scrollHeight;
     }
   }, [currentMessages]);
   if (!selectedContact) {
@@ -155,7 +168,6 @@ export default function ChatArea({
                 </div>
               );
             })}
-            <div ref={bottomRef} />
           </>
         )}
       </div>
