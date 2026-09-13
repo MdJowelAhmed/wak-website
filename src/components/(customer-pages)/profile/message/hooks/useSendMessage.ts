@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { myFetch } from "../../../../../../helpers/myFetch";
+import { revalidateMessageCaches } from "../actions";
 import {
   ApiChat,
   appendUniqueMessage,
@@ -85,6 +86,7 @@ export function useSendMessage({
 
         setInput("");
         setSelectedFile(null);
+        void revalidateMessageCaches(selectedContact);
       } else {
         toast.error(res?.message || "Failed to send message");
       }

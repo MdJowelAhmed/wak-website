@@ -4,21 +4,24 @@ import DashboardCard from "@/shared/DashboardCard";
 import ChatSidebar from "./components/ChatSidebar";
 import ChatArea from "./components/ChatArea";
 import { useChatLogic } from "./hooks/useChatLogic";
+import type { MessagePageBootstrap } from "./types";
 
-interface MessagePageProps {
-  currentUserId: string;
-  initialChatId?: string;
-}
-
-export default function MessagePage({ currentUserId, initialChatId }: MessagePageProps) {
+export default function MessagePage({
+  currentUserId,
+  selectedChatId,
+  chats,
+  chatHasMore,
+  messages,
+  messageHasMore,
+}: MessagePageBootstrap) {
   const {
-    chats,
+    chats: chatList,
     isLoadingChats,
     searchTerm,
     setSearchTerm,
     selectedContact,
     setSelectedContact,
-    chatHasMore,
+    chatHasMore: hasMoreChats,
     isLoadingMoreChats,
     onLoadMoreChats,
     currentMessages,
@@ -30,25 +33,32 @@ export default function MessagePage({ currentUserId, initialChatId }: MessagePag
     selectedFile,
     setSelectedFile,
     handleFileChange,
-    messageHasMore,
+    messageHasMore: hasMoreMessages,
     isLoadingMoreMessages,
     onLoadMoreMessages,
     handleAcceptOffer,
     handleRejectOffer,
-  } = useChatLogic({ currentUserId, initialChatId });
+  } = useChatLogic({
+    currentUserId,
+    selectedChatId,
+    chats,
+    chatHasMore,
+    messages,
+    messageHasMore,
+  });
 
   return (
     <DashboardCard>
       <div className="flex flex-col lg:flex-row gap-6 h-[700px] text-zinc-800">
         <ChatSidebar 
-          chats={chats}
+          chats={chatList}
           currentUserId={currentUserId}
           isLoadingChats={isLoadingChats}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           selectedContact={selectedContact}
           setSelectedContact={setSelectedContact}
-          chatHasMore={chatHasMore}
+          chatHasMore={hasMoreChats}
           isLoadingMoreChats={isLoadingMoreChats}
           onLoadMoreChats={onLoadMoreChats}
         />
@@ -64,7 +74,7 @@ export default function MessagePage({ currentUserId, initialChatId }: MessagePag
           selectedFile={selectedFile}
           setSelectedFile={setSelectedFile}
           handleFileChange={handleFileChange}
-          messageHasMore={messageHasMore}
+          messageHasMore={hasMoreMessages}
           isLoadingMoreMessages={isLoadingMoreMessages}
           onLoadMoreMessages={onLoadMoreMessages}
           handleAcceptOffer={handleAcceptOffer}

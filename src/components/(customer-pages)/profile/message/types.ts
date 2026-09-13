@@ -35,6 +35,15 @@ export interface ChatMessage {
   customOffer?: CustomOffer;
 }
 
+export interface MessagePageBootstrap {
+  currentUserId: string;
+  selectedChatId: string | null;
+  chats: ApiChat[];
+  chatHasMore: boolean;
+  messages: ChatMessage[];
+  messageHasMore: boolean;
+}
+
 export function readEntityId(value: unknown): string {
   if (typeof value === "string" && value) return value;
   if (value && typeof value === "object") {

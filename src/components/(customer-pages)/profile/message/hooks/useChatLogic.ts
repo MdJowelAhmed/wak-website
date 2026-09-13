@@ -2,18 +2,36 @@ import { useChatsList } from "./useChatsList";
 import { useMessageHistory } from "./useMessageHistory";
 import { useSendMessage } from "./useSendMessage";
 import { useChatSocket } from "./useChatSocket";
+import type { ApiChat, ChatMessage } from "../types";
 
 interface UseChatLogicProps {
   currentUserId: string;
-  initialChatId?: string;
+  selectedChatId: string | null;
+  chats: ApiChat[];
+  chatHasMore: boolean;
+  messages: ChatMessage[];
+  messageHasMore: boolean;
 }
 
-export function useChatLogic({ currentUserId, initialChatId }: UseChatLogicProps) {
-  const chatList = useChatsList({ initialChatId });
+export function useChatLogic({
+  currentUserId,
+  selectedChatId,
+  chats,
+  chatHasMore,
+  messages,
+  messageHasMore,
+}: UseChatLogicProps) {
+  const chatList = useChatsList({
+    initialChats: chats,
+    initialChatHasMore: chatHasMore,
+    initialSelectedChatId: selectedChatId,
+  });
 
   const messageHistory = useMessageHistory({
     selectedContact: chatList.selectedContact,
-    currentUserId,
+    initialChatId: selectedChatId,
+    initialMessages: messages,
+    initialMessageHasMore: messageHasMore,
   });
 
   useChatSocket({
@@ -30,9 +48,15 @@ export function useChatLogic({ currentUserId, initialChatId }: UseChatLogicProps
     setChats: chatList.setChats,
   });
 
+  const setSelectedContact = (id: string) => {
+    chatList.setSelectedContact(id);
+    messageHistory.ensureMessagesLoaded(id);
+  };
+
   return {
     ...chatList,
     ...messageHistory,
     ...sendMessage,
+    setSelectedContact,
   };
 }

@@ -1,79 +1,112 @@
-import { useState, useEffect } from "react";
-import { myFetch } from "../../../../../../helpers/myFetch";
+import { useCallback, useRef, useState, type SetStateAction } from "react";
+import { loadMyChatsAction } from "../actions";
 import { ApiChat } from "../types";
 
 interface UseChatsListProps {
-  initialChatId?: string;
+  initialChats: ApiChat[];
+  initialChatHasMore: boolean;
+  initialSelectedChatId: string | null;
 }
 
-export function useChatsList({ initialChatId }: UseChatsListProps = {}) {
-  const [chats, setChats] = useState<ApiChat[]>([]);
-  const [selectedContact, setSelectedContact] = useState<string | null>(initialChatId || null);
+export function useChatsList({
+  initialChats,
+  initialChatHasMore,
+  initialSelectedChatId,
+}: UseChatsListProps) {
+  const [browseChats, setBrowseChats] = useState<ApiChat[]>(initialChats);
+  const [searchResults, setSearchResults] = useState<ApiChat[] | null>(null);
+  const [selectedContact, setSelectedContact] = useState<string | null>(initialSelectedChatId);
   const [isLoadingChats, setIsLoadingChats] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  
-  const [chatPage, setChatPage] = useState(1);
-  const [chatHasMore, setChatHasMore] = useState(true);
+  const [searchTerm, setSearchTermState] = useState("");
+  const [browsePage, setBrowsePage] = useState(1);
+  const [searchPage, setSearchPage] = useState(1);
+  const [browseHasMore, setBrowseHasMore] = useState(initialChatHasMore);
+  const [searchHasMore, setSearchHasMore] = useState(false);
   const [isLoadingMoreChats, setIsLoadingMoreChats] = useState(false);
 
-  useEffect(() => {
-    setChatPage(1);
-    setChats([]);
-    setChatHasMore(true);
-  }, [searchTerm]);
+  const searchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const searchRequestRef = useRef(0);
+  const loadMoreRequestRef = useRef(0);
 
-  useEffect(() => {
-    const fetchChats = async () => {
-      if (chatPage === 1) setIsLoadingChats(true);
-      else setIsLoadingMoreChats(true);
-      
-      try {
-        let endpoint = `/chats/mine?page=${chatPage}&limit=10`;
-        if (searchTerm.trim()) {
-          endpoint += `&searchTerm=${encodeURIComponent(searchTerm)}`;
-        }
-        
-        const res = await myFetch(endpoint, { cache: "no-store" });
-        if (res?.success && Array.isArray(res.data)) {
-          if (chatPage === 1) {
-            setChats(res.data);
-            if (!selectedContact && res.data.length > 0) {
-              setSelectedContact(res.data[0]._id);
-            }
-          } else {
-            setChats(prev => {
-              const existingIds = new Set(prev.map(c => c._id));
-              const newChats = res.data.filter((c: any) => !existingIds.has(c._id));
-              return [...prev, ...newChats];
-            });
-          }
-          
-          if (res.pagination) {
-            setChatHasMore(chatPage < res.pagination.totalPage);
-          } else {
-            setChatHasMore(res.data.length === 10);
-          }
-        }
-      } catch (error) {
-        console.error("Failed to fetch chats:", error);
-      } finally {
+  const isSearching = searchResults !== null;
+  const chats = searchResults ?? browseChats;
+  const chatHasMore = isSearching ? searchHasMore : browseHasMore;
+
+  const setChats = useCallback((action: SetStateAction<ApiChat[]>) => {
+    setBrowseChats(action);
+    setSearchResults((prev) => {
+      if (!prev) return prev;
+      return typeof action === "function" ? action(prev) : action;
+    });
+  }, []);
+
+  const setSearchTerm = (term: string) => {
+    setSearchTermState(term);
+    if (searchTimerRef.current) {
+      clearTimeout(searchTimerRef.current);
+    }
+
+    searchTimerRef.current = setTimeout(() => {
+      const requestId = ++searchRequestRef.current;
+      const query = term.trim();
+
+      if (!query) {
+        setSearchResults(null);
+        setSearchPage(1);
+        setSearchHasMore(false);
         setIsLoadingChats(false);
-        setIsLoadingMoreChats(false);
+        return;
       }
-    };
 
-    const delayDebounceFn = setTimeout(() => {
-      fetchChats();
+      setIsLoadingChats(true);
+      void loadMyChatsAction(1, query)
+        .then((result) => {
+          if (requestId !== searchRequestRef.current) return;
+          setSearchResults(result.chats);
+          setSearchPage(1);
+          setSearchHasMore(result.hasMore);
+        })
+        .finally(() => {
+          if (requestId === searchRequestRef.current) {
+            setIsLoadingChats(false);
+          }
+        });
     }, 500);
-
-    return () => clearTimeout(delayDebounceFn);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm, chatPage]);
+  };
 
   const onLoadMoreChats = () => {
-    if (!isLoadingChats && !isLoadingMoreChats && chatHasMore) {
-      setChatPage(prev => prev + 1);
-    }
+    if (isLoadingChats || isLoadingMoreChats || !chatHasMore) return;
+
+    const query = searchTerm.trim();
+    const nextPage = (isSearching ? searchPage : browsePage) + 1;
+    const requestId = ++loadMoreRequestRef.current;
+    setIsLoadingMoreChats(true);
+
+    void loadMyChatsAction(nextPage, query)
+      .then((result) => {
+        if (requestId !== loadMoreRequestRef.current) return;
+
+        const merge = (prev: ApiChat[]) => {
+          const existingIds = new Set(prev.map((chat) => chat._id));
+          const incoming = result.chats.filter((chat) => !existingIds.has(chat._id));
+          return [...prev, ...incoming];
+        };
+
+        if (query) {
+          setSearchResults((prev) => merge(prev ?? []));
+          setSearchPage(nextPage);
+          setSearchHasMore(result.hasMore);
+        } else {
+          setBrowseChats(merge);
+          setBrowsePage(nextPage);
+          setBrowseHasMore(result.hasMore);
+        }
+      })
+      .finally(() => {
+        if (requestId === loadMoreRequestRef.current) {
+          setIsLoadingMoreChats(false);
+        }
+      });
   };
 
   return {

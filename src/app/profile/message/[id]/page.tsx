@@ -1,6 +1,5 @@
 import MessagePage from "@/components/(customer-pages)/profile/message";
-import { readEntityId } from "@/components/(customer-pages)/profile/message/types";
-import getProfile from "../../../../../helpers/getProfile";
+import { getMessagePageBootstrap } from "@/components/(customer-pages)/profile/message/data";
 
 export default async function ChatIdRoute({
   params,
@@ -8,6 +7,6 @@ export default async function ChatIdRoute({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const profile = await getProfile();
-  return <MessagePage currentUserId={readEntityId(profile)} initialChatId={id} />;
+  const data = await getMessagePageBootstrap(id);
+  return <MessagePage {...data} />;
 }

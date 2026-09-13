@@ -1,78 +1,75 @@
-import { useState, useEffect } from "react";
-import { myFetch } from "../../../../../../helpers/myFetch";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
-import { ChatMessage, OfferPaymentMethod, mapChatMessage } from "../types";
-
-const initialMessages: Record<string, ChatMessage[]> = {};
+import { myFetch } from "../../../../../../helpers/myFetch";
+import { loadChatMessagesAction, revalidateMessageCaches } from "../actions";
+import { ChatMessage, OfferPaymentMethod } from "../types";
 
 interface UseMessageHistoryProps {
   selectedContact: string | null;
-  currentUserId: string;
+  initialChatId: string | null;
+  initialMessages: ChatMessage[];
+  initialMessageHasMore: boolean;
 }
 
-export function useMessageHistory({ selectedContact, currentUserId }: UseMessageHistoryProps) {
-  const [messageHistories, setMessageHistories] = useState(initialMessages);
+export function useMessageHistory({
+  selectedContact,
+  initialChatId,
+  initialMessages,
+  initialMessageHasMore,
+}: UseMessageHistoryProps) {
+  const [messageHistories, setMessageHistories] = useState<Record<string, ChatMessage[]>>(
+    initialChatId ? { [initialChatId]: initialMessages } : {},
+  );
   const [isLoadingMessages, setIsLoadingMessages] = useState(false);
-  const [messagePage, setMessagePage] = useState(1);
-  const [messageHasMore, setMessageHasMore] = useState(true);
+  const [messagePages, setMessagePages] = useState<Record<string, number>>(
+    initialChatId ? { [initialChatId]: 1 } : {},
+  );
+  const [hasMoreByChat, setHasMoreByChat] = useState<Record<string, boolean>>(
+    initialChatId ? { [initialChatId]: initialMessageHasMore } : {},
+  );
   const [isLoadingMoreMessages, setIsLoadingMoreMessages] = useState(false);
 
-  useEffect(() => {
-    setMessagePage(1);
-    setMessageHasMore(true);
-  }, [selectedContact]);
+  const loadedChatsRef = useRef<Set<string>>(new Set(initialChatId ? [initialChatId] : []));
+  const loadingChatRef = useRef<string | null>(null);
+  const loadMoreRequestRef = useRef(0);
 
-  useEffect(() => {
-    if (!selectedContact || !currentUserId) return;
+  const mergePageOne = (chatId: string, fetched: ChatMessage[]) => {
+    setMessageHistories((prev) => {
+      const existing = prev[chatId] || [];
+      const fetchedIds = new Set(fetched.map((message) => message.id));
+      const extraRealtime = existing.filter((message) => !fetchedIds.has(message.id));
+      return { ...prev, [chatId]: [...fetched, ...extraRealtime] };
+    });
+  };
 
-    const fetchMessages = async () => {
-      if (messagePage === 1) setIsLoadingMessages(true);
-      else setIsLoadingMoreMessages(true);
-      
-      try {
-        const res = await myFetch(`/messages/chats/${selectedContact}?page=${messagePage}&limit=15`, { cache: "no-store" });
-        if (res?.success && Array.isArray(res.data)) {
-          const mapped = res.data
-            .map((item: unknown) => mapChatMessage(item, currentUserId))
-            .filter((item): item is ChatMessage => item !== null)
-            .reverse();
+  const ensureMessagesLoaded = (chatId: string) => {
+    if (!chatId || loadedChatsRef.current.has(chatId) || loadingChatRef.current === chatId) {
+      return;
+    }
 
-          setMessageHistories((prev) => {
-            const existing = prev[selectedContact] || [];
-            if (messagePage === 1) {
-              const fetchedIds = new Set(mapped.map((message) => message.id));
-              const extraRealtime = existing.filter((message) => !fetchedIds.has(message.id));
-              return { ...prev, [selectedContact]: [...mapped, ...extraRealtime] };
-            } else {
-              const existingIds = new Set((prev[selectedContact] || []).map(m => m.id));
-              const newMapped = mapped.filter(m => !existingIds.has(m.id));
-              
-              return {
-                ...prev,
-                [selectedContact]: [...newMapped, ...(prev[selectedContact] || [])]
-              };
-            }
-          });
+    loadingChatRef.current = chatId;
+    setIsLoadingMessages(true);
 
-          if (res.pagination) {
-            setMessageHasMore(messagePage < res.pagination.totalPage);
-          } else {
-            setMessageHasMore(res.data.length === 15);
-          }
-        }
-      } catch {
+    void loadChatMessagesAction(chatId, 1)
+      .then((result) => {
+        loadedChatsRef.current.add(chatId);
+        mergePageOne(chatId, result.messages);
+        setMessagePages((prev) => ({ ...prev, [chatId]: 1 }));
+        setHasMoreByChat((prev) => ({ ...prev, [chatId]: result.hasMore }));
+      })
+      .catch(() => {
         toast.error("Could not load messages.");
-      } finally {
+      })
+      .finally(() => {
+        if (loadingChatRef.current === chatId) {
+          loadingChatRef.current = null;
+        }
         setIsLoadingMessages(false);
-        setIsLoadingMoreMessages(false);
-      }
-    };
-
-    fetchMessages();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedContact, messagePage, currentUserId]);
+      });
+  };
 
   const currentMessages = (selectedContact && messageHistories[selectedContact]) || [];
+  const messageHasMore = selectedContact ? Boolean(hasMoreByChat[selectedContact]) : false;
 
   const handleAcceptOffer = async (offerId: string, paymentMethod: OfferPaymentMethod) => {
     try {
@@ -84,6 +81,10 @@ export function useMessageHistory({ selectedContact, currentUserId }: UseMessage
         res?.success && typeof res.data?.checkoutUrl === "string"
           ? res.data.checkoutUrl
           : null;
+
+      if (selectedContact) {
+        void revalidateMessageCaches(selectedContact);
+      }
 
       if (checkoutUrl) {
         window.location.href = checkoutUrl;
@@ -119,6 +120,7 @@ export function useMessageHistory({ selectedContact, currentUserId }: UseMessage
           }),
         };
       });
+      void revalidateMessageCaches(selectedContact);
       toast.success("Offer rejected.");
     } catch {
       toast.error("Could not reject this offer.");
@@ -126,9 +128,35 @@ export function useMessageHistory({ selectedContact, currentUserId }: UseMessage
   };
 
   const onLoadMoreMessages = () => {
-    if (!isLoadingMessages && !isLoadingMoreMessages && messageHasMore) {
-      setMessagePage(prev => prev + 1);
+    if (!selectedContact || isLoadingMessages || isLoadingMoreMessages || !messageHasMore) {
+      return;
     }
+
+    const nextPage = (messagePages[selectedContact] || 1) + 1;
+    const chatId = selectedContact;
+    const requestId = ++loadMoreRequestRef.current;
+    setIsLoadingMoreMessages(true);
+
+    void loadChatMessagesAction(chatId, nextPage)
+      .then((result) => {
+        if (requestId !== loadMoreRequestRef.current) return;
+        setMessageHistories((prev) => {
+          const existing = prev[chatId] || [];
+          const existingIds = new Set(existing.map((message) => message.id));
+          const incoming = result.messages.filter((message) => !existingIds.has(message.id));
+          return { ...prev, [chatId]: [...incoming, ...existing] };
+        });
+        setMessagePages((prev) => ({ ...prev, [chatId]: nextPage }));
+        setHasMoreByChat((prev) => ({ ...prev, [chatId]: result.hasMore }));
+      })
+      .catch(() => {
+        toast.error("Could not load messages.");
+      })
+      .finally(() => {
+        if (requestId === loadMoreRequestRef.current) {
+          setIsLoadingMoreMessages(false);
+        }
+      });
   };
 
   return {
@@ -139,6 +167,7 @@ export function useMessageHistory({ selectedContact, currentUserId }: UseMessage
     messageHasMore,
     isLoadingMoreMessages,
     onLoadMoreMessages,
+    ensureMessagesLoaded,
     handleAcceptOffer,
     handleRejectOffer,
   };

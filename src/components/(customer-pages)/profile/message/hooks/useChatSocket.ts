@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import Cookies from "js-cookie";
+import { revalidateMessageCaches } from "../actions";
 import {
   ApiChat,
   appendUniqueMessage,
@@ -33,6 +34,15 @@ export function useChatSocket({
   const selectedContactRef = useRef(selectedContact);
   const currentUserIdRef = useRef(currentUserId);
   const socketRef = useRef<Socket | null>(null);
+  const revalidateTimersRef = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+
+  const scheduleCacheRevalidate = (chatId: string) => {
+    const existing = revalidateTimersRef.current[chatId];
+    if (existing) clearTimeout(existing);
+    revalidateTimersRef.current[chatId] = setTimeout(() => {
+      void revalidateMessageCaches(chatId);
+    }, 1500);
+  };
 
   useEffect(() => {
     selectedContactRef.current = selectedContact;
@@ -96,6 +106,8 @@ export function useChatSocket({
         }
         return updated;
       });
+
+      scheduleCacheRevalidate(chatId);
     };
 
     socket.on("message:new", handleNewMessage);
@@ -103,6 +115,8 @@ export function useChatSocket({
     socket.on("receiveMessage", handleNewMessage);
 
     return () => {
+      Object.values(revalidateTimersRef.current).forEach((timer) => clearTimeout(timer));
+      revalidateTimersRef.current = {};
       socket.removeAllListeners();
       socket.disconnect();
       socketRef.current = null;
