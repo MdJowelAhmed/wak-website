@@ -1,24 +1,27 @@
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import ProductGallery from "./components/ProductGallery";
 import ProductInfo from "./components/ProductInfo";
 import ProductSpecs from "./components/ProductSpecs";
 import RelatedItems from "./components/RelatedItems";
 import type { ProductDetailsData, RelatedProduct } from "./types";
 
-export default function ShopDetails({
+export default async function ShopDetails({
     product,
     relatedProducts,
 }: {
     product: ProductDetailsData;
     relatedProducts: RelatedProduct[];
 }) {
+    const t = await getTranslations("ShopDetails");
+
     return (
         <div className="px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
             <div className="container mx-auto max-w-7xl">
                 <header className="mb-8">
                     <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
                         <Link href="/shop" className="hover:text-white">
-                            Shop
+                            {t("shop")}
                         </Link>
                         <span className="mx-2 text-white/40">/</span>
                         {product.name}

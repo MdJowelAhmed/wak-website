@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Star } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 interface RatingFilterProps {
@@ -15,6 +16,7 @@ export default function RatingFilter({
     setSelectedRating,
     variant = "light",
 }: RatingFilterProps) {
+    const t = useTranslations("Shop");
     const [hoveredRating, setHoveredRating] = useState<number | null>(null);
     const activeRating = hoveredRating || selectedRating || 0;
     const isDark = variant === "dark";
@@ -22,7 +24,7 @@ export default function RatingFilter({
     return (
         <div>
             <h3 className={cn("mb-4 text-sm font-bold", isDark ? "text-white" : "text-card-foreground")}>
-                Ratings
+                {t("ratings")}
             </h3>
             <div className="flex items-center gap-3">
                 <div
@@ -33,7 +35,7 @@ export default function RatingFilter({
                         <button
                             key={star}
                             type="button"
-                            aria-label={`${star} star${star > 1 ? "s" : ""} and up`}
+                            aria-label={t("starsAndUp", { count: star })}
                             aria-pressed={selectedRating === star}
                             onClick={() => setSelectedRating(selectedRating === star ? null : star)}
                             onMouseEnter={() => setHoveredRating(star)}
@@ -60,7 +62,7 @@ export default function RatingFilter({
                             : isDark ? "text-white/50" : "text-muted-foreground",
                     )}
                 >
-                    {selectedRating ? "& Up" : "Any"}
+                    {selectedRating ? t("andUp") : t("any")}
                 </span>
             </div>
         </div>

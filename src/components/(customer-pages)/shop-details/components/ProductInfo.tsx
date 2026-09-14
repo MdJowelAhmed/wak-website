@@ -1,16 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Loader2, Minus, Plus, Shield, ShoppingCart, Star, Truck, Zap } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Button } from "@/ui/button";
 import { useCart } from "@/context/CartContext";
 import { useCurrency } from "@/hooks/use-currency";
+import { useRouter } from "@/i18n/navigation";
 import { myFetch } from "../../../../../helpers/myFetch";
 import { type ProductDetailsData } from "../types";
 
 export default function ProductInfo({ product }: { product: ProductDetailsData }) {
+    const t = useTranslations("ShopDetails");
     const router = useRouter();
     const { refreshCart } = useCart();
     const { formatPrice } = useCurrency();
@@ -27,7 +29,7 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
             body: { product: product.id, quantity: qty },
         });
         if (!res?.success) {
-            toast.error(res?.message || "Could not add this product to cart.");
+            toast.error(res?.message || t("addError"));
             return false;
         }
         await refreshCart();
@@ -39,9 +41,9 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
         setIsAdding(true);
         try {
             const added = await addToCart();
-            if (added) toast.success("Added to cart");
+            if (added) toast.success(t("addedToCart"));
         } catch {
-            toast.error("Could not add this product to cart.");
+            toast.error(t("addError"));
         } finally {
             setIsAdding(false);
         }
@@ -54,7 +56,7 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
             const added = await addToCart();
             if (added) router.push("/check-out");
         } catch {
-            toast.error("Could not start checkout.");
+            toast.error(t("checkoutError"));
         } finally {
             setIsBuying(false);
         }
@@ -88,20 +90,20 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
                 </div>
                 <span className="text-sm font-semibold text-white">{product.rating.toFixed(1)}</span>
                 <span className="text-sm text-white/65">
-                    ({product.reviews} {product.reviews === 1 ? "review" : "reviews"})
+                    ({t("reviewCount", { count: product.reviews })})
                 </span>
             </div>
 
             <dl className="mt-5 grid grid-cols-2 gap-3 text-sm">
                 <div>
-                    <dt className="text-white/55">Stock</dt>
+                    <dt className="text-white/55">{t("stock")}</dt>
                     <dd className="mt-0.5 font-semibold text-white">
-                        {inStock ? `${product.stock} available` : "Out of stock"}
+                        {inStock ? t("available", { count: product.stock }) : t("outOfStock")}
                     </dd>
                 </div>
                 {product.sku ? (
                     <div>
-                        <dt className="text-white/55">SKU</dt>
+                        <dt className="text-white/55">{t("sku")}</dt>
                         <dd className="mt-0.5 font-semibold text-white">{product.sku}</dd>
                     </div>
                 ) : null}
@@ -109,14 +111,14 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
 
             <div className="mt-6 flex flex-col gap-4">
                 <div className="flex items-center gap-4">
-                    <span className="text-sm font-medium text-white">Quantity</span>
+                    <span className="text-sm font-medium text-white">{t("quantity")}</span>
                     <div className="flex items-center rounded-xl border border-white/15 bg-white/10">
                         <button
                             type="button"
                             onClick={() => setQty((value) => Math.max(1, value - 1))}
                             disabled={!inStock || qty <= 1}
                             className="flex h-10 w-10 cursor-pointer items-center justify-center text-white transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
-                            aria-label="Decrease quantity"
+                            aria-label={t("decreaseQty")}
                         >
                             <Minus className="h-4 w-4" />
                         </button>
@@ -126,7 +128,7 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
                             onClick={() => setQty((value) => Math.min(maxQty, value + 1))}
                             disabled={!inStock || qty >= maxQty}
                             className="flex h-10 w-10 cursor-pointer items-center justify-center text-white transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
-                            aria-label="Increase quantity"
+                            aria-label={t("increaseQty")}
                         >
                             <Plus className="h-4 w-4" />
                         </button>
@@ -142,7 +144,7 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
                         className="flex-1 rounded-xl border-white/20 text-white hover:bg-white/10 hover:text-white"
                     >
                         {isAdding ? <Loader2 className="h-4 w-4 animate-spin" /> : <ShoppingCart className="h-4 w-4" />}
-                        Add to cart
+                        {t("addToCart")}
                     </Button>
                     <Button
                         type="button"
@@ -151,7 +153,7 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
                         className="flex-1 rounded-xl shadow-md shadow-primary/20"
                     >
                         {isBuying ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
-                        Buy now
+                        {t("buyNow")}
                     </Button>
                 </div>
             </div>
@@ -160,19 +162,19 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
                 <div className="flex items-start gap-3">
                     <Truck className="mt-0.5 h-4 w-4 text-primary" />
                     <div>
-                        <p className="text-sm font-semibold text-white">Delivery</p>
+                        <p className="text-sm font-semibold text-white">{t("delivery")}</p>
                         <p className="text-xs text-white/65">
                             {product.localDeliveryFee != null
-                                ? `Local delivery ${formatPrice(product.localDeliveryFee)}`
-                                : "Calculated at checkout"}
+                                ? t("localDelivery", { price: formatPrice(product.localDeliveryFee) })
+                                : t("calculatedAtCheckout")}
                         </p>
                     </div>
                 </div>
                 <div className="flex items-start gap-3">
                     <Shield className="mt-0.5 h-4 w-4 text-primary" />
                     <div>
-                        <p className="text-sm font-semibold text-white">Secure checkout</p>
-                        <p className="text-xs text-white/65">Protected payment</p>
+                        <p className="text-sm font-semibold text-white">{t("secureCheckout")}</p>
+                        <p className="text-xs text-white/65">{t("protectedPayment")}</p>
                     </div>
                 </div>
             </div>

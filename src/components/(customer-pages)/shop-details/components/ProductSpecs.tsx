@@ -1,13 +1,19 @@
+import { getTranslations } from "next-intl/server";
 import type { ProductDetailsData } from "../types";
 
-export default function ProductSpecs({ product }: { product: ProductDetailsData }) {
+export default async function ProductSpecs({ product }: { product: ProductDetailsData }) {
+    const t = await getTranslations("ShopDetails");
     const hasAbout = Boolean(product.description || product.productDetails);
     const extraSpecs = [
-        product.weight ? { label: "Weight", value: `${product.weight} kg` } : null,
+        product.weight ? { label: t("weight"), value: t("weightValue", { value: product.weight }) } : null,
         product.dimensions
             ? {
-                  label: "Dimensions",
-                  value: `${product.dimensions.length} × ${product.dimensions.width} × ${product.dimensions.height} cm`,
+                  label: t("dimensions"),
+                  value: t("dimensionsValue", {
+                      length: product.dimensions.length,
+                      width: product.dimensions.width,
+                      height: product.dimensions.height,
+                  }),
               }
             : null,
     ].filter((item): item is { label: string; value: string } => item !== null);
@@ -19,7 +25,7 @@ export default function ProductSpecs({ product }: { product: ProductDetailsData 
         <section className="rounded-2xl border border-white/10 bg-secondary p-5 shadow-lg sm:p-6">
             {hasAbout && (
                 <div>
-                    <h2 className="text-lg font-bold text-white">About this product</h2>
+                    <h2 className="text-lg font-bold text-white">{t("about")}</h2>
                     {product.description && (
                         <p className="mt-3 text-sm leading-relaxed text-white/80">{product.description}</p>
                     )}
@@ -31,7 +37,7 @@ export default function ProductSpecs({ product }: { product: ProductDetailsData 
 
             {specs.length > 0 && (
                 <div className={hasAbout ? "mt-6 border-t border-white/10 pt-5" : ""}>
-                    <h2 className="mb-4 text-lg font-bold text-white">Specifications</h2>
+                    <h2 className="mb-4 text-lg font-bold text-white">{t("specifications")}</h2>
                     <dl className="grid gap-3 sm:grid-cols-2">
                         {specs.map((item) => (
                             <div

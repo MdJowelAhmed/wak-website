@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const LENS_SIZE = 200;
 
@@ -19,6 +20,7 @@ function clamp(value: number, min: number, max: number) {
 }
 
 export default function ProductGallery({ images, name, inStock, discount }: ProductGalleryProps) {
+    const t = useTranslations("ShopDetails");
     const [activeIndex, setActiveIndex] = useState(0);
     const [zoomLevel, setZoomLevel] = useState<ZoomLevel>(2);
     const [pointer, setPointer] = useState<{ x: number; y: number } | null>(null);
@@ -66,7 +68,7 @@ export default function ProductGallery({ images, name, inStock, discount }: Prod
                         >
                             <Image
                                 src={image}
-                                alt={`${name} view ${index + 1}`}
+                                alt={t("viewImage", { name, index: index + 1 })}
                                 fill
                                 unoptimized
                                 className="object-cover"
@@ -79,7 +81,7 @@ export default function ProductGallery({ images, name, inStock, discount }: Prod
                 <div className="order-1 min-w-0 flex-1 md:order-2">
                     <div className="mb-3 flex items-center justify-between gap-3">
                         <div className="flex items-center gap-2">
-                            <span className="text-xs font-semibold text-white/70">Zoom</span>
+                            <span className="text-xs font-semibold text-white/70">{t("zoom")}</span>
                             {([2, 3] as const).map((level) => (
                                 <button
                                     key={level}
@@ -100,7 +102,7 @@ export default function ProductGallery({ images, name, inStock, discount }: Prod
                                 inStock ? "bg-success/15 text-foreground" : "bg-destructive/15 text-foreground/70"
                             }`}
                         >
-                            {inStock ? "In stock" : "Out of stock"}
+                            {inStock ? t("inStock") : t("outOfStock")}
                         </span>
                     </div>
 

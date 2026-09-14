@@ -1,11 +1,12 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Checkbox } from "@/ui/checkbox";
 import { cn } from "@/lib/utils";
 
 const DISCOUNT_OPTIONS = [
-    { label: "Regular Products", value: "regular" },
-    { label: "Discounted Products", value: "discounted" },
+    { labelKey: "regularProducts" as const, value: "regular" },
+    { labelKey: "discountedProducts" as const, value: "discounted" },
 ];
 
 interface OfferFilterProps {
@@ -21,12 +22,13 @@ export default function OfferFilter({
     setSelectedOffers,
     variant = "light",
 }: OfferFilterProps) {
+    const t = useTranslations("Shop");
     const isDark = variant === "dark";
 
     return (
         <div>
             <h3 className={cn("mb-4 text-sm font-bold", isDark ? "text-white" : "text-card-foreground")}>
-                Discount Filter
+                {t("discountFilter")}
             </h3>
             <div className="space-y-3">
                 {DISCOUNT_OPTIONS.map((option) => {
@@ -54,7 +56,7 @@ export default function OfferFilter({
                                 )}
                             />
                             <span className={cn("text-sm font-medium", isDark ? "text-white" : "text-card-foreground")}>
-                                {option.label}
+                                {t(option.labelKey)}
                             </span>
                         </label>
                     );

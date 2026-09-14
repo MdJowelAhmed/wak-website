@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 interface PriceFilterProps {
@@ -20,12 +21,13 @@ export default function PriceFilter({
     setPriceMax,
     variant = "light",
 }: PriceFilterProps) {
+    const t = useTranslations("Shop");
     const isDark = variant === "dark";
 
     return (
         <div>
             <h3 className={cn("mb-4 text-sm font-bold", isDark ? "text-white" : "text-card-foreground")}>
-                Price Range
+                {t("priceRange")}
             </h3>
             <div className="space-y-5">
                 <div className={cn("relative flex h-1.5 w-full items-center rounded-full", isDark ? "bg-white/20" : "bg-border")}>
@@ -41,7 +43,7 @@ export default function PriceFilter({
                         min={0}
                         max={1000}
                         value={priceMin}
-                        aria-label="Minimum price"
+                        aria-label={t("minPrice")}
                         onChange={(e) => setPriceMin(Math.min(Number(e.target.value), priceMax - 1))}
                         className={`${thumbClass} z-20 [&::-webkit-slider-thumb]:bg-primary [&::-moz-range-thumb]:bg-primary`}
                     />
@@ -50,7 +52,7 @@ export default function PriceFilter({
                         min={0}
                         max={1000}
                         value={priceMax}
-                        aria-label="Maximum price"
+                        aria-label={t("maxPrice")}
                         onChange={(e) => setPriceMax(Math.max(Number(e.target.value), priceMin + 1))}
                         className={`${thumbClass} z-30 [&::-webkit-slider-thumb]:bg-primary [&::-moz-range-thumb]:bg-primary`}
                     />
@@ -59,7 +61,7 @@ export default function PriceFilter({
                 <div className="flex items-center gap-3">
                     <label className="flex-1">
                         <span className={cn("mb-1.5 block text-[11px] font-semibold uppercase tracking-wide", isDark ? "text-white/60" : "text-muted-foreground")}>
-                            Min
+                            {t("min")}
                         </span>
                         <div className={cn("flex items-center rounded-xl px-3 py-2.5", isDark ? "border border-white/25 bg-white/15" : "bg-secondary")}>
                             <span className="mr-1 text-xs font-medium text-white/70">$</span>
@@ -78,7 +80,7 @@ export default function PriceFilter({
                     </span>
                     <label className="flex-1">
                         <span className={cn("mb-1.5 block text-[11px] font-semibold uppercase tracking-wide", isDark ? "text-white/60" : "text-muted-foreground")}>
-                            Max
+                            {t("max")}
                         </span>
                         <div className={cn("flex items-center rounded-xl px-3 py-2.5", isDark ? "border border-white/25 bg-white/15" : "bg-secondary")}>
                             <span className="mr-1 text-xs font-medium text-white/70">$</span>

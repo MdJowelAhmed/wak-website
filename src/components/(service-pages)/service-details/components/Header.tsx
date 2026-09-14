@@ -1,8 +1,11 @@
 import Image from "next/image";
 import { Star } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import type { ServiceDetailsData } from "../types";
 
-export default function Header({ service }: { service: ServiceDetailsData }) {
+export default async function Header({ service }: { service: ServiceDetailsData }) {
+    const t = await getTranslations("ServiceDetails");
+
     return (
         <section className="overflow-hidden rounded-2xl border border-white/10 bg-secondary shadow-lg">
             <div className="relative h-64 w-full sm:h-80 md:h-96">
@@ -42,7 +45,7 @@ export default function Header({ service }: { service: ServiceDetailsData }) {
                     <Star className="h-4 w-4 fill-primary text-primary" />
                     <span className="font-semibold text-white">{service.rating.toFixed(1)}</span>
                     <span className="text-white/65">
-                        ({service.reviewCount} {service.reviewCount === 1 ? "review" : "reviews"})
+                        ({t("reviewCount", { count: service.reviewCount })})
                     </span>
                 </div>
             </div>

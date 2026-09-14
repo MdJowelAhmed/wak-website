@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { Star, ShoppingCart, Loader2 } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { useRouter } from "@/i18n/navigation";
 import { useCart } from "@/context/CartContext";
 import { useCurrency } from "@/hooks/use-currency";
 import { myFetch } from "../../helpers/myFetch";
@@ -23,6 +24,7 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: { product: ProductCardProps }) => {
     const { id, productId, name, image, currentPrice, originalPrice, discount, rating, reviews } = product;
+    const t = useTranslations("ShopDetails");
     const router = useRouter();
     const { refreshCart } = useCart();
     const { formatPrice } = useCurrency();
@@ -52,13 +54,13 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
                 body: { product: productId || String(id), quantity: 1 },
             });
             if (res?.success) {
-                toast.success("Added to cart");
+                toast.success(t("addedToCart"));
                 await refreshCart();
             } else {
-                toast.error(res?.message || "Failed to add to cart");
+                toast.error(res?.message || t("addError"));
             }
         } catch {
-            toast.error("Could not add this product to cart");
+            toast.error(t("addError"));
         } finally {
             setAddingToCart(false);
         }
@@ -93,7 +95,7 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
                     onClick={handleCartClick}
                     disabled={addingToCart}
                     className="absolute top-2 right-2 z-10 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-secondary/80 text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-primary disabled:cursor-not-allowed disabled:opacity-70 sm:top-3 sm:right-3 sm:h-8 sm:w-8"
-                    aria-label="Add to cart"
+                    aria-label={t("addToCart")}
                 >
                     {addingToCart ? (
                         <Loader2 className="h-3.5 w-3.5 animate-spin sm:h-4 sm:w-4" />

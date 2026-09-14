@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 const brands = ["E-commerce", "E-shop", "Shop Name your togine"];
 
 interface BrandFilterProps {
@@ -9,9 +11,10 @@ interface BrandFilterProps {
 }
 
 export default function BrandFilter({ selectedBrands, toggleItem, setSelectedBrands }: BrandFilterProps) {
+    const t = useTranslations("Shop");
     return (
         <div>
-            <h3 className="text-gray-900 font-medium text-sm mb-4">Brands</h3>
+            <h3 className="text-gray-900 font-medium text-sm mb-4">{t("brands")}</h3>
             <div className="space-y-3">
                 {brands.map((brand) => (
                     <label key={brand} className="flex items-center gap-3 cursor-pointer group">

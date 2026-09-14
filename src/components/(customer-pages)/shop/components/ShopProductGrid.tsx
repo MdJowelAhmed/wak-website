@@ -1,6 +1,8 @@
 "use client";
 
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useRouter, usePathname } from "@/i18n/navigation";
 import ProductCard from "@/shared/ProductCard";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
 import {
@@ -43,6 +45,7 @@ function buildPageRange(current: number, total: number): (number | null)[] {
 }
 
 export default function ShopProductGrid({ products = [], pagination }: ShopProductGridProps) {
+    const t = useTranslations("Shop");
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -81,7 +84,7 @@ export default function ShopProductGrid({ products = [], pagination }: ShopProdu
                 </div>
             ) : (
                 <div className="flex justify-center items-center py-20 text-white/50">
-                    No products found matching your criteria.
+                    {t("empty")}
                 </div>
             )}
 
@@ -98,8 +101,11 @@ export default function ShopProductGrid({ products = [], pagination }: ShopProdu
                                         e.preventDefault();
                                         if (currentPage > 1) handlePageChange(currentPage - 1);
                                     }}
+                                    aria-label={t("previousPage")}
                                     className={`${LINK_BASE} ${currentPage === 1 ? LINK_DISABLED : ""}`}
-                                />
+                                >
+                                    {t("previous")}
+                                </PaginationPrevious>
                             </PaginationItem>
 
                             {/* Page numbers */}
@@ -133,8 +139,11 @@ export default function ShopProductGrid({ products = [], pagination }: ShopProdu
                                         e.preventDefault();
                                         if (currentPage < totalPage) handlePageChange(currentPage + 1);
                                     }}
+                                    aria-label={t("nextPage")}
                                     className={`${LINK_BASE} ${currentPage === totalPage ? LINK_DISABLED : ""}`}
-                                />
+                                >
+                                    {t("next")}
+                                </PaginationNext>
                             </PaginationItem>
                         </PaginationContent>
                     </Pagination>

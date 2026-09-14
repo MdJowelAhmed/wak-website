@@ -1,4 +1,4 @@
-import ServicesList from "./components/ServiceList";
+import ServicesList, { type ServiceCategory, type ServiceItem } from "./components/ServiceList";
 
 export interface PaginationData {
     total: number;
@@ -8,9 +8,9 @@ export interface PaginationData {
 }
 
 interface ServicesProps {
-    services: any[];
+    services: ServiceItem[];
     pagination?: PaginationData;
-    categoriesList: any[];
+    categoriesList: ServiceCategory[];
     searchParams?: { [key: string]: string | string[] | undefined };
 }
 

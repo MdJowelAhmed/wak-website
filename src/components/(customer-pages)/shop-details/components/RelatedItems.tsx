@@ -1,25 +1,28 @@
 "use client";
 
-import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import ProductCard from "@/shared/ProductCard";
+import { Link } from "@/i18n/navigation";
 import type { RelatedProduct } from "../types";
 
 import "swiper/css";
 
 export default function RelatedItems({ products }: { products: RelatedProduct[] }) {
+    const t = useTranslations("ShopDetails");
+
     return (
         <section className="pt-4">
             <div className="mb-6 flex items-center justify-between gap-4">
-                <h2 className="text-lg font-bold text-white">Related products</h2>
+                <h2 className="text-lg font-bold text-white">{t("related")}</h2>
                 <Link
                     href="/shop"
                     className="inline-flex items-center gap-1 text-sm font-semibold text-white/80 hover:text-white"
                 >
-                    View all
-                    <ArrowRight className="h-4 w-4" />
+                    {t("viewAll")}
+                    <ArrowRight className="h-4 w-4 rtl:rotate-180" />
                 </Link>
             </div>
             <Swiper

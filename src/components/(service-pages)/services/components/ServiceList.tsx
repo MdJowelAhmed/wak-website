@@ -1,11 +1,37 @@
 'use client';
 
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Star } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useCurrency } from '@/hooks/use-currency';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
 import { PaginationData } from '../index';
 import Image from 'next/image';
+import { useRouter, usePathname } from '@/i18n/navigation';
+
+export interface ServiceCategory {
+    _id?: string;
+    name: string;
+    slug?: string;
+}
+
+export interface ServiceCreator {
+    name?: string;
+    profileImage?: string;
+}
+
+export interface ServiceItem {
+    _id: string;
+    slug?: string;
+    name?: string;
+    description?: string;
+    price?: number;
+    image?: string;
+    ratingAverage?: number;
+    ratingCount?: number;
+    category?: ServiceCategory;
+    creator?: ServiceCreator;
+}
 
 const HorizontalServiceCard = ({
     id,
@@ -16,7 +42,8 @@ const HorizontalServiceCard = ({
     category,
     description,
     price,
-    coverImage
+    coverImage,
+    fromLabel,
 }: {
     id: string | number;
     name: string;
@@ -27,9 +54,9 @@ const HorizontalServiceCard = ({
     description: string;
     price: number;
     coverImage: string;
+    fromLabel: string;
 }) => {
     const router = useRouter();
-    const { formatPrice } = useCurrency();
 
     const handleClick = () => {
         const cookies = document.cookie;
@@ -48,7 +75,6 @@ const HorizontalServiceCard = ({
             onClick={handleClick}
             className="group flex cursor-pointer gap-4 rounded-2xl border border-white/10 bg-secondary p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:bg-secondary/90"
         >
-            {/* Cover Image (Left Side) */}
             <div className="w-28 h-20 sm:w-32 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-white/10">
                 <Image
                     src={coverImage}
@@ -59,7 +85,6 @@ const HorizontalServiceCard = ({
                 />
             </div>
 
-            {/* Content (Right Side) */}
             <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
                 <div>
                     <h4 className="text-foreground font-semibold text-sm sm:text-base line-clamp-1 group-hover:text-foreground/90 transition-colors">
@@ -93,7 +118,7 @@ const HorizontalServiceCard = ({
                             </span>
                         </div>
                         <span className="text-[11px] font-bold text-primary">
-                            From: {formatPrice(price)}
+                            {fromLabel}
                         </span>
                     </div>
                 </div>
@@ -103,28 +128,28 @@ const HorizontalServiceCard = ({
 };
 
 interface ServiceListProps {
-    services?: any[];
+    services?: ServiceItem[];
     pagination?: PaginationData;
-    categoriesList?: any[];
+    categoriesList?: ServiceCategory[];
     searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 export default function ServiceList({
     services = [],
-    pagination,
     categoriesList = [],
     searchParams = {},
 }: ServiceListProps) {
+    const t = useTranslations("Services");
+    const { formatPrice } = useCurrency();
     const router = useRouter();
     const pathname = usePathname();
     const currentSearchParams = useSearchParams();
 
     const selectedCategory = (searchParams?.category ?? currentSearchParams.get('category')) as string || 'All';
 
-    // Construct Category options from categoriesList prop
     const categories = [
-        { name: "All", value: "All" },
-        ...categoriesList.map((c: any) => ({
+        { name: t("all"), value: "All" },
+        ...categoriesList.map((c) => ({
             name: c.name,
             value: c.slug || c._id || c.name,
         })),
@@ -154,24 +179,22 @@ export default function ServiceList({
     return (
         <section className="pb-16 md:py-20 ">
             <div className="container mx-auto px-4">
-                {/* Section Header */}
                 <div className="mb-8">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                         <div className="flex items-center gap-4">
                             <div className="h-10 w-1 rounded-full bg-primary"></div>
                             <div>
                                 <h2 className="text-3xl md:text-4xl font-semibold text-white">
-                                    Our Services
+                                    {t("title")}
                                 </h2>
                                 <p className="text-white/70 text-sm mt-2">
-                                    Browse through expert-vetted professionals
+                                    {t("subtitle")}
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Category Tabs */}
                 <div className="flex flex-wrap gap-2.5 mb-12">
                     {categories.map((category) => {
                         const isActive = selectedCategory === category.value || (selectedCategory === 'All' && category.value === 'All');
@@ -192,22 +215,23 @@ export default function ServiceList({
 
                 {filteredServices.length === 0 ? (
                     <div key={selectedCategory} className="rounded-2xl border border-dashed border-white/20 bg-secondary/40 py-20 text-center animate-in fade-in duration-300">
-                        <p className="text-sm text-white/70">No services found in this category.</p>
+                        <p className="text-sm text-white/70">{t("empty")}</p>
                     </div>
                 ) : (
                     <div key={selectedCategory} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-3 duration-500">
                         {filteredServices.map((service) => (
-                            <HorizontalServiceCard 
-                                key={service._id} 
+                            <HorizontalServiceCard
+                                key={service._id}
                                 id={service.slug || service._id}
-                                name={service.name || "Untitled service"}
+                                name={service.name || t("untitled")}
                                 avatar={resolveImageUrl(service.creator?.profileImage) || `https://ui-avatars.com/api/?name=${encodeURIComponent(service.creator?.name || 'User')}&background=random`}
                                 rating={service.ratingAverage || 0}
                                 reviewCount={service.ratingCount || 0}
-                                category={service.category?.name || "Service"}
+                                category={service.category?.name || t("fallbackCategory")}
                                 description={service.description || service.name || ""}
                                 price={service.price || 0}
                                 coverImage={resolveImageUrl(service.image) || "/placeholder.jpg"}
+                                fromLabel={t("from", { price: formatPrice(service.price || 0) })}
                             />
                         ))}
                     </div>
