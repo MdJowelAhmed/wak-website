@@ -54,14 +54,6 @@ export interface ShippingEstimate {
     grandTotal: number;
 }
 
-export interface CheckoutFxQuote {
-    exchangeRate: number;
-    baseRate: number;
-    fxFeeRate: number;
-    quoteId: string;
-    isLocked: boolean;
-}
-
 export function formatCheckoutMoney(amount: number): string {
     return new Intl.NumberFormat("en-US", {
         style: "currency",
@@ -185,26 +177,5 @@ export function readEstimate(data: unknown): ShippingEstimate | null {
         grandSubTotal: row.grandSubTotal,
         grandShippingTotal: row.grandShippingTotal,
         grandTotal: row.grandTotal,
-    };
-}
-
-export function readFxQuote(data: unknown): CheckoutFxQuote | null {
-    if (!data || typeof data !== "object") return null;
-    const row = data as {
-        exchangeRate?: unknown;
-        baseRate?: unknown;
-        fxFeeRate?: unknown;
-        quoteId?: unknown;
-        isLocked?: unknown;
-    };
-    if (typeof row.exchangeRate !== "number" || !Number.isFinite(row.exchangeRate) || row.exchangeRate <= 0) {
-        return null;
-    }
-    return {
-        exchangeRate: row.exchangeRate,
-        baseRate: typeof row.baseRate === "number" ? row.baseRate : row.exchangeRate,
-        fxFeeRate: typeof row.fxFeeRate === "number" ? row.fxFeeRate : 0,
-        quoteId: typeof row.quoteId === "string" ? row.quoteId : "",
-        isLocked: Boolean(row.isLocked),
     };
 }

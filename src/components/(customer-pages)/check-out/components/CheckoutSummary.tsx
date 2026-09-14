@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import { Button } from "@/ui/button";
-import type { CartItem, CheckoutFxQuote, DeliveryOption, PaymentMethod } from "../types";
-import { formatExchangeRate } from "../../../../../helpers/currency";
+import type { CartItem, DeliveryOption, PaymentMethod } from "../types";
 
 interface CheckoutSummaryProps {
     cartItems: CartItem[];
@@ -13,8 +12,6 @@ interface CheckoutSummaryProps {
     deliveryOption: DeliveryOption;
     paymentMethod: PaymentMethod;
     formatMoney: (amountUsd: number) => string;
-    fxQuote: CheckoutFxQuote | null;
-    currency: string;
     onPlaceOrder: () => void;
     isPlacingOrder: boolean;
 }
@@ -27,13 +24,10 @@ export default function CheckoutSummary({
     deliveryOption,
     paymentMethod,
     formatMoney,
-    fxQuote,
-    currency,
     onPlaceOrder,
     isPlacingOrder,
 }: CheckoutSummaryProps) {
     const paymentLabel = paymentMethod === "stripe" ? "Stripe" : "PayChangu";
-    const feePercent = fxQuote ? Math.round(fxQuote.fxFeeRate * 1000) / 10 : 0;
 
     return (
         <aside className="w-full space-y-6 lg:w-[400px]">
@@ -84,20 +78,10 @@ export default function CheckoutSummary({
                         <dt className="text-white/65">Pay with</dt>
                         <dd className="font-medium text-white">{paymentLabel}</dd>
                     </div>
-                    {paymentMethod === "stripe" && fxQuote ? (
-                        <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-xs leading-relaxed text-white/75">
-                            <p>
-                                Stripe converts at{" "}
-                                <span className="font-semibold text-white">
-                                    {formatExchangeRate(fxQuote.exchangeRate, currency)}
-                                </span>
-                                , including a {feePercent}% conversion fee.
-                            </p>
-                            <p className="mt-1">
-                                Base rate {formatExchangeRate(fxQuote.baseRate, currency)}. The total
-                                above is what you will pay in {currency}.
-                            </p>
-                        </div>
+                    {paymentMethod === "stripe" ? (
+                        <p className="rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-xs leading-relaxed text-white/75">
+                            A Stripe charge will be added when you pay with Stripe.
+                        </p>
                     ) : null}
                 </dl>
             </section>
