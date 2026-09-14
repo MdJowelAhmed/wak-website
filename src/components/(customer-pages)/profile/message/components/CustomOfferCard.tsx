@@ -12,6 +12,7 @@ import {
 } from "@/ui/dialog";
 import { Button } from "@/ui/button";
 import { useCurrency } from "@/hooks/use-currency";
+import { useTranslations } from "next-intl";
 import type { CustomOffer, OfferPaymentMethod } from "../types";
 
 interface CustomOfferCardProps {
@@ -37,6 +38,7 @@ export default function CustomOfferCard({
   onReject,
 }: CustomOfferCardProps) {
   const { formatPrice } = useCurrency();
+  const t = useTranslations("Messages");
   const [step, setStep] = useState<DialogStep>("closed");
   const [paymentMethod, setPaymentMethod] = useState<OfferPaymentMethod>("stripe");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -69,7 +71,7 @@ export default function CustomOfferCard({
 
   return (
     <div className="mb-2 w-72 max-w-full rounded-xl border border-orange-200 bg-orange-50 p-4 shadow-sm">
-      <p className="mb-2 text-sm font-bold text-zinc-800">Custom offer</p>
+      <p className="mb-2 text-sm font-bold text-zinc-800">{t("customOffer")}</p>
       <p className="mb-1 text-sm font-semibold leading-tight text-zinc-900">{offer.title}</p>
       {offer.description && (
         <p className="mt-1 mb-3 line-clamp-3 text-xs leading-relaxed text-zinc-600">
@@ -88,31 +90,31 @@ export default function CustomOfferCard({
             }}
             className="flex-1 cursor-pointer rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-primary-hover"
           >
-            Accept
+            {t("accept")}
           </button>
           <button
             type="button"
             onClick={() => setStep("rejectConfirm")}
             className="flex-1 cursor-pointer rounded-lg border border-primary bg-white px-3 py-1.5 text-xs font-semibold text-primary shadow-sm transition-colors hover:bg-orange-50"
           >
-            Reject
+            {t("reject")}
           </button>
         </div>
       )}
 
       {offer.status === "pending" && !canRespond && (
         <p className="inline-block rounded bg-zinc-100 px-2 py-1 text-xs font-semibold text-zinc-500">
-          Waiting for response
+          {t("waiting")}
         </p>
       )}
       {offer.status === "rejected" && (
         <p className="inline-block rounded bg-red-50 px-2 py-1 text-xs font-semibold text-red-500">
-          Offer rejected
+          {t("offerRejected")}
         </p>
       )}
       {offer.status === "accepted" && (
         <p className="inline-block rounded bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
-          Offer accepted
+          {t("offerAccepted")}
         </p>
       )}
 
@@ -134,9 +136,9 @@ export default function CustomOfferCard({
           {step === "payment" && (
             <>
               <DialogHeader>
-                <DialogTitle className="text-card-foreground">Choose payment method</DialogTitle>
+                <DialogTitle className="text-card-foreground">{t("choosePayment")}</DialogTitle>
                 <DialogDescription className="text-muted-foreground">
-                  Select how you want to pay {formatPrice(offer.price)} for this offer.
+                  {t("choosePaymentHint", { amount: formatPrice(offer.price) })}
                 </DialogDescription>
               </DialogHeader>
               <div className="grid grid-cols-2 gap-2 py-2">
@@ -165,10 +167,10 @@ export default function CustomOfferCard({
               </div>
               <DialogFooter className="gap-2">
                 <Button type="button" variant="outline" onClick={closeDialog}>
-                  Cancel
+                  {t("cancel")}
                 </Button>
                 <Button type="button" onClick={() => setStep("acceptConfirm")}>
-                  Continue
+                  {t("continue")}
                 </Button>
               </DialogFooter>
             </>
@@ -177,10 +179,13 @@ export default function CustomOfferCard({
           {step === "acceptConfirm" && (
             <>
               <DialogHeader>
-                <DialogTitle className="text-card-foreground">Confirm payment</DialogTitle>
+                <DialogTitle className="text-card-foreground">{t("confirmPayment")}</DialogTitle>
                 <DialogDescription className="text-muted-foreground">
-                  Accept “{offer.title}” and pay {formatPrice(offer.price)} with{" "}
-                  {PAYMENT_LABEL[paymentMethod]}? You will be redirected to complete payment.
+                  {t("confirmAccept", {
+                    title: offer.title,
+                    amount: formatPrice(offer.price),
+                    method: PAYMENT_LABEL[paymentMethod],
+                  })}
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter className="gap-2">
@@ -190,11 +195,11 @@ export default function CustomOfferCard({
                   disabled={isSubmitting}
                   onClick={() => setStep("payment")}
                 >
-                  Back
+                  {t("back")}
                 </Button>
                 <Button type="button" disabled={isSubmitting} onClick={handleConfirmAccept}>
                   {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                  Confirm & pay
+                  {t("confirmPay")}
                 </Button>
               </DialogFooter>
             </>
@@ -203,14 +208,14 @@ export default function CustomOfferCard({
           {step === "rejectConfirm" && (
             <>
               <DialogHeader>
-                <DialogTitle className="text-card-foreground">Reject offer</DialogTitle>
+                <DialogTitle className="text-card-foreground">{t("rejectOffer")}</DialogTitle>
                 <DialogDescription className="text-muted-foreground">
-                  Reject “{offer.title}”? The provider will be notified and you won’t be able to accept it later.
+                  {t("confirmReject", { title: offer.title })}
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter className="gap-2">
                 <Button type="button" variant="outline" disabled={isSubmitting} onClick={closeDialog}>
-                  Cancel
+                  {t("cancel")}
                 </Button>
                 <Button
                   type="button"
@@ -219,7 +224,7 @@ export default function CustomOfferCard({
                   onClick={handleConfirmReject}
                 >
                   {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                  Reject offer
+                  {t("rejectOffer")}
                 </Button>
               </DialogFooter>
             </>

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 import { myFetch } from "../../../../../../helpers/myFetch";
 import { loadChatMessagesAction, revalidateMessageCaches } from "../actions";
 import { ChatMessage, OfferPaymentMethod } from "../types";
@@ -17,6 +18,7 @@ export function useMessageHistory({
   initialMessages,
   initialMessageHasMore,
 }: UseMessageHistoryProps) {
+  const t = useTranslations("Messages");
   const [messageHistories, setMessageHistories] = useState<Record<string, ChatMessage[]>>(
     initialChatId ? { [initialChatId]: initialMessages } : {},
   );
@@ -58,7 +60,7 @@ export function useMessageHistory({
         setHasMoreByChat((prev) => ({ ...prev, [chatId]: result.hasMore }));
       })
       .catch(() => {
-        toast.error("Could not load messages.");
+        toast.error(t("loadError"));
       })
       .finally(() => {
         if (loadingChatRef.current === chatId) {
@@ -91,9 +93,9 @@ export function useMessageHistory({
         return;
       }
 
-      toast.error(res?.message || "Could not start payment. Please try again.");
+      toast.error(res?.message || t("paymentError"));
     } catch {
-      toast.error("Could not accept this offer.");
+      toast.error(t("acceptError"));
     }
   };
 
@@ -101,7 +103,7 @@ export function useMessageHistory({
     try {
       const res = await myFetch(`/custom-offers/${offerId}/reject`, { method: "POST" });
       if (!res?.success) {
-        toast.error(res?.message || "Could not reject this offer.");
+        toast.error(res?.message || t("rejectError"));
         return;
       }
       if (!selectedContact) return;
@@ -121,9 +123,9 @@ export function useMessageHistory({
         };
       });
       void revalidateMessageCaches(selectedContact);
-      toast.success("Offer rejected.");
+      toast.success(t("rejectSuccess"));
     } catch {
-      toast.error("Could not reject this offer.");
+      toast.error(t("rejectError"));
     }
   };
 
@@ -150,7 +152,7 @@ export function useMessageHistory({
         setHasMoreByChat((prev) => ({ ...prev, [chatId]: result.hasMore }));
       })
       .catch(() => {
-        toast.error("Could not load messages.");
+        toast.error(t("loadError"));
       })
       .finally(() => {
         if (requestId === loadMoreRequestRef.current) {

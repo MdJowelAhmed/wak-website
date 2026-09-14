@@ -5,27 +5,29 @@ import { useState } from "react";
 import { Eye, EyeOff, Check } from "lucide-react";
 import { Input } from "@/ui/input";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 import { myFetch } from "../../../../../helpers/myFetch";
 
 export default function DeleteAccount() {
+  const t = useTranslations("Profile.settings");
   const [selectedReasonId, setSelectedReasonId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
   const reasons = [
-    { id: "duplicate", label: "I have a duplicate account" },
-    { id: "no-longer", label: "I no longer want to use this platform" },
-    { id: "others", label: "Others" },
+    { id: "duplicate", label: t("reasonDuplicate"), apiLabel: "I have a duplicate account" },
+    { id: "no-longer", label: t("reasonNoLonger"), apiLabel: "I no longer want to use this platform" },
+    { id: "others", label: t("reasonOthers"), apiLabel: "Others" },
   ];
 
   const handleDelete = async () => {
     if (!selectedReasonId || !password.trim()) {
-      toast.error("Please select a reason and enter your password.");
+      toast.error(t("needReasonAndPassword"));
       return;
     }
 
-    const selectedReasonLabel = reasons.find((r) => r.id === selectedReasonId)?.label || "Others";
+    const selectedReasonLabel = reasons.find((r) => r.id === selectedReasonId)?.apiLabel || "Others";
 
     setLoading(true);
     try {
@@ -38,16 +40,16 @@ export default function DeleteAccount() {
       });
 
       if (res.success) {
-        toast.success(res.message || "Account deletion request submitted successfully.");
+        toast.success(res.message || t("deleteSuccess"));
         // Clear the form
         setSelectedReasonId("");
         setPassword("");
       } else {
-        toast.error(res.message || res.error || "Failed to submit account deletion request.");
+        toast.error(res.message || res.error || t("deleteError"));
       }
     } catch (error) {
       console.error("Account deletion error:", error);
-      toast.error("An unexpected error occurred.");
+      toast.error(t("unexpectedError"));
     } finally {
       setLoading(false);
     }
@@ -57,20 +59,16 @@ export default function DeleteAccount() {
     <div className="text-zinc-850 space-y-8">
       {/* Header Info */}
       <div>
-        <h2 className="text-xl font-bold text-zinc-900 mb-4 tracking-tight">Account Deletion Request</h2>
+        <h2 className="text-xl font-bold text-zinc-900 mb-4 tracking-tight">{t("deleteTitle")}</h2>
         <div className="space-y-3 text-sm text-zinc-600 leading-relaxed font-medium">
-          <p>
-            - If you delete your Account, you will lose your Account&apos;s Order History, Star Points, Saved PCs, Product Wishlist, and other Data that are related to your Account.
-          </p>
-          <p>
-            - Star Points and other financial assets/Data related to this Account will not be Refundable/Recoverable.
-          </p>
+          <p>- {t("deleteWarning1")}</p>
+          <p>- {t("deleteWarning2")}</p>
         </div>
       </div>
  
       {/* Reason Selection */}
       <div>
-        <h3 className="text-lg font-bold text-zinc-900 mb-4 tracking-tight">Reason for Deletion</h3>
+        <h3 className="text-lg font-bold text-zinc-900 mb-4 tracking-tight">{t("reasonTitle")}</h3>
         <div className="space-y-3.5">
           {reasons.map((reason) => {
             const isSelected = selectedReasonId === reason.id;
@@ -100,7 +98,7 @@ export default function DeleteAccount() {
       {/* Password Input */}
       <div className="space-y-2.5 max-w-full">
         <label htmlFor="delete-password" className="text-sm font-semibold text-zinc-700">
-          Current Password
+          {t("currentPassword")}
         </label>
         <div className="relative">
           <Input
@@ -115,7 +113,7 @@ export default function DeleteAccount() {
             type="button"
             onClick={() => setShowPassword(!showPassword)}
             className="absolute right-4 top-1/2 -translate-y-1/2 mt-1 text-zinc-400 hover:text-zinc-650 transition-colors cursor-pointer"
-            aria-label="Toggle password visibility"
+            aria-label={showPassword ? t("hidePassword") : t("showPassword")}
           >
             {showPassword ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
           </button>
@@ -133,7 +131,7 @@ export default function DeleteAccount() {
           disabled={loading}
           className="px-8 py-2.5 bg-red-50 hover:bg-red-100 disabled:opacity-50 text-red-600 text-sm font-semibold rounded-xl transition-colors cursor-pointer"
         >
-          Cancel
+          {t("cancel")}
         </button>
         <button
           type="button"
@@ -141,7 +139,7 @@ export default function DeleteAccount() {
           onClick={handleDelete}
           className="px-8 py-2.5 bg-primary hover:bg-orange-500 disabled:opacity-50 disabled:hover:bg-primary text-white text-sm font-bold rounded-xl transition-colors cursor-pointer shadow-md shadow-orange-500/10"
         >
-          {loading ? "Confirming..." : "Confirm"}
+          {loading ? t("confirming") : t("confirm")}
         </button>
       </div>
     </div>

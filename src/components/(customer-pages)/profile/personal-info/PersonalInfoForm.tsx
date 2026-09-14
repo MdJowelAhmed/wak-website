@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/ui/select";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
+import { useTranslations } from "next-intl";
 import type { PersonalInfoUser } from "./PersonalInfoView";
 
 export type PersonalInfoSavePayload = {
@@ -52,6 +53,7 @@ export default function PersonalInfoForm({
   onSave,
   onCancel,
 }: PersonalInfoFormProps) {
+  const t = useTranslations("Profile.personal");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [country, setCountry] = useState(userData.country || "");
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -90,12 +92,12 @@ export default function PersonalInfoForm({
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            aria-label="Change profile photo"
+            aria-label={t("changePhoto")}
             className="group relative h-28 w-28 overflow-hidden rounded-full border-4 border-primary shadow-lg shadow-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
             <img
               src={currentImage}
-              alt="Profile preview"
+              alt={t("previewAlt")}
               className="h-full w-full object-cover"
             />
             <span className="absolute inset-0 flex items-center justify-center bg-black/45 opacity-0 transition-opacity group-hover:opacity-100">
@@ -119,34 +121,34 @@ export default function PersonalInfoForm({
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-2">
           <label htmlFor="profile-username" className={fieldLabel}>
-            User Name
+            {t("userName")}
           </label>
           <Input
             id="profile-username"
             name="username"
             defaultValue={userData.username}
-            placeholder="Enter full name"
+            placeholder={t("namePlaceholder")}
             className={fieldControl}
           />
         </div>
 
         <div className="space-y-2">
           <label htmlFor="profile-email" className={fieldLabel}>
-            Email
+            {t("email")}
           </label>
           <Input
             id="profile-email"
             name="email"
             type="email"
             defaultValue={userData.email}
-            placeholder="Enter email address"
+            placeholder={t("emailPlaceholder")}
             className={fieldControl}
           />
         </div>
 
         <div className="space-y-2">
           <label htmlFor="profile-phone" className={fieldLabel}>
-            Contact Number
+            {t("phone")}
           </label>
           <Input
             id="profile-phone"
@@ -159,14 +161,14 @@ export default function PersonalInfoForm({
 
         <div className="space-y-2">
           <label htmlFor="profile-country" className={fieldLabel}>
-            Country
+            {t("country")}
           </label>
           <Select value={country || undefined} onValueChange={setCountry}>
             <SelectTrigger
               id="profile-country"
               className={`${fieldControl} shadow-none`}
             >
-              <SelectValue placeholder="Select country name" />
+              <SelectValue placeholder={t("countryPlaceholder")} />
             </SelectTrigger>
             <SelectContent className="rounded-xl border-border bg-card text-card-foreground">
               {countries.map((country) => (
@@ -190,10 +192,10 @@ export default function PersonalInfoForm({
           onClick={onCancel}
           className="rounded-xl border-white/30 bg-transparent px-8 text-white hover:bg-white/10 hover:text-white"
         >
-          Cancel
+          {t("cancel")}
         </Button>
         <Button type="submit" className="rounded-xl px-8 shadow-md shadow-primary/25">
-          Save
+          {t("save")}
         </Button>
       </div>
     </form>

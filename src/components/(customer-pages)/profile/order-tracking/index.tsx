@@ -2,62 +2,77 @@
 
 import { useState } from "react";
 import { Search, Package, CheckCircle2, Truck, MapPin, Home } from "lucide-react";
+import { useTranslations } from "next-intl";
 import DashboardCard from "../../../../shared/DashboardCard";
+
+type StepIcon = typeof Package;
+
+interface TrackingStep {
+  titleKey: "confirmedTitle" | "packedTitle" | "outTitle" | "nearbyTitle" | "deliveredTitle";
+  descriptionKey:
+    | "confirmedDescription"
+    | "packedDescription"
+    | "outDescription"
+    | "nearbyDescription"
+    | "nearbyHeading"
+    | "deliveredDescription";
+  time?: string;
+  expectedKey?: "expectedTomorrow" | "pending";
+  expectedTime?: string;
+  icon: StepIcon;
+}
 
 interface OrderTrackingData {
   orderId: string;
   estimatedDelivery: string;
-  currentStatus: string;
-  steps: {
-    title: string;
-    description: string;
-    time?: string;
-    expected?: string;
-    icon: any;
-  }[];
+  statusKey: "delivered" | "inTransit";
+  steps: TrackingStep[];
 }
+
+const defaultSteps: TrackingStep[] = [
+  {
+    titleKey: "confirmedTitle",
+    descriptionKey: "confirmedDescription",
+    time: "Nov 30, 10:30 AM",
+    icon: Package,
+  },
+  {
+    titleKey: "packedTitle",
+    descriptionKey: "packedDescription",
+    time: "Nov 30, 10:30 AM",
+    icon: CheckCircle2,
+  },
+  {
+    titleKey: "outTitle",
+    descriptionKey: "outDescription",
+    time: "Nov 30, 10:30 AM",
+    icon: Truck,
+  },
+  {
+    titleKey: "nearbyTitle",
+    descriptionKey: "nearbyDescription",
+    expectedTime: "4:15 PM",
+    icon: MapPin,
+  },
+  {
+    titleKey: "deliveredTitle",
+    descriptionKey: "deliveredDescription",
+    expectedTime: "4:30 PM",
+    icon: Home,
+  },
+];
 
 const mockOrderData: Record<string, OrderTrackingData> = {
   "#ORB10gz": {
     orderId: "#ORB10gz",
     estimatedDelivery: "20 April, 2024",
-    currentStatus: "Delivered",
-    steps: [
-      {
-        title: "Order Confirmed",
-        description: "Your order has been placed successfully",
-        time: "Nov 30, 10:30 AM",
-        icon: Package,
-      },
-      {
-        title: "Order Packed",
-        description: "Your order has been packed and ready to ship",
-        time: "Nov 30, 10:30 AM",
-        icon: CheckCircle2,
-      },
-      {
-        title: "Out for Delivery",
-        description: "Your package is on the way",
-        time: "Nov 30, 10:30 AM",
-        icon: Truck,
-      },
-      {
-        title: "Nearby",
-        description: "Driver is near your location",
-        expected: "Expected at 4:15 PM",
-        icon: MapPin,
-      },
-      {
-        title: "Delivered",
-        description: "Package delivered successfully",
-        expected: "Expected at 4:30 PM",
-        icon: Home,
-      },
-    ],
+    statusKey: "delivered",
+    steps: defaultSteps,
   },
 };
 
 export default function OrderTrackingPage() {
+  const t = useTranslations("Profile.tracking");
   const [searchQuery, setSearchQuery] = useState("#ORB10gz");
   const [activeOrder, setActiveOrder] = useState<OrderTrackingData>(mockOrderData["#ORB10gz"]);
   const [isSearching, setIsSearching] = useState(false);
@@ -71,40 +86,39 @@ export default function OrderTrackingPage() {
       if (mockOrderData[query]) {
         setActiveOrder(mockOrderData[query]);
       } else {
-        // Fallback or generic simulation
         setActiveOrder({
           orderId: query || "#ORB123456",
           estimatedDelivery: "25 May, 2026",
-          currentStatus: "In Transit",
+          statusKey: "inTransit",
           steps: [
             {
-              title: "Order Confirmed",
-              description: "Your order has been placed successfully",
+              titleKey: "confirmedTitle",
+              descriptionKey: "confirmedDescription",
               time: "Today, 09:00 AM",
               icon: Package,
             },
             {
-              title: "Order Packed",
-              description: "Your order has been packed and ready to ship",
+              titleKey: "packedTitle",
+              descriptionKey: "packedDescription",
               time: "Today, 02:00 PM",
               icon: CheckCircle2,
             },
             {
-              title: "Out for Delivery",
-              description: "Your package is on the way",
-              expected: "Expected tomorrow by 5:00 PM",
+              titleKey: "outTitle",
+              descriptionKey: "outDescription",
+              expectedKey: "expectedTomorrow",
               icon: Truck,
             },
             {
-              title: "Nearby",
-              description: "Driver is heading towards destination",
-              expected: "Pending",
+              titleKey: "nearbyTitle",
+              descriptionKey: "nearbyHeading",
+              expectedKey: "pending",
               icon: MapPin,
             },
             {
-              title: "Delivered",
-              description: "Package delivered successfully",
-              expected: "Pending",
+              titleKey: "deliveredTitle",
+              descriptionKey: "deliveredDescription",
+              expectedKey: "pending",
               icon: Home,
             },
           ],
@@ -116,24 +130,22 @@ export default function OrderTrackingPage() {
 
   return (
     <DashboardCard className="p-8 sm:p-10 rounded-2xl bg-white border border-zinc-200/50 shadow-md">
-      {/* Header */}
       <div className="text-center max-w-xl mx-auto mb-10">
         <h1 className="text-2xl sm:text-3xl font-bold text-zinc-900 tracking-wide">
-          Track Your Order
+          {t("title")}
         </h1>
         <p className="text-sm text-zinc-500 mt-2">
-          Enter your order number to track your package
+          {t("subtitle")}
         </p>
       </div>
- 
-      {/* Search Bar */}
+
       <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4 max-w-3xl mx-auto mb-12">
         <div className="relative flex-1">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Enter order number (e.g., #ORB123456)"
+            placeholder={t("placeholder")}
             className="w-full bg-zinc-50 border border-zinc-200 focus:border-primary focus:bg-white rounded-xl px-5 py-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition-all shadow-sm focus:ring-1 focus:ring-primary"
           />
         </div>
@@ -147,40 +159,38 @@ export default function OrderTrackingPage() {
           ) : (
             <Search className="w-4 h-4 shrink-0 font-bold" />
           )}
-          <span>Track Order</span>
+          <span>{t("track")}</span>
         </button>
       </form>
- 
-      {/* Order Info Summary */}
+
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-8 mb-5 text-sm border-b border-zinc-100">
         <div className="space-y-3 font-normal">
           <div className="flex items-center gap-8">
-            <span className="text-zinc-500 w-36">Order ID</span>
+            <span className="text-zinc-500 w-36">{t("orderId")}</span>
             <span className="text-zinc-900 font-semibold">: {activeOrder.orderId}</span>
           </div>
           <div className="flex items-center gap-8">
-            <span className="text-zinc-500 w-36">Estimated Delivery</span>
+            <span className="text-zinc-500 w-36">{t("estimatedDelivery")}</span>
             <span className="text-zinc-900 font-semibold">: {activeOrder.estimatedDelivery}</span>
           </div>
         </div>
- 
+
         <div className="flex items-center justify-end gap-2">
-          <span className="text-zinc-500 text-xs">Current Status:</span>
+          <span className="text-zinc-500 text-xs">{t("currentStatus")}</span>
           <span className="bg-[#00D26A] text-white px-5 py-1.5 rounded-full font-bold text-xs tracking-wide shadow-lg shadow-[#00D26A]/20 inline-block">
-            {activeOrder.currentStatus}
+            {t(activeOrder.statusKey)}
           </span>
         </div>
       </div>
- 
-      {/* Order Status Timeline */}
+
       <div className="max-w-3xl ">
         <h3 className="text-primary font-bold text-lg mb-8 tracking-wide">
-          Order Status
+          {t("orderStatus")}
         </h3>
- 
+
         <div className="space-y-0">
           {activeOrder.steps.map((step, index) => (
-            <div key={index} className="flex gap-6 items-start min-h-[90px] group">
+            <div key={step.titleKey} className="flex gap-6 items-start min-h-[90px] group">
               <div className="flex flex-col items-center self-stretch">
                 <div className="w-10 h-10 rounded-full bg-[#00D26A] flex items-center justify-center text-white shadow-lg shadow-[#00D26A]/20 shrink-0 transition-transform duration-300 group-hover:scale-110">
                   <step.icon className="w-5 h-5 shrink-0" />
@@ -189,22 +199,27 @@ export default function OrderTrackingPage() {
                   <div className="w-0 flex-1 border-l-2 border-dashed border-zinc-200 my-1.5" />
                 )}
               </div>
- 
+
               <div className="flex flex-col pb-8 pt-1">
                 <h4 className="text-zinc-800 font-semibold text-base tracking-wide">
-                  {step.title}
+                  {t(step.titleKey)}
                 </h4>
                 <p className="text-zinc-650 text-sm mt-1.5 leading-relaxed font-normal">
-                  {step.description}
+                  {t(step.descriptionKey)}
                 </p>
                 {step.time && (
                   <span className="text-zinc-400 text-xs mt-1.5 font-normal">
                     {step.time}
                   </span>
                 )}
-                {step.expected && (
+                {step.expectedTime && (
                   <span className="text-zinc-500 text-xs mt-1.5 font-normal">
-                    {step.expected}
+                    {t("expectedAt", { time: step.expectedTime })}
+                  </span>
+                )}
+                {step.expectedKey && (
+                  <span className="text-zinc-500 text-xs mt-1.5 font-normal">
+                    {t(step.expectedKey)}
                   </span>
                 )}
               </div>

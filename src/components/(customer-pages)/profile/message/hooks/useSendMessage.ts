@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 import { myFetch } from "../../../../../../helpers/myFetch";
 import { revalidateMessageCaches } from "../actions";
 import {
@@ -23,6 +24,7 @@ export function useSendMessage({
   setMessageHistories,
   setChats,
 }: UseSendMessageProps) {
+  const t = useTranslations("Messages");
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -73,7 +75,7 @@ export function useSendMessage({
         setChats((prevChats) => {
           const updated = prevChats.map((chat) =>
             chat._id === selectedContact
-              ? { ...chat, lastMessage: { text: ownMessage?.text || "Attachment" } }
+              ? { ...chat, lastMessage: { text: ownMessage?.text || t("attachment") } }
               : chat,
           );
           const currentChatIdx = updated.findIndex((chat) => chat._id === selectedContact);
@@ -88,10 +90,10 @@ export function useSendMessage({
         setSelectedFile(null);
         void revalidateMessageCaches(selectedContact);
       } else {
-        toast.error(res?.message || "Failed to send message");
+        toast.error(res?.message || t("sendError"));
       }
     } catch {
-      toast.error("An error occurred while sending");
+      toast.error(t("sendUnexpected"));
     } finally {
       setIsSending(false);
     }

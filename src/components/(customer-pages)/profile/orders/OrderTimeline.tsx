@@ -1,4 +1,8 @@
+"use client";
+
 import { Check, X } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { formatLabel, orderStatusMessageKey } from "./types";
 
 interface OrderTimelineProps {
   statusLog?: { status: string; timestamp: string; note: string }[];
@@ -14,14 +18,19 @@ const statusStyles: Record<string, string> = {
 };
 
 export default function OrderTimeline({ statusLog = [] }: OrderTimelineProps) {
+  const t = useTranslations("Orders");
+  const locale = useLocale();
+
   if (!statusLog || statusLog.length === 0) {
-    return <div className="py-4 text-sm text-white/60">No milestones recorded yet.</div>;
+    return <div className="py-4 text-sm text-white/60">{t("noMilestones")}</div>;
   }
 
   return (
     <div className="relative pl-2">
       {statusLog.map((log, index) => {
         const isCancelled = log.status === "cancelled";
+        const statusKey = orderStatusMessageKey(log.status);
+        const statusLabel = statusKey ? t(statusKey) : formatLabel(log.status);
 
         return (
           <div key={`${log.status}-${log.timestamp}-${index}`} className="relative flex gap-6 pb-10 last:pb-0">
@@ -46,11 +55,10 @@ export default function OrderTimeline({ statusLog = [] }: OrderTimelineProps) {
             <div className="flex min-h-[40px] flex-1 items-start justify-between gap-4 pt-1">
               <div>
                 <h4 className="text-sm font-semibold text-white">
-                  {log.note ||
-                    log.status.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+                  {log.note || statusLabel}
                 </h4>
                 <p className="mt-0.5 text-xs text-white/55">
-                  {new Date(log.timestamp).toLocaleString("en-US", {
+                  {new Date(log.timestamp).toLocaleString(locale, {
                     month: "short",
                     day: "numeric",
                     year: "numeric",
@@ -65,7 +73,7 @@ export default function OrderTimeline({ statusLog = [] }: OrderTimelineProps) {
                   statusStyles[log.status] || statusStyles.pending
                 }`}
               >
-                {log.status.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+                {statusLabel}
               </span>
             </div>
           </div>

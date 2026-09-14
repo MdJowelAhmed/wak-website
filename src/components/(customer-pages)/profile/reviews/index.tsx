@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import DashboardCard from "../../../../shared/DashboardCard";
 import StarRating from "./StarRating";
 import ReviewForm from "./ReviewForm";
 
 export default function ReviewsPage() {
+  const t = useTranslations("Profile.reviews");
   const [rating, setRating] = useState(0);
 
   const handleSubmit = (data: { name: string; description: string }) => {
@@ -21,7 +23,7 @@ export default function ReviewsPage() {
     <DashboardCard>
       {/* Page Title */}
       <h1 className="text-xl md:text-2xl font-bold text-zinc-900 mb-8">
-        Review & Feedback
+        {t("title")}
       </h1>
 
       {/* Star Rating */}

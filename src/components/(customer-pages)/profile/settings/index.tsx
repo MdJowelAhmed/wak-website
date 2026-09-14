@@ -1,19 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import DashboardCard from "../../../../shared/DashboardCard";
 import ChangePasswordForm from "./ChangePasswordForm";
 import DeleteAccount from "./DeleteAccount";
 
 type SettingsTab = "password" | "delete";
 
-const tabs: { key: SettingsTab; label: string }[] = [
-  { key: "password", label: "Change Password" },
-  { key: "delete", label: "Delete Account" },
-];
-
 export default function SettingsPage() {
+  const t = useTranslations("Profile.settings");
   const [activeTab, setActiveTab] = useState<SettingsTab>("password");
+
+  const tabs: { key: SettingsTab; label: string }[] = [
+    { key: "password", label: t("changePassword") },
+    { key: "delete", label: t("deleteAccount") },
+  ];
 
   return (
     <DashboardCard>

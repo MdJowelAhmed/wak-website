@@ -6,6 +6,7 @@ import StarRating from "../reviews/StarRating";
 import { useState } from "react";
 import { Order } from "./OrdersTable";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 import { myFetch } from "../../../../../helpers/myFetch";
 
 interface ReviewModalProps {
@@ -16,6 +17,7 @@ interface ReviewModalProps {
 }
 
 export default function ReviewModal({ order, isOpen, onClose, type = "product" }: ReviewModalProps) {
+  const t = useTranslations("Orders");
   const [rating, setRating] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -23,21 +25,28 @@ export default function ReviewModal({ order, isOpen, onClose, type = "product" }
 
   const handleSubmit = async (data: { name: string; description: string }) => {
     if (rating === 0) {
-      toast.error("Please select a star rating first");
+      toast.error(t("needRating"));
       return;
     }
 
     if (!order.dbId || !order.itemId) {
-      toast.error("Order details are incomplete");
+      toast.error(t("incompleteOrder"));
       return;
     }
 
     setIsSubmitting(true);
     try {
-      const payload: any = {
+      const payload: {
+        reviewType: "product" | "service";
+        order: string;
+        rating: number;
+        text: string;
+        product?: string;
+        service?: string;
+      } = {
         reviewType: type,
         order: order.dbId,
-        rating: rating,
+        rating,
         text: data.description,
       };
 
@@ -53,15 +62,14 @@ export default function ReviewModal({ order, isOpen, onClose, type = "product" }
       });
 
       if (res?.success) {
-        toast.success(res.message || "Review submitted successfully!");
+        toast.success(res.message || t("reviewSuccess"));
         onClose();
         setRating(0); // Reset for next time
       } else {
-        toast.error(res?.message || "Failed to submit review");
+        toast.error(res?.message || t("reviewError"));
       }
-    } catch (error) {
-      console.error("Failed to submit review:", error);
-      toast.error("An error occurred while submitting your review");
+    } catch {
+      toast.error(t("reviewUnexpected"));
     } finally {
       setIsSubmitting(false);
     }
@@ -73,12 +81,13 @@ export default function ReviewModal({ order, isOpen, onClose, type = "product" }
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-zinc-100">
           <div>
-            <h2 className="text-xl font-bold text-zinc-900">Write a Review</h2>
-            <p className="text-sm text-zinc-500 mt-1">Order {order.id} • {order.title}</p>
+            <h2 className="text-xl font-bold text-zinc-900">{t("writeReview")}</h2>
+            <p className="text-sm text-zinc-500 mt-1">{t("reviewFor", { id: order.id, title: order.title })}</p>
           </div>
           <button
             onClick={onClose}
             disabled={isSubmitting}
+            aria-label={t("close")}
             className="p-2 text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 rounded-full transition-colors disabled:opacity-50"
           >
             <X size={20} />
@@ -93,7 +102,7 @@ export default function ReviewModal({ order, isOpen, onClose, type = "product" }
             </div>
           )}
           <div className="mb-6 space-y-2">
-             <label className="text-sm font-semibold text-zinc-700">Rating</label>
+             <label className="text-sm font-semibold text-zinc-700">{t("rating")}</label>
              <StarRating rating={rating} onRate={setRating} />
           </div>
           

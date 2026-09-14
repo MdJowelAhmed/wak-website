@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Eye, Star } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
   Pagination,
   PaginationContent,
@@ -12,7 +13,7 @@ import {
   PaginationPrevious,
 } from "@/ui/pagination";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
-import { formatLabel, statusBadgeClass, type Order } from "./types";
+import { formatLabel, orderStatusMessageKey, statusBadgeClass, type Order } from "./types";
 
 export type { Order } from "./types";
 
@@ -57,6 +58,7 @@ export default function OrdersTable({
   totalPages = 1,
   onPageChange,
 }: OrdersTableProps) {
+  const t = useTranslations("Orders");
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       onPageChange?.(page);
@@ -65,9 +67,7 @@ export default function OrdersTable({
 
   const pageRange = buildPageRange(currentPage, totalPages);
   const subtitle =
-    type === "product"
-      ? "Manage and track all your product orders."
-      : "Manage and track all your service requests.";
+    type === "product" ? t("productSubtitle") : t("serviceSubtitle");
 
   return (
     <div>
@@ -78,16 +78,16 @@ export default function OrdersTable({
 
       <div className="overflow-hidden rounded-xl border border-white/10 bg-white/5">
         <div className="hidden grid-cols-12 border-b border-white/10 bg-white/10 px-6 py-4 text-xs font-bold uppercase tracking-wider text-white md:grid">
-          <div className="col-span-4">Order details</div>
-          <div className="col-span-3">Seller</div>
-          <div className="col-span-2">Amount</div>
-          <div className="col-span-1 text-center">Status</div>
-          <div className="col-span-2 text-center">Action</div>
+          <div className="col-span-4">{t("orderDetails")}</div>
+          <div className="col-span-3">{t("seller")}</div>
+          <div className="col-span-2">{t("amount")}</div>
+          <div className="col-span-1 text-center">{t("status")}</div>
+          <div className="col-span-2 text-center">{t("action")}</div>
         </div>
 
         <div className="divide-y divide-white/10">
           {orders.length === 0 ? (
-            <div className="p-8 text-center text-sm font-medium text-white/60">No orders found.</div>
+            <div className="p-8 text-center text-sm font-medium text-white/60">{t("empty")}</div>
           ) : (
             orders.map((order) => (
               <div key={`${order.id}-${order.dbId || order.title}`}>
@@ -165,7 +165,9 @@ export default function OrdersTable({
                     handlePageChange(currentPage - 1);
                   }}
                   className={`${PAGE_BTN} ${currentPage === 1 ? "pointer-events-none opacity-50" : ""}`}
-                />
+                >
+                  {t("previous")}
+                </PaginationPrevious>
               </PaginationItem>
 
               {pageRange.map((page, idx) =>
@@ -198,7 +200,9 @@ export default function OrdersTable({
                     handlePageChange(currentPage + 1);
                   }}
                   className={`${PAGE_BTN} ${currentPage === totalPages ? "pointer-events-none opacity-50" : ""}`}
-                />
+                >
+                  {t("next")}
+                </PaginationNext>
               </PaginationItem>
             </PaginationContent>
           </Pagination>
@@ -220,11 +224,13 @@ function OrderThumb({ order }: { order: Order }) {
 }
 
 function StatusBadge({ status }: { status: string }) {
+  const t = useTranslations("Orders");
+  const key = orderStatusMessageKey(status);
   return (
     <span
       className={`whitespace-nowrap rounded-full border px-3 py-1 text-[11px] font-bold ${statusBadgeClass(status)}`}
     >
-      {formatLabel(status)}
+      {key ? t(key) : formatLabel(status)}
     </span>
   );
 }
@@ -238,13 +244,14 @@ function OrderActions({
   onSelectOrder: (order: Order) => void;
   onReviewOrder: (order: Order) => void;
 }) {
+  const t = useTranslations("Orders");
   return (
     <>
       <button
         type="button"
         onClick={() => onSelectOrder(order)}
         className="rounded-lg p-2 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
-        aria-label="View order details"
+        aria-label={t("viewDetails")}
       >
         <Eye className="h-5 w-5" />
       </button>
@@ -252,7 +259,7 @@ function OrderActions({
         type="button"
         onClick={() => onReviewOrder(order)}
         className="rounded-lg p-2 text-white/70 transition-colors hover:bg-white/10 hover:text-primary"
-        aria-label="Review order"
+        aria-label={t("reviewOrder")}
       >
         <Star className="h-5 w-5" />
       </button>

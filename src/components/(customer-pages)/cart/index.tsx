@@ -1,9 +1,10 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import CartItemRow from "./CartItemRow";
 import OrderSummary from "./OrderSummary";
 import { Button } from "@/ui/button";
@@ -12,6 +13,7 @@ import { useCart } from "@/context/CartContext";
 import type { CartItem } from "../check-out/types";
 
 export default function ProductCart({ initialItems }: { initialItems: CartItem[] }) {
+    const t = useTranslations("Cart");
     const [items, setItems] = useState(initialItems);
     const [pendingIds, setPendingIds] = useState<string[]>([]);
     const pendingRef = useRef(new Set<string>());
@@ -37,13 +39,13 @@ export default function ProductCart({ initialItems }: { initialItems: CartItem[]
             });
             if (!res?.success) {
                 setItems(previous);
-                toast.error(res?.message || "Could not remove item.");
+                toast.error(res?.message || t("removeError"));
                 return;
             }
             await refreshCart();
         } catch {
             setItems(previous);
-            toast.error("Could not remove item.");
+            toast.error(t("removeError"));
         } finally {
             setPending(id, false);
         }
@@ -68,13 +70,13 @@ export default function ProductCart({ initialItems }: { initialItems: CartItem[]
             );
             if (!res?.success) {
                 setItems(previous);
-                toast.error(res?.message || "Could not update quantity.");
+                toast.error(res?.message || t("quantityError"));
                 return;
             }
             await refreshCart();
         } catch {
             setItems(previous);
-            toast.error("Could not update quantity.");
+            toast.error(t("quantityError"));
         } finally {
             setPending(id, false);
         }
@@ -87,10 +89,10 @@ export default function ProductCart({ initialItems }: { initialItems: CartItem[]
                     <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 text-primary">
                         <ShoppingCart className="h-7 w-7" />
                     </div>
-                    <h1 className="text-2xl font-bold text-white">Your cart is empty</h1>
-                    <p className="mt-2 text-sm text-white/70">Add products to continue to checkout.</p>
+                    <h1 className="text-2xl font-bold text-white">{t("emptyTitle")}</h1>
+                    <p className="mt-2 text-sm text-white/70">{t("emptyDescription")}</p>
                     <Button asChild size="lg" className="mt-6 rounded-xl shadow-md shadow-primary/20">
-                        <Link href="/shop">Browse products</Link>
+                        <Link href="/shop">{t("browseProducts")}</Link>
                     </Button>
                 </div>
             </div>
@@ -103,10 +105,10 @@ export default function ProductCart({ initialItems }: { initialItems: CartItem[]
         <div className="px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
             <div className="container mx-auto max-w-7xl">
                 <header className="mb-8">
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">Cart</p>
-                    <h1 className="mt-2 text-3xl font-bold tracking-tight text-foreground">Shopping cart</h1>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">{t("eyebrow")}</p>
+                    <h1 className="mt-2 text-3xl font-bold tracking-tight text-foreground">{t("heading")}</h1>
                     <p className="mt-1 text-sm text-white/75">
-                        {itemCount} {itemCount === 1 ? "item" : "items"} ready for checkout
+                        {t("readyForCheckout", { count: itemCount })}
                     </p>
                 </header>
 

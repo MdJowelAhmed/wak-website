@@ -1,4 +1,7 @@
+"use client";
+
 import { Pencil } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/ui/button";
 
 interface ProfileHeaderProps {
@@ -12,6 +15,8 @@ export default function ProfileHeader({
   isEditing,
   onToggleEdit,
 }: ProfileHeaderProps) {
+  const t = useTranslations("Profile.personal");
+
   return (
     <div className="mb-8 flex items-center justify-between gap-4">
       <h1 className="text-xl font-bold tracking-tight text-white md:text-2xl">
@@ -25,7 +30,7 @@ export default function ProfileHeader({
           className="rounded-xl shadow-md shadow-primary/20"
         >
           <Pencil className="h-4 w-4" />
-          Edit Profile
+          {t("edit")}
         </Button>
       )}
     </div>

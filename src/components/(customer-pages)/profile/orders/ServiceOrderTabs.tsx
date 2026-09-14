@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import { Calendar, Clock, FileText } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/ui/tabs";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
 import OrderTimeline from "./OrderTimeline";
@@ -11,6 +11,7 @@ import {
   formatDate,
   formatLabel,
   formatMoney,
+  orderStatusMessageKey,
   type Order,
   type ServiceOrderTab,
 } from "./types";
@@ -37,9 +38,16 @@ export default function ServiceOrderTabs({
   order: Order;
   activeTab: ServiceOrderTab;
 }) {
+  const t = useTranslations("Orders");
+  const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const currency = order.currency || "USD";
+  const money = (amount: number) => formatMoney(amount, currency, locale);
+  const statusLabel = (value?: string) => {
+    const key = orderStatusMessageKey(value);
+    return key ? t(key) : formatLabel(value);
+  };
   const attachments = order.deliveryAttachments || [];
   const hasDelivery = Boolean(order.deliveryDescription) || attachments.length > 0;
   const imageSrc = resolveImageUrl(order.thumbnail, "/placeholder.jpg") || "/placeholder.jpg";
@@ -52,79 +60,79 @@ export default function ServiceOrderTabs({
     <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
       <TabsList className="mb-5 h-auto w-full justify-start gap-6 overflow-x-auto rounded-none border-b border-white/15 bg-transparent p-0">
         <TabsTrigger value="order-details" className={TAB_TRIGGER}>
-          Order details
+          {t("orderDetails")}
         </TabsTrigger>
         <TabsTrigger value="activity" className={TAB_TRIGGER}>
-          Activity
+          {t("activity")}
         </TabsTrigger>
         <TabsTrigger value="delivery" className={TAB_TRIGGER}>
-          Delivery
+          {t("delivery")}
         </TabsTrigger>
       </TabsList>
 
       <TabsContent value="order-details" className="mt-0 space-y-6">
         <section className="rounded-xl border border-white/10 bg-white/5 p-4 sm:p-5">
-          <h2 className="mb-4 text-sm font-semibold text-white">Order details</h2>
+          <h2 className="mb-4 text-sm font-semibold text-white">{t("orderDetails")}</h2>
           <dl className="space-y-3 text-sm">
             <div className="flex items-start justify-between gap-4">
               <dt className="flex items-center gap-2 text-white/65">
                 <Calendar className="h-4 w-4 text-primary" aria-hidden />
-                Ordered
+                {t("ordered")}
               </dt>
               <dd className="font-medium text-white">{order.date}</dd>
             </div>
             <div className="flex items-start justify-between gap-4">
               <dt className="flex items-center gap-2 text-white/65">
                 <Clock className="h-4 w-4 text-primary" aria-hidden />
-                Due date
+                {t("dueDate")}
               </dt>
-              <dd className="font-medium text-white">{formatDate(order.deliveryDate)}</dd>
+              <dd className="font-medium text-white">{formatDate(order.deliveryDate, locale)}</dd>
             </div>
             {order.cancelledAt && (
               <div className="flex items-start justify-between gap-4">
-                <dt className="text-white/65">Cancelled</dt>
-                <dd className="font-medium text-white">{formatDate(order.cancelledAt)}</dd>
+                <dt className="text-white/65">{t("cancelled")}</dt>
+                <dd className="font-medium text-white">{formatDate(order.cancelledAt, locale)}</dd>
               </div>
             )}
             {order.completedAt && (
               <div className="flex items-start justify-between gap-4">
-                <dt className="text-white/65">Completed</dt>
-                <dd className="font-medium text-white">{formatDate(order.completedAt)}</dd>
+                <dt className="text-white/65">{t("completed")}</dt>
+                <dd className="font-medium text-white">{formatDate(order.completedAt, locale)}</dd>
               </div>
             )}
           </dl>
         </section>
 
         <section className="rounded-xl border border-white/10 bg-white/5 p-4 sm:p-5">
-          <h2 className="mb-4 text-sm font-semibold text-white">Price summary</h2>
+          <h2 className="mb-4 text-sm font-semibold text-white">{t("priceSummary")}</h2>
           <dl className="space-y-2.5 text-sm">
             <div className="flex justify-between gap-4">
-              <dt className="text-white/65">Service</dt>
+              <dt className="text-white/65">{t("service")}</dt>
               <dd className="font-medium text-white">
-                {formatMoney(order.servicePrice ?? order.subTotal ?? 0, currency)}
+                {money(order.servicePrice ?? order.subTotal ?? 0)}
               </dd>
             </div>
             {order.serviceCharge != null && (
               <div className="flex justify-between gap-4">
-                <dt className="text-white/65">Service fee</dt>
-                <dd className="font-medium text-white">{formatMoney(order.serviceCharge, currency)}</dd>
+                <dt className="text-white/65">{t("serviceFee")}</dt>
+                <dd className="font-medium text-white">{money(order.serviceCharge)}</dd>
               </div>
             )}
             <div className="flex justify-between gap-4 border-t border-white/10 pt-2.5">
-              <dt className="font-semibold text-white">Total</dt>
+              <dt className="font-semibold text-white">{t("total")}</dt>
               <dd className="font-bold text-primary">
-                {formatMoney(order.netAmount ?? order.grandTotal ?? 0, currency)}
+                {money(order.netAmount ?? order.grandTotal ?? 0)}
               </dd>
             </div>
             {order.paymentMethod && (
               <div className="flex justify-between gap-4">
                 <dt className="flex items-center gap-2 text-white/65">
                   <FileText className="h-4 w-4 text-primary" aria-hidden />
-                  Payment
+                  {t("payment")}
                 </dt>
                 <dd className="text-right font-medium text-white">
                   {formatLabel(order.paymentMethod)}
-                  {order.paymentStatus ? ` · ${formatLabel(order.paymentStatus)}` : ""}
+                  {order.paymentStatus ? ` · ${statusLabel(order.paymentStatus)}` : ""}
                 </dd>
               </div>
             )}
@@ -153,7 +161,7 @@ export default function ServiceOrderTabs({
             {order.serviceDescription ? (
               <p className="mt-2 text-sm leading-relaxed text-white/75">{order.serviceDescription}</p>
             ) : (
-              <p className="mt-2 text-sm text-white/55">No service description available.</p>
+              <p className="mt-2 text-sm text-white/55">{t("noDescription")}</p>
             )}
           </div>
         </section>
@@ -165,7 +173,7 @@ export default function ServiceOrderTabs({
 
       <TabsContent value="delivery" className="mt-0 space-y-6">
         <section className="rounded-xl border border-white/10 bg-white/5 p-4 sm:p-5">
-          <p className="text-xs font-semibold uppercase tracking-wider text-white/50">Provider</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-white/50">{t("provider")}</p>
           <div className="mt-3 flex items-center gap-3">
             <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-white/10">
               <Image
@@ -179,7 +187,7 @@ export default function ServiceOrderTabs({
             </div>
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold text-white">{order.sellerName}</p>
-              <p className="text-xs text-white/55">Service provider</p>
+              <p className="text-xs text-white/55">{t("serviceProvider")}</p>
             </div>
           </div>
         </section>
@@ -187,7 +195,7 @@ export default function ServiceOrderTabs({
         {hasDelivery ? (
           <section className="overflow-hidden rounded-xl border border-white/10 bg-white/5">
             <div className="border-b border-white/10 bg-white/10 px-4 py-2.5 sm:px-5">
-              <p className="text-xs font-bold uppercase tracking-wider text-white/55">Delivery #1</p>
+              <p className="text-xs font-bold uppercase tracking-wider text-white/55">{t("deliveryNumber", { number: 1 })}</p>
             </div>
             <div className="p-4 sm:p-5">
               <div className="flex items-start gap-3">
@@ -202,7 +210,7 @@ export default function ServiceOrderTabs({
                   />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-semibold text-primary">{order.sellerName}&apos;s message</p>
+                  <p className="text-sm font-semibold text-primary">{t("providerMessage", { name: order.sellerName })}</p>
                   {order.deliveryDescription && (
                     <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-white/80">
                       {order.deliveryDescription}
@@ -215,7 +223,7 @@ export default function ServiceOrderTabs({
                 <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
                   {attachments.map((file) => {
                     const href = resolveImageUrl(file) || file;
-                    const name = file.split("/").pop() || "Attachment";
+                    const name = file.split("/").pop() || t("attachment");
                     return (
                       <li key={file}>
                         <a
@@ -240,7 +248,7 @@ export default function ServiceOrderTabs({
             </div>
           </section>
         ) : (
-          <EmptyState message="No delivery has been submitted yet." />
+          <EmptyState message={t("noDelivery")} />
         )}
       </TabsContent>
     </Tabs>

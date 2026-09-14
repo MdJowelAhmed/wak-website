@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { Check, Loader2, MessageCircle, Star } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 import { Button } from "@/ui/button";
 import { myFetch } from "../../../../../helpers/myFetch";
 import { completeServiceOrder } from "./completeServiceOrder";
@@ -11,6 +12,7 @@ import ReviewModal from "./ReviewModal";
 import { isDeliveredStatus, type Order } from "./types";
 
 export default function ServiceOrderToolbar({ order }: { order: Order }) {
+  const t = useTranslations("Orders");
   const router = useRouter();
   const [isCreatingChat, setIsCreatingChat] = useState(false);
   const [isAccepting, setIsAccepting] = useState(false);
@@ -19,7 +21,7 @@ export default function ServiceOrderToolbar({ order }: { order: Order }) {
 
   const handleMessage = async () => {
     if (!order.sellerId) {
-      toast.error("Seller information is missing");
+      toast.error(t("missingSeller"));
       return;
     }
 
@@ -34,10 +36,10 @@ export default function ServiceOrderToolbar({ order }: { order: Order }) {
         const chatId = res.data?._id || res.data?.id;
         router.push(chatId ? `/profile/message/${chatId}` : "/profile/message");
       } else {
-        toast.error(res?.message || "Failed to initiate chat");
+        toast.error(res?.message || t("chatError"));
       }
     } catch {
-      toast.error("An error occurred while initiating chat");
+      toast.error(t("chatUnexpected"));
     } finally {
       setIsCreatingChat(false);
     }
@@ -50,13 +52,13 @@ export default function ServiceOrderToolbar({ order }: { order: Order }) {
     try {
       const res = await completeServiceOrder(order.dbId);
       if (res.success) {
-        toast.success(res.message || "Delivery accepted");
+        toast.success(res.message || t("deliveryAccepted"));
         router.refresh();
       } else {
-        toast.error(res.message || "Failed to accept delivery");
+        toast.error(res.message || t("acceptError"));
       }
     } catch {
-      toast.error("An error occurred while accepting delivery");
+      toast.error(t("acceptUnexpected"));
     } finally {
       setIsAccepting(false);
     }
@@ -72,7 +74,7 @@ export default function ServiceOrderToolbar({ order }: { order: Order }) {
           className="rounded-xl shadow-md shadow-primary/30"
         >
           {isAccepting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
-          Accept
+          {t("accept")}
         </Button>
       )}
       <Button
@@ -87,7 +89,7 @@ export default function ServiceOrderToolbar({ order }: { order: Order }) {
         }
       >
         {isCreatingChat ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageCircle className="h-4 w-4" />}
-        Contact seller
+        {t("contactSeller")}
       </Button>
       {(order.canReview || order.alreadyReviewed) && (
         <Button
@@ -98,7 +100,7 @@ export default function ServiceOrderToolbar({ order }: { order: Order }) {
           className="rounded-xl border-white/20 text-white hover:bg-white/10 hover:text-white"
         >
           <Star className="h-4 w-4" />
-          {order.alreadyReviewed ? "Reviewed" : "Leave a review"}
+          {order.alreadyReviewed ? t("reviewed") : t("leaveReview")}
         </Button>
       )}
       <ReviewModal

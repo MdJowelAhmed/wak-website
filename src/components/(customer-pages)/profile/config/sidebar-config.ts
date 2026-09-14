@@ -6,22 +6,22 @@ export interface SidebarItem {
 
 export const customerSidebar: SidebarItem[] = [
   {
-    label: "Personal Information",
+    label: "personalInfo",
     href: "/profile/personal-info",
     icon: "User",
   },
   {
-    label: "Order Tracking",
+    label: "orderTracking",
     href: "/profile/order-tracking",
     icon: "FolderKanban",
   },
   {
-    label: "Review & Feedback",
+    label: "reviews",
     href: "/profile/reviews",
     icon: "Star",
   },
   {
-    label: "Setting",
+    label: "settings",
     href: "/profile/settings",
     icon: "Settings",
   },
@@ -29,27 +29,27 @@ export const customerSidebar: SidebarItem[] = [
 
 export const serviceSidebar: SidebarItem[] = [
   {
-    label: "Personal Information",
+    label: "personalInfo",
     href: "/profile/personal-info",
     icon: "User",
   },
   {
-    label: "Product Orders",
+    label: "productOrders",
     href: "/profile/product-orders",
     icon: "FolderKanban",
   },
   {
-    label: "Service Orders",
+    label: "serviceOrders",
     href: "/profile/service-orders",
     icon: "Briefcase",
   },
   {
-    label: "Message",
+    label: "message",
     href: "/profile/message",
     icon: "MessageCircle",
   },
   {
-    label: "Setting",
+    label: "settings",
     href: "/profile/settings",
     icon: "Settings",
   },

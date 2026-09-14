@@ -33,7 +33,6 @@ export default async function ServiceOrdersRoute({ searchParams }: ServiceOrders
   return (
     <OrdersPage
       type="service"
-      title="Service Orders"
       initialOrders={orders}
       pagination={pagination}
     />

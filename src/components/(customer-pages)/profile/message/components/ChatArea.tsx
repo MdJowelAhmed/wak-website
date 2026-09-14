@@ -1,5 +1,8 @@
+"use client";
+
 import { Paperclip, Send, Loader2, X, Image as ImageIcon } from "lucide-react";
 import { useRef, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { ChatMessage, OfferPaymentMethod } from "../types";
 import { resolveImageUrl } from "../../../../../../helpers/resolveImageUrl";
 import CustomOfferCard from "./CustomOfferCard";
@@ -39,6 +42,7 @@ export default function ChatArea({
   handleAcceptOffer,
   handleRejectOffer,
 }: ChatAreaProps) {
+  const t = useTranslations("Messages");
   const imageInputRef = useRef<HTMLInputElement>(null);
   const docInputRef = useRef<HTMLInputElement>(null);
   
@@ -80,7 +84,7 @@ export default function ChatArea({
   if (!selectedContact) {
     return (
       <div className="flex-1 bg-zinc-50 border border-zinc-200 rounded-2xl p-4 flex flex-col justify-center items-center shadow-sm min-w-0 overflow-hidden text-zinc-500">
-        Select a chat to start messaging
+        {t("selectChat")}
       </div>
     );
   }
@@ -95,7 +99,7 @@ export default function ChatArea({
           </div>
         ) : currentMessages.length === 0 ? (
           <div className="flex justify-center items-center h-full text-zinc-500 text-sm">
-            No messages in this conversation yet.
+            {t("emptyConversation")}
           </div>
         ) : (
           <>
@@ -108,7 +112,7 @@ export default function ChatArea({
             {/* Yesterday Badge */}
             <div className="flex justify-center mb-8">
               <span className="px-4 py-1.5 rounded-full border border-zinc-200 bg-zinc-150 text-xs text-zinc-500 font-semibold tracking-wide uppercase">
-                Yesterday
+                {t("yesterday")}
               </span>
             </div>
 
@@ -117,7 +121,7 @@ export default function ChatArea({
               return (
                 <div key={m.id} className={`flex items-start gap-3.5 ${isUser ? "flex-row-reverse" : ""}`}>
                   <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-zinc-200 -mt-2">
-                    <img src={m.avatar} alt="Avatar" className="w-full h-full object-cover" />
+                    <img src={m.avatar} alt={t("avatarAlt")} className="w-full h-full object-cover" />
                   </div>
                   <div className="max-w-md">
                     <div className={`p-4 text-sm leading-relaxed shadow-xs ${isUser
@@ -128,7 +132,7 @@ export default function ChatArea({
                         <div className="mb-2">
                           <img 
                             src={resolveImageUrl(m.attachment)} 
-                            alt="Attachment" 
+                            alt={t("attachmentAlt")} 
                             className="max-w-[200px] max-h-[200px] object-cover rounded-lg border border-black/10 cursor-pointer" 
                             onClick={() => window.open(resolveImageUrl(m.attachment!), '_blank')}
                           />
@@ -144,7 +148,7 @@ export default function ChatArea({
                           }`}
                         >
                           <Paperclip className="w-4 h-4" />
-                          <span className="font-semibold text-xs">Download File</span>
+                          <span className="font-semibold text-xs">{t("downloadFile")}</span>
                         </a>
                       )}
                       {m.type === 'custom_offer' && m.customOffer && (
@@ -208,8 +212,8 @@ export default function ChatArea({
               type="button" 
               onClick={() => imageInputRef.current?.click()}
               className="text-zinc-400 hover:text-primary transition-colors cursor-pointer p-1.5 shrink-0" 
-              title="Attach Image"
-              aria-label="Attach Image"
+              title={t("attachImage")}
+              aria-label={t("attachImage")}
             >
               <ImageIcon className="w-5 h-5" />
             </button>
@@ -217,8 +221,8 @@ export default function ChatArea({
               type="button" 
               onClick={() => docInputRef.current?.click()}
               className="text-zinc-400 hover:text-primary transition-colors cursor-pointer p-1.5 shrink-0" 
-              title="Attach Document"
-              aria-label="Attach Document"
+              title={t("attachDocument")}
+              aria-label={t("attachDocument")}
             >
               <Paperclip className="w-5 h-5" />
             </button>
@@ -228,7 +232,7 @@ export default function ChatArea({
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Type here..."
+            placeholder={t("placeholder")}
             disabled={isSending}
             className="flex-1 bg-white border border-zinc-200 focus:border-primary rounded-xl py-3 px-4 text-sm text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:ring-1 focus:ring-primary disabled:opacity-70"
           />
@@ -237,7 +241,7 @@ export default function ChatArea({
             type="submit"
             disabled={isSending || (!input.trim() && !selectedFile)}
             className="w-12 h-12 bg-primary hover:bg-orange-500 disabled:opacity-40 text-white rounded-xl flex items-center justify-center transition-colors cursor-pointer shrink-0 shadow-md shadow-orange-500/10 font-bold"
-            aria-label="Send message"
+            aria-label={t("send")}
           >
             {isSending ? (
               <Loader2 className="w-5 h-5 animate-spin" />

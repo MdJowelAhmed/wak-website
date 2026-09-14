@@ -8,6 +8,7 @@ import PersonalInfoForm, { type PersonalInfoSavePayload } from "./PersonalInfoFo
 import getProfile from "../../../../../helpers/getProfile";
 import { myFetch } from "../../../../../helpers/myFetch";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 const defaultUserData: PersonalInfoUser = {
   username: "",
@@ -18,6 +19,7 @@ const defaultUserData: PersonalInfoUser = {
 };
 
 export default function PersonalInfoPage() {
+  const t = useTranslations("Profile.personal");
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState(defaultUserData);
 
@@ -51,7 +53,7 @@ export default function PersonalInfoPage() {
       });
 
       if (res?.success) {
-        toast.success(res?.message || "Profile updated successfully");
+        toast.success(res?.message || t("updateSuccess"));
         
         getProfile().then((fetchedData) => {
           if (fetchedData) {
@@ -69,18 +71,18 @@ export default function PersonalInfoPage() {
         
         setIsEditing(false);
       } else {
-        toast.error(res?.message || "Failed to update profile");
+        toast.error(res?.message || t("updateError"));
       }
     } catch (error) {
       console.error(error);
-      toast.error("An error occurred while saving.");
+      toast.error(t("saveError"));
     }
   };
 
   return (
     <DashboardCard className="border-white/10 bg-secondary">
       <ProfileHeader
-        title={isEditing ? "Edit Personal Information" : "Personal Information"}
+        title={isEditing ? t("editTitle") : t("title")}
         isEditing={isEditing}
         onToggleEdit={() => setIsEditing(true)}
       />

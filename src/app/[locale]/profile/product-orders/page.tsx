@@ -33,7 +33,6 @@ export default async function ProductOrdersRoute({ searchParams }: ProductOrders
   return (
     <OrdersPage
       type="product"
-      title="Product Orders"
       initialOrders={orders}
       pagination={pagination}
     />

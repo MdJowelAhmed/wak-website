@@ -1,4 +1,7 @@
+"use client";
+
 import { Search, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { resolveImageUrl } from "../../../../../../helpers/resolveImageUrl";
 import { ApiChat, getOtherParticipant } from "../types";
 
@@ -27,6 +30,7 @@ export default function ChatSidebar({
   isLoadingMoreChats,
   onLoadMoreChats,
 }: ChatSidebarProps) {
+  const t = useTranslations("Messages");
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
     if (scrollHeight - scrollTop <= clientHeight + 50) {
@@ -35,7 +39,7 @@ export default function ChatSidebar({
   };
   return (
     <div className="w-full lg:w-80 bg-zinc-50 border border-zinc-200 rounded-2xl p-6 flex flex-col shrink-0 shadow-sm">
-      <h1 className="text-xl font-bold text-zinc-900 mb-5 tracking-tight">Message</h1>
+      <h1 className="text-xl font-bold text-zinc-900 mb-5 tracking-tight">{t("title")}</h1>
 
       {/* Search Bar */}
       <div className="relative mb-6">
@@ -44,7 +48,7 @@ export default function ChatSidebar({
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search chats..."
+          placeholder={t("search")}
           className="w-full bg-white border border-zinc-200 rounded-lg py-2.5 pl-10 pr-4 text-sm text-zinc-900 outline-none placeholder:text-zinc-400 focus:border-primary transition-colors focus:ring-1 focus:ring-primary"
         />
       </div>
@@ -57,14 +61,14 @@ export default function ChatSidebar({
           </div>
         ) : chats.length === 0 ? (
           <div className="text-center text-zinc-500 text-sm py-8">
-            No chats found
+            {t("empty")}
           </div>
         ) : (
           chats.map((chat) => {
             const participant = getOtherParticipant(chat, currentUserId);
             const avatarUrl = participant?.profileImage ? resolveImageUrl(participant.profileImage) : "/user.svg";
-            const participantName = participant?.name || "Unknown User";
-            const subtitle = chat.lastMessage?.text || "No messages yet";
+            const participantName = participant?.name || t("unknownUser");
+            const subtitle = chat.lastMessage?.text || t("noMessagesYet");
             
             return (
               <div

@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
+import { useRouter, usePathname } from "@/i18n/navigation";
 import DashboardCard from "../../../../shared/DashboardCard";
 import type { Order } from "./types";
 import OrdersTable from "./OrdersTable";
@@ -18,18 +19,17 @@ export interface OrdersPagination {
 }
 
 interface OrdersPageProps {
-  title?: string;
   type?: "product" | "service";
   initialOrders?: Order[];
   pagination?: OrdersPagination;
 }
 
 export default function OrdersPage({
-  title = "My Orders",
   type = "product",
   initialOrders = [],
   pagination,
 }: OrdersPageProps) {
+  const t = useTranslations("Orders");
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [reviewOrder, setReviewOrder] = useState<Order | null>(null);
   const [isCreatingChat, setIsCreatingChat] = useState(false);
@@ -56,7 +56,7 @@ export default function OrdersPage({
 
   const handleMessageSeller = async () => {
     if (!selectedOrder?.sellerId) {
-      toast.error("Seller information is missing");
+      toast.error(t("missingSeller"));
       return;
     }
 
@@ -75,20 +75,22 @@ export default function OrdersPage({
           router.push("/profile/message");
         }
       } else {
-        toast.error(res?.message || "Failed to initiate chat");
+        toast.error(res?.message || t("chatError"));
       }
     } catch {
-      toast.error("An error occurred while initiating chat");
+      toast.error(t("chatUnexpected"));
     } finally {
       setIsCreatingChat(false);
     }
   };
 
+  const heading = type === "product" ? t("productOrders") : t("serviceOrders");
+
   if (!selectedOrder) {
     return (
       <DashboardCard className="border-white/10 bg-secondary p-6 md:p-8">
         <OrdersTable
-          title={title}
+          title={heading}
           type={type}
           orders={initialOrders}
           onSelectOrder={handleSelectOrder}
@@ -112,7 +114,7 @@ export default function OrdersPage({
       <OrderDetails
         order={selectedOrder}
         type={type}
-        listTitle={title}
+        listTitle={heading}
         isCreatingChat={isCreatingChat}
         onBack={() => setSelectedOrder(null)}
         onMessageSeller={handleMessageSeller}

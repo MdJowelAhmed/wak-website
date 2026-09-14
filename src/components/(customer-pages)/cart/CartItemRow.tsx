@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { Minus, Plus, Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { useCurrency } from "@/hooks/use-currency";
 import { type CartItem } from "../check-out/types";
 
@@ -20,6 +21,7 @@ export default function CartItemRow({
     onQuantityChange,
 }: CartItemRowProps) {
     const { formatPrice } = useCurrency();
+    const t = useTranslations("Cart");
     const lineTotal = item.price * item.quantity;
     const href = `/shop/${item.slug || item.productId}`;
 
@@ -48,7 +50,7 @@ export default function CartItemRow({
                         {item.name}
                     </Link>
                     <p className="mt-1 text-sm text-white/70">
-                        {formatPrice(item.price)} each
+                        {t("each", { price: formatPrice(item.price) })}
                     </p>
                     <p className="mt-1 text-base font-bold text-primary sm:text-lg">
                         {formatPrice(lineTotal)}
@@ -62,7 +64,7 @@ export default function CartItemRow({
                             onClick={() => item.quantity > 1 && onQuantityChange(item.id, item.quantity - 1)}
                             disabled={disabled || item.quantity <= 1}
                             className="flex h-9 w-9 items-center justify-center text-white transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
-                            aria-label="Decrease quantity"
+                            aria-label={t("decreaseQty")}
                         >
                             <Minus className="h-4 w-4" />
                         </button>
@@ -74,7 +76,7 @@ export default function CartItemRow({
                             onClick={() => onQuantityChange(item.id, item.quantity + 1)}
                             disabled={disabled}
                             className="flex h-9 w-9 items-center justify-center text-white transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
-                            aria-label="Increase quantity"
+                            aria-label={t("increaseQty")}
                         >
                             <Plus className="h-4 w-4" />
                         </button>
@@ -84,7 +86,7 @@ export default function CartItemRow({
                         onClick={() => onRemove(item.id)}
                         disabled={disabled}
                         className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/80 transition-colors hover:border-red-400/40 hover:bg-red-500/15 hover:text-red-200 disabled:cursor-not-allowed disabled:opacity-40"
-                        aria-label="Remove item"
+                        aria-label={t("removeItem")}
                     >
                         <Trash2 className="h-4 w-4" />
                     </button>

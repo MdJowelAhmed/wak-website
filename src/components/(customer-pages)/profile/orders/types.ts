@@ -63,9 +63,9 @@ export interface Order {
   alreadyReviewed?: boolean;
 }
 
-export function formatMoney(amount: number, currency = "USD"): string {
+export function formatMoney(amount: number, currency = "USD", locale = "en"): string {
   try {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat(locale, {
       style: "currency",
       currency,
     }).format(amount);
@@ -101,11 +101,11 @@ export function statusBadgeClass(status?: string): string {
   return "border-amber-300/40 bg-amber-400/15 text-amber-200";
 }
 
-export function formatDate(value?: string | null): string {
+export function formatDate(value?: string | null, locale = "en"): string {
   if (!value) return "—";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "—";
-  return date.toLocaleDateString("en-US", {
+  return date.toLocaleDateString(locale, {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -126,4 +126,28 @@ export function formatAddress(address?: OrderAddress): string {
   return [address.address, address.city, address.state, address.postalCode, address.country]
     .filter(Boolean)
     .join(", ");
+}
+
+const ORDER_STATUS_KEYS: Record<string, string> = {
+  pending: "statusPending",
+  confirmed: "statusConfirmed",
+  in_progress: "statusInProgress",
+  inprogress: "statusInProgress",
+  in_transit: "statusInTransit",
+  intransit: "statusInTransit",
+  delivered: "statusDelivered",
+  completed: "statusCompleted",
+  cancelled: "statusCancelled",
+  canceled: "statusCanceled",
+  paid: "statusPaid",
+  failed: "statusFailed",
+  processing: "statusProcessing",
+  shipped: "statusShipped",
+  packed: "statusPacked",
+};
+
+export function orderStatusMessageKey(value?: string): string | null {
+  if (!value) return null;
+  const key = value.toLowerCase().replace(/[\s-]+/g, "_");
+  return ORDER_STATUS_KEYS[key] ?? null;
 }

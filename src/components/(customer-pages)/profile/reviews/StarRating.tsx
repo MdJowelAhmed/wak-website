@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Star } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface StarRatingProps {
   rating: number;
@@ -14,6 +15,7 @@ export default function StarRating({
   onRate,
   size = 28,
 }: StarRatingProps) {
+  const t = useTranslations("Profile.reviews");
   const [hoverRating, setHoverRating] = useState(0);
 
   return (
@@ -27,6 +29,7 @@ export default function StarRating({
             onClick={() => onRate(star)}
             onMouseEnter={() => setHoverRating(star)}
             onMouseLeave={() => setHoverRating(0)}
+            aria-label={t("rate", { count: star })}
             className="cursor-pointer transition-transform hover:scale-110"
           >
             <Star
