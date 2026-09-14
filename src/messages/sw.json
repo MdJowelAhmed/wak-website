@@ -1,0 +1,86 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "Nunua bidhaa, weka huduma na pokea delivery duniani kote."
+  },
+  "Navigation": {
+    "home": "Nyumbani",
+    "products": "Bidhaa",
+    "services": "Huduma",
+    "contact": "Wasiliana nasi",
+    "support": "Msaada",
+    "supportHelp": "Msaada / Usaidizi",
+    "login": "Ingia / Jisajili",
+    "myAccount": "Akaunti yangu",
+    "myProfile": "Wasifu wangu",
+    "logout": "Toka",
+    "logoutAccount": "Toka kwenye akaunti",
+    "signedInAs": "Umeingia kama",
+    "trackOrder": "Fuatilia agizo"
+  },
+  "Navbar": {
+    "deliverTo": "Peleka kwa:",
+    "updateLocation": "(Sasisha eneo)",
+    "searchPlaceholder": "Tafuta bidhaa, huduma na kategoria...",
+    "languageCurrency": "Badilisha lugha na sarafu",
+    "toggleMenu": "Fungua menyu ya simu"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Badilisha lugha",
+    "changeCurrency": "Badilisha sarafu",
+    "searchLanguage": "Tafuta lugha...",
+    "searchCurrency": "Tafuta sarafu...",
+    "noLanguage": "Hakuna lugha iliyopatikana",
+    "noCurrency": "Hakuna sarafu iliyopatikana",
+    "change": "Badilisha",
+    "done": "Imekamilika",
+    "shoppingOn": "Unanunua kwenye",
+    "changeCountry": "Badilisha nchi/eneo."
+  },
+  "MobileMenu": {
+    "deliverTo": "Peleka kwa:",
+    "change": "Badilisha",
+    "languageCountry": "Lugha na nchi",
+    "searchPlaceholder": "Tafuta bidhaa na huduma..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld ni soko la kununua bidhaa, kuweka huduma na kupokea delivery duniani kote — linalounganisha Afrika na dunia.",
+    "company": "Kampuni",
+    "customerService": "Huduma kwa wateja",
+    "legal": "Kisheria",
+    "aboutUs": "Kuhusu sisi",
+    "shop": "Duka",
+    "services": "Huduma",
+    "contactUs": "Wasiliana nasi",
+    "helpCenter": "Kituo cha msaada",
+    "trackOrder": "Fuatilia agizo",
+    "terms": "Sheria na masharti",
+    "privacy": "Sera ya faragha"
+  },
+  "Newsletter": {
+    "title": "Pata taarifa",
+    "description": "Pata ofa, bidhaa mpya na habari za WorthWorld kwa barua pepe.",
+    "email": "Anwani ya barua pepe",
+    "placeholder": "Barua pepe yako",
+    "consent": "Ninakubali kupokea barua pepe za masoko na naweza kujiondoa wakati wowote.",
+    "subscribe": "Jisajili",
+    "unsubscribe": "Jiondoe",
+    "subscribedAs": "Umejisajili kama",
+    "invalidEmail": "Weka barua pepe sahihi.",
+    "needConsent": "Tafadhali kubali kupokea barua pepe za masoko.",
+    "alreadySubscribed": "Barua pepe hii tayari imesajiliwa.",
+    "success": "Umejisajili. Angalia kikasha chako.",
+    "unsubscribed": "Umeondolewa kwenye orodha."
+  },
+  "Logo": {
+    "tagline": "Nunua. Weka. Peleka. Duniani kote."
+  },
+  "Cart": {
+    "title": "Kikapu"
+  },
+  "NotFound": {
+    "title": "404 Ukurasa haujapatikana",
+    "description": "Ukurasa uliotembelea haujapatikana. Unaweza kurudi ukurasa wa nyumbani.",
+    "backHome": "Rudi nyumbani"
+  }
+}

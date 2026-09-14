@@ -1,0 +1,86 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "Mua sắm sản phẩm, đặt dịch vụ và nhận giao hàng trên toàn thế giới."
+  },
+  "Navigation": {
+    "home": "Trang chủ",
+    "products": "Sản phẩm",
+    "services": "Dịch vụ",
+    "contact": "Liên hệ",
+    "support": "Hỗ trợ",
+    "supportHelp": "Hỗ trợ / Trợ giúp",
+    "login": "Đăng nhập / Đăng ký",
+    "myAccount": "Tài khoản của tôi",
+    "myProfile": "Hồ sơ của tôi",
+    "logout": "Đăng xuất",
+    "logoutAccount": "Đăng xuất tài khoản",
+    "signedInAs": "Đăng nhập với",
+    "trackOrder": "Theo dõi đơn hàng"
+  },
+  "Navbar": {
+    "deliverTo": "Giao đến:",
+    "updateLocation": "(Cập nhật vị trí)",
+    "searchPlaceholder": "Tìm sản phẩm, dịch vụ và danh mục...",
+    "languageCurrency": "Đổi ngôn ngữ và tiền tệ",
+    "toggleMenu": "Mở menu di động"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Đổi ngôn ngữ",
+    "changeCurrency": "Đổi tiền tệ",
+    "searchLanguage": "Tìm ngôn ngữ...",
+    "searchCurrency": "Tìm tiền tệ...",
+    "noLanguage": "Không tìm thấy ngôn ngữ",
+    "noCurrency": "Không tìm thấy tiền tệ",
+    "change": "Đổi",
+    "done": "Xong",
+    "shoppingOn": "Bạn đang mua sắm trên",
+    "changeCountry": "Đổi quốc gia/khu vực."
+  },
+  "MobileMenu": {
+    "deliverTo": "Giao đến:",
+    "change": "Đổi",
+    "languageCountry": "Ngôn ngữ và quốc gia",
+    "searchPlaceholder": "Tìm sản phẩm và dịch vụ..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld là sàn thương mại để mua sản phẩm, đặt dịch vụ và giao hàng toàn cầu — kết nối châu Phi với thế giới.",
+    "company": "Công ty",
+    "customerService": "Chăm sóc khách hàng",
+    "legal": "Pháp lý",
+    "aboutUs": "Về chúng tôi",
+    "shop": "Cửa hàng",
+    "services": "Dịch vụ",
+    "contactUs": "Liên hệ",
+    "helpCenter": "Trung tâm trợ giúp",
+    "trackOrder": "Theo dõi đơn hàng",
+    "terms": "Điều khoản và điều kiện",
+    "privacy": "Chính sách bảo mật"
+  },
+  "Newsletter": {
+    "title": "Cập nhật tin mới",
+    "description": "Nhận ưu đãi, hàng mới và tin WorthWorld qua email.",
+    "email": "Địa chỉ email",
+    "placeholder": "Email của bạn",
+    "consent": "Tôi đồng ý nhận email marketing và có thể hủy bất cứ lúc nào.",
+    "subscribe": "Đăng ký",
+    "unsubscribe": "Hủy đăng ký",
+    "subscribedAs": "Đã đăng ký với",
+    "invalidEmail": "Nhập email hợp lệ.",
+    "needConsent": "Vui lòng đồng ý nhận email marketing.",
+    "alreadySubscribed": "Email này đã được đăng ký.",
+    "success": "Bạn đã đăng ký. Hãy kiểm tra hộp thư.",
+    "unsubscribed": "Bạn đã hủy đăng ký."
+  },
+  "Logo": {
+    "tagline": "Mua sắm. Đặt lịch. Giao hàng. Toàn cầu."
+  },
+  "Cart": {
+    "title": "Giỏ hàng"
+  },
+  "NotFound": {
+    "title": "404 Không tìm thấy trang",
+    "description": "Trang bạn truy cập không tồn tại. Bạn có thể về trang chủ.",
+    "backHome": "Về trang chủ"
+  }
+}

@@ -28,7 +28,9 @@
   "LanguageSwitcher": {
     "changeLanguage": "Sinthani chinenero",
     "changeCurrency": "Sinthani ndalama",
+    "searchLanguage": "Fufuzani chinenero...",
     "searchCurrency": "Fufuzani ndalama...",
+    "noLanguage": "Palibe chinenero chomwe chapezeka",
     "noCurrency": "Palibe ndalama yomwe yapezeka",
     "change": "Sinthani",
     "done": "Zatheka",

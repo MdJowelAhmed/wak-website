@@ -1,0 +1,86 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "Ürün alışverişi yapın, hizmet rezervasyonu alın ve dünyanın her yerine teslimat alın."
+  },
+  "Navigation": {
+    "home": "Ana sayfa",
+    "products": "Ürünler",
+    "services": "Hizmetler",
+    "contact": "İletişim",
+    "support": "Destek",
+    "supportHelp": "Destek / Yardım",
+    "login": "Giriş / Kayıt",
+    "myAccount": "Hesabım",
+    "myProfile": "Profilim",
+    "logout": "Çıkış",
+    "logoutAccount": "Hesaptan çıkış",
+    "signedInAs": "Giriş yapılan hesap",
+    "trackOrder": "Siparişi takip et"
+  },
+  "Navbar": {
+    "deliverTo": "Teslimat adresi:",
+    "updateLocation": "(Konumu güncelle)",
+    "searchPlaceholder": "Ürün, hizmet ve kategori ara...",
+    "languageCurrency": "Dil ve para birimini değiştir",
+    "toggleMenu": "Mobil menüyü aç"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Dili değiştir",
+    "changeCurrency": "Para birimini değiştir",
+    "searchLanguage": "Dil ara...",
+    "searchCurrency": "Para birimi ara...",
+    "noLanguage": "Dil bulunamadı",
+    "noCurrency": "Para birimi bulunamadı",
+    "change": "Değiştir",
+    "done": "Tamam",
+    "shoppingOn": "Alışveriş yaptığınız yer",
+    "changeCountry": "Ülke/bölge değiştir."
+  },
+  "MobileMenu": {
+    "deliverTo": "Teslimat adresi:",
+    "change": "Değiştir",
+    "languageCountry": "Dil ve ülke",
+    "searchPlaceholder": "Ürün ve hizmet ara..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld; ürün alışverişi, hizmet rezervasyonu ve dünya çapında teslimat sunan bir pazaryeridir — Afrika’yı dünyayla buluşturur.",
+    "company": "Şirket",
+    "customerService": "Müşteri hizmetleri",
+    "legal": "Yasal",
+    "aboutUs": "Hakkımızda",
+    "shop": "Mağaza",
+    "services": "Hizmetler",
+    "contactUs": "İletişim",
+    "helpCenter": "Yardım merkezi",
+    "trackOrder": "Siparişi takip et",
+    "terms": "Şartlar ve koşullar",
+    "privacy": "Gizlilik politikası"
+  },
+  "Newsletter": {
+    "title": "Güncel kalın",
+    "description": "Fırsatları, yeni ürünleri ve WorthWorld haberlerini e-posta ile alın.",
+    "email": "E-posta adresi",
+    "placeholder": "E-postanız",
+    "consent": "Pazarlama e-postaları almayı kabul ediyorum ve istediğim zaman abonelikten çıkabilirim.",
+    "subscribe": "Abone ol",
+    "unsubscribe": "Abonelikten çık",
+    "subscribedAs": "Abone olunan",
+    "invalidEmail": "Geçerli bir e-posta girin.",
+    "needConsent": "Lütfen pazarlama e-postalarını kabul edin.",
+    "alreadySubscribed": "Bu e-posta zaten abone.",
+    "success": "Abone oldunuz. Gelen kutunuzu kontrol edin.",
+    "unsubscribed": "Abonelikten çıktınız."
+  },
+  "Logo": {
+    "tagline": "Alışveriş. Rezervasyon. Teslimat. Dünya çapında."
+  },
+  "Cart": {
+    "title": "Alışveriş sepeti"
+  },
+  "NotFound": {
+    "title": "404 Sayfa bulunamadı",
+    "description": "Ziyaret ettiğiniz sayfa bulunamadı. Ana sayfaya gidebilirsiniz.",
+    "backHome": "Ana sayfaya dön"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "Acquista prodotti, prenota servizi e ricevi consegne in tutto il mondo."
+  },
+  "Navigation": {
+    "home": "Home",
+    "products": "Prodotti",
+    "services": "Servizi",
+    "contact": "Contatti",
+    "support": "Assistenza",
+    "supportHelp": "Assistenza / Aiuto",
+    "login": "Accedi / Registrati",
+    "myAccount": "Il mio account",
+    "myProfile": "Il mio profilo",
+    "logout": "Esci",
+    "logoutAccount": "Esci dall’account",
+    "signedInAs": "Accesso effettuato come",
+    "trackOrder": "Traccia ordine"
+  },
+  "Navbar": {
+    "deliverTo": "Consegna a:",
+    "updateLocation": "(Aggiorna posizione)",
+    "searchPlaceholder": "Cerca prodotti, servizi e categorie...",
+    "languageCurrency": "Cambia lingua e valuta",
+    "toggleMenu": "Apri menu mobile"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Cambia lingua",
+    "changeCurrency": "Cambia valuta",
+    "searchLanguage": "Cerca lingua...",
+    "searchCurrency": "Cerca valuta...",
+    "noLanguage": "Nessuna lingua trovata",
+    "noCurrency": "Nessuna valuta trovata",
+    "change": "Cambia",
+    "done": "Fatto",
+    "shoppingOn": "Stai acquistando su",
+    "changeCountry": "Cambia paese/regione."
+  },
+  "MobileMenu": {
+    "deliverTo": "Consegna a:",
+    "change": "Cambia",
+    "languageCountry": "Lingua e paese",
+    "searchPlaceholder": "Cerca prodotti e servizi..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld è un marketplace per acquistare prodotti, prenotare servizi e ricevere consegne in tutto il mondo — collegando l’Africa al resto del mondo.",
+    "company": "Azienda",
+    "customerService": "Assistenza clienti",
+    "legal": "Note legali",
+    "aboutUs": "Chi siamo",
+    "shop": "Negozio",
+    "services": "Servizi",
+    "contactUs": "Contatti",
+    "helpCenter": "Centro assistenza",
+    "trackOrder": "Traccia ordine",
+    "terms": "Termini e condizioni",
+    "privacy": "Informativa sulla privacy"
+  },
+  "Newsletter": {
+    "title": "Resta aggiornato",
+    "description": "Ricevi offerte, novità e notizie WorthWorld via e-mail.",
+    "email": "Indirizzo e-mail",
+    "placeholder": "La tua e-mail",
+    "consent": "Accetto di ricevere e-mail di marketing e posso annullare l’iscrizione in qualsiasi momento.",
+    "subscribe": "Iscriviti",
+    "unsubscribe": "Annulla iscrizione",
+    "subscribedAs": "Iscritto come",
+    "invalidEmail": "Inserisci un’e-mail valida.",
+    "needConsent": "Accetta di ricevere e-mail di marketing.",
+    "alreadySubscribed": "Questa e-mail è già iscritta.",
+    "success": "Iscrizione completata. Controlla la posta in arrivo.",
+    "unsubscribed": "Iscrizione annullata."
+  },
+  "Logo": {
+    "tagline": "Acquista. Prenota. Consegna. In tutto il mondo."
+  },
+  "Cart": {
+    "title": "Carrello"
+  },
+  "NotFound": {
+    "title": "404 Pagina non trovata",
+    "description": "La pagina visitata non è stata trovata. Puoi tornare alla home.",
+    "backHome": "Torna alla home"
+  }
+}

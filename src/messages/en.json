@@ -28,7 +28,9 @@
   "LanguageSwitcher": {
     "changeLanguage": "Change language",
     "changeCurrency": "Change currency",
+    "searchLanguage": "Search language...",
     "searchCurrency": "Search currency...",
+    "noLanguage": "No language found",
     "noCurrency": "No currency found",
     "change": "Change",
     "done": "Done",

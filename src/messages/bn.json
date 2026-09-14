@@ -28,7 +28,9 @@
   "LanguageSwitcher": {
     "changeLanguage": "ভাষা পরিবর্তন করুন",
     "changeCurrency": "মুদ্রা পরিবর্তন করুন",
+    "searchLanguage": "ভাষা খুঁজুন...",
     "searchCurrency": "মুদ্রা খুঁজুন...",
+    "noLanguage": "কোনো ভাষা পাওয়া যায়নি",
     "noCurrency": "কোনো মুদ্রা পাওয়া যায়নি",
     "change": "পরিবর্তন",
     "done": "হয়ে গেছে",

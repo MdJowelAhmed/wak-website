@@ -1,0 +1,86 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "Belanja produk, pesan layanan, dan terima pengiriman ke seluruh dunia."
+  },
+  "Navigation": {
+    "home": "Beranda",
+    "products": "Produk",
+    "services": "Layanan",
+    "contact": "Hubungi kami",
+    "support": "Dukungan",
+    "supportHelp": "Dukungan / Bantuan",
+    "login": "Masuk / Daftar",
+    "myAccount": "Akun saya",
+    "myProfile": "Profil saya",
+    "logout": "Keluar",
+    "logoutAccount": "Keluar dari akun",
+    "signedInAs": "Masuk sebagai",
+    "trackOrder": "Lacak pesanan"
+  },
+  "Navbar": {
+    "deliverTo": "Kirim ke:",
+    "updateLocation": "(Perbarui lokasi)",
+    "searchPlaceholder": "Cari produk, layanan & kategori...",
+    "languageCurrency": "Ubah bahasa dan mata uang",
+    "toggleMenu": "Buka menu seluler"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Ubah bahasa",
+    "changeCurrency": "Ubah mata uang",
+    "searchLanguage": "Cari bahasa...",
+    "searchCurrency": "Cari mata uang...",
+    "noLanguage": "Bahasa tidak ditemukan",
+    "noCurrency": "Mata uang tidak ditemukan",
+    "change": "Ubah",
+    "done": "Selesai",
+    "shoppingOn": "Anda berbelanja di",
+    "changeCountry": "Ubah negara/wilayah."
+  },
+  "MobileMenu": {
+    "deliverTo": "Kirim ke:",
+    "change": "Ubah",
+    "languageCountry": "Bahasa & negara",
+    "searchPlaceholder": "Cari produk dan layanan..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld adalah marketplace untuk belanja produk, memesan layanan, dan pengiriman ke seluruh dunia — menghubungkan Afrika dengan dunia.",
+    "company": "Perusahaan",
+    "customerService": "Layanan pelanggan",
+    "legal": "Legal",
+    "aboutUs": "Tentang kami",
+    "shop": "Toko",
+    "services": "Layanan",
+    "contactUs": "Hubungi kami",
+    "helpCenter": "Pusat bantuan",
+    "trackOrder": "Lacak pesanan",
+    "terms": "Syarat dan ketentuan",
+    "privacy": "Kebijakan privasi"
+  },
+  "Newsletter": {
+    "title": "Tetap terbarui",
+    "description": "Dapatkan penawaran, produk baru, dan berita WorthWorld lewat email.",
+    "email": "Alamat email",
+    "placeholder": "Email Anda",
+    "consent": "Saya setuju menerima email pemasaran dan dapat berhenti berlangganan kapan saja.",
+    "subscribe": "Berlangganan",
+    "unsubscribe": "Berhenti berlangganan",
+    "subscribedAs": "Berlangganan sebagai",
+    "invalidEmail": "Masukkan alamat email yang valid.",
+    "needConsent": "Harap setujui untuk menerima email pemasaran.",
+    "alreadySubscribed": "Email ini sudah berlangganan.",
+    "success": "Anda sudah berlangganan. Periksa kotak masuk.",
+    "unsubscribed": "Anda telah berhenti berlangganan."
+  },
+  "Logo": {
+    "tagline": "Belanja. Pesan. Kirim. Ke seluruh dunia."
+  },
+  "Cart": {
+    "title": "Keranjang belanja"
+  },
+  "NotFound": {
+    "title": "404 Halaman tidak ditemukan",
+    "description": "Halaman yang Anda kunjungi tidak ditemukan. Anda dapat ke beranda.",
+    "backHome": "Kembali ke beranda"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "Покупайте товары, бронируйте услуги и получайте доставку по всему миру."
+  },
+  "Navigation": {
+    "home": "Главная",
+    "products": "Товары",
+    "services": "Услуги",
+    "contact": "Контакты",
+    "support": "Поддержка",
+    "supportHelp": "Поддержка / Помощь",
+    "login": "Вход / Регистрация",
+    "myAccount": "Мой аккаунт",
+    "myProfile": "Мой профиль",
+    "logout": "Выйти",
+    "logoutAccount": "Выйти из аккаунта",
+    "signedInAs": "Вы вошли как",
+    "trackOrder": "Отследить заказ"
+  },
+  "Navbar": {
+    "deliverTo": "Доставка в:",
+    "updateLocation": "(Обновить адрес)",
+    "searchPlaceholder": "Поиск товаров, услуг и категорий...",
+    "languageCurrency": "Изменить язык и валюту",
+    "toggleMenu": "Открыть мобильное меню"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Изменить язык",
+    "changeCurrency": "Изменить валюту",
+    "searchLanguage": "Поиск языка...",
+    "searchCurrency": "Поиск валюты...",
+    "noLanguage": "Язык не найден",
+    "noCurrency": "Валюта не найдена",
+    "change": "Изменить",
+    "done": "Готово",
+    "shoppingOn": "Вы покупаете на",
+    "changeCountry": "Изменить страну/регион."
+  },
+  "MobileMenu": {
+    "deliverTo": "Доставка в:",
+    "change": "Изменить",
+    "languageCountry": "Язык и страна",
+    "searchPlaceholder": "Поиск товаров и услуг..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld — маркетплейс для покупки товаров, бронирования услуг и доставки по всему миру, соединяющий Африку с остальным миром.",
+    "company": "Компания",
+    "customerService": "Служба поддержки",
+    "legal": "Правовая информация",
+    "aboutUs": "О нас",
+    "shop": "Магазин",
+    "services": "Услуги",
+    "contactUs": "Контакты",
+    "helpCenter": "Справочный центр",
+    "trackOrder": "Отследить заказ",
+    "terms": "Условия использования",
+    "privacy": "Политика конфиденциальности"
+  },
+  "Newsletter": {
+    "title": "Будьте в курсе",
+    "description": "Получайте акции, новинки и новости WorthWorld на почту.",
+    "email": "Адрес эл. почты",
+    "placeholder": "Ваш email",
+    "consent": "Я согласен(на) получать маркетинговые письма и могу отписаться в любое время.",
+    "subscribe": "Подписаться",
+    "unsubscribe": "Отписаться",
+    "subscribedAs": "Подписка оформлена как",
+    "invalidEmail": "Введите действительный email.",
+    "needConsent": "Подтвердите согласие на маркетинговые письма.",
+    "alreadySubscribed": "Этот email уже подписан.",
+    "success": "Вы подписались. Проверьте входящие.",
+    "unsubscribed": "Вы отписались."
+  },
+  "Logo": {
+    "tagline": "Покупайте. Бронируйте. Доставляйте. По всему миру."
+  },
+  "Cart": {
+    "title": "Корзина"
+  },
+  "NotFound": {
+    "title": "404 Страница не найдена",
+    "description": "Посещённая страница не найдена. Вы можете перейти на главную.",
+    "backHome": "На главную"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "选购商品、预约服务，全球配送。"
+  },
+  "Navigation": {
+    "home": "首页",
+    "products": "商品",
+    "services": "服务",
+    "contact": "联系我们",
+    "support": "支持",
+    "supportHelp": "支持 / 帮助",
+    "login": "登录 / 注册",
+    "myAccount": "我的账户",
+    "myProfile": "我的资料",
+    "logout": "退出",
+    "logoutAccount": "退出账户",
+    "signedInAs": "已登录为",
+    "trackOrder": "追踪订单"
+  },
+  "Navbar": {
+    "deliverTo": "配送至：",
+    "updateLocation": "（更新地址）",
+    "searchPlaceholder": "搜索商品、服务和分类...",
+    "languageCurrency": "更改语言和货币",
+    "toggleMenu": "打开移动菜单"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "更改语言",
+    "changeCurrency": "更改货币",
+    "searchLanguage": "搜索语言...",
+    "searchCurrency": "搜索货币...",
+    "noLanguage": "未找到语言",
+    "noCurrency": "未找到货币",
+    "change": "更改",
+    "done": "完成",
+    "shoppingOn": "您正在购物于",
+    "changeCountry": "更改国家/地区。"
+  },
+  "MobileMenu": {
+    "deliverTo": "配送至：",
+    "change": "更改",
+    "languageCountry": "语言和国家",
+    "searchPlaceholder": "搜索商品和服务..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld 是一个可购买商品、预约服务并全球配送的市场 — 连接非洲与世界。",
+    "company": "公司",
+    "customerService": "客户服务",
+    "legal": "法律信息",
+    "aboutUs": "关于我们",
+    "shop": "商店",
+    "services": "服务",
+    "contactUs": "联系我们",
+    "helpCenter": "帮助中心",
+    "trackOrder": "追踪订单",
+    "terms": "条款与条件",
+    "privacy": "隐私政策"
+  },
+  "Newsletter": {
+    "title": "保持更新",
+    "description": "通过邮件获取优惠、新品和 WorthWorld 资讯。",
+    "email": "电子邮箱",
+    "placeholder": "您的邮箱",
+    "consent": "我同意接收营销邮件，并可随时取消订阅。",
+    "subscribe": "订阅",
+    "unsubscribe": "取消订阅",
+    "subscribedAs": "已订阅为",
+    "invalidEmail": "请输入有效的电子邮箱。",
+    "needConsent": "请同意接收营销邮件。",
+    "alreadySubscribed": "该邮箱已订阅。",
+    "success": "订阅成功。请查看收件箱。",
+    "unsubscribed": "已取消订阅。"
+  },
+  "Logo": {
+    "tagline": "购物。预约。配送。全球可达。"
+  },
+  "Cart": {
+    "title": "购物车"
+  },
+  "NotFound": {
+    "title": "404 未找到页面",
+    "description": "您访问的页面不存在。可以返回首页。",
+    "backHome": "返回首页"
+  }
+}

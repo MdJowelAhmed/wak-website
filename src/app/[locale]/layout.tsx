@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Noto_Naskh_Arabic, Noto_Sans_Bengali } from "next/font/google";
+import { Inter, Noto_Naskh_Arabic, Noto_Sans_Bengali, Noto_Sans_Devanagari, Noto_Sans_JP, Noto_Sans_KR, Noto_Sans_SC, Noto_Sans_Thai } from "next/font/google";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -17,7 +17,7 @@ import { getExchangeRates } from "../../../helpers/getExchangeRates";
 import { DEFAULT_COUNTRY, DEFAULT_CURRENCY } from "../../../helpers/currency";
 
 const inter = Inter({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin", "latin-ext", "cyrillic", "vietnamese"],
   variable: "--font-inter",
 });
 
@@ -30,6 +30,58 @@ const notoBengali = Noto_Sans_Bengali({
   subsets: ["bengali"],
   variable: "--font-bengali",
 });
+
+const notoChinese = Noto_Sans_SC({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-chinese",
+});
+
+const notoJapanese = Noto_Sans_JP({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-japanese",
+});
+
+const notoKorean = Noto_Sans_KR({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-korean",
+});
+
+const notoHindi = Noto_Sans_Devanagari({
+  subsets: ["devanagari", "latin"],
+  weight: ["400", "700"],
+  variable: "--font-hindi",
+});
+
+const notoThai = Noto_Sans_Thai({
+  subsets: ["thai", "latin"],
+  weight: ["400", "700"],
+  variable: "--font-thai",
+});
+
+function bodyFontClass(locale: string) {
+  switch (locale) {
+    case "ar":
+    case "ur":
+      return notoArabic.className;
+    case "bn":
+      return notoBengali.className;
+    case "zh":
+      return notoChinese.className;
+    case "ja":
+      return notoJapanese.className;
+    case "ko":
+      return notoKorean.className;
+    case "hi":
+      return notoHindi.className;
+    case "th":
+      return notoThai.className;
+    default:
+      return inter.className;
+  }
+}
 
 type LocaleLayoutProps = {
   children: React.ReactNode;
@@ -75,15 +127,10 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   const initialCountry = cookieStore.get("user_country")?.value || DEFAULT_COUNTRY;
   const initialCurrency = cookieStore.get("user_currency")?.value || DEFAULT_CURRENCY;
   const direction = isRtlLocale(locale) ? "rtl" : "ltr";
-  const fontClass =
-    locale === "ar"
-      ? notoArabic.className
-      : locale === "bn"
-        ? notoBengali.className
-        : inter.className;
+  const fontClass = bodyFontClass(locale);
 
   return (
-    <html lang={locale} dir={direction} className={`${inter.variable} ${notoArabic.variable} ${notoBengali.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang={locale} dir={direction} className={`${inter.variable} ${notoArabic.variable} ${notoBengali.variable} ${notoChinese.variable} ${notoJapanese.variable} ${notoKorean.variable} ${notoHindi.variable} ${notoThai.variable} h-full antialiased`} suppressHydrationWarning>
       <body className={`${fontClass} min-h-full flex flex-col mx-auto`}>
         <NextIntlClientProvider messages={messages}>
           <AuthProvider>

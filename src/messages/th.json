@@ -1,0 +1,86 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "เลือกซื้อสินค้า จองบริการ และรับจัดส่งทั่วโลก"
+  },
+  "Navigation": {
+    "home": "หน้าแรก",
+    "products": "สินค้า",
+    "services": "บริการ",
+    "contact": "ติดต่อเรา",
+    "support": "ฝ่ายสนับสนุน",
+    "supportHelp": "ฝ่ายสนับสนุน / ช่วยเหลือ",
+    "login": "เข้าสู่ระบบ / สมัคร",
+    "myAccount": "บัญชีของฉัน",
+    "myProfile": "โปรไฟล์ของฉัน",
+    "logout": "ออกจากระบบ",
+    "logoutAccount": "ออกจากบัญชี",
+    "signedInAs": "เข้าสู่ระบบในชื่อ",
+    "trackOrder": "ติดตามคำสั่งซื้อ"
+  },
+  "Navbar": {
+    "deliverTo": "จัดส่งถึง:",
+    "updateLocation": "(อัปเดตที่อยู่)",
+    "searchPlaceholder": "ค้นหาสินค้า บริการ และหมวดหมู่...",
+    "languageCurrency": "เปลี่ยนภาษาและสกุลเงิน",
+    "toggleMenu": "เปิดเมนูมือถือ"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "เปลี่ยนภาษา",
+    "changeCurrency": "เปลี่ยนสกุลเงิน",
+    "searchLanguage": "ค้นหาภาษา...",
+    "searchCurrency": "ค้นหาสกุลเงิน...",
+    "noLanguage": "ไม่พบภาษา",
+    "noCurrency": "ไม่พบสกุลเงิน",
+    "change": "เปลี่ยน",
+    "done": "เสร็จสิ้น",
+    "shoppingOn": "คุณกำลังช็อปที่",
+    "changeCountry": "เปลี่ยนประเทศ/ภูมิภาค"
+  },
+  "MobileMenu": {
+    "deliverTo": "จัดส่งถึง:",
+    "change": "เปลี่ยน",
+    "languageCountry": "ภาษาและประเทศ",
+    "searchPlaceholder": "ค้นหาสินค้าและบริการ..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld คือตลาดซื้อสินค้า จองบริการ และจัดส่งทั่วโลก — เชื่อมแอฟริกากับทั่วโลก",
+    "company": "บริษัท",
+    "customerService": "บริการลูกค้า",
+    "legal": "กฎหมาย",
+    "aboutUs": "เกี่ยวกับเรา",
+    "shop": "ร้านค้า",
+    "services": "บริการ",
+    "contactUs": "ติดต่อเรา",
+    "helpCenter": "ศูนย์ช่วยเหลือ",
+    "trackOrder": "ติดตามคำสั่งซื้อ",
+    "terms": "ข้อกำหนดและเงื่อนไข",
+    "privacy": "นโยบายความเป็นส่วนตัว"
+  },
+  "Newsletter": {
+    "title": "รับข่าวสาร",
+    "description": "รับดีล สินค้าใหม่ และข่าว WorthWorld ทางอีเมล",
+    "email": "อีเมล",
+    "placeholder": "อีเมลของคุณ",
+    "consent": "ฉันยินยอมรับอีเมลการตลาด และยกเลิกได้ทุกเมื่อ",
+    "subscribe": "สมัครรับข่าว",
+    "unsubscribe": "ยกเลิกการสมัคร",
+    "subscribedAs": "สมัครแล้วในชื่อ",
+    "invalidEmail": "กรอกอีเมลให้ถูกต้อง",
+    "needConsent": "โปรดยินยอมรับอีเมลการตลาด",
+    "alreadySubscribed": "อีเมลนี้สมัครแล้ว",
+    "success": "สมัครเรียบร้อย ตรวจสอบกล่องจดหมาย",
+    "unsubscribed": "ยกเลิกการสมัครแล้ว"
+  },
+  "Logo": {
+    "tagline": "ช็อป จอง ส่ง ทั่วโลก"
+  },
+  "Cart": {
+    "title": "ตะกร้าสินค้า"
+  },
+  "NotFound": {
+    "title": "404 ไม่พบหน้านี้",
+    "description": "ไม่พบหน้าที่คุณเข้าชม สามารถกลับไปหน้าแรกได้",
+    "backHome": "กลับหน้าแรก"
+  }
+}

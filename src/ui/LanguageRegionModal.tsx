@@ -104,7 +104,7 @@ export default function LanguageRegionModal({
     return (
         <div
             ref={popoverRef}
-            className="absolute end-0 top-full mt-2.5 w-64 sm:w-72 rounded-2xl border border-card-border bg-card p-4 text-card-foreground shadow-2xl sm:p-5 z-[300] animate-in fade-in zoom-in-95 duration-150"
+            className="absolute end-0 top-full mt-2.5 w-72 sm:w-80 rounded-2xl border border-card-border bg-card p-4 text-card-foreground shadow-2xl sm:p-5 z-[300] animate-in fade-in zoom-in-95 duration-150"
             role="menu"
             aria-label={t("changeLanguage")}
         >
@@ -118,13 +118,13 @@ export default function LanguageRegionModal({
                     type="search"
                     value={languageQuery}
                     onChange={(event) => setLanguageQuery(event.target.value)}
-                    placeholder={t("changeLanguage")}
+                    placeholder={t("searchLanguage")}
                     className="mb-1.5 w-full rounded-lg border border-border bg-section-bg px-2.5 py-1.5 text-xs text-card-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
                 />
 
-                <div className="space-y-1">
+                <div className="max-h-64 space-y-1 overflow-y-auto">
                     {filteredLanguages.length === 0 ? (
-                        <p className="px-2 py-2 text-[11px] text-muted-foreground">{t("noCurrency")}</p>
+                        <p className="px-2 py-2 text-[11px] text-muted-foreground">{t("noLanguage")}</p>
                     ) : null}
                     {filteredLanguages.map((lang) => {
                         const isSelected = selectedLang === lang.code;

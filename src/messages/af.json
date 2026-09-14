@@ -28,7 +28,9 @@
   "LanguageSwitcher": {
     "changeLanguage": "Verander taal",
     "changeCurrency": "Verander geldeenheid",
+    "searchLanguage": "Soek taal...",
     "searchCurrency": "Soek geldeenheid...",
+    "noLanguage": "Geen taal gevind nie",
     "noCurrency": "Geen geldeenheid gevind nie",
     "change": "Verander",
     "done": "Klaar",

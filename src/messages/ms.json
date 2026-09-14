@@ -1,0 +1,86 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "Beli produk, tempah perkhidmatan dan terima penghantaran ke seluruh dunia."
+  },
+  "Navigation": {
+    "home": "Laman utama",
+    "products": "Produk",
+    "services": "Perkhidmatan",
+    "contact": "Hubungi kami",
+    "support": "Sokongan",
+    "supportHelp": "Sokongan / Bantuan",
+    "login": "Log masuk / Daftar",
+    "myAccount": "Akaun saya",
+    "myProfile": "Profil saya",
+    "logout": "Log keluar",
+    "logoutAccount": "Log keluar akaun",
+    "signedInAs": "Log masuk sebagai",
+    "trackOrder": "Jejak pesanan"
+  },
+  "Navbar": {
+    "deliverTo": "Hantar ke:",
+    "updateLocation": "(Kemas kini lokasi)",
+    "searchPlaceholder": "Cari produk, perkhidmatan & kategori...",
+    "languageCurrency": "Tukar bahasa dan mata wang",
+    "toggleMenu": "Buka menu mudah alih"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Tukar bahasa",
+    "changeCurrency": "Tukar mata wang",
+    "searchLanguage": "Cari bahasa...",
+    "searchCurrency": "Cari mata wang...",
+    "noLanguage": "Tiada bahasa dijumpai",
+    "noCurrency": "Tiada mata wang dijumpai",
+    "change": "Tukar",
+    "done": "Selesai",
+    "shoppingOn": "Anda membeli-belah di",
+    "changeCountry": "Tukar negara/rantau."
+  },
+  "MobileMenu": {
+    "deliverTo": "Hantar ke:",
+    "change": "Tukar",
+    "languageCountry": "Bahasa & negara",
+    "searchPlaceholder": "Cari produk dan perkhidmatan..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld ialah pasaran untuk membeli produk, menempah perkhidmatan dan penghantaran ke seluruh dunia — menghubungkan Afrika dengan dunia.",
+    "company": "Syarikat",
+    "customerService": "Khidmat pelanggan",
+    "legal": "Undang-undang",
+    "aboutUs": "Tentang kami",
+    "shop": "Kedai",
+    "services": "Perkhidmatan",
+    "contactUs": "Hubungi kami",
+    "helpCenter": "Pusat bantuan",
+    "trackOrder": "Jejak pesanan",
+    "terms": "Terma dan syarat",
+    "privacy": "Dasar privasi"
+  },
+  "Newsletter": {
+    "title": "Kekal dikemas kini",
+    "description": "Dapatkan tawaran, ketibaan baharu dan berita WorthWorld melalui e-mel.",
+    "email": "Alamat e-mel",
+    "placeholder": "E-mel anda",
+    "consent": "Saya bersetuju menerima e-mel pemasaran dan boleh berhenti langgan pada bila-bila masa.",
+    "subscribe": "Langgan",
+    "unsubscribe": "Berhenti langgan",
+    "subscribedAs": "Dilanggan sebagai",
+    "invalidEmail": "Masukkan e-mel yang sah.",
+    "needConsent": "Sila bersetuju menerima e-mel pemasaran.",
+    "alreadySubscribed": "E-mel ini sudah dilanggan.",
+    "success": "Anda telah langgan. Semak peti masuk.",
+    "unsubscribed": "Anda telah berhenti langgan."
+  },
+  "Logo": {
+    "tagline": "Beli. Tempah. Hantar. Seluruh dunia."
+  },
+  "Cart": {
+    "title": "Troli beli-belah"
+  },
+  "NotFound": {
+    "title": "404 Halaman tidak dijumpai",
+    "description": "Halaman yang anda lawati tidak dijumpai. Anda boleh ke laman utama.",
+    "backHome": "Kembali ke laman utama"
+  }
+}

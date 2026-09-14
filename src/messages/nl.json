@@ -1,0 +1,86 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "Koop producten, boek diensten en ontvang levering wereldwijd."
+  },
+  "Navigation": {
+    "home": "Home",
+    "products": "Producten",
+    "services": "Diensten",
+    "contact": "Contact",
+    "support": "Ondersteuning",
+    "supportHelp": "Ondersteuning / Help",
+    "login": "Inloggen / Registreren",
+    "myAccount": "Mijn account",
+    "myProfile": "Mijn profiel",
+    "logout": "Uitloggen",
+    "logoutAccount": "Account uitloggen",
+    "signedInAs": "Ingelogd als",
+    "trackOrder": "Bestelling volgen"
+  },
+  "Navbar": {
+    "deliverTo": "Bezorgen bij:",
+    "updateLocation": "(Locatie bijwerken)",
+    "searchPlaceholder": "Zoek producten, diensten en categorieën...",
+    "languageCurrency": "Taal en valuta wijzigen",
+    "toggleMenu": "Mobiel menu openen"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Taal wijzigen",
+    "changeCurrency": "Valuta wijzigen",
+    "searchLanguage": "Taal zoeken...",
+    "searchCurrency": "Valuta zoeken...",
+    "noLanguage": "Geen taal gevonden",
+    "noCurrency": "Geen valuta gevonden",
+    "change": "Wijzigen",
+    "done": "Klaar",
+    "shoppingOn": "U winkelt op",
+    "changeCountry": "Land/regio wijzigen."
+  },
+  "MobileMenu": {
+    "deliverTo": "Bezorgen bij:",
+    "change": "Wijzigen",
+    "languageCountry": "Taal en land",
+    "searchPlaceholder": "Zoek producten en diensten..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld is een marktplaats om producten te kopen, diensten te boeken en wereldwijd te laten bezorgen — Afrika verbinden met de rest van de wereld.",
+    "company": "Bedrijf",
+    "customerService": "Klantenservice",
+    "legal": "Juridisch",
+    "aboutUs": "Over ons",
+    "shop": "Winkel",
+    "services": "Diensten",
+    "contactUs": "Contact",
+    "helpCenter": "Helpcentrum",
+    "trackOrder": "Bestelling volgen",
+    "terms": "Algemene voorwaarden",
+    "privacy": "Privacybeleid"
+  },
+  "Newsletter": {
+    "title": "Blijf op de hoogte",
+    "description": "Ontvang deals, nieuwe items en WorthWorld-nieuws per e-mail.",
+    "email": "E-mailadres",
+    "placeholder": "Uw e-mail",
+    "consent": "Ik ga akkoord met marketingmails en kan me op elk moment uitschrijven.",
+    "subscribe": "Abonneren",
+    "unsubscribe": "Uitschrijven",
+    "subscribedAs": "Geabonneerd als",
+    "invalidEmail": "Voer een geldig e-mailadres in.",
+    "needConsent": "Ga akkoord met het ontvangen van marketingmails.",
+    "alreadySubscribed": "Dit e-mailadres is al geabonneerd.",
+    "success": "U bent geabonneerd. Controleer uw inbox.",
+    "unsubscribed": "U bent uitgeschreven."
+  },
+  "Logo": {
+    "tagline": "Winkelen. Boeken. Bezorgen. Wereldwijd."
+  },
+  "Cart": {
+    "title": "Winkelwagen"
+  },
+  "NotFound": {
+    "title": "404 Pagina niet gevonden",
+    "description": "De bezochte pagina is niet gevonden. U kunt naar de startpagina gaan.",
+    "backHome": "Terug naar home"
+  }
+}

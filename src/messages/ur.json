@@ -1,0 +1,86 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "مصنوعات خریدیں، خدمات بک کریں اور دنیا بھر میں ڈیلیوری حاصل کریں۔"
+  },
+  "Navigation": {
+    "home": "ہوم",
+    "products": "مصنوعات",
+    "services": "خدمات",
+    "contact": "رابطہ کریں",
+    "support": "سپورٹ",
+    "supportHelp": "سپورٹ / مدد",
+    "login": "لاگ ان / سائن اپ",
+    "myAccount": "میرا اکاؤنٹ",
+    "myProfile": "میری پروفائل",
+    "logout": "لاگ آؤٹ",
+    "logoutAccount": "اکاؤنٹ سے لاگ آؤٹ",
+    "signedInAs": "لاگ ان بطور",
+    "trackOrder": "آرڈر ٹریک کریں"
+  },
+  "Navbar": {
+    "deliverTo": "ڈیلیوری پتہ:",
+    "updateLocation": "(لوکیشن اپ ڈیٹ کریں)",
+    "searchPlaceholder": "مصنوعات، خدمات اور کیٹیگریز تلاش کریں...",
+    "languageCurrency": "زبان اور کرنسی تبدیل کریں",
+    "toggleMenu": "موبائل مینو کھولیں"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "زبان تبدیل کریں",
+    "changeCurrency": "کرنسی تبدیل کریں",
+    "searchLanguage": "زبان تلاش کریں...",
+    "searchCurrency": "کرنسی تلاش کریں...",
+    "noLanguage": "کوئی زبان نہیں ملی",
+    "noCurrency": "کوئی کرنسی نہیں ملی",
+    "change": "تبدیل کریں",
+    "done": "ہو گیا",
+    "shoppingOn": "آپ خریداری کر رہے ہیں",
+    "changeCountry": "ملک/علاقہ تبدیل کریں۔"
+  },
+  "MobileMenu": {
+    "deliverTo": "ڈیلیوری پتہ:",
+    "change": "تبدیل کریں",
+    "languageCountry": "زبان اور ملک",
+    "searchPlaceholder": "مصنوعات اور خدمات تلاش کریں..."
+  },
+  "Footer": {
+    "tagline": "ورتھ ورلڈ ایک مارکیٹ پلیس ہے جہاں مصنوعات خریدیں، خدمات بک کریں اور دنیا بھر میں ڈیلیوری پائیں — افریقہ کو دنیا سے جوڑتے ہوئے۔",
+    "company": "کمپنی",
+    "customerService": "کسٹمر سروس",
+    "legal": "قانونی",
+    "aboutUs": "ہمارے بارے میں",
+    "shop": "شاپ",
+    "services": "خدمات",
+    "contactUs": "رابطہ کریں",
+    "helpCenter": "ہیلپ سینٹر",
+    "trackOrder": "آرڈر ٹریک کریں",
+    "terms": "شرائط و ضوابط",
+    "privacy": "پرائیویسی پالیسی"
+  },
+  "Newsletter": {
+    "title": "اپ ڈیٹ رہیں",
+    "description": "ای میل پر آفرز، نئی آمد اور ورتھ ورلڈ کی خبریں حاصل کریں۔",
+    "email": "ای میل ایڈریس",
+    "placeholder": "آپ کی ای میل",
+    "consent": "میں مارکیٹنگ ای میلز حاصل کرنے پر رضامند ہوں اور کسی بھی وقت ان سبسکرائب کر سکتا/سکتی ہوں۔",
+    "subscribe": "سبسکرائب",
+    "unsubscribe": "ان سبسکرائب",
+    "subscribedAs": "سبسکرائب بطور",
+    "invalidEmail": "درست ای میل درج کریں۔",
+    "needConsent": "براہ کرم مارکیٹنگ ای میلز کی رضامندی دیں۔",
+    "alreadySubscribed": "یہ ای میل پہلے سے سبسکرائب ہے۔",
+    "success": "آپ سبسکرائب ہو گئے۔ ان باکس چیک کریں۔",
+    "unsubscribed": "آپ ان سبسکرائب ہو گئے۔"
+  },
+  "Logo": {
+    "tagline": "خریدیں۔ بک کریں۔ ڈیلیور کریں۔ پوری دنیا میں۔"
+  },
+  "Cart": {
+    "title": "شاپنگ کارٹ"
+  },
+  "NotFound": {
+    "title": "۴۰۴ صفحہ نہیں ملا",
+    "description": "آپ نے جو صفحہ دیکھا وہ نہیں ملا۔ آپ ہوم پیج پر جا سکتے ہیں۔",
+    "backHome": "ہوم پیج پر واپس جائیں"
+  }
+}

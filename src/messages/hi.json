@@ -1,0 +1,86 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "उत्पाद खरीदें, सेवाएँ बुक करें और दुनिया भर में डिलीवरी पाएँ।"
+  },
+  "Navigation": {
+    "home": "होम",
+    "products": "उत्पाद",
+    "services": "सेवाएँ",
+    "contact": "संपर्क करें",
+    "support": "सहायता",
+    "supportHelp": "सहायता / मदद",
+    "login": "लॉगिन / साइन अप",
+    "myAccount": "मेरा खाता",
+    "myProfile": "मेरी प्रोफ़ाइल",
+    "logout": "लॉगआउट",
+    "logoutAccount": "खाते से लॉगआउट",
+    "signedInAs": "इस रूप में साइन इन",
+    "trackOrder": "ऑर्डर ट्रैक करें"
+  },
+  "Navbar": {
+    "deliverTo": "डिलीवरी पता:",
+    "updateLocation": "(लोकेशन अपडेट करें)",
+    "searchPlaceholder": "उत्पाद, सेवाएँ और श्रेणियाँ खोजें...",
+    "languageCurrency": "भाषा और मुद्रा बदलें",
+    "toggleMenu": "मोबाइल मेनू खोलें"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "भाषा बदलें",
+    "changeCurrency": "मुद्रा बदलें",
+    "searchLanguage": "भाषा खोजें...",
+    "searchCurrency": "मुद्रा खोजें...",
+    "noLanguage": "कोई भाषा नहीं मिली",
+    "noCurrency": "कोई मुद्रा नहीं मिली",
+    "change": "बदलें",
+    "done": "हो गया",
+    "shoppingOn": "आप यहाँ खरीदारी कर रहे हैं",
+    "changeCountry": "देश/क्षेत्र बदलें।"
+  },
+  "MobileMenu": {
+    "deliverTo": "डिलीवरी पता:",
+    "change": "बदलें",
+    "languageCountry": "भाषा और देश",
+    "searchPlaceholder": "उत्पाद और सेवाएँ खोजें..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld एक मार्केटप्लेस है जहाँ आप उत्पाद खरीद सकते हैं, सेवाएँ बुक कर सकते हैं और दुनिया भर में डिलीवरी पा सकते हैं — अफ्रीका को विश्व से जोड़ते हुए।",
+    "company": "कंपनी",
+    "customerService": "ग्राहक सेवा",
+    "legal": "कानूनी",
+    "aboutUs": "हमारे बारे में",
+    "shop": "दुकान",
+    "services": "सेवाएँ",
+    "contactUs": "संपर्क करें",
+    "helpCenter": "सहायता केंद्र",
+    "trackOrder": "ऑर्डर ट्रैक करें",
+    "terms": "नियम और शर्तें",
+    "privacy": "गोपनीयता नीति"
+  },
+  "Newsletter": {
+    "title": "अपडेट रहें",
+    "description": "ईमेल पर ऑफर, नई आवक और WorthWorld समाचार पाएँ।",
+    "email": "ईमेल पता",
+    "placeholder": "आपका ईमेल",
+    "consent": "मैं मार्केटिंग ईमेल प्राप्त करने के लिए सहमत हूँ और कभी भी अनसब्सक्राइब कर सकता/सकती हूँ।",
+    "subscribe": "सब्सक्राइब करें",
+    "unsubscribe": "अनसब्सक्राइब",
+    "subscribedAs": "सब्सक्राइब किया",
+    "invalidEmail": "मान्य ईमेल पता दर्ज करें।",
+    "needConsent": "कृपया मार्केटिंग ईमेल प्राप्त करने की सहमति दें।",
+    "alreadySubscribed": "यह ईमेल पहले से सब्सक्राइब है।",
+    "success": "आप सब्सक्राइब हो गए हैं। इनबॉक्स देखें।",
+    "unsubscribed": "आप अनसब्सक्राइब हो गए हैं।"
+  },
+  "Logo": {
+    "tagline": "खरीदें। बुक करें। डिलीवर करें। दुनिया भर में।"
+  },
+  "Cart": {
+    "title": "शॉपिंग कार्ट"
+  },
+  "NotFound": {
+    "title": "404 पेज नहीं मिला",
+    "description": "आपके द्वारा देखा गया पेज नहीं मिला। आप होम पेज पर जा सकते हैं।",
+    "backHome": "होम पेज पर वापस जाएँ"
+  }
+}
