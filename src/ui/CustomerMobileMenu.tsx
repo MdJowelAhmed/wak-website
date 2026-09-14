@@ -1,8 +1,9 @@
 // src/ui/CustomerMobileMenu.tsx
 'use client';
 
-import Link from 'next/link';
-import { ShoppingCart, LogOut, MapPin, Truck, HelpCircle, Globe } from 'lucide-react';
+import { LogOut, MapPin, Truck, HelpCircle, Globe } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import NavLinks from '@/ui/NavLinks';
 import AuthModal from '@/components/(auth-pages)';
 import SearchBar from '@/ui/SearchBar';
@@ -32,6 +33,8 @@ export default function CustomerMobileMenu({
     currentCurrencyLabel = '🇲🇼 MWK',
     currentLangName = 'English',
 }: CustomerMobileMenuProps) {
+    const t = useTranslations();
+
     if (!isOpen) return null;
 
     return (
@@ -40,7 +43,7 @@ export default function CustomerMobileMenu({
                 {/* Mobile Search */}
                 <div className="md:hidden">
                     <SearchBar
-                        placeholder="Search products & services..."
+                        placeholder={t("MobileMenu.searchPlaceholder")}
                         onClose={onClose}
                     />
                 </div>
@@ -55,9 +58,9 @@ export default function CustomerMobileMenu({
                 >
                     <div className="flex items-center gap-2 text-xs font-semibold text-foreground">
                         <MapPin className="w-4 h-4 text-primary shrink-0" />
-                        <span>Deliver to: <strong className="text-primary">{currentLocation}</strong></span>
+                        <span>{t("MobileMenu.deliverTo")} <strong className="text-primary">{currentLocation}</strong></span>
                     </div>
-                    <span className="text-[10px] font-bold text-primary underline">Change</span>
+                    <span className="text-[10px] font-bold text-primary underline">{t("MobileMenu.change")}</span>
                 </div>
 
                 {/* Main Navigation Links */}
@@ -76,7 +79,7 @@ export default function CustomerMobileMenu({
                     >
                         <div className="flex items-center gap-2">
                             <Globe className="w-4 h-4 text-primary" />
-                            <span>Language & Country</span>
+                            <span>{t("MobileMenu.languageCountry")}</span>
                         </div>
                         <span className="text-[10px] bg-primary/5 text-primary px-2 py-0.5 rounded font-bold">
                             {currentCurrencyLabel} / {currentLangName}
@@ -85,12 +88,12 @@ export default function CustomerMobileMenu({
 
                     <Link href="/profile" onClick={onClose} className="flex items-center gap-2 py-2 text-foreground hover:text-primary transition-colors">
                         <Truck className="w-4 h-4 text-primary" />
-                        <span>Track Order</span>
+                        <span>{t("Navigation.trackOrder")}</span>
                     </Link>
 
                     <Link href="/contact-us" onClick={onClose} className="flex items-center gap-2 py-2 text-foreground hover:text-primary transition-colors">
                         <HelpCircle className="w-4 h-4 text-primary" />
-                        <span>Support / Help</span>
+                        <span>{t("Navigation.supportHelp")}</span>
                     </Link>
                 </div>
 
@@ -100,7 +103,7 @@ export default function CustomerMobileMenu({
                         <AuthModal
                             trigger={
                                 <button className="w-full bg-primary hover:bg-primary-hover transition-colors text-white py-2.5 rounded-xl font-bold text-xs cursor-pointer shadow-xs">
-                                    Login / Sign Up
+                                    {t("Navigation.login")}
                                 </button>
                             }
                         />
@@ -112,7 +115,7 @@ export default function CustomerMobileMenu({
                             }}
                             className="flex items-center justify-between text-error hover:bg-error/10 py-2.5 px-3 rounded-xl cursor-pointer w-full text-left font-semibold text-xs border border-error/20"
                         >
-                            <span>Logout Account</span>
+                            <span>{t("Navigation.logoutAccount")}</span>
                             <LogOut className="w-4 h-4" />
                         </button>
                     )}

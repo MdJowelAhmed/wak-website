@@ -1,0 +1,84 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "Achetez des produits, réservez des services et faites-vous livrer dans le monde entier."
+  },
+  "Navigation": {
+    "home": "Accueil",
+    "products": "Produits",
+    "services": "Services",
+    "contact": "Contact",
+    "support": "Assistance",
+    "supportHelp": "Assistance / Aide",
+    "login": "Connexion / Inscription",
+    "myAccount": "Mon compte",
+    "myProfile": "Mon profil",
+    "logout": "Déconnexion",
+    "logoutAccount": "Se déconnecter",
+    "signedInAs": "Connecté en tant que",
+    "trackOrder": "Suivre la commande"
+  },
+  "Navbar": {
+    "deliverTo": "Livrer à :",
+    "updateLocation": "(Modifier l’adresse)",
+    "searchPlaceholder": "Rechercher des produits, services et catégories...",
+    "languageCurrency": "Changer la langue et la devise",
+    "toggleMenu": "Ouvrir le menu mobile"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Changer de langue",
+    "changeCurrency": "Changer de devise",
+    "searchCurrency": "Rechercher une devise...",
+    "noCurrency": "Aucune devise trouvée",
+    "change": "Modifier",
+    "done": "Terminé",
+    "shoppingOn": "Vous achetez sur",
+    "changeCountry": "Changer de pays/région."
+  },
+  "MobileMenu": {
+    "deliverTo": "Livrer à :",
+    "change": "Modifier",
+    "languageCountry": "Langue et pays",
+    "searchPlaceholder": "Rechercher des produits et services..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld est une place de marché pour acheter des produits, réserver des services et se faire livrer dans le monde entier — en reliant l’Afrique au reste du monde.",
+    "company": "Entreprise",
+    "customerService": "Service client",
+    "legal": "Mentions légales",
+    "aboutUs": "À propos",
+    "shop": "Boutique",
+    "services": "Services",
+    "contactUs": "Contact",
+    "helpCenter": "Centre d’aide",
+    "trackOrder": "Suivre la commande",
+    "terms": "Conditions générales",
+    "privacy": "Politique de confidentialité"
+  },
+  "Newsletter": {
+    "title": "Restez informé",
+    "description": "Recevez les offres, nouveautés et actualités WorthWorld par e-mail.",
+    "email": "Adresse e-mail",
+    "placeholder": "Votre e-mail",
+    "consent": "J’accepte de recevoir des e-mails marketing et je peux me désabonner à tout moment.",
+    "subscribe": "S’abonner",
+    "unsubscribe": "Se désabonner",
+    "subscribedAs": "Abonné en tant que",
+    "invalidEmail": "Saisissez une adresse e-mail valide.",
+    "needConsent": "Veuillez accepter de recevoir des e-mails marketing.",
+    "alreadySubscribed": "Cet e-mail est déjà abonné.",
+    "success": "Vous êtes abonné. Consultez votre boîte de réception.",
+    "unsubscribed": "Vous êtes désabonné."
+  },
+  "Logo": {
+    "tagline": "Achetez. Réservez. Livrez. Partout."
+  },
+  "Cart": {
+    "title": "Panier"
+  },
+  "NotFound": {
+    "title": "404 Page introuvable",
+    "description": "La page visitée est introuvable. Vous pouvez retourner à l’accueil.",
+    "backHome": "Retour à l’accueil"
+  }
+}

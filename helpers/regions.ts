@@ -5,6 +5,7 @@ import {
   currencyToOption,
   type CountryOption,
 } from "./currencies";
+import { APP_LOCALES, localeMeta } from "../src/i18n/locales";
 
 export type { CountryOption };
 
@@ -14,13 +15,11 @@ export interface LanguageOption {
   nativeName: string;
 }
 
-export const languagesList: LanguageOption[] = [
-  { code: "en", name: "English", nativeName: "English" },
-  { code: "ny", name: "Chichewa", nativeName: "Chinyanja" },
-  { code: "sw", name: "Swahili", nativeName: "Kiswahili" },
-  { code: "fr", name: "French", nativeName: "Français" },
-  { code: "pt", name: "Portuguese", nativeName: "Português" },
-];
+export const languagesList: LanguageOption[] = APP_LOCALES.map((code) => ({
+  code,
+  name: localeMeta[code].name,
+  nativeName: localeMeta[code].nativeName,
+}));
 
 export const countriesList: CountryOption[] = [
   currencyToOption("MWK"),

@@ -1,0 +1,84 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "Compra productos, reserva servicios y recibe entregas en todo el mundo."
+  },
+  "Navigation": {
+    "home": "Inicio",
+    "products": "Productos",
+    "services": "Servicios",
+    "contact": "Contacto",
+    "support": "Soporte",
+    "supportHelp": "Soporte / Ayuda",
+    "login": "Iniciar sesión / Registrarse",
+    "myAccount": "Mi cuenta",
+    "myProfile": "Mi perfil",
+    "logout": "Cerrar sesión",
+    "logoutAccount": "Cerrar sesión",
+    "signedInAs": "Conectado como",
+    "trackOrder": "Seguir pedido"
+  },
+  "Navbar": {
+    "deliverTo": "Entregar en:",
+    "updateLocation": "(Actualizar ubicación)",
+    "searchPlaceholder": "Buscar productos, servicios y categorías...",
+    "languageCurrency": "Cambiar idioma y moneda",
+    "toggleMenu": "Abrir menú móvil"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Cambiar idioma",
+    "changeCurrency": "Cambiar moneda",
+    "searchCurrency": "Buscar moneda...",
+    "noCurrency": "No se encontró moneda",
+    "change": "Cambiar",
+    "done": "Listo",
+    "shoppingOn": "Estás comprando en",
+    "changeCountry": "Cambiar país/región."
+  },
+  "MobileMenu": {
+    "deliverTo": "Entregar en:",
+    "change": "Cambiar",
+    "languageCountry": "Idioma y país",
+    "searchPlaceholder": "Buscar productos y servicios..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld es un mercado para comprar productos, reservar servicios y recibir entregas en todo el mundo — conectando África con el resto del mundo.",
+    "company": "Empresa",
+    "customerService": "Atención al cliente",
+    "legal": "Legal",
+    "aboutUs": "Sobre nosotros",
+    "shop": "Tienda",
+    "services": "Servicios",
+    "contactUs": "Contacto",
+    "helpCenter": "Centro de ayuda",
+    "trackOrder": "Seguir pedido",
+    "terms": "Términos y condiciones",
+    "privacy": "Política de privacidad"
+  },
+  "Newsletter": {
+    "title": "Mantente al día",
+    "description": "Recibe ofertas, novedades y noticias de WorthWorld por correo.",
+    "email": "Correo electrónico",
+    "placeholder": "Tu correo",
+    "consent": "Acepto recibir correos de marketing y puedo cancelar la suscripción en cualquier momento.",
+    "subscribe": "Suscribirse",
+    "unsubscribe": "Cancelar suscripción",
+    "subscribedAs": "Suscrito como",
+    "invalidEmail": "Introduce un correo válido.",
+    "needConsent": "Acepta recibir correos de marketing.",
+    "alreadySubscribed": "Este correo ya está suscrito.",
+    "success": "Ya estás suscrito. Revisa tu bandeja de entrada.",
+    "unsubscribed": "Te has dado de baja."
+  },
+  "Logo": {
+    "tagline": "Compra. Reserva. Entrega. En todo el mundo."
+  },
+  "Cart": {
+    "title": "Carrito"
+  },
+  "NotFound": {
+    "title": "404 No encontrado",
+    "description": "La página que visitaste no existe. Puedes ir a la página de inicio.",
+    "backHome": "Volver al inicio"
+  }
+}

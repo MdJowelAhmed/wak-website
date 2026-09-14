@@ -1,0 +1,84 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "Gulani zinthu, lembani ntchito, ndi kulandira katundu padziko lonse."
+  },
+  "Navigation": {
+    "home": "Tsamba loyamba",
+    "products": "Zogulitsa",
+    "services": "Ntchito",
+    "contact": "Tiyankhuleni",
+    "support": "Thandizo",
+    "supportHelp": "Thandizo",
+    "login": "Lowani / Lembani",
+    "myAccount": "Akaunti yanga",
+    "myProfile": "Mbiri yanga",
+    "logout": "Tuluka",
+    "logoutAccount": "Tuluka ku akaunti",
+    "signedInAs": "Mwalowa ngati",
+    "trackOrder": "Tsatirani oda"
+  },
+  "Navbar": {
+    "deliverTo": "Tumizani ku:",
+    "updateLocation": "(Sinthani malo)",
+    "searchPlaceholder": "Fufuzani zogulitsa, ntchito ndi magulu...",
+    "languageCurrency": "Sinthani chinenero ndi ndalama",
+    "toggleMenu": "Tsegulani menyu"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Sinthani chinenero",
+    "changeCurrency": "Sinthani ndalama",
+    "searchCurrency": "Fufuzani ndalama...",
+    "noCurrency": "Palibe ndalama yomwe yapezeka",
+    "change": "Sinthani",
+    "done": "Zatheka",
+    "shoppingOn": "Mukugula pa",
+    "changeCountry": "Sinthani dziko/dera."
+  },
+  "MobileMenu": {
+    "deliverTo": "Tumizani ku:",
+    "change": "Sinthani",
+    "languageCountry": "Chinenero ndi dziko",
+    "searchPlaceholder": "Fufuzani zogulitsa ndi ntchito..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld ndi msika wogula zinthu, kulemba ntchito, ndi kulandira katundu padziko lonse — kulumikiza Africa ndi dziko lonse.",
+    "company": "Kampani",
+    "customerService": "Utumiki wa makasitomala",
+    "legal": "Zamalamulo",
+    "aboutUs": "Za ife",
+    "shop": "Shopu",
+    "services": "Ntchito",
+    "contactUs": "Tiyankhuleni",
+    "helpCenter": "Malo othandizira",
+    "trackOrder": "Tsatirani oda",
+    "terms": "Malamulo ndi zovomereza",
+    "privacy": "Ndondomeko ya chinsinsi"
+  },
+  "Newsletter": {
+    "title": "Khalani ndi nkhani",
+    "description": "Landirani malonda, zatsopano, ndi nkhani za WorthWorld pa imelo.",
+    "email": "Imelo",
+    "placeholder": "Imelo yanu",
+    "consent": "Ndikuvomera kulandira maimelo a malonda ndipo nditha kuleka nthawi iliyonse.",
+    "subscribe": "Lembetsani",
+    "unsubscribe": "Lekani",
+    "subscribedAs": "Mwalembetsa ngati",
+    "invalidEmail": "Lowetsani imelo yolondola.",
+    "needConsent": "Chonde vomerani kulandira maimelo a malonda.",
+    "alreadySubscribed": "Imelo iyi yalembetsedwa kale.",
+    "success": "Mwalembetsa. Yang'anani imelo yanu.",
+    "unsubscribed": "Mwaleka kulandira maimelo."
+  },
+  "Logo": {
+    "tagline": "Gulani. Lembani. Tumizani. Padziko lonse."
+  },
+  "Cart": {
+    "title": "Ngolo yogulira"
+  },
+  "NotFound": {
+    "title": "404 Tsamba silikupezeka",
+    "description": "Tsamba lomwe munaona silikupezeka. Mutha kubwerera patsamba loyamba.",
+    "backHome": "Bwererani patsamba loyamba"
+  }
+}

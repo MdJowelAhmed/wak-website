@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, X, MapPin, Globe, Truck, HelpCircle, ChevronDown } from 'lucide-react';
-import Link from 'next/link';
+import { Menu, X, MapPin, HelpCircle, ChevronDown } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import NavLinks from '@/ui/NavLinks';
 import { useAuth } from '@/hooks/use-auth';
 import Logo from '@/ui/Logo';
 import CartButton from '@/ui/CartButton';
-import WishlistButton from '@/ui/WishlistButton';
 import UserAuthMenu from '@/ui/UserAuthMenu';
 import SearchBar from '@/ui/SearchBar';
 import CustomerMobileMenu from '@/ui/CustomerMobileMenu';
@@ -25,20 +25,17 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
     const [isLangOpen, setIsLangOpen] = useState(false);
 
     const [currentLocation, setCurrentLocation] = useState('Lilongwe, 20100');
-    const [currentLang, setCurrentLang] = useState('en');
+    const locale = useLocale();
+    const t = useTranslations();
 
     const { isLoggedIn, logout } = useAuth();
     const { country, currency, rate, setCountry } = useCurrency();
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const savedLang = localStorage.getItem('user_language');
-            const savedLoc = localStorage.getItem('user_location');
-
-            if (savedLang) setCurrentLang(savedLang);
-            if (savedLoc) setCurrentLocation(savedLoc);
-        }
-    }, []);
+        const savedLoc = localStorage.getItem('user_location');
+        if (savedLoc) setCurrentLocation(savedLoc);
+        localStorage.setItem('user_language', locale);
+    }, [locale]);
 
     const handleSelectLocation = (loc: string) => {
         setCurrentLocation(loc);
@@ -47,7 +44,7 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
         }
     };
 
-    const activeLangObj = languagesList.find((l) => l.code === currentLang) || languagesList[0];
+    const activeLangObj = languagesList.find((l) => l.code === locale) || languagesList[0];
 
     return (
         <header className="sticky top-0 z-50 w-full shadow-sm">
@@ -57,14 +54,14 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
                     {/* Left: Deliver to Location Control */}
                     <div className="flex items-center gap-2">
                         <MapPin className="w-3.5 h-3.5 text-accent-foreground shrink-0" />
-                        <span className="hidden sm:inline text-accent-foreground">Deliver to:</span>
+                        <span className="hidden sm:inline text-accent-foreground">{t("Navbar.deliverTo")}</span>
                         <button
                             onClick={() => setIsLocationOpen(true)}
                             className="font-bold text-accent-foreground hover:text-accent-foreground transition-colors cursor-pointer flex items-center gap-1"
                         >
                             <span>{currentLocation}</span>
                             <span className="text-[10px] text-accent-foreground underline ml-1 font-semibold">
-                                (Update Location)
+                                {t("Navbar.updateLocation")}
                             </span>
                         </button>
                     </div>
@@ -76,7 +73,7 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
                             <button
                                 onClick={() => setIsLangOpen(!isLangOpen)}
                                 className="flex items-center gap-1.5 hover:text-accent-foreground transition-colors cursor-pointer text-accent-foreground font-semibold py-0.5"
-                                aria-label="Change Language and Currency"
+                                aria-label={t("Navbar.languageCurrency")}
                             >
                                 <span>{country.flag}</span>
                                 <span>{currency}</span>
@@ -91,9 +88,9 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
                             <LanguageRegionModal
                                 isOpen={isLangOpen}
                                 onClose={() => setIsLangOpen(false)}
-                                currentLang={currentLang}
+                                currentLang={locale}
                                 currentCountry={country.code}
-                                onSelectLanguage={setCurrentLang}
+                                onSelectLanguage={() => undefined}
                                 onSelectCountry={setCountry}
                             />
                         </div>
@@ -111,7 +108,7 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
                             className="hidden sm:flex items-center gap-1 text-accent-foreground transition-colors"
                         >
                             <HelpCircle className="w-3.5 h-3.5 text-accent-foreground" />
-                            <span>Support</span>
+                            <span>{t("Navigation.support")}</span>
                         </Link>
                     </div>
                 </div>
@@ -125,7 +122,7 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
 
                     {/* All Categories & Search Bar */}
                     <div className="hidden md:flex flex-1 max-w-2xl mx-2">
-                        <SearchBar placeholder="Search products, services & categories..." />
+                        <SearchBar placeholder={t("Navbar.searchPlaceholder")} />
                     </div>
 
                     {/* Nav Links — xl screens */}
@@ -134,16 +131,16 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
                     </div>
 
                     {/* Action Icons */}
-                    <div className="ml-auto flex items-center gap-2.5 sm:gap-4 shrink-0">
+                    <div className="ms-auto flex items-center gap-2.5 sm:gap-4 shrink-0">
                         {/* <WishlistButton /> */}
                         <CartButton />
                         <UserAuthMenu isLoggedIn={isLoggedIn} logout={logout} />
 
                         {/* Mobile Hamburger */}
                         <button
-                            className="lg:hidden text-foreground cursor-pointer p-2 rounded-xl border border-border hover:bg-section-bg transition-colors ml-1"
+                            className="lg:hidden text-foreground cursor-pointer p-2 rounded-xl border border-border hover:bg-section-bg transition-colors ms-1"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            aria-label="Toggle Mobile Menu"
+                            aria-label={t("Navbar.toggleMenu")}
                         >
                             {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                         </button>

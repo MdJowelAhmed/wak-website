@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
 const STORAGE_KEY = "newsletter_subscription";
@@ -19,6 +20,7 @@ function readSubscription(): string | null {
 }
 
 export default function Newsletter() {
+    const t = useTranslations("Newsletter");
     const [email, setEmail] = useState("");
     const [consent, setConsent] = useState(false);
     const [subscribedEmail, setSubscribedEmail] = useState<string | null>(null);
@@ -33,15 +35,15 @@ export default function Newsletter() {
         const nextEmail = email.trim().toLowerCase();
 
         if (!EMAIL_PATTERN.test(nextEmail)) {
-            setError("Enter a valid email address.");
+            setError(t("invalidEmail"));
             return;
         }
         if (!consent) {
-            setError("Please agree to receive marketing emails.");
+            setError(t("needConsent"));
             return;
         }
         if (subscribedEmail === nextEmail) {
-            setError("This email is already subscribed.");
+            setError(t("alreadySubscribed"));
             return;
         }
 
@@ -53,40 +55,40 @@ export default function Newsletter() {
         setEmail("");
         setConsent(false);
         setError("");
-        toast.success("You are subscribed. Watch your inbox for updates.");
+        toast.success(t("success"));
     };
 
     const handleUnsubscribe = () => {
         localStorage.removeItem(STORAGE_KEY);
         setSubscribedEmail(null);
         setError("");
-        toast.success("You have been unsubscribed.");
+        toast.success(t("unsubscribed"));
     };
 
     return (
         <div className="max-w-sm">
-            <h3 className="mb-2 text-lg font-bold text-white">Stay Updated</h3>
+            <h3 className="mb-2 text-lg font-bold text-white">{t("title")}</h3>
             <p className="mb-4 text-sm leading-relaxed text-zinc-300">
-                Get deals, new arrivals, and WorthWorld news by email.
+                {t("description")}
             </p>
 
             {subscribedEmail ? (
                 <div className="rounded-xl border border-white/10 bg-white/5 p-3">
                     <p className="text-sm text-white">
-                        Subscribed as <span className="font-semibold">{subscribedEmail}</span>
+                        {t("subscribedAs")} <span className="font-semibold">{subscribedEmail}</span>
                     </p>
                     <button
                         type="button"
                         onClick={handleUnsubscribe}
                         className="mt-2 text-xs font-semibold text-primary hover:underline"
                     >
-                        Unsubscribe
+                        {t("unsubscribe")}
                     </button>
                 </div>
             ) : (
                 <form onSubmit={handleSubscribe} className="space-y-3" noValidate>
                     <label className="sr-only" htmlFor="newsletter-email">
-                        Email address
+                        {t("email")}
                     </label>
                     <input
                         id="newsletter-email"
@@ -96,7 +98,7 @@ export default function Newsletter() {
                             setEmail(event.target.value);
                             if (error) setError("");
                         }}
-                        placeholder="Your email"
+                        placeholder={t("placeholder")}
                         autoComplete="email"
                         className="h-11 w-full rounded-xl border border-white/15 bg-white/5 px-3 text-sm text-white outline-none placeholder:text-white/45 focus:border-primary"
                     />
@@ -110,14 +112,14 @@ export default function Newsletter() {
                             }}
                             className="mt-0.5 h-3.5 w-3.5 shrink-0 accent-primary"
                         />
-                        I agree to receive marketing emails and can unsubscribe at any time.
+                        {t("consent")}
                     </label>
                     {error ? <p className="text-xs text-red-300">{error}</p> : null}
                     <button
                         type="submit"
                         className="h-11 w-full rounded-xl bg-primary text-sm font-semibold text-white transition-colors hover:bg-primary-hover"
                     >
-                        Subscribe
+                        {t("subscribe")}
                     </button>
                 </form>
             )}

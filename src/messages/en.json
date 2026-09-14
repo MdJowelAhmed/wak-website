@@ -1,0 +1,84 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "Shop products, book services, and get delivery worldwide."
+  },
+  "Navigation": {
+    "home": "Home",
+    "products": "Products",
+    "services": "Services",
+    "contact": "Contact Us",
+    "support": "Support",
+    "supportHelp": "Support / Help",
+    "login": "Login / Sign Up",
+    "myAccount": "My Account",
+    "myProfile": "My Profile",
+    "logout": "Logout",
+    "logoutAccount": "Logout Account",
+    "signedInAs": "Signed in as",
+    "trackOrder": "Track Order"
+  },
+  "Navbar": {
+    "deliverTo": "Deliver to:",
+    "updateLocation": "(Update Location)",
+    "searchPlaceholder": "Search products, services & categories...",
+    "languageCurrency": "Change Language and Currency",
+    "toggleMenu": "Toggle Mobile Menu"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Change language",
+    "changeCurrency": "Change currency",
+    "searchCurrency": "Search currency...",
+    "noCurrency": "No currency found",
+    "change": "Change",
+    "done": "Done",
+    "shoppingOn": "You are shopping on",
+    "changeCountry": "Change country/region."
+  },
+  "MobileMenu": {
+    "deliverTo": "Deliver to:",
+    "change": "Change",
+    "languageCountry": "Language & Country",
+    "searchPlaceholder": "Search products & services..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld is a marketplace to shop products, book services, and get delivery worldwide — connecting Africa to the rest of the world.",
+    "company": "Company",
+    "customerService": "Customer Service",
+    "legal": "Legal",
+    "aboutUs": "About Us",
+    "shop": "Shop",
+    "services": "Services",
+    "contactUs": "Contact Us",
+    "helpCenter": "Help Center",
+    "trackOrder": "Track Order",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy"
+  },
+  "Newsletter": {
+    "title": "Stay Updated",
+    "description": "Get deals, new arrivals, and WorthWorld news by email.",
+    "email": "Email address",
+    "placeholder": "Your email",
+    "consent": "I agree to receive marketing emails and can unsubscribe at any time.",
+    "subscribe": "Subscribe",
+    "unsubscribe": "Unsubscribe",
+    "subscribedAs": "Subscribed as",
+    "invalidEmail": "Enter a valid email address.",
+    "needConsent": "Please agree to receive marketing emails.",
+    "alreadySubscribed": "This email is already subscribed.",
+    "success": "You are subscribed. Watch your inbox for updates.",
+    "unsubscribed": "You have been unsubscribed."
+  },
+  "Logo": {
+    "tagline": "Shop. Book. Deliver. Worldwide."
+  },
+  "Cart": {
+    "title": "Shopping Cart"
+  },
+  "NotFound": {
+    "title": "404 Not Found",
+    "description": "Your visited page was not found. You may go to the home page.",
+    "backHome": "Back to Home Page"
+  }
+}

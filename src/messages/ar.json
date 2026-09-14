@@ -1,0 +1,84 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "تسوّق المنتجات واحجز الخدمات واستلم طلباتك في جميع أنحاء العالم."
+  },
+  "Navigation": {
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "services": "الخدمات",
+    "contact": "اتصل بنا",
+    "support": "الدعم",
+    "supportHelp": "الدعم / المساعدة",
+    "login": "تسجيل الدخول / إنشاء حساب",
+    "myAccount": "حسابي",
+    "myProfile": "ملفي الشخصي",
+    "logout": "تسجيل الخروج",
+    "logoutAccount": "تسجيل الخروج من الحساب",
+    "signedInAs": "مسجّل الدخول باسم",
+    "trackOrder": "تتبّع الطلب"
+  },
+  "Navbar": {
+    "deliverTo": "التوصيل إلى:",
+    "updateLocation": "(تحديث الموقع)",
+    "searchPlaceholder": "ابحث عن منتجات وخدمات وفئات...",
+    "languageCurrency": "تغيير اللغة والعملة",
+    "toggleMenu": "فتح قائمة الجوال"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "تغيير اللغة",
+    "changeCurrency": "تغيير العملة",
+    "searchCurrency": "ابحث عن عملة...",
+    "noCurrency": "لم يتم العثور على عملة",
+    "change": "تغيير",
+    "done": "تم",
+    "shoppingOn": "أنت تتسوق على",
+    "changeCountry": "تغيير الدولة/المنطقة."
+  },
+  "MobileMenu": {
+    "deliverTo": "التوصيل إلى:",
+    "change": "تغيير",
+    "languageCountry": "اللغة والدولة",
+    "searchPlaceholder": "ابحث عن منتجات وخدمات..."
+  },
+  "Footer": {
+    "tagline": "ورث وورلد سوق لشراء المنتجات وحجز الخدمات والتوصيل حول العالم — يربط أفريقيا ببقية العالم.",
+    "company": "الشركة",
+    "customerService": "خدمة العملاء",
+    "legal": "قانوني",
+    "aboutUs": "من نحن",
+    "shop": "المتجر",
+    "services": "الخدمات",
+    "contactUs": "اتصل بنا",
+    "helpCenter": "مركز المساعدة",
+    "trackOrder": "تتبّع الطلب",
+    "terms": "الشروط والأحكام",
+    "privacy": "سياسة الخصوصية"
+  },
+  "Newsletter": {
+    "title": "ابقَ على اطلاع",
+    "description": "احصل على العروض والمنتجات الجديدة وأخبار ورث وورلد عبر البريد.",
+    "email": "البريد الإلكتروني",
+    "placeholder": "بريدك الإلكتروني",
+    "consent": "أوافق على تلقي رسائل تسويقية ويمكنني إلغاء الاشتراك في أي وقت.",
+    "subscribe": "اشترك",
+    "unsubscribe": "إلغاء الاشتراك",
+    "subscribedAs": "مشترك باسم",
+    "invalidEmail": "أدخل بريدًا إلكترونيًا صالحًا.",
+    "needConsent": "يرجى الموافقة على تلقي الرسائل التسويقية.",
+    "alreadySubscribed": "هذا البريد مشترك بالفعل.",
+    "success": "تم الاشتراك. تحقق من صندوق الوارد.",
+    "unsubscribed": "تم إلغاء الاشتراك."
+  },
+  "Logo": {
+    "tagline": "تسوّق. احجز. استلم. في كل مكان."
+  },
+  "Cart": {
+    "title": "سلة التسوق"
+  },
+  "NotFound": {
+    "title": "404 الصفحة غير موجودة",
+    "description": "الصفحة التي زرتها غير موجودة. يمكنك العودة إلى الصفحة الرئيسية.",
+    "backHome": "العودة إلى الرئيسية"
+  }
+}

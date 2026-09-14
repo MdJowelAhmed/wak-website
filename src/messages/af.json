@@ -1,0 +1,84 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "Koop produkte, bespreek dienste en kry aflewering wêreldwyd."
+  },
+  "Navigation": {
+    "home": "Tuis",
+    "products": "Produkte",
+    "services": "Dienste",
+    "contact": "Kontak ons",
+    "support": "Ondersteuning",
+    "supportHelp": "Ondersteuning / Hulp",
+    "login": "Teken in / Registreer",
+    "myAccount": "My rekening",
+    "myProfile": "My profiel",
+    "logout": "Teken uit",
+    "logoutAccount": "Teken uit",
+    "signedInAs": "Aangemeld as",
+    "trackOrder": "Volg bestelling"
+  },
+  "Navbar": {
+    "deliverTo": "Lewer aan:",
+    "updateLocation": "(Dateer ligging op)",
+    "searchPlaceholder": "Soek produkte, dienste en kategorieë...",
+    "languageCurrency": "Verander taal en geldeenheid",
+    "toggleMenu": "Maak mobiele kieslys oop"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Verander taal",
+    "changeCurrency": "Verander geldeenheid",
+    "searchCurrency": "Soek geldeenheid...",
+    "noCurrency": "Geen geldeenheid gevind nie",
+    "change": "Verander",
+    "done": "Klaar",
+    "shoppingOn": "Jy koop op",
+    "changeCountry": "Verander land/streek."
+  },
+  "MobileMenu": {
+    "deliverTo": "Lewer aan:",
+    "change": "Verander",
+    "languageCountry": "Taal en land",
+    "searchPlaceholder": "Soek produkte en dienste..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld is ’n markplek om produkte te koop, dienste te bespreek en wêreldwyd te laat aflewer — wat Afrika met die res van die wêreld verbind.",
+    "company": "Maatskappy",
+    "customerService": "Kliëntediens",
+    "legal": "Regsaspekte",
+    "aboutUs": "Oor ons",
+    "shop": "Winkel",
+    "services": "Dienste",
+    "contactUs": "Kontak ons",
+    "helpCenter": "Hulpsentrum",
+    "trackOrder": "Volg bestelling",
+    "terms": "Bepalings en voorwaardes",
+    "privacy": "Privaatheidsbeleid"
+  },
+  "Newsletter": {
+    "title": "Bly op hoogte",
+    "description": "Kry aanbiedinge, nuwe aankomste en WorthWorld-nuus per e-pos.",
+    "email": "E-posadres",
+    "placeholder": "Jou e-pos",
+    "consent": "Ek stem in om bemarkings-e-posse te ontvang en kan enige tyd uitskryf.",
+    "subscribe": "Teken in",
+    "unsubscribe": "Skryf uit",
+    "subscribedAs": "Ingeteken as",
+    "invalidEmail": "Voer ’n geldige e-posadres in.",
+    "needConsent": "Stem asseblief in om bemarkings-e-posse te ontvang.",
+    "alreadySubscribed": "Hierdie e-pos is reeds ingeteken.",
+    "success": "Jy is ingeteken. Kyk in jou inkassie.",
+    "unsubscribed": "Jy is uitgeskryf."
+  },
+  "Logo": {
+    "tagline": "Koop. Bespreek. Lewer. Wêreldwyd."
+  },
+  "Cart": {
+    "title": "Winkelmandjie"
+  },
+  "NotFound": {
+    "title": "404 Nie gevind nie",
+    "description": "Die bladsy wat jy besoek het, is nie gevind nie. Jy kan na die tuisblad gaan.",
+    "backHome": "Terug na tuisblad"
+  }
+}

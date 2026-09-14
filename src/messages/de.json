@@ -1,0 +1,84 @@
+{
+  "Metadata": {
+    "title": "WorthWorld",
+    "description": "Produkte kaufen, Services buchen und weltweit liefern lassen."
+  },
+  "Navigation": {
+    "home": "Startseite",
+    "products": "Produkte",
+    "services": "Dienstleistungen",
+    "contact": "Kontakt",
+    "support": "Support",
+    "supportHelp": "Support / Hilfe",
+    "login": "Anmelden / Registrieren",
+    "myAccount": "Mein Konto",
+    "myProfile": "Mein Profil",
+    "logout": "Abmelden",
+    "logoutAccount": "Konto abmelden",
+    "signedInAs": "Angemeldet als",
+    "trackOrder": "Bestellung verfolgen"
+  },
+  "Navbar": {
+    "deliverTo": "Liefern an:",
+    "updateLocation": "(Standort ändern)",
+    "searchPlaceholder": "Produkte, Services und Kategorien suchen...",
+    "languageCurrency": "Sprache und Währung ändern",
+    "toggleMenu": "Mobilmenü öffnen"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Sprache ändern",
+    "changeCurrency": "Währung ändern",
+    "searchCurrency": "Währung suchen...",
+    "noCurrency": "Keine Währung gefunden",
+    "change": "Ändern",
+    "done": "Fertig",
+    "shoppingOn": "Sie kaufen auf",
+    "changeCountry": "Land/Region ändern."
+  },
+  "MobileMenu": {
+    "deliverTo": "Liefern an:",
+    "change": "Ändern",
+    "languageCountry": "Sprache & Land",
+    "searchPlaceholder": "Produkte und Services suchen..."
+  },
+  "Footer": {
+    "tagline": "WorthWorld ist ein Marktplatz, um Produkte zu kaufen, Services zu buchen und weltweit liefern zu lassen — und verbindet Afrika mit dem Rest der Welt.",
+    "company": "Unternehmen",
+    "customerService": "Kundenservice",
+    "legal": "Rechtliches",
+    "aboutUs": "Über uns",
+    "shop": "Shop",
+    "services": "Dienstleistungen",
+    "contactUs": "Kontakt",
+    "helpCenter": "Hilfezentrum",
+    "trackOrder": "Bestellung verfolgen",
+    "terms": "Allgemeine Geschäftsbedingungen",
+    "privacy": "Datenschutz"
+  },
+  "Newsletter": {
+    "title": "Bleiben Sie informiert",
+    "description": "Erhalten Sie Angebote, Neuheiten und WorthWorld-News per E-Mail.",
+    "email": "E-Mail-Adresse",
+    "placeholder": "Ihre E-Mail",
+    "consent": "Ich stimme dem Empfang von Marketing-E-Mails zu und kann mich jederzeit abmelden.",
+    "subscribe": "Abonnieren",
+    "unsubscribe": "Abmelden",
+    "subscribedAs": "Abonniert als",
+    "invalidEmail": "Bitte eine gültige E-Mail-Adresse eingeben.",
+    "needConsent": "Bitte dem Empfang von Marketing-E-Mails zustimmen.",
+    "alreadySubscribed": "Diese E-Mail ist bereits abonniert.",
+    "success": "Sie sind angemeldet. Prüfen Sie Ihren Posteingang.",
+    "unsubscribed": "Sie wurden abgemeldet."
+  },
+  "Logo": {
+    "tagline": "Kaufen. Buchen. Liefern. Weltweit."
+  },
+  "Cart": {
+    "title": "Warenkorb"
+  },
+  "NotFound": {
+    "title": "404 Nicht gefunden",
+    "description": "Die aufgerufene Seite wurde nicht gefunden. Sie können zur Startseite gehen.",
+    "backHome": "Zur Startseite"
+  }
+}

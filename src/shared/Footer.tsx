@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
     FaFacebookF,
     FaInstagram,
@@ -6,6 +5,8 @@ import {
     FaYoutube,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import Logo from "@/ui/Logo";
 import Newsletter from "@/ui/Newsletter";
 import FooterPayments from "@/ui/FooterPayments";
@@ -16,23 +17,6 @@ const socialLinks = [
     { icon: FaXTwitter, href: "https://x.com/worthworld", label: "X" },
     { icon: FaLinkedinIn, href: "https://www.linkedin.com/company/worth-world", label: "LinkedIn" },
     { icon: FaYoutube, href: "https://www.youtube.com/@worthworld", label: "YouTube" },
-];
-
-const companyLinks = [
-    { name: "About Us", href: "/about-us" },
-    { name: "Shop", href: "/shop" },
-    { name: "Services", href: "/services" },
-    { name: "Contact Us", href: "/contact-us" },
-];
-
-const customerServiceLinks = [
-    { name: "Help Center", href: "/contact-us" },
-    { name: "Track Order", href: "/profile/order-tracking" },
-];
-
-const legalLinks = [
-    { name: "Terms & Conditions", href: "/terms-of-services" },
-    { name: "Privacy Policy", href: "/privacy-policy" },
 ];
 
 function FooterLinks({
@@ -47,7 +31,7 @@ function FooterLinks({
             <h3 className="mb-5 text-base font-bold text-white">{title}</h3>
             <ul className="space-y-3 text-sm">
                 {links.map((link) => (
-                    <li key={link.name}>
+                    <li key={link.href}>
                         <Link
                             href={link.href}
                             className="text-zinc-300 transition-colors hover:text-primary"
@@ -61,7 +45,26 @@ function FooterLinks({
     );
 }
 
-export default function Footer() {
+export default async function Footer() {
+    const t = await getTranslations("Footer");
+
+    const companyLinks = [
+        { name: t("aboutUs"), href: "/about-us" },
+        { name: t("shop"), href: "/shop" },
+        { name: t("services"), href: "/services" },
+        { name: t("contactUs"), href: "/contact-us" },
+    ];
+
+    const customerServiceLinks = [
+        { name: t("helpCenter"), href: "/contact-us" },
+        { name: t("trackOrder"), href: "/profile/order-tracking" },
+    ];
+
+    const legalLinks = [
+        { name: t("terms"), href: "/terms-of-services" },
+        { name: t("privacy"), href: "/privacy-policy" },
+    ];
+
     return (
         <footer className="mt-16 bg-secondary text-white">
             <div className="container mx-auto px-6 py-16 md:py-20">
@@ -69,8 +72,7 @@ export default function Footer() {
                     <div className="lg:col-span-3">
                         <Logo />
                         <p className="mt-5 max-w-xs text-sm leading-relaxed text-zinc-300">
-                            WorthWorld is a marketplace to shop products, book services, and
-                            get delivery worldwide — connecting Africa to the rest of the world.
+                            {t("tagline")}
                         </p>
                         <div className="mt-6 flex flex-wrap gap-3">
                             {socialLinks.map((social) => (
@@ -89,13 +91,13 @@ export default function Footer() {
                     </div>
 
                     <div className="lg:col-span-2">
-                        <FooterLinks title="Company" links={companyLinks} />
+                        <FooterLinks title={t("company")} links={companyLinks} />
                     </div>
                     <div className="lg:col-span-2">
-                        <FooterLinks title="Customer Service" links={customerServiceLinks} />
+                        <FooterLinks title={t("customerService")} links={customerServiceLinks} />
                     </div>
                     <div className="lg:col-span-2">
-                        <FooterLinks title="Legal" links={legalLinks} />
+                        <FooterLinks title={t("legal")} links={legalLinks} />
                     </div>
                     <div className="lg:col-span-3">
                         <Newsletter />
