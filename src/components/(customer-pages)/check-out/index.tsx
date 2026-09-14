@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { Link } from "@/i18n/navigation";
 import { myFetch } from "../../../../helpers/myFetch";
 import { useCurrency } from "@/hooks/use-currency";
 import CheckoutChoices from "./CheckoutChoices";
@@ -45,6 +46,7 @@ export default function Checkout({
     const [isCalculating, setIsCalculating] = useState(false);
     const [isPlacingOrder, setIsPlacingOrder] = useState(false);
     const { formatPrice } = useCurrency();
+    const t = useTranslations("Checkout");
 
     const fallbackSubtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const subtotal = estimate?.grandSubTotal ?? fallbackSubtotal;
@@ -84,7 +86,7 @@ export default function Checkout({
         try {
             await fetchEstimate(selectedAddressId);
         } catch {
-            toast.error("Could not calculate shipping for this address.");
+            toast.error(t("shippingError"));
         } finally {
             setIsCalculating(false);
         }
@@ -116,7 +118,7 @@ export default function Checkout({
         try {
             await fetchEstimate(selectedId);
         } catch {
-            toast.error("Could not calculate shipping for this address.");
+            toast.error(t("shippingError"));
         } finally {
             setIsCalculating(false);
         }
@@ -143,7 +145,7 @@ export default function Checkout({
 
     const handleSaveAddress = async () => {
         if (!formData.fullName || !formData.phone || !formData.address || !formData.city) {
-            toast.error("Please fill in the required address fields.");
+            toast.error(t("requiredFields"));
             return;
         }
 
@@ -160,7 +162,7 @@ export default function Checkout({
                 if (res?.success && typeof res.data?._id === "string") {
                     savedAddressId = res.data._id;
                 } else if (!res?.success) {
-                    toast.error(res?.message || "Could not update address.");
+                    toast.error(res?.message || t("updateAddressError"));
                     return;
                 }
             } else {
@@ -189,7 +191,7 @@ export default function Checkout({
                         },
                     ]);
                 } else {
-                    toast.error(res?.message || "Could not save address.");
+                    toast.error(res?.message || t("saveAddressError"));
                     return;
                 }
             }
@@ -197,9 +199,9 @@ export default function Checkout({
             if (savedAddressId && deliveryOption === "delivery") {
                 await fetchEstimate(savedAddressId);
             }
-            toast.success("Address saved.");
+            toast.success(t("addressSaved"));
         } catch {
-            toast.error("Could not save the address.");
+            toast.error(t("saveFailed"));
         } finally {
             setIsCalculating(false);
         }
@@ -207,11 +209,11 @@ export default function Checkout({
 
     const handlePlaceOrder = async () => {
         if (cartItems.length === 0) {
-            toast.error("Your cart is empty.");
+            toast.error(t("emptyCartToast"));
             return;
         }
         if (deliveryOption === "delivery" && !selectedAddressId) {
-            toast.error("Please select or save a shipping address.");
+            toast.error(t("needAddress"));
             return;
         }
 
@@ -244,9 +246,9 @@ export default function Checkout({
                 return;
             }
 
-            toast.error(res?.message || "Failed to start checkout. Please try again.");
+            toast.error(res?.message || t("checkoutFailed"));
         } catch {
-            toast.error("Something went wrong while placing your order.");
+            toast.error(t("placeOrderError"));
         } finally {
             setIsPlacingOrder(false);
         }
@@ -255,13 +257,13 @@ export default function Checkout({
     if (cartItems.length === 0) {
         return (
             <div className="container mx-auto max-w-3xl px-4 py-16 text-center">
-                <h1 className="text-2xl font-bold text-foreground">Your cart is empty</h1>
-                <p className="mt-2 text-sm text-white/80">Add products before checking out.</p>
+                <h1 className="text-2xl font-bold text-foreground">{t("emptyTitle")}</h1>
+                <p className="mt-2 text-sm text-white/80">{t("emptyDescription")}</p>
                 <Link
                     href="/shop"
                     className="mt-6 inline-flex rounded-xl bg-secondary px-5 py-2.5 text-sm font-semibold text-white hover:bg-secondary/90"
                 >
-                    Browse products
+                    {t("browseProducts")}
                 </Link>
             </div>
         );
@@ -271,8 +273,8 @@ export default function Checkout({
         <div className="px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
             <div className="container mx-auto max-w-7xl">
                 <header className="mb-8">
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">Checkout</p>
-                    <h1 className="mt-2 text-3xl font-bold tracking-tight text-foreground">Complete your order</h1>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">{t("eyebrow")}</p>
+                    <h1 className="mt-2 text-3xl font-bold tracking-tight text-foreground">{t("title")}</h1>
                 </header>
 
                 <div className="flex flex-col gap-8 lg:flex-row">

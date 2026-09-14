@@ -7,8 +7,6 @@ export default async function ProductCategoriesPage() {
 
     return (
         <CategoryListPage
-            title="Product Categories"
-            description="Browse all available product categories or filter by featured categories."
             kind="product"
             initialCategories={categories}
         />

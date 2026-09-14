@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
 import { Label } from "@/ui/label";
@@ -12,6 +13,7 @@ const fieldClass =
     "h-12 rounded-xl border-card-border bg-section-bg text-card-foreground placeholder:text-muted-foreground focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary";
 
 const ContactUsForm = () => {
+    const t = useTranslations("Contact");
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         name: "",
@@ -28,7 +30,7 @@ const ContactUsForm = () => {
         e.preventDefault();
 
         if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-            toast.error("Please fill in all required fields.");
+            toast.error(t("requiredFields"));
             return;
         }
 
@@ -40,7 +42,7 @@ const ContactUsForm = () => {
             });
 
             if (res.success) {
-                toast.success(res.message || "Message sent successfully!");
+                toast.success(res.message || t("sent"));
                 setFormData({
                     name: "",
                     email: "",
@@ -48,10 +50,10 @@ const ContactUsForm = () => {
                     message: "",
                 });
             } else {
-                toast.error(res.message || res.error || "Failed to send message.");
+                toast.error(res.message || res.error || t("sendFailed"));
             }
         } catch {
-            toast.error("An unexpected error occurred.");
+            toast.error(t("unexpected"));
         } finally {
             setLoading(false);
         }
@@ -63,22 +65,22 @@ const ContactUsForm = () => {
             onSubmit={handleSubmit}
         >
             <div>
-                <h2 className="mb-1 text-lg font-bold text-card-foreground">Send a message</h2>
+                <h2 className="mb-1 text-lg font-bold text-card-foreground">{t("formTitle")}</h2>
                 <p className="mb-6 text-sm text-muted-foreground">
-                    Tell us how we can help. All fields are required.
+                    {t("formHint")}
                 </p>
 
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                     <div className="space-y-2">
                         <Label htmlFor="contact-name" className="font-semibold text-card-foreground">
-                            Full name<span className="text-destructive"> *</span>
+                            {t("fullName")}<span className="text-destructive"> *</span>
                         </Label>
                         <Input
                             id="contact-name"
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
-                            placeholder="Enter full name"
+                            placeholder={t("fullNamePlaceholder")}
                             required
                             autoComplete="name"
                             className={fieldClass}
@@ -86,7 +88,7 @@ const ContactUsForm = () => {
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="contact-email" className="font-semibold text-card-foreground">
-                            Email<span className="text-destructive"> *</span>
+                            {t("email")}<span className="text-destructive"> *</span>
                         </Label>
                         <Input
                             id="contact-email"
@@ -94,7 +96,7 @@ const ContactUsForm = () => {
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            placeholder="Enter email"
+                            placeholder={t("emailPlaceholder")}
                             required
                             autoComplete="email"
                             className={fieldClass}
@@ -102,7 +104,7 @@ const ContactUsForm = () => {
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="contact-phone" className="font-semibold text-card-foreground">
-                            Contact number<span className="text-destructive"> *</span>
+                            {t("contactNumber")}<span className="text-destructive"> *</span>
                         </Label>
                         <Input
                             id="contact-phone"
@@ -110,7 +112,7 @@ const ContactUsForm = () => {
                             type="tel"
                             value={formData.subject}
                             onChange={handleChange}
-                            placeholder="Enter contact number"
+                            placeholder={t("contactPlaceholder")}
                             required
                             autoComplete="tel"
                             className={fieldClass}
@@ -120,14 +122,14 @@ const ContactUsForm = () => {
 
                 <div className="mt-5 space-y-2">
                     <Label htmlFor="contact-message" className="font-semibold text-card-foreground">
-                        Message<span className="text-destructive"> *</span>
+                        {t("message")}<span className="text-destructive"> *</span>
                     </Label>
                     <Textarea
                         id="contact-message"
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
-                        placeholder="How can we help?"
+                        placeholder={t("messagePlaceholder")}
                         required
                         rows={6}
                         className="min-h-[150px] resize-none rounded-xl border-card-border bg-section-bg p-4 text-card-foreground placeholder:text-muted-foreground focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary"
@@ -137,7 +139,7 @@ const ContactUsForm = () => {
 
             <div className="mt-8 flex justify-end">
                 <Button type="submit" disabled={loading} size="lg" className="px-8">
-                    {loading ? "Sending..." : "Send message"}
+                    {loading ? t("sending") : t("send")}
                 </Button>
             </div>
         </form>

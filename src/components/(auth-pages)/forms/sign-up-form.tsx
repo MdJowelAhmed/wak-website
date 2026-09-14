@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
 import { Label } from "@/ui/label";
-import { FacebookIcon, GoogleIcon, AppleIcon } from "@/components/(auth-pages)/components/brands";
+import { GoogleIcon, AppleIcon } from "@/components/(auth-pages)/components/brands";
 import { toast } from "sonner";
 import { myFetch } from "../../../../helpers/myFetch";
 
@@ -14,6 +15,7 @@ interface SignUpFormProps {
 
 export function SignUpForm({ onSwitch }: SignUpFormProps) {
   const [loading, setLoading] = useState(false);
+  const t = useTranslations("Auth");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,7 +26,7 @@ export function SignUpForm({ onSwitch }: SignUpFormProps) {
     const password = formData.get("password") as string;
 
     if (!name || !email || !phone || !password) {
-      toast.error("Please fill in all fields", { id: "register" });
+      toast.error(t("fillAllFields"), { id: "register" });
       return;
     }
 
@@ -36,7 +38,7 @@ export function SignUpForm({ onSwitch }: SignUpFormProps) {
       });
 
       if (res?.success) {
-        toast.success(res?.message || "Registered successfully", { id: "register" });
+        toast.success(res?.message || t("registerSuccess"), { id: "register" });
         onSwitch("otp", email);
       } else {
         if (res?.error && Array.isArray(res.error)) {
@@ -44,12 +46,11 @@ export function SignUpForm({ onSwitch }: SignUpFormProps) {
             toast.error(err.message, { id: "register" });
           });
         } else {
-          toast.error(res?.message || "Failed to register!", { id: "register" });
+          toast.error(res?.message || t("registerFailed"), { id: "register" });
         }
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Network error", { id: "register" });
+    } catch {
+      toast.error(t("networkError"), { id: "register" });
     } finally {
       setLoading(false);
     }
@@ -58,44 +59,43 @@ export function SignUpForm({ onSwitch }: SignUpFormProps) {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-3 text-center">
-        <h2 className="auth-title mb-0! text-zinc-900">Register a new account</h2>
-        <p className="text-sm text-zinc-500">Please enter your information to create account</p>
+        <h2 className="auth-title mb-0! text-zinc-900">{t("registerTitle")}</h2>
+        <p className="text-sm text-zinc-500">{t("registerSubtitle")}</p>
       </div>
 
       <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
-          <Label htmlFor="signup-name" className="text-zinc-700 text-sm font-medium">User Name</Label>
-          <Input name="name" id="signup-name" type="text" placeholder="Enter full name" required className="h-12 bg-zinc-50 border border-zinc-200 text-zinc-900 mt-2 rounded-xl placeholder:text-zinc-400 focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary" />
+          <Label htmlFor="signup-name" className="text-zinc-700 text-sm font-medium">{t("userName")}</Label>
+          <Input name="name" id="signup-name" type="text" placeholder={t("fullNamePlaceholder")} required className="h-12 bg-zinc-50 border border-zinc-200 text-zinc-900 mt-2 rounded-xl placeholder:text-zinc-400 focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary" />
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="signup-email" className="text-zinc-700 text-sm font-medium">Email</Label>
-          <Input name="email" id="signup-email" type="email" placeholder="Enter email address" required className="h-12 bg-zinc-50 border border-zinc-200 text-zinc-900 mt-2 rounded-xl placeholder:text-zinc-400 focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary" />
+          <Label htmlFor="signup-email" className="text-zinc-700 text-sm font-medium">{t("email")}</Label>
+          <Input name="email" id="signup-email" type="email" placeholder={t("emailPlaceholder")} required className="h-12 bg-zinc-50 border border-zinc-200 text-zinc-900 mt-2 rounded-xl placeholder:text-zinc-400 focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary" />
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="signup-contact" className="text-zinc-700 text-sm font-medium">Contact Number</Label>
-          <Input name="phone" id="signup-contact" type="text" placeholder="Enter contact number" required className="h-12 bg-zinc-50 border border-zinc-200 text-zinc-900 mt-2 rounded-xl placeholder:text-zinc-400 focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary" />
+          <Label htmlFor="signup-contact" className="text-zinc-700 text-sm font-medium">{t("contactNumber")}</Label>
+          <Input name="phone" id="signup-contact" type="text" placeholder={t("contactPlaceholder")} required className="h-12 bg-zinc-50 border border-zinc-200 text-zinc-900 mt-2 rounded-xl placeholder:text-zinc-400 focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary" />
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="signup-password" className="text-zinc-700 text-sm font-medium">Password</Label>
+          <Label htmlFor="signup-password" className="text-zinc-700 text-sm font-medium">{t("password")}</Label>
           <Input name="password" id="signup-password" type="password" placeholder="********" required className="h-12 bg-zinc-50 border border-zinc-200 text-zinc-900 mt-2 rounded-xl placeholder:text-zinc-400 focus:bg-white focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary" />
         </div>
 
-
         <Button type="submit" disabled={loading} className="w-full bg-primary hover:bg-orange-500 text-white h-14 text-lg font-bold rounded-xl mt-4 shadow-lg shadow-orange-500/20 cursor-pointer">
-          {loading ? "Signing Up..." : "Sign Up"}
+          {loading ? t("signingUp") : t("signUp")}
         </Button>
       </form>
 
       <div className="text-center text-sm text-zinc-500">
-        Already have an account?{" "}
+        {t("haveAccount")}{" "}
         <button
           onClick={() => onSwitch("signin")}
           className="text-primary font-semibold hover:underline cursor-pointer"
         >
-          Sign In
+          {t("signIn")}
         </button>
       </div>
 
@@ -112,4 +112,3 @@ export function SignUpForm({ onSwitch }: SignUpFormProps) {
     </div>
   );
 }
-

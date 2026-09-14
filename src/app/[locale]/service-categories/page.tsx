@@ -7,8 +7,6 @@ export default async function ServiceCategoriesPage() {
 
     return (
         <CategoryListPage
-            title="Service Categories"
-            description="Browse all available service categories or filter by featured categories."
             kind="service"
             initialCategories={categories}
         />

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
 import { Label } from "@/ui/label";
@@ -49,25 +50,26 @@ export default function ShippingForm({
     shippingFee,
     formatMoney,
 }: ShippingFormProps) {
+    const t = useTranslations("Checkout");
     const isPickup = deliveryOption === "pickup";
-    const title = isPickup ? "Pickup address" : "Shipping address";
-    const saveLabel = isPickup ? "Save address" : "Save address & calculate shipping";
+    const title = isPickup ? t("pickupAddress") : t("shippingAddress");
+    const saveLabel = isPickup ? t("saveAddress") : t("saveAddressShipping");
 
     return (
         <section className="rounded-2xl border border-card-border bg-card p-5 shadow-lg sm:p-7">
             <div className="mb-6">
                 <h2 className="text-lg font-bold text-card-foreground">{title}</h2>
                 <div className="mt-4 space-y-2">
-                    <Label className="font-semibold text-card-foreground">Saved address</Label>
+                    <Label className="font-semibold text-card-foreground">{t("savedAddress")}</Label>
                     <Select
                         value={selectedAddressId || "new"}
                         onValueChange={(value) => handleAddressSelect(value === "new" ? "" : value)}
                     >
                         <SelectTrigger className="h-12 rounded-xl border-card-border bg-section-bg text-card-foreground focus:ring-1 focus:ring-primary focus:ring-offset-0">
-                            <SelectValue placeholder="Select a saved address..." />
+                            <SelectValue placeholder={t("selectSavedAddress")} />
                         </SelectTrigger>
                         <SelectContent className="z-[400] bg-white text-card-foreground">
-                            <SelectItem value="new">Use a new address</SelectItem>
+                            <SelectItem value="new">{t("newAddress")}</SelectItem>
                             {addresses.map((addr) => (
                                 <SelectItem key={addr._id} value={addr._id}>
                                     {addr.fullName ? `${addr.fullName} — ` : ""}
@@ -80,22 +82,20 @@ export default function ShippingForm({
             </div>
 
             <p className="mb-6 text-sm text-muted-foreground">
-                {isPickup
-                    ? "Choose or save the address you will use for pickup."
-                    : "Choose or save the address where this order should be delivered."}
+                {isPickup ? t("pickupHint") : t("deliveryHint")}
             </p>
 
             <div className="space-y-5">
                 <div className="space-y-2">
                     <Label htmlFor="checkout-fullName" className="font-semibold text-card-foreground">
-                        Full name<span className="text-destructive"> *</span>
+                        {t("fullName")}<span className="text-destructive"> *</span>
                     </Label>
                     <Input
                         id="checkout-fullName"
                         name="fullName"
                         value={formData.fullName}
                         onChange={handleInputChange}
-                        placeholder="Enter your full name"
+                        placeholder={t("fullNamePlaceholder")}
                         required
                         autoComplete="name"
                         className={fieldClass}
@@ -105,7 +105,7 @@ export default function ShippingForm({
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                     <div className="space-y-2">
                         <Label htmlFor="checkout-phone" className="font-semibold text-card-foreground">
-                            Phone number<span className="text-destructive"> *</span>
+                            {t("phone")}<span className="text-destructive"> *</span>
                         </Label>
                         <Input
                             id="checkout-phone"
@@ -113,7 +113,7 @@ export default function ShippingForm({
                             type="tel"
                             value={formData.phone}
                             onChange={handleInputChange}
-                            placeholder="Enter phone number"
+                            placeholder={t("phonePlaceholder")}
                             required
                             autoComplete="tel"
                             className={fieldClass}
@@ -121,7 +121,7 @@ export default function ShippingForm({
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="checkout-email" className="font-semibold text-card-foreground">
-                            Email
+                            {t("email")}
                         </Label>
                         <Input
                             id="checkout-email"
@@ -129,7 +129,7 @@ export default function ShippingForm({
                             type="email"
                             value={formData.email}
                             onChange={handleInputChange}
-                            placeholder="Enter email address"
+                            placeholder={t("emailPlaceholder")}
                             autoComplete="email"
                             className={fieldClass}
                         />
@@ -139,28 +139,28 @@ export default function ShippingForm({
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                     <div className="space-y-2">
                         <Label htmlFor="checkout-city" className="font-semibold text-card-foreground">
-                            City<span className="text-destructive"> *</span>
+                            {t("city")}<span className="text-destructive"> *</span>
                         </Label>
                         <Input
                             id="checkout-city"
                             name="city"
                             value={formData.city}
                             onChange={handleInputChange}
-                            placeholder="e.g. Dhaka"
+                            placeholder={t("cityPlaceholder")}
                             required
                             className={fieldClass}
                         />
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="checkout-state" className="font-semibold text-card-foreground">
-                            Zone<span className="text-destructive"> *</span>
+                            {t("zone")}<span className="text-destructive"> *</span>
                         </Label>
                         <Input
                             id="checkout-state"
                             name="state"
                             value={formData.state}
                             onChange={handleInputChange}
-                            placeholder="e.g. Dhanmondi"
+                            placeholder={t("zonePlaceholder")}
                             required
                             className={fieldClass}
                         />
@@ -170,7 +170,7 @@ export default function ShippingForm({
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                     <div className="space-y-2">
                         <Label htmlFor="checkout-country" className="font-semibold text-card-foreground">
-                            Country<span className="text-destructive"> *</span>
+                            {t("country")}<span className="text-destructive"> *</span>
                         </Label>
                         <select
                             id="checkout-country"
@@ -179,7 +179,7 @@ export default function ShippingForm({
                             onChange={handleInputChange}
                             className="h-12 w-full rounded-xl border border-card-border bg-section-bg px-3 text-sm text-card-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                         >
-                            <option value="">Select country...</option>
+                            <option value="">{t("selectCountry")}</option>
                             {countries.map((country) => (
                                 <option key={country.countryCode || country.name} value={country.name}>
                                     {country.name}
@@ -189,14 +189,14 @@ export default function ShippingForm({
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="checkout-postalCode" className="font-semibold text-card-foreground">
-                            Postal code<span className="text-destructive"> *</span>
+                            {t("postalCode")}<span className="text-destructive"> *</span>
                         </Label>
                         <Input
                             id="checkout-postalCode"
                             name="postalCode"
                             value={formData.postalCode}
                             onChange={handleInputChange}
-                            placeholder="e.g. 1209"
+                            placeholder={t("postalPlaceholder")}
                             required
                             className={fieldClass}
                         />
@@ -205,14 +205,14 @@ export default function ShippingForm({
 
                 <div className="space-y-2">
                     <Label htmlFor="checkout-address" className="font-semibold text-card-foreground">
-                        Address<span className="text-destructive"> *</span>
+                        {t("address")}<span className="text-destructive"> *</span>
                     </Label>
                     <Input
                         id="checkout-address"
                         name="address"
                         value={formData.address}
                         onChange={handleInputChange}
-                        placeholder="House, road, block"
+                        placeholder={t("addressPlaceholder")}
                         required
                         className={fieldClass}
                     />
@@ -227,17 +227,17 @@ export default function ShippingForm({
                             onChange={handleInputChange}
                             className="h-4 w-4 rounded border-card-border text-primary focus:ring-primary"
                         />
-                        Save this address for next time
+                        {t("saveForNext")}
                     </label>
                     <Button type="button" onClick={handleSaveAddress} disabled={isCalculating}>
-                        {isCalculating ? "Saving..." : saveLabel}
+                        {isCalculating ? t("saving") : saveLabel}
                     </Button>
                 </div>
 
                 {!isPickup && (
                     <div className="border-t border-card-border pt-5">
                         <p className="text-sm font-semibold text-card-foreground">
-                            Shipping charge: {formatMoney(shippingFee)}
+                            {t("shippingCharge", { price: formatMoney(shippingFee) })}
                         </p>
                     </div>
                 )}

@@ -1,5 +1,7 @@
 "use client";
+
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/ui/button";
 import {
   InputOTP,
@@ -20,18 +22,19 @@ export function OtpForm({ onSwitch, email, setResetToken, purpose }: OtpFormProp
   const [loading, setLoading] = useState(false);
   const [resending, setResending] = useState(false);
   const [otp, setOtp] = useState("");
+  const t = useTranslations("Auth");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!email) {
-      toast.error("Email is missing. Please restart the process.", { id: "otp" });
+      toast.error(t("emailMissing"), { id: "otp" });
       onSwitch(purpose === "signup" ? "signup" : "forgot-password");
       return;
     }
 
     if (otp.length !== 6) {
-      toast.error("Please enter a valid 6-digit code", { id: "otp" });
+      toast.error(t("invalidOtp"), { id: "otp" });
       return;
     }
 
@@ -43,7 +46,7 @@ export function OtpForm({ onSwitch, email, setResetToken, purpose }: OtpFormProp
       });
 
       if (res?.success) {
-        toast.success(res?.message || "Email verified successfully", { id: "otp" });
+        toast.success(res?.message || t("verified"), { id: "otp" });
         if (purpose === "forgot-password") {
           setResetToken(res?.data?.token);
           onSwitch("reset-password");
@@ -56,12 +59,11 @@ export function OtpForm({ onSwitch, email, setResetToken, purpose }: OtpFormProp
             toast.error(err.message, { id: "otp" });
           });
         } else {
-          toast.error(res?.message || "Invalid OTP!", { id: "otp" });
+          toast.error(res?.message || t("invalidOtpError"), { id: "otp" });
         }
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Network error", { id: "otp" });
+    } catch {
+      toast.error(t("networkError"), { id: "otp" });
     } finally {
       setLoading(false);
     }
@@ -69,7 +71,7 @@ export function OtpForm({ onSwitch, email, setResetToken, purpose }: OtpFormProp
 
   const handleResend = async () => {
     if (!email) {
-      toast.error("Email is missing. Please restart the process.", { id: "otp" });
+      toast.error(t("emailMissing"), { id: "otp" });
       onSwitch("forgot-password");
       return;
     }
@@ -82,13 +84,12 @@ export function OtpForm({ onSwitch, email, setResetToken, purpose }: OtpFormProp
       });
 
       if (res?.success) {
-        toast.success(res?.message || "OTP resent successfully", { id: "otp" });
+        toast.success(res?.message || t("otpResent"), { id: "otp" });
       } else {
-        toast.error(res?.message || "Failed to resend OTP!", { id: "otp" });
+        toast.error(res?.message || t("resendFailed"), { id: "otp" });
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Network error", { id: "otp" });
+    } catch {
+      toast.error(t("networkError"), { id: "otp" });
     } finally {
       setResending(false);
     }
@@ -97,13 +98,13 @@ export function OtpForm({ onSwitch, email, setResetToken, purpose }: OtpFormProp
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-3 text-center">
-        <h2 className="auth-title mb-0! text-zinc-900">Check your email</h2>
+        <h2 className="auth-title mb-0! text-zinc-900">{t("otpTitle")}</h2>
         <p className="text-sm text-zinc-500 font-medium">
-          We sent a reset link to <span className="text-zinc-900 font-bold">{email || "your email"}</span><br />
-          Enter 6 digit code that mentioned in the email
+          {t("otpSentTo")} <span className="text-zinc-900 font-bold">{email || t("yourEmail")}</span><br />
+          {t("otpHint")}
         </p>
       </div>
- 
+
       <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
         <div className="flex justify-center mt-2">
           <InputOTP maxLength={6} value={otp} onChange={(val) => setOtp(val)}>
@@ -117,16 +118,16 @@ export function OtpForm({ onSwitch, email, setResetToken, purpose }: OtpFormProp
             </InputOTPGroup>
           </InputOTP>
         </div>
- 
+
         <div className="flex flex-col gap-4">
           <Button type="submit" disabled={loading} className="w-full bg-primary hover:bg-orange-500 text-white h-14 text-lg font-bold rounded-xl shadow-lg shadow-orange-500/20 cursor-pointer">
-            {loading ? "Verifying..." : "Verify Code"}
+            {loading ? t("verifying") : t("verifyCode")}
           </Button>
- 
+
           <p className="text-center text-sm text-zinc-500">
-            You have not received the email?{" "}
+            {t("noEmailReceived")}{" "}
             <button type="button" onClick={handleResend} disabled={resending} className="text-primary font-semibold hover:underline cursor-pointer disabled:opacity-50">
-              {resending ? "Resending..." : "Resend"}
+              {resending ? t("resending") : t("resend")}
             </button>
           </p>
         </div>
@@ -134,4 +135,3 @@ export function OtpForm({ onSwitch, email, setResetToken, purpose }: OtpFormProp
     </div>
   );
 }
-

@@ -1,31 +1,29 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import type { Category } from '../../helpers/categoryService';
 import { isFeaturedCategory, type CategoryKind } from '../../helpers/categoryUtils';
 import CategoryCard from './CategoryCard';
 import { cn } from '@/lib/utils';
 
 interface CategoryListPageProps {
-    title: string;
-    description: string;
     kind: CategoryKind;
     initialCategories?: Category[];
 }
 
 export default function CategoryListPage({
-    title,
-    description,
     kind,
     initialCategories = [],
 }: CategoryListPageProps) {
+    const t = useTranslations("Categories");
     const [tab, setTab] = useState<'all' | 'featured'>('all');
     const featuredCategories = initialCategories.filter(isFeaturedCategory);
     const activeCategories = tab === 'all' ? initialCategories : featuredCategories;
     const emptyMessage =
         tab === 'all'
-            ? `No ${kind} categories found`
-            : `No featured ${kind} categories found`;
+            ? t(kind === 'product' ? 'emptyAllProduct' : 'emptyAllService')
+            : t(kind === 'product' ? 'emptyFeaturedProduct' : 'emptyFeaturedService');
 
     return (
         <div className="min-h-screen bg-background py-10 px-4 sm:px-6 lg:px-8">
@@ -33,9 +31,11 @@ export default function CategoryListPage({
                 <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-center">
                     <div>
                         <h1 className="mb-2 text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl">
-                            {title}
+                            {t(kind === 'product' ? 'productTitle' : 'serviceTitle')}
                         </h1>
-                        <p className="text-sm text-foreground/80 sm:text-base">{description}</p>
+                        <p className="text-sm text-foreground/80 sm:text-base">
+                            {t(kind === 'product' ? 'productDescription' : 'serviceDescription')}
+                        </p>
                     </div>
 
                     <div className="inline-flex select-none self-start rounded-xl bg-white/10 p-1 backdrop-blur-sm md:self-auto">
@@ -49,7 +49,7 @@ export default function CategoryListPage({
                                     : 'text-white/80 hover:bg-white/10 hover:text-white',
                             )}
                         >
-                            All Categories ({initialCategories.length})
+                            {t('all', { count: initialCategories.length })}
                         </button>
                         <button
                             type="button"
@@ -61,7 +61,7 @@ export default function CategoryListPage({
                                     : 'text-white/80 hover:bg-white/10 hover:text-white',
                             )}
                         >
-                            Featured Categories ({featuredCategories.length})
+                            {t('featured', { count: featuredCategories.length })}
                         </button>
                     </div>
                 </div>
