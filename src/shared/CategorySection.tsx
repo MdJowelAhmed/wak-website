@@ -1,12 +1,13 @@
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Category } from "../../helpers/categoryService";
 import type { CategoryKind } from "../../helpers/categoryUtils";
 import CategoryCard from "./CategoryCard";
+import { Link } from "@/i18n/navigation";
 
 interface CategorySectionProps {
     title: string;
     viewAllHref: string;
+    viewAllLabel: string;
     categories: Category[];
     kind: CategoryKind;
     emptyMessage: string;
@@ -15,6 +16,7 @@ interface CategorySectionProps {
 export default function CategorySection({
     title,
     viewAllHref,
+    viewAllLabel,
     categories,
     kind,
     emptyMessage,
@@ -29,8 +31,8 @@ export default function CategorySection({
                     href={viewAllHref}
                     className="group flex cursor-pointer items-center gap-2 text-xs font-semibold text-foreground transition-all hover:underline hover:underline-offset-4 sm:text-sm"
                 >
-                    View All
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    {viewAllLabel}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1 rtl:group-hover:translate-x-0" />
                 </Link>
             </div>
 

@@ -82,5 +82,116 @@
     "title": "404 페이지를 찾을 수 없습니다",
     "description": "방문하신 페이지를 찾을 수 없습니다. 홈으로 이동할 수 있습니다.",
     "backHome": "홈으로 돌아가기"
+  },
+  "Home": {
+    "viewAll": "전체 보기",
+    "banner": {
+      "shopNow": "지금 쇼핑",
+      "viewService": "서비스 보기",
+      "previous": "이전 배너",
+      "next": "다음 배너"
+    },
+    "userTypes": {
+      "customerTitle": "고객",
+      "customerSubtitle": "상품을 구매하고 서비스를 예약하세요",
+      "customerCta": "지금 쇼핑",
+      "vendorTitle": "판매자 / 가맹점",
+      "vendorSubtitle": "상품을 판매하세요",
+      "vendorCta": "가맹점으로 가입",
+      "providerTitle": "서비스 제공자",
+      "providerSubtitle": "서비스를 제공하세요",
+      "providerCta": "제공자로 가입",
+      "driverTitle": "드라이버",
+      "driverSubtitle": "함께 배송하세요",
+      "driverCta": "드라이버로 가입"
+    },
+    "categories": {
+      "products": "상품 카테고리",
+      "services": "서비스 카테고리",
+      "emptyProducts": "상품 카테고리를 찾을 수 없습니다",
+      "emptyServices": "서비스 카테고리를 찾을 수 없습니다"
+    },
+    "featured": {
+      "title": "추천 카테고리",
+      "loading": "카테고리를 불러오는 중...",
+      "empty": "추천 카테고리를 찾을 수 없습니다.",
+      "exploreProducts": "상품 둘러보기",
+      "exploreServices": "서비스 둘러보기",
+      "previous": "이전 카테고리",
+      "next": "다음 카테고리"
+    },
+    "bestSelling": {
+      "eyebrow": "이번 달",
+      "title": "베스트셀러 상품",
+      "empty": "베스트셀러 상품을 찾을 수 없습니다."
+    },
+    "newArrival": {
+      "eyebrow": "이번 달",
+      "title": "신상품 쇼핑",
+      "empty": "신상품을 찾을 수 없습니다."
+    },
+    "services": {
+      "title": "서비스",
+      "empty": "서비스를 찾을 수 없습니다.",
+      "unknown": "알 수 없음",
+      "fallbackCategory": "서비스"
+    },
+    "features": {
+      "badge": "우리를 선택하는 이유",
+      "title": "쇼핑과 예약을",
+      "titleHighlight": "함께",
+      "subtitle": "모든 상품 구매와 서비스 예약에서 안전, 편리함, 만족을 최우선으로 합니다.",
+      "secureTitle": "안전한 결제",
+      "secureDescription": "100% 안전하고 보호됩니다.",
+      "returnsTitle": "간편한 반품",
+      "returnsDescription": "번거로움 없는 반품.",
+      "supportTitle": "24시간 지원",
+      "supportDescription": "언제든지 도와드립니다.",
+      "deliveryTitle": "빠른 배송",
+      "deliveryDescription": "매번 제시간에 도착.",
+      "merchantsTitle": "인증된 판매자",
+      "merchantsDescription": "신뢰할 수 있습니다."
+    },
+    "appDownload": {
+      "heading": "필요한 모든 것,",
+      "headingAccent": "주머니 속에.",
+      "chooseApp": "앱 선택",
+      "downloadOnThe": "다운로드",
+      "appStore": "App Store",
+      "getItOn": "다운로드",
+      "googlePlay": "Google Play",
+      "customerBadge": "고객용",
+      "customerTab": "고객",
+      "customerTitle": "고객 앱",
+      "customerDescription": "상품을 구매하고, 전문 서비스를 예약하며, 주문을 실시간으로 추적하세요.",
+      "customerFeature1": "실시간 주문 추적",
+      "customerFeature2": "다양한 결제 지원",
+      "customerFeature3": "독점 혜택",
+      "customerAlt": "고객 앱 홈 및 상품 탐색 화면",
+      "merchantBadge": "가맹점용",
+      "merchantTab": "가맹점",
+      "merchantTitle": "가맹점 앱",
+      "merchantDescription": "재고를 관리하고, 주문을 처리하며, 어디서나 매출을 확인하세요.",
+      "merchantFeature1": "재고 관리",
+      "merchantFeature2": "일괄 처리",
+      "merchantFeature3": "즉시 정산",
+      "merchantAlt": "모바일 앱의 가맹점 대시보드",
+      "providerBadge": "서비스 제공자용",
+      "providerTab": "제공자",
+      "providerTitle": "서비스 제공자 앱",
+      "providerDescription": "예약을 받고, 일정을 관리하며, 서비스 사업을 성장시키세요.",
+      "providerFeature1": "예약 캘린더",
+      "providerFeature2": "고객 직접 메시지",
+      "providerFeature3": "수익 출금",
+      "providerAlt": "모바일 앱의 서비스 제공자 대시보드",
+      "driverBadge": "드라이버용",
+      "driverTab": "드라이버",
+      "driverTitle": "드라이버 앱",
+      "driverDescription": "배송 요청을 수락하고, 최적 경로로 이동하며, 원하는 시간에 수익을 올리세요.",
+      "driverFeature1": "경로 안내",
+      "driverFeature2": "주간 수익 추적",
+      "driverFeature3": "24시간 배송 지원",
+      "driverAlt": "드라이버 앱 실시간 배송 추적 화면"
+    }
   }
 }

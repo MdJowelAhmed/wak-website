@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import type { Category } from "../../../../../helpers/categoryService";
 import CategorySection from "@/shared/CategorySection";
 
@@ -6,25 +7,29 @@ interface AllBrandsProps {
     serviceCategories?: Category[];
 }
 
-const AllBrands = ({
+const AllBrands = async ({
     productCategories = [],
     serviceCategories = [],
 }: AllBrandsProps) => {
+    const t = await getTranslations("Home");
+
     return (
         <section className="mb-3 bg-background md:mb-6">
             <CategorySection
-                title="Product Categories"
+                title={t("categories.products")}
                 viewAllHref="/product-categories"
+                viewAllLabel={t("viewAll")}
                 categories={productCategories}
                 kind="product"
-                emptyMessage="No product categories found"
+                emptyMessage={t("categories.emptyProducts")}
             />
             <CategorySection
-                title="Service Categories"
+                title={t("categories.services")}
                 viewAllHref="/service-categories"
+                viewAllLabel={t("viewAll")}
                 categories={serviceCategories}
                 kind="service"
-                emptyMessage="No service categories found"
+                emptyMessage={t("categories.emptyServices")}
             />
         </section>
     );

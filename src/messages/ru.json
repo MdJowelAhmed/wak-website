@@ -82,5 +82,116 @@
     "title": "404 Страница не найдена",
     "description": "Посещённая страница не найдена. Вы можете перейти на главную.",
     "backHome": "На главную"
+  },
+  "Home": {
+    "viewAll": "Смотреть все",
+    "banner": {
+      "shopNow": "Купить сейчас",
+      "viewService": "Смотреть услугу",
+      "previous": "Предыдущие баннеры",
+      "next": "Следующие баннеры"
+    },
+    "userTypes": {
+      "customerTitle": "Покупатель",
+      "customerSubtitle": "Покупайте товары и бронируйте услуги",
+      "customerCta": "Купить сейчас",
+      "vendorTitle": "Продавец / Торговец",
+      "vendorSubtitle": "Продавайте свои товары",
+      "vendorCta": "Стать продавцом",
+      "providerTitle": "Исполнитель услуг",
+      "providerSubtitle": "Предлагайте свои услуги",
+      "providerCta": "Стать исполнителем",
+      "driverTitle": "Водитель",
+      "driverSubtitle": "Доставляйте с нами",
+      "driverCta": "Стать водителем"
+    },
+    "categories": {
+      "products": "Категории товаров",
+      "services": "Категории услуг",
+      "emptyProducts": "Категории товаров не найдены",
+      "emptyServices": "Категории услуг не найдены"
+    },
+    "featured": {
+      "title": "Избранные категории",
+      "loading": "Загрузка категорий...",
+      "empty": "Избранные категории не найдены.",
+      "exploreProducts": "Смотреть товары",
+      "exploreServices": "Смотреть услуги",
+      "previous": "Предыдущие категории",
+      "next": "Следующие категории"
+    },
+    "bestSelling": {
+      "eyebrow": "В этом месяце",
+      "title": "Хиты продаж",
+      "empty": "Хиты продаж не найдены."
+    },
+    "newArrival": {
+      "eyebrow": "В этом месяце",
+      "title": "Покупайте новинки",
+      "empty": "Новинки не найдены."
+    },
+    "services": {
+      "title": "Услуги",
+      "empty": "Услуги не найдены.",
+      "unknown": "Неизвестно",
+      "fallbackCategory": "Услуга"
+    },
+    "features": {
+      "badge": "Почему мы",
+      "title": "Почему покупать и бронировать у",
+      "titleHighlight": "нас",
+      "subtitle": "Мы ставим вашу безопасность, удобство и полное удовлетворение на первое место при каждой покупке и бронировании.",
+      "secureTitle": "Безопасные платежи",
+      "secureDescription": "100% безопасно.",
+      "returnsTitle": "Простой возврат",
+      "returnsDescription": "Возврат без хлопот.",
+      "supportTitle": "Поддержка 24/7",
+      "supportDescription": "Мы всегда готовы помочь.",
+      "deliveryTitle": "Быстрая доставка",
+      "deliveryDescription": "Вовремя каждый раз.",
+      "merchantsTitle": "Проверенные продавцы",
+      "merchantsDescription": "Надёжные и проверенные."
+    },
+    "appDownload": {
+      "heading": "Всё необходимое",
+      "headingAccent": "у вас в кармане.",
+      "chooseApp": "Выберите приложение",
+      "downloadOnThe": "Загрузить в",
+      "appStore": "App Store",
+      "getItOn": "Доступно в",
+      "googlePlay": "Google Play",
+      "customerBadge": "Для покупателей",
+      "customerTab": "Покупатель",
+      "customerTitle": "Приложение покупателя",
+      "customerDescription": "Покупайте товары, бронируйте услуги и отслеживайте заказы в реальном времени.",
+      "customerFeature1": "Отслеживание заказа в реальном времени",
+      "customerFeature2": "Несколько способов оплаты",
+      "customerFeature3": "Эксклюзивные предложения",
+      "customerAlt": "Главный экран и просмотр товаров в приложении покупателя",
+      "merchantBadge": "Для продавцов",
+      "merchantTab": "Продавец",
+      "merchantTitle": "Приложение продавца",
+      "merchantDescription": "Управляйте складом, обрабатывайте заказы и смотрите продажи где угодно.",
+      "merchantFeature1": "Контроль запасов",
+      "merchantFeature2": "Пакетная обработка",
+      "merchantFeature3": "Мгновенные выплаты",
+      "merchantAlt": "Панель продавца в мобильном приложении",
+      "providerBadge": "Для исполнителей услуг",
+      "providerTab": "Исполнитель",
+      "providerTitle": "Приложение исполнителя услуг",
+      "providerDescription": "Принимайте бронирования, управляйте расписанием и развивайте сервисный бизнес.",
+      "providerFeature1": "Календарь бронирований",
+      "providerFeature2": "Прямые сообщения клиентам",
+      "providerFeature3": "Вывод дохода",
+      "providerAlt": "Панель исполнителя в мобильном приложении",
+      "driverBadge": "Для водителей",
+      "driverTab": "Водитель",
+      "driverTitle": "Приложение водителя",
+      "driverDescription": "Принимайте заявки на доставку, следуйте оптимальным маршрутам и зарабатывайте по своему графику.",
+      "driverFeature1": "Навигация по маршруту",
+      "driverFeature2": "Трекер недельного дохода",
+      "driverFeature3": "Поддержка доставки 24/7",
+      "driverAlt": "Экран отслеживания доставки в приложении водителя"
+    }
   }
 }

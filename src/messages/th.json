@@ -82,5 +82,116 @@
     "title": "404 ไม่พบหน้านี้",
     "description": "ไม่พบหน้าที่คุณเข้าชม สามารถกลับไปหน้าแรกได้",
     "backHome": "กลับหน้าแรก"
+  },
+  "Home": {
+    "viewAll": "ดูทั้งหมด",
+    "banner": {
+      "shopNow": "ช้อปเลย",
+      "viewService": "ดูบริการ",
+      "previous": "แบนเนอร์ก่อนหน้า",
+      "next": "แบนเนอร์ถัดไป"
+    },
+    "userTypes": {
+      "customerTitle": "ลูกค้า",
+      "customerSubtitle": "ซื้อสินค้าและจองบริการ",
+      "customerCta": "ช้อปเลย",
+      "vendorTitle": "ผู้ขาย / พ่อค้า",
+      "vendorSubtitle": "ขายสินค้าของคุณ",
+      "vendorCta": "สมัครเป็นผู้ขาย",
+      "providerTitle": "ผู้ให้บริการ",
+      "providerSubtitle": "เสนอบริการของคุณ",
+      "providerCta": "สมัครเป็นผู้ให้บริการ",
+      "driverTitle": "คนขับ",
+      "driverSubtitle": "จัดส่งกับเรา",
+      "driverCta": "สมัครเป็นคนขับ"
+    },
+    "categories": {
+      "products": "หมวดหมู่สินค้า",
+      "services": "หมวดหมู่บริการ",
+      "emptyProducts": "ไม่พบหมวดหมู่สินค้า",
+      "emptyServices": "ไม่พบหมวดหมู่บริการ"
+    },
+    "featured": {
+      "title": "หมวดหมู่แนะนำ",
+      "loading": "กำลังโหลดหมวดหมู่...",
+      "empty": "ไม่พบหมวดหมู่แนะนำ",
+      "exploreProducts": "สำรวจสินค้า",
+      "exploreServices": "สำรวจบริการ",
+      "previous": "หมวดหมู่ก่อนหน้า",
+      "next": "หมวดหมู่ถัดไป"
+    },
+    "bestSelling": {
+      "eyebrow": "เดือนนี้",
+      "title": "สินค้าขายดี",
+      "empty": "ไม่พบสินค้าขายดี"
+    },
+    "newArrival": {
+      "eyebrow": "เดือนนี้",
+      "title": "ช้อปสินค้ามาใหม่",
+      "empty": "ไม่พบสินค้ามาใหม่"
+    },
+    "services": {
+      "title": "บริการ",
+      "empty": "ไม่พบบริการ",
+      "unknown": "ไม่ทราบ",
+      "fallbackCategory": "บริการ"
+    },
+    "features": {
+      "badge": "ทำไมต้องเลือกเรา",
+      "title": "ทำไมต้องช้อปและจองกับ",
+      "titleHighlight": "เรา",
+      "subtitle": "เราให้ความสำคัญกับความปลอดภัย ความสะดวก และความพึงพอใจของคุณในทุกการซื้อสินค้าและการจองบริการ",
+      "secureTitle": "ชำระเงินปลอดภัย",
+      "secureDescription": "ปลอดภัย 100%",
+      "returnsTitle": "คืนสินค้าง่าย",
+      "returnsDescription": "คืนสินค้าได้โดยไม่ยุ่งยาก",
+      "supportTitle": "ซัพพอร์ต 24/7",
+      "supportDescription": "เราพร้อมช่วยเหลือ",
+      "deliveryTitle": "จัดส่งรวดเร็ว",
+      "deliveryDescription": "ตรงเวลาทุกครั้ง",
+      "merchantsTitle": "ร้านค้าที่ยืนยันแล้ว",
+      "merchantsDescription": "น่าเชื่อถือและไว้ใจได้"
+    },
+    "appDownload": {
+      "heading": "ทุกสิ่งที่คุณต้องการ",
+      "headingAccent": "อยู่ในกระเป๋าคุณ",
+      "chooseApp": "เลือกแอป",
+      "downloadOnThe": "ดาวน์โหลดบน",
+      "appStore": "App Store",
+      "getItOn": "รับได้ที่",
+      "googlePlay": "Google Play",
+      "customerBadge": "สำหรับลูกค้า",
+      "customerTab": "ลูกค้า",
+      "customerTitle": "แอปลูกค้า",
+      "customerDescription": "ซื้อสินค้า จองบริการมืออาชีพ และติดตามคำสั่งซื้อแบบเรียลไทม์",
+      "customerFeature1": "ติดตามคำสั่งซื้อสด",
+      "customerFeature2": "รองรับหลายช่องทางชำระเงิน",
+      "customerFeature3": "ดีลพิเศษ",
+      "customerAlt": "หน้าจอหน้าแรกและการเลือกดูสินค้าของแอปลูกค้า",
+      "merchantBadge": "สำหรับผู้ขาย",
+      "merchantTab": "ผู้ขาย",
+      "merchantTitle": "แอปผู้ขาย",
+      "merchantDescription": "จัดการสต็อก ประมวลผลคำสั่งซื้อ และดูยอดขายได้ทุกที่",
+      "merchantFeature1": "ควบคุมสินค้าคงคลัง",
+      "merchantFeature2": "จัดส่งเป็นชุด",
+      "merchantFeature3": "รับเงินทันที",
+      "merchantAlt": "แดชบอร์ดผู้ขายบนแอปมือถือ",
+      "providerBadge": "สำหรับผู้ให้บริการ",
+      "providerTab": "ผู้ให้บริการ",
+      "providerTitle": "แอปผู้ให้บริการ",
+      "providerDescription": "รับการจอง จัดการนัดหมาย และสร้างธุรกิจบริการของคุณ",
+      "providerFeature1": "ปฏิทินการจอง",
+      "providerFeature2": "แชทตรงกับลูกค้า",
+      "providerFeature3": "ถอนรายได้",
+      "providerAlt": "แดชบอร์ดผู้ให้บริการบนแอปมือถือ",
+      "driverBadge": "สำหรับคนขับ",
+      "driverTab": "คนขับ",
+      "driverTitle": "แอปคนขับ",
+      "driverDescription": "รับงานจัดส่ง ใช้เส้นทางที่เหมาะสม และหารายได้ตามตารางของคุณ",
+      "driverFeature1": "นำทางเส้นทาง",
+      "driverFeature2": "ติดตามรายได้รายสัปดาห์",
+      "driverFeature3": "ซัพพอร์ตจัดส่ง 24/7",
+      "driverAlt": "หน้าจอติดตามการจัดส่งสดของแอปคนขับ"
+    }
   }
 }

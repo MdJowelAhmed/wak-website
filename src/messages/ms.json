@@ -82,5 +82,116 @@
     "title": "404 Halaman tidak dijumpai",
     "description": "Halaman yang anda lawati tidak dijumpai. Anda boleh ke laman utama.",
     "backHome": "Kembali ke laman utama"
+  },
+  "Home": {
+    "viewAll": "Lihat semua",
+    "banner": {
+      "shopNow": "Beli sekarang",
+      "viewService": "Lihat perkhidmatan",
+      "previous": "Banner sebelumnya",
+      "next": "Banner seterusnya"
+    },
+    "userTypes": {
+      "customerTitle": "Pelanggan",
+      "customerSubtitle": "Beli produk dan tempah perkhidmatan",
+      "customerCta": "Beli sekarang",
+      "vendorTitle": "Penjual / Peniaga",
+      "vendorSubtitle": "Jual produk anda",
+      "vendorCta": "Sertai sebagai peniaga",
+      "providerTitle": "Penyedia perkhidmatan",
+      "providerSubtitle": "Tawarkan perkhidmatan anda",
+      "providerCta": "Sertai sebagai penyedia",
+      "driverTitle": "Pemandu",
+      "driverSubtitle": "Hantar bersama kami",
+      "driverCta": "Sertai sebagai pemandu"
+    },
+    "categories": {
+      "products": "Kategori produk",
+      "services": "Kategori perkhidmatan",
+      "emptyProducts": "Tiada kategori produk dijumpai",
+      "emptyServices": "Tiada kategori perkhidmatan dijumpai"
+    },
+    "featured": {
+      "title": "Kategori unggulan",
+      "loading": "Memuatkan kategori...",
+      "empty": "Tiada kategori unggulan dijumpai.",
+      "exploreProducts": "Terokai produk",
+      "exploreServices": "Terokai perkhidmatan",
+      "previous": "Kategori sebelumnya",
+      "next": "Kategori seterusnya"
+    },
+    "bestSelling": {
+      "eyebrow": "Bulan ini",
+      "title": "Produk terlaris",
+      "empty": "Tiada produk terlaris dijumpai."
+    },
+    "newArrival": {
+      "eyebrow": "Bulan ini",
+      "title": "Beli ketibaan baharu",
+      "empty": "Tiada ketibaan baharu dijumpai."
+    },
+    "services": {
+      "title": "Perkhidmatan",
+      "empty": "Tiada perkhidmatan dijumpai.",
+      "unknown": "Tidak diketahui",
+      "fallbackCategory": "Perkhidmatan"
+    },
+    "features": {
+      "badge": "Mengapa pilih kami",
+      "title": "Mengapa beli dan tempah dengan",
+      "titleHighlight": "kami",
+      "subtitle": "Kami utamakan keselamatan, keselesaan dan kepuasan anda dalam setiap pembelian produk dan tempahan perkhidmatan.",
+      "secureTitle": "Pembayaran selamat",
+      "secureDescription": "100% selamat dan terlindung.",
+      "returnsTitle": "Pemulangan mudah",
+      "returnsDescription": "Pemulangan tanpa kerumitan.",
+      "supportTitle": "Sokongan 24/7",
+      "supportDescription": "Kami sedia membantu.",
+      "deliveryTitle": "Penghantaran pantas",
+      "deliveryDescription": "Tepat masa, setiap kali.",
+      "merchantsTitle": "Peniaga disahkan",
+      "merchantsDescription": "Dipercayai dan boleh diharap."
+    },
+    "appDownload": {
+      "heading": "Semua yang anda perlukan,",
+      "headingAccent": "dalam poket anda.",
+      "chooseApp": "Pilih aplikasi",
+      "downloadOnThe": "Muat turun di",
+      "appStore": "App Store",
+      "getItOn": "Dapatkannya di",
+      "googlePlay": "Google Play",
+      "customerBadge": "Untuk pelanggan",
+      "customerTab": "Pelanggan",
+      "customerTitle": "Aplikasi pelanggan",
+      "customerDescription": "Beli produk, tempah perkhidmatan profesional dan jejak pesanan secara masa nyata.",
+      "customerFeature1": "Penjejakan pesanan secara langsung",
+      "customerFeature2": "Sokongan pelbagai pembayaran",
+      "customerFeature3": "Tawaran eksklusif",
+      "customerAlt": "Skrin utama dan semakan produk aplikasi pelanggan",
+      "merchantBadge": "Untuk peniaga",
+      "merchantTab": "Peniaga",
+      "merchantTitle": "Aplikasi peniaga",
+      "merchantDescription": "Urus inventori, proses pesanan dan lihat jualan di mana sahaja.",
+      "merchantFeature1": "Kawalan inventori",
+      "merchantFeature2": "Pemenuhan secara kelompok",
+      "merchantFeature3": "Pembayaran segera",
+      "merchantAlt": "Papan pemuka peniaga pada aplikasi mudah alih",
+      "providerBadge": "Untuk penyedia perkhidmatan",
+      "providerTab": "Penyedia",
+      "providerTitle": "Aplikasi penyedia perkhidmatan",
+      "providerDescription": "Terima tempahan, urus jadual dan bina perniagaan perkhidmatan anda.",
+      "providerFeature1": "Kalendar tempahan",
+      "providerFeature2": "Mesej terus dengan pelanggan",
+      "providerFeature3": "Pengeluaran pendapatan",
+      "providerAlt": "Papan pemuka penyedia perkhidmatan pada aplikasi mudah alih",
+      "driverBadge": "Untuk pemandu",
+      "driverTab": "Pemandu",
+      "driverTitle": "Aplikasi pemandu",
+      "driverDescription": "Terima permintaan penghantaran, ikut laluan dioptimumkan dan jana pendapatan mengikut jadual anda.",
+      "driverFeature1": "Navigasi laluan",
+      "driverFeature2": "Penjejak pendapatan mingguan",
+      "driverFeature3": "Sokongan penghantaran 24/7",
+      "driverAlt": "Skrin penjejakan penghantaran langsung aplikasi pemandu"
+    }
   }
 }

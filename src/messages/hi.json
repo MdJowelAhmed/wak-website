@@ -82,5 +82,116 @@
     "title": "404 पेज नहीं मिला",
     "description": "आपके द्वारा देखा गया पेज नहीं मिला। आप होम पेज पर जा सकते हैं।",
     "backHome": "होम पेज पर वापस जाएँ"
+  },
+  "Home": {
+    "viewAll": "सभी देखें",
+    "banner": {
+      "shopNow": "अभी खरीदें",
+      "viewService": "सेवा देखें",
+      "previous": "पिछले बैनर",
+      "next": "अगले बैनर"
+    },
+    "userTypes": {
+      "customerTitle": "ग्राहक",
+      "customerSubtitle": "उत्पाद खरीदें और सेवाएँ बुक करें",
+      "customerCta": "अभी खरीदें",
+      "vendorTitle": "विक्रेता / व्यापारी",
+      "vendorSubtitle": "अपने उत्पाद बेचें",
+      "vendorCta": "व्यापारी के रूप में जुड़ें",
+      "providerTitle": "सेवा प्रदाता",
+      "providerSubtitle": "अपनी सेवाएँ दें",
+      "providerCta": "प्रदाता के रूप में जुड़ें",
+      "driverTitle": "ड्राइवर",
+      "driverSubtitle": "हमारे साथ डिलीवरी करें",
+      "driverCta": "ड्राइवर के रूप में जुड़ें"
+    },
+    "categories": {
+      "products": "उत्पाद श्रेणियाँ",
+      "services": "सेवा श्रेणियाँ",
+      "emptyProducts": "कोई उत्पाद श्रेणी नहीं मिली",
+      "emptyServices": "कोई सेवा श्रेणी नहीं मिली"
+    },
+    "featured": {
+      "title": "विशेष श्रेणियाँ",
+      "loading": "श्रेणियाँ लोड हो रही हैं...",
+      "empty": "कोई विशेष श्रेणी नहीं मिली।",
+      "exploreProducts": "उत्पाद देखें",
+      "exploreServices": "सेवाएँ देखें",
+      "previous": "पिछली श्रेणियाँ",
+      "next": "अगली श्रेणियाँ"
+    },
+    "bestSelling": {
+      "eyebrow": "इस महीने",
+      "title": "सबसे ज़्यादा बिकने वाले उत्पाद",
+      "empty": "कोई बेस्ट सेलिंग उत्पाद नहीं मिला।"
+    },
+    "newArrival": {
+      "eyebrow": "इस महीने",
+      "title": "नई आवक से खरीदें",
+      "empty": "कोई नई आवक नहीं मिली।"
+    },
+    "services": {
+      "title": "सेवाएँ",
+      "empty": "कोई सेवा नहीं मिली।",
+      "unknown": "अज्ञात",
+      "fallbackCategory": "सेवा"
+    },
+    "features": {
+      "badge": "हमें क्यों चुनें",
+      "title": "खरीदारी और बुकिंग क्यों करें",
+      "titleHighlight": "हमारे साथ",
+      "subtitle": "हर उत्पाद खरीद और सेवा बुकिंग में हम आपकी सुरक्षा, सुविधा और संतुष्टि को प्राथमिकता देते हैं।",
+      "secureTitle": "सुरक्षित भुगतान",
+      "secureDescription": "100% सुरक्षित और संरक्षित।",
+      "returnsTitle": "आसान रिटर्न",
+      "returnsDescription": "बिना झंझट के वापसी।",
+      "supportTitle": "24/7 सहायता",
+      "supportDescription": "हम मदद के लिए तैयार हैं।",
+      "deliveryTitle": "तेज़ डिलीवरी",
+      "deliveryDescription": "हर बार समय पर।",
+      "merchantsTitle": "सत्यापित व्यापारी",
+      "merchantsDescription": "विश्वसनीय और भरोसेमंद।"
+    },
+    "appDownload": {
+      "heading": "जो भी चाहिए,",
+      "headingAccent": "आपकी जेब में।",
+      "chooseApp": "एक ऐप चुनें",
+      "downloadOnThe": "डाउनलोड करें",
+      "appStore": "App Store",
+      "getItOn": "उपलब्ध",
+      "googlePlay": "Google Play",
+      "customerBadge": "ग्राहकों के लिए",
+      "customerTab": "ग्राहक",
+      "customerTitle": "ग्राहक ऐप",
+      "customerDescription": "उत्पाद खरीदें, पेशेवर सेवाएँ बुक करें और ऑर्डर रियल-टाइम में ट्रैक करें।",
+      "customerFeature1": "लाइव ऑर्डर ट्रैकिंग",
+      "customerFeature2": "कई भुगतान विकल्प",
+      "customerFeature3": "विशेष ऑफ़र",
+      "customerAlt": "ग्राहक ऐप होम और उत्पाद ब्राउज़िंग स्क्रीन",
+      "merchantBadge": "व्यापारियों के लिए",
+      "merchantTab": "व्यापारी",
+      "merchantTitle": "व्यापारी ऐप",
+      "merchantDescription": "इन्वेंटरी प्रबंधित करें, ऑर्डर प्रोसेस करें और कहीं से भी बिक्री देखें।",
+      "merchantFeature1": "इन्वेंटरी नियंत्रण",
+      "merchantFeature2": "बैच फुलफिलमेंट",
+      "merchantFeature3": "तुरंत भुगतान",
+      "merchantAlt": "मोबाइल ऐप पर व्यापारी डैशबोर्ड",
+      "providerBadge": "सेवा प्रदाताओं के लिए",
+      "providerTab": "प्रदाता",
+      "providerTitle": "सेवा प्रदाता ऐप",
+      "providerDescription": "बुकिंग प्राप्त करें, अपॉइंटमेंट प्रबंधित करें और अपना सेवा व्यवसाय बढ़ाएँ।",
+      "providerFeature1": "बुकिंग कैलेंडर",
+      "providerFeature2": "सीधे ग्राहक संदेश",
+      "providerFeature3": "कमाई निकासी",
+      "providerAlt": "मोबाइल ऐप पर सेवा प्रदाता डैशबोर्ड",
+      "driverBadge": "ड्राइवरों के लिए",
+      "driverTab": "ड्राइवर",
+      "driverTitle": "ड्राइवर ऐप",
+      "driverDescription": "डिलीवरी अनुरोध स्वीकार करें, बेहतर रूट पर चलें और अपने समय पर कमाएँ।",
+      "driverFeature1": "रूट नेविगेशन",
+      "driverFeature2": "साप्ताहिक कमाई ट्रैकर",
+      "driverFeature3": "24/7 डिलीवरी सहायता",
+      "driverAlt": "ड्राइवर ऐप की लाइव डिलीवरी ट्रैकिंग स्क्रीन"
+    }
   }
 }

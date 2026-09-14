@@ -82,5 +82,116 @@
     "title": "404 Página não encontrada",
     "description": "A página que visitou não foi encontrada. Pode ir para a página inicial.",
     "backHome": "Voltar ao início"
+  },
+  "Home": {
+    "viewAll": "Ver tudo",
+    "banner": {
+      "shopNow": "Comprar agora",
+      "viewService": "Ver serviço",
+      "previous": "Banners anteriores",
+      "next": "Próximos banners"
+    },
+    "userTypes": {
+      "customerTitle": "Cliente",
+      "customerSubtitle": "Compre produtos e reserve serviços",
+      "customerCta": "Comprar agora",
+      "vendorTitle": "Vendedor / Comerciante",
+      "vendorSubtitle": "Venda os seus produtos",
+      "vendorCta": "Juntar-se como comerciante",
+      "providerTitle": "Prestador de serviços",
+      "providerSubtitle": "Ofereça os seus serviços",
+      "providerCta": "Juntar-se como prestador",
+      "driverTitle": "Motorista",
+      "driverSubtitle": "Entregue connosco",
+      "driverCta": "Juntar-se como motorista"
+    },
+    "categories": {
+      "products": "Categorias de produtos",
+      "services": "Categorias de serviços",
+      "emptyProducts": "Nenhuma categoria de produtos encontrada",
+      "emptyServices": "Nenhuma categoria de serviços encontrada"
+    },
+    "featured": {
+      "title": "Categorias em destaque",
+      "loading": "A carregar categorias...",
+      "empty": "Nenhuma categoria em destaque encontrada.",
+      "exploreProducts": "Explorar produtos",
+      "exploreServices": "Explorar serviços",
+      "previous": "Categorias anteriores",
+      "next": "Próximas categorias"
+    },
+    "bestSelling": {
+      "eyebrow": "Este mês",
+      "title": "Produtos mais vendidos",
+      "empty": "Nenhum produto mais vendido encontrado."
+    },
+    "newArrival": {
+      "eyebrow": "Este mês",
+      "title": "Compre as novidades",
+      "empty": "Nenhuma novidade encontrada."
+    },
+    "services": {
+      "title": "Serviços",
+      "empty": "Nenhum serviço encontrado.",
+      "unknown": "Desconhecido",
+      "fallbackCategory": "Serviço"
+    },
+    "features": {
+      "badge": "Porquê escolher-nos",
+      "title": "Porque comprar e reservar connosco",
+      "titleHighlight": "nós",
+      "subtitle": "Priorizamos a sua segurança, conveniência e satisfação em cada compra e reserva de serviço.",
+      "secureTitle": "Pagamentos seguros",
+      "secureDescription": "100% seguros e protegidos.",
+      "returnsTitle": "Devoluções fáceis",
+      "returnsDescription": "Devoluções sem complicações.",
+      "supportTitle": "Apoio 24/7",
+      "supportDescription": "Estamos aqui para ajudar.",
+      "deliveryTitle": "Entrega rápida",
+      "deliveryDescription": "A tempo, sempre.",
+      "merchantsTitle": "Comerciantes verificados",
+      "merchantsDescription": "Confiáveis e seguros."
+    },
+    "appDownload": {
+      "heading": "Tudo o que precisa,",
+      "headingAccent": "no seu bolso.",
+      "chooseApp": "Escolher uma app",
+      "downloadOnThe": "Descarregar na",
+      "appStore": "App Store",
+      "getItOn": "Obter no",
+      "googlePlay": "Google Play",
+      "customerBadge": "Para clientes",
+      "customerTab": "Cliente",
+      "customerTitle": "App do cliente",
+      "customerDescription": "Compre produtos, reserve serviços profissionais e acompanhe encomendas em tempo real.",
+      "customerFeature1": "Rastreio de encomendas em direto",
+      "customerFeature2": "Vários métodos de pagamento",
+      "customerFeature3": "Ofertas exclusivas",
+      "customerAlt": "Ecrãs iniciais e de produtos da app do cliente",
+      "merchantBadge": "Para comerciantes",
+      "merchantTab": "Comerciante",
+      "merchantTitle": "App do comerciante",
+      "merchantDescription": "Gira o inventário, processe encomendas e veja as vendas em qualquer lugar.",
+      "merchantFeature1": "Controlo de inventário",
+      "merchantFeature2": "Cumprimento em lote",
+      "merchantFeature3": "Pagamentos instantâneos",
+      "merchantAlt": "Painel do comerciante na app móvel",
+      "providerBadge": "Para prestadores de serviços",
+      "providerTab": "Prestador",
+      "providerTitle": "App do prestador de serviços",
+      "providerDescription": "Receba reservas, gira horários e desenvolva o seu negócio de serviços.",
+      "providerFeature1": "Calendário de reservas",
+      "providerFeature2": "Mensagens diretas com clientes",
+      "providerFeature3": "Levantamento de ganhos",
+      "providerAlt": "Painel do prestador na app móvel",
+      "driverBadge": "Para motoristas",
+      "driverTab": "Motorista",
+      "driverTitle": "App do motorista",
+      "driverDescription": "Aceite entregas, siga rotas otimizadas e ganhe no seu horário.",
+      "driverFeature1": "Navegação de rotas",
+      "driverFeature2": "Acompanhamento de ganhos semanais",
+      "driverFeature3": "Apoio de entregas 24/7",
+      "driverAlt": "Ecrã de rastreio de entrega em direto da app do motorista"
+    }
   }
 }

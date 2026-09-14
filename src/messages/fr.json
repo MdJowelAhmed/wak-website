@@ -82,5 +82,116 @@
     "title": "404 Page introuvable",
     "description": "La page visitée est introuvable. Vous pouvez retourner à l’accueil.",
     "backHome": "Retour à l’accueil"
+  },
+  "Home": {
+    "viewAll": "Tout voir",
+    "banner": {
+      "shopNow": "Acheter maintenant",
+      "viewService": "Voir le service",
+      "previous": "Bannières précédentes",
+      "next": "Bannières suivantes"
+    },
+    "userTypes": {
+      "customerTitle": "Client",
+      "customerSubtitle": "Achetez des produits et réservez des services",
+      "customerCta": "Acheter maintenant",
+      "vendorTitle": "Vendeur / Marchand",
+      "vendorSubtitle": "Vendez vos produits",
+      "vendorCta": "Devenir marchand",
+      "providerTitle": "Prestataire de services",
+      "providerSubtitle": "Proposez vos services",
+      "providerCta": "Devenir prestataire",
+      "driverTitle": "Chauffeur",
+      "driverSubtitle": "Livrez avec nous",
+      "driverCta": "Devenir chauffeur"
+    },
+    "categories": {
+      "products": "Catégories de produits",
+      "services": "Catégories de services",
+      "emptyProducts": "Aucune catégorie de produits trouvée",
+      "emptyServices": "Aucune catégorie de services trouvée"
+    },
+    "featured": {
+      "title": "Catégories en vedette",
+      "loading": "Chargement des catégories...",
+      "empty": "Aucune catégorie en vedette trouvée.",
+      "exploreProducts": "Explorer les produits",
+      "exploreServices": "Explorer les services",
+      "previous": "Catégories précédentes",
+      "next": "Catégories suivantes"
+    },
+    "bestSelling": {
+      "eyebrow": "Ce mois-ci",
+      "title": "Meilleures ventes",
+      "empty": "Aucune meilleure vente trouvée."
+    },
+    "newArrival": {
+      "eyebrow": "Ce mois-ci",
+      "title": "Acheter les nouveautés",
+      "empty": "Aucune nouveauté trouvée."
+    },
+    "services": {
+      "title": "Services",
+      "empty": "Aucun service trouvé.",
+      "unknown": "Inconnu",
+      "fallbackCategory": "Service"
+    },
+    "features": {
+      "badge": "Pourquoi nous choisir",
+      "title": "Pourquoi acheter et réserver chez",
+      "titleHighlight": "nous",
+      "subtitle": "Nous privilégions votre sécurité, votre confort et votre satisfaction à chaque achat et réservation.",
+      "secureTitle": "Paiements sécurisés",
+      "secureDescription": "100 % sûrs et protégés.",
+      "returnsTitle": "Retours faciles",
+      "returnsDescription": "Retours sans tracas.",
+      "supportTitle": "Support 24h/24",
+      "supportDescription": "Nous sommes là pour vous aider.",
+      "deliveryTitle": "Livraison rapide",
+      "deliveryDescription": "À l’heure, à chaque fois.",
+      "merchantsTitle": "Marchands vérifiés",
+      "merchantsDescription": "Fiables et de confiance."
+    },
+    "appDownload": {
+      "heading": "Tout ce dont vous avez besoin,",
+      "headingAccent": "dans votre poche.",
+      "chooseApp": "Choisir une application",
+      "downloadOnThe": "Télécharger sur",
+      "appStore": "App Store",
+      "getItOn": "Disponible sur",
+      "googlePlay": "Google Play",
+      "customerBadge": "Pour les clients",
+      "customerTab": "Client",
+      "customerTitle": "Application client",
+      "customerDescription": "Achetez des produits, réservez des services professionnels et suivez vos commandes en temps réel.",
+      "customerFeature1": "Suivi des commandes en direct",
+      "customerFeature2": "Paiements multiples",
+      "customerFeature3": "Offres exclusives",
+      "customerAlt": "Écrans d’accueil et de navigation produits de l’application client",
+      "merchantBadge": "Pour les marchands",
+      "merchantTab": "Marchand",
+      "merchantTitle": "Application marchand",
+      "merchantDescription": "Gérez le stock, traitez les commandes et consultez les ventes où que vous soyez.",
+      "merchantFeature1": "Gestion des stocks",
+      "merchantFeature2": "Traitement par lots",
+      "merchantFeature3": "Paiements instantanés",
+      "merchantAlt": "Tableau de bord marchand sur l’application mobile",
+      "providerBadge": "Pour les prestataires",
+      "providerTab": "Prestataire",
+      "providerTitle": "Application prestataire",
+      "providerDescription": "Recevez des réservations, gérez les rendez-vous et développez votre activité de services.",
+      "providerFeature1": "Calendrier de réservation",
+      "providerFeature2": "Messagerie directe client",
+      "providerFeature3": "Retrait des gains",
+      "providerAlt": "Tableau de bord prestataire sur l’application mobile",
+      "driverBadge": "Pour les chauffeurs",
+      "driverTab": "Chauffeur",
+      "driverTitle": "Application chauffeur",
+      "driverDescription": "Acceptez des livraisons, suivez des itinéraires optimisés et gagnez selon votre emploi du temps.",
+      "driverFeature1": "Navigation d’itinéraire",
+      "driverFeature2": "Suivi des gains hebdomadaires",
+      "driverFeature3": "Support livraison 24h/24",
+      "driverAlt": "Écran de suivi de livraison en direct de l’application chauffeur"
+    }
   }
 }

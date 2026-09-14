@@ -82,5 +82,116 @@
     "title": "404 الصفحة غير موجودة",
     "description": "الصفحة التي زرتها غير موجودة. يمكنك العودة إلى الصفحة الرئيسية.",
     "backHome": "العودة إلى الرئيسية"
+  },
+  "Home": {
+    "viewAll": "عرض الكل",
+    "banner": {
+      "shopNow": "تسوق الآن",
+      "viewService": "عرض الخدمة",
+      "previous": "البانرات السابقة",
+      "next": "البانرات التالية"
+    },
+    "userTypes": {
+      "customerTitle": "عميل",
+      "customerSubtitle": "اشترِ المنتجات واحجز الخدمات",
+      "customerCta": "تسوق الآن",
+      "vendorTitle": "بائع / تاجر",
+      "vendorSubtitle": "بع منتجاتك",
+      "vendorCta": "انضم كتاجر",
+      "providerTitle": "مقدّم خدمة",
+      "providerSubtitle": "قدّم خدماتك",
+      "providerCta": "انضم كمقدّم خدمة",
+      "driverTitle": "سائق",
+      "driverSubtitle": "وصّل معنا",
+      "driverCta": "انضم كسائق"
+    },
+    "categories": {
+      "products": "فئات المنتجات",
+      "services": "فئات الخدمات",
+      "emptyProducts": "لم يتم العثور على فئات منتجات",
+      "emptyServices": "لم يتم العثور على فئات خدمات"
+    },
+    "featured": {
+      "title": "الفئات المميزة",
+      "loading": "جارٍ تحميل الفئات...",
+      "empty": "لم يتم العثور على فئات مميزة.",
+      "exploreProducts": "استكشف المنتجات",
+      "exploreServices": "استكشف الخدمات",
+      "previous": "الفئات السابقة",
+      "next": "الفئات التالية"
+    },
+    "bestSelling": {
+      "eyebrow": "هذا الشهر",
+      "title": "المنتجات الأكثر مبيعًا",
+      "empty": "لم يتم العثور على منتجات الأكثر مبيعًا."
+    },
+    "newArrival": {
+      "eyebrow": "هذا الشهر",
+      "title": "تسوق من الوصول الجديد",
+      "empty": "لم يتم العثور على وصول جديد."
+    },
+    "services": {
+      "title": "الخدمات",
+      "empty": "لم يتم العثور على خدمات.",
+      "unknown": "غير معروف",
+      "fallbackCategory": "خدمة"
+    },
+    "features": {
+      "badge": "لماذا تختارنا",
+      "title": "لماذا تتسوق وتحجز",
+      "titleHighlight": "معنا",
+      "subtitle": "نضع سلامتك وراحتك ورضاك الكامل أولوية في كل عملية شراء وحجز خدمة.",
+      "secureTitle": "مدفوعات آمنة",
+      "secureDescription": "آمنة ومحمية بنسبة 100%.",
+      "returnsTitle": "إرجاع سهل",
+      "returnsDescription": "إرجاع بدون متاعب.",
+      "supportTitle": "دعم على مدار الساعة",
+      "supportDescription": "نحن هنا للمساعدة.",
+      "deliveryTitle": "توصيل سريع",
+      "deliveryDescription": "في الوقت المحدد في كل مرة.",
+      "merchantsTitle": "تجار موثّقون",
+      "merchantsDescription": "موثوقون ومعتمدون."
+    },
+    "appDownload": {
+      "heading": "كل ما تحتاجه،",
+      "headingAccent": "في جيبك.",
+      "chooseApp": "اختر تطبيقًا",
+      "downloadOnThe": "حمّل من",
+      "appStore": "App Store",
+      "getItOn": "احصل عليه من",
+      "googlePlay": "Google Play",
+      "customerBadge": "للعملاء",
+      "customerTab": "عميل",
+      "customerTitle": "تطبيق العميل",
+      "customerDescription": "اشترِ المنتجات، واحجز خدمات احترافية، وتتبع طلباتك في الوقت الفعلي.",
+      "customerFeature1": "تتبع الطلب مباشرة",
+      "customerFeature2": "دعم طرق دفع متعددة",
+      "customerFeature3": "عروض حصرية",
+      "customerAlt": "شاشات الصفحة الرئيسية وتصفح المنتجات في تطبيق العميل",
+      "merchantBadge": "للتجار",
+      "merchantTab": "تاجر",
+      "merchantTitle": "تطبيق التاجر",
+      "merchantDescription": "أدِر المخزون، ونفّذ الطلبات، واطّلع على المبيعات أينما كنت.",
+      "merchantFeature1": "التحكم في المخزون",
+      "merchantFeature2": "تنفيذ جماعي",
+      "merchantFeature3": "مدفوعات فورية",
+      "merchantAlt": "لوحة التاجر في التطبيق",
+      "providerBadge": "لمقدّمي الخدمات",
+      "providerTab": "مقدّم",
+      "providerTitle": "تطبيق مقدّم الخدمة",
+      "providerDescription": "استقبل حجوزات العملاء، وأدر المواعيد، وابنِ عملك الخدمي.",
+      "providerFeature1": "تقويم الحجوزات",
+      "providerFeature2": "رسائل مباشرة مع العملاء",
+      "providerFeature3": "سحب الأرباح",
+      "providerAlt": "لوحة مقدّم الخدمة في التطبيق",
+      "driverBadge": "للسائقين",
+      "driverTab": "سائق",
+      "driverTitle": "تطبيق السائق",
+      "driverDescription": "اقبل طلبات التوصيل، واتبع المسارات المحسّنة، واكسب وفق جدولك.",
+      "driverFeature1": "ملاحة المسار",
+      "driverFeature2": "متتبع الأرباح الأسبوعية",
+      "driverFeature3": "دعم توصيل على مدار الساعة",
+      "driverAlt": "شاشة تتبع التوصيل المباشر في تطبيق السائق"
+    }
   }
 }

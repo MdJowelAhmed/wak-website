@@ -82,5 +82,116 @@
     "title": "404 Sayfa bulunamadı",
     "description": "Ziyaret ettiğiniz sayfa bulunamadı. Ana sayfaya gidebilirsiniz.",
     "backHome": "Ana sayfaya dön"
+  },
+  "Home": {
+    "viewAll": "Tümünü gör",
+    "banner": {
+      "shopNow": "Şimdi alışveriş yap",
+      "viewService": "Hizmeti gör",
+      "previous": "Önceki bannerlar",
+      "next": "Sonraki bannerlar"
+    },
+    "userTypes": {
+      "customerTitle": "Müşteri",
+      "customerSubtitle": "Ürün alın ve hizmet rezervasyonu yapın",
+      "customerCta": "Şimdi alışveriş yap",
+      "vendorTitle": "Satıcı / Tüccar",
+      "vendorSubtitle": "Ürünlerinizi satın",
+      "vendorCta": "Tüccar olarak katılın",
+      "providerTitle": "Hizmet sağlayıcı",
+      "providerSubtitle": "Hizmetlerinizi sunun",
+      "providerCta": "Sağlayıcı olarak katılın",
+      "driverTitle": "Sürücü",
+      "driverSubtitle": "Bizimle teslimat yapın",
+      "driverCta": "Sürücü olarak katılın"
+    },
+    "categories": {
+      "products": "Ürün kategorileri",
+      "services": "Hizmet kategorileri",
+      "emptyProducts": "Ürün kategorisi bulunamadı",
+      "emptyServices": "Hizmet kategorisi bulunamadı"
+    },
+    "featured": {
+      "title": "Öne çıkan kategoriler",
+      "loading": "Kategoriler yükleniyor...",
+      "empty": "Öne çıkan kategori bulunamadı.",
+      "exploreProducts": "Ürünleri keşfet",
+      "exploreServices": "Hizmetleri keşfet",
+      "previous": "Önceki kategoriler",
+      "next": "Sonraki kategoriler"
+    },
+    "bestSelling": {
+      "eyebrow": "Bu ay",
+      "title": "En çok satan ürünler",
+      "empty": "En çok satan ürün bulunamadı."
+    },
+    "newArrival": {
+      "eyebrow": "Bu ay",
+      "title": "Yeni gelenlerden alışveriş yapın",
+      "empty": "Yeni gelen ürün bulunamadı."
+    },
+    "services": {
+      "title": "Hizmetler",
+      "empty": "Hizmet bulunamadı.",
+      "unknown": "Bilinmiyor",
+      "fallbackCategory": "Hizmet"
+    },
+    "features": {
+      "badge": "Neden bizi seçmelisiniz",
+      "title": "Neden alışveriş ve rezervasyon",
+      "titleHighlight": "bizimle",
+      "subtitle": "Her ürün alımında ve hizmet rezervasyonunda güvenliğinizi, kolaylığınızı ve memnuniyetinizi ön planda tutarız.",
+      "secureTitle": "Güvenli ödemeler",
+      "secureDescription": "%100 güvenli ve korumalı.",
+      "returnsTitle": "Kolay iade",
+      "returnsDescription": "Sorunsuz iadeler.",
+      "supportTitle": "7/24 destek",
+      "supportDescription": "Yardım için buradayız.",
+      "deliveryTitle": "Hızlı teslimat",
+      "deliveryDescription": "Her seferinde zamanında.",
+      "merchantsTitle": "Doğrulanmış satıcılar",
+      "merchantsDescription": "Güvenilir ve emin."
+    },
+    "appDownload": {
+      "heading": "İhtiyacınız olan her şey,",
+      "headingAccent": "cebinizde.",
+      "chooseApp": "Bir uygulama seçin",
+      "downloadOnThe": "İndir",
+      "appStore": "App Store",
+      "getItOn": "Şurada edinin",
+      "googlePlay": "Google Play",
+      "customerBadge": "Müşteriler için",
+      "customerTab": "Müşteri",
+      "customerTitle": "Müşteri uygulaması",
+      "customerDescription": "Ürün alın, profesyonel hizmet rezervasyonu yapın ve siparişlerinizi gerçek zamanlı takip edin.",
+      "customerFeature1": "Canlı sipariş takibi",
+      "customerFeature2": "Çoklu ödeme desteği",
+      "customerFeature3": "Özel fırsatlar",
+      "customerAlt": "Müşteri uygulaması ana sayfa ve ürün tarama ekranları",
+      "merchantBadge": "Satıcılar için",
+      "merchantTab": "Satıcı",
+      "merchantTitle": "Satıcı uygulaması",
+      "merchantDescription": "Envanteri yönetin, siparişleri işleyin ve satışları her yerden görün.",
+      "merchantFeature1": "Envanter kontrolü",
+      "merchantFeature2": "Toplu yerine getirme",
+      "merchantFeature3": "Anında ödeme",
+      "merchantAlt": "Mobil uygulamada satıcı panosu",
+      "providerBadge": "Hizmet sağlayıcılar için",
+      "providerTab": "Sağlayıcı",
+      "providerTitle": "Hizmet sağlayıcı uygulaması",
+      "providerDescription": "Rezervasyon alın, randevuları yönetin ve hizmet işinizi büyütün.",
+      "providerFeature1": "Rezervasyon takvimi",
+      "providerFeature2": "Doğrudan müşteri mesajları",
+      "providerFeature3": "Kazanç çekimi",
+      "providerAlt": "Mobil uygulamada hizmet sağlayıcı panosu",
+      "driverBadge": "Sürücüler için",
+      "driverTab": "Sürücü",
+      "driverTitle": "Sürücü uygulaması",
+      "driverDescription": "Teslimat taleplerini kabul edin, optimize edilmiş rotaları izleyin ve kendi programınıza göre kazanın.",
+      "driverFeature1": "Rota navigasyonu",
+      "driverFeature2": "Haftalık kazanç takibi",
+      "driverFeature3": "7/24 teslimat desteği",
+      "driverAlt": "Sürücü uygulamasının canlı teslimat takip ekranı"
+    }
   }
 }

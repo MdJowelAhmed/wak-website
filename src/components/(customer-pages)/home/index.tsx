@@ -4,7 +4,6 @@ import UserTypes from "./components/UserTypes";
 import AllBrands from "./components/AllBrands";
 import Banner, { BannerSkeleton } from "./components/Banner";
 import BestSelling, { BestSellingSkeleton } from "./components/BestSelling";
-import FeaturedCategories from "./components/FeaturedCategories";
 import Features from "./components/Features";
 import NewArrival from "./components/NewArrival";
 import Services from "./components/Services";
@@ -60,7 +59,6 @@ const Home = async () => {
                 productCategories={productCategories}
                 serviceCategories={serviceCategories}
             />
-            {/* <FeaturedCategories /> */}
             <Suspense fallback={<BestSellingSkeleton />}>
                 <BestSelling initialProducts={bestSellingProducts} />
             </Suspense>

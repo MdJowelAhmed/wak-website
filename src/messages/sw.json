@@ -82,5 +82,116 @@
     "title": "404 Ukurasa haujapatikana",
     "description": "Ukurasa uliotembelea haujapatikana. Unaweza kurudi ukurasa wa nyumbani.",
     "backHome": "Rudi nyumbani"
+  },
+  "Home": {
+    "viewAll": "Tazama zote",
+    "banner": {
+      "shopNow": "Nunua sasa",
+      "viewService": "Tazama huduma",
+      "previous": "Mabango yaliyotangulia",
+      "next": "Mabango yafuatayo"
+    },
+    "userTypes": {
+      "customerTitle": "Mteja",
+      "customerSubtitle": "Nunua bidhaa na weka huduma",
+      "customerCta": "Nunua sasa",
+      "vendorTitle": "Muuzaji / Mfanyabiashara",
+      "vendorSubtitle": "Uza bidhaa zako",
+      "vendorCta": "Jiunge kama mfanyabiashara",
+      "providerTitle": "Mtoa huduma",
+      "providerSubtitle": "Toa huduma zako",
+      "providerCta": "Jiunge kama mtoa huduma",
+      "driverTitle": "Dereva",
+      "driverSubtitle": "Peleka na sisi",
+      "driverCta": "Jiunge kama dereva"
+    },
+    "categories": {
+      "products": "Kategoria za bidhaa",
+      "services": "Kategoria za huduma",
+      "emptyProducts": "Hakuna kategoria za bidhaa",
+      "emptyServices": "Hakuna kategoria za huduma"
+    },
+    "featured": {
+      "title": "Kategoria maarufu",
+      "loading": "Inapakia kategoria...",
+      "empty": "Hakuna kategoria maarufu.",
+      "exploreProducts": "Gundua bidhaa",
+      "exploreServices": "Gundua huduma",
+      "previous": "Kategoria zilizotangulia",
+      "next": "Kategoria zijazo"
+    },
+    "bestSelling": {
+      "eyebrow": "Mwezi huu",
+      "title": "Bidhaa zinazouzwa zaidi",
+      "empty": "Hakuna bidhaa zinazouzwa zaidi."
+    },
+    "newArrival": {
+      "eyebrow": "Mwezi huu",
+      "title": "Nunua vitu vipya",
+      "empty": "Hakuna vitu vipya."
+    },
+    "services": {
+      "title": "Huduma",
+      "empty": "Hakuna huduma.",
+      "unknown": "Haijulikani",
+      "fallbackCategory": "Huduma"
+    },
+    "features": {
+      "badge": "Kwa nini tuchague",
+      "title": "Kwa nini ununue na uhifadhi na",
+      "titleHighlight": "sisi",
+      "subtitle": "Tunaweka usalama wako, urahisi, na kuridhika kamili kwanza katika kila ununuzi na uhifadhi wa huduma.",
+      "secureTitle": "Malipo salama",
+      "secureDescription": "Salama 100%.",
+      "returnsTitle": "Marejesho rahisi",
+      "returnsDescription": "Marejesho bila shida.",
+      "supportTitle": "Msaada 24/7",
+      "supportDescription": "Tuko hapa kukusaidia.",
+      "deliveryTitle": "Uwasilishaji wa haraka",
+      "deliveryDescription": "Kwa wakati, kila mara.",
+      "merchantsTitle": "Wafanyabiashara walioidhinishwa",
+      "merchantsDescription": "Waaminifu na wategemewa."
+    },
+    "appDownload": {
+      "heading": "Kila unachohitaji,",
+      "headingAccent": "mfukoni mwako.",
+      "chooseApp": "Chagua programu",
+      "downloadOnThe": "Pakua kwenye",
+      "appStore": "App Store",
+      "getItOn": "Pata kwenye",
+      "googlePlay": "Google Play",
+      "customerBadge": "Kwa wateja",
+      "customerTab": "Mteja",
+      "customerTitle": "Programu ya mteja",
+      "customerDescription": "Nunua bidhaa, weka huduma za kitaalamu, na fuatilia oda zako moja kwa moja.",
+      "customerFeature1": "Ufuatiliaji wa oda moja kwa moja",
+      "customerFeature2": "Njia nyingi za malipo",
+      "customerFeature3": "Ofa maalum",
+      "customerAlt": "Skrini za nyumbani na bidhaa za programu ya mteja",
+      "merchantBadge": "Kwa wafanyabiashara",
+      "merchantTab": "Mfanyabiashara",
+      "merchantTitle": "Programu ya mfanyabiashara",
+      "merchantDescription": "Simamia hisa, shughulikia oda, na tazama mauzo popote.",
+      "merchantFeature1": "Udhibiti wa hisa",
+      "merchantFeature2": "Utimilifu wa kundi",
+      "merchantFeature3": "Malipo ya papo hapo",
+      "merchantAlt": "Dashibodi ya mfanyabiashara kwenye programu",
+      "providerBadge": "Kwa watoa huduma",
+      "providerTab": "Mtoa huduma",
+      "providerTitle": "Programu ya mtoa huduma",
+      "providerDescription": "Pokea uhifadhi, simamia ratiba, na jenga biashara yako ya huduma.",
+      "providerFeature1": "Kalenda ya uhifadhi",
+      "providerFeature2": "Ujumbe wa moja kwa moja na wateja",
+      "providerFeature3": "Kutoa mapato",
+      "providerAlt": "Dashibodi ya mtoa huduma kwenye programu",
+      "driverBadge": "Kwa madereva",
+      "driverTab": "Dereva",
+      "driverTitle": "Programu ya dereva",
+      "driverDescription": "Kubali maombi ya uwasilishaji, fuata njia zilizoboreshwa, na pata mapato kwa ratiba yako.",
+      "driverFeature1": "Urambazaji wa njia",
+      "driverFeature2": "Kifuatiliaji cha mapato ya wiki",
+      "driverFeature3": "Msaada wa uwasilishaji 24/7",
+      "driverAlt": "Skrini ya ufuatiliaji wa uwasilishaji wa programu ya dereva"
+    }
   }
 }

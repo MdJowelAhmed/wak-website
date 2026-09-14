@@ -82,5 +82,116 @@
     "title": "404 Not Found",
     "description": "Your visited page was not found. You may go to the home page.",
     "backHome": "Back to Home Page"
+  },
+  "Home": {
+    "viewAll": "View All",
+    "banner": {
+      "shopNow": "Shop Now",
+      "viewService": "View service",
+      "previous": "Previous banners",
+      "next": "Next banners"
+    },
+    "userTypes": {
+      "customerTitle": "Customer",
+      "customerSubtitle": "Shop products & book services",
+      "customerCta": "Shop Now",
+      "vendorTitle": "Vendor / Merchant",
+      "vendorSubtitle": "Sell your products",
+      "vendorCta": "Join as Merchant",
+      "providerTitle": "Service Provider",
+      "providerSubtitle": "Offer your services",
+      "providerCta": "Join as Provider",
+      "driverTitle": "Driver",
+      "driverSubtitle": "Deliver with us",
+      "driverCta": "Join as Driver"
+    },
+    "categories": {
+      "products": "Product Categories",
+      "services": "Service Categories",
+      "emptyProducts": "No product categories found",
+      "emptyServices": "No service categories found"
+    },
+    "featured": {
+      "title": "Featured Categories",
+      "loading": "Loading categories...",
+      "empty": "No featured categories found.",
+      "exploreProducts": "Explore products",
+      "exploreServices": "Explore services",
+      "previous": "Previous categories",
+      "next": "Next categories"
+    },
+    "bestSelling": {
+      "eyebrow": "This Month",
+      "title": "Best Selling Products",
+      "empty": "No best selling products found."
+    },
+    "newArrival": {
+      "eyebrow": "This Month",
+      "title": "Shop From New Arrival",
+      "empty": "No new arrivals found."
+    },
+    "services": {
+      "title": "Services",
+      "empty": "No services found.",
+      "unknown": "Unknown",
+      "fallbackCategory": "Service"
+    },
+    "features": {
+      "badge": "Why Choose Us",
+      "title": "Why Shop & Book With",
+      "titleHighlight": "Us",
+      "subtitle": "We prioritize your safety, convenience, and complete satisfaction with every product purchase and service booking.",
+      "secureTitle": "Secure Payments",
+      "secureDescription": "100% safe & secure.",
+      "returnsTitle": "Easy Returns",
+      "returnsDescription": "Hassle-free returns.",
+      "supportTitle": "24/7 Support",
+      "supportDescription": "We're here to help.",
+      "deliveryTitle": "Fast Delivery",
+      "deliveryDescription": "On-time, every time.",
+      "merchantsTitle": "Verified Merchants",
+      "merchantsDescription": "Trusted & reliable."
+    },
+    "appDownload": {
+      "heading": "Everything you need,",
+      "headingAccent": "in your pocket.",
+      "chooseApp": "Choose an app",
+      "downloadOnThe": "Download on the",
+      "appStore": "App Store",
+      "getItOn": "Get it on",
+      "googlePlay": "Google Play",
+      "customerBadge": "For Customers",
+      "customerTab": "Customer",
+      "customerTitle": "Customer App",
+      "customerDescription": "Shop products, book professional services, and track your orders in real-time.",
+      "customerFeature1": "Live Order Tracking",
+      "customerFeature2": "Multi-payment Support",
+      "customerFeature3": "Exclusive Deals",
+      "customerAlt": "Customer App home and product browsing screens",
+      "merchantBadge": "For Merchants",
+      "merchantTab": "Merchant",
+      "merchantTitle": "Merchant App",
+      "merchantDescription": "Manage store inventory, process customer orders, and view sales analytics on the go.",
+      "merchantFeature1": "Inventory Control",
+      "merchantFeature2": "Batch Fulfillment",
+      "merchantFeature3": "Instant Payouts",
+      "merchantAlt": "Merchant dashboard overview on the mobile app",
+      "providerBadge": "For Service Providers",
+      "providerTab": "Provider",
+      "providerTitle": "Service Provider App",
+      "providerDescription": "Receive client bookings, manage appointment schedules, and build your service business.",
+      "providerFeature1": "Booking Calendar",
+      "providerFeature2": "Direct Client Messaging",
+      "providerFeature3": "Earnings Cashout",
+      "providerAlt": "Service provider dashboard on the mobile app",
+      "driverBadge": "For Drivers",
+      "driverTab": "Driver",
+      "driverTitle": "Driver App",
+      "driverDescription": "Accept delivery requests, navigate optimized routes, and earn money on your schedule.",
+      "driverFeature1": "Route Navigation",
+      "driverFeature2": "Weekly Earnings Tracker",
+      "driverFeature3": "24/7 Delivery Support",
+      "driverAlt": "Driver app live delivery tracking screen"
+    }
   }
 }

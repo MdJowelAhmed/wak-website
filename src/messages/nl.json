@@ -82,5 +82,116 @@
     "title": "404 Pagina niet gevonden",
     "description": "De bezochte pagina is niet gevonden. U kunt naar de startpagina gaan.",
     "backHome": "Terug naar home"
+  },
+  "Home": {
+    "viewAll": "Alles bekijken",
+    "banner": {
+      "shopNow": "Nu winkelen",
+      "viewService": "Dienst bekijken",
+      "previous": "Vorige banners",
+      "next": "Volgende banners"
+    },
+    "userTypes": {
+      "customerTitle": "Klant",
+      "customerSubtitle": "Koop producten en boek diensten",
+      "customerCta": "Nu winkelen",
+      "vendorTitle": "Verkoper / Handelaar",
+      "vendorSubtitle": "Verkoop je producten",
+      "vendorCta": "Word handelaar",
+      "providerTitle": "Dienstverlener",
+      "providerSubtitle": "Bied je diensten aan",
+      "providerCta": "Word dienstverlener",
+      "driverTitle": "Chauffeur",
+      "driverSubtitle": "Bezorg met ons",
+      "driverCta": "Word chauffeur"
+    },
+    "categories": {
+      "products": "Productcategorieën",
+      "services": "Dienstcategorieën",
+      "emptyProducts": "Geen productcategorieën gevonden",
+      "emptyServices": "Geen dienstcategorieën gevonden"
+    },
+    "featured": {
+      "title": "Uitgelichte categorieën",
+      "loading": "Categorieën laden...",
+      "empty": "Geen uitgelichte categorieën gevonden.",
+      "exploreProducts": "Ontdek producten",
+      "exploreServices": "Ontdek diensten",
+      "previous": "Vorige categorieën",
+      "next": "Volgende categorieën"
+    },
+    "bestSelling": {
+      "eyebrow": "Deze maand",
+      "title": "Bestverkochte producten",
+      "empty": "Geen bestverkochte producten gevonden."
+    },
+    "newArrival": {
+      "eyebrow": "Deze maand",
+      "title": "Shop nieuwe collectie",
+      "empty": "Geen nieuwe producten gevonden."
+    },
+    "services": {
+      "title": "Diensten",
+      "empty": "Geen diensten gevonden.",
+      "unknown": "Onbekend",
+      "fallbackCategory": "Dienst"
+    },
+    "features": {
+      "badge": "Waarom voor ons kiezen",
+      "title": "Waarom winkelen en boeken bij",
+      "titleHighlight": "ons",
+      "subtitle": "We zetten jouw veiligheid, gemak en tevredenheid voorop bij elke aankoop en boeking.",
+      "secureTitle": "Veilige betalingen",
+      "secureDescription": "100% veilig en beschermd.",
+      "returnsTitle": "Eenvoudig retourneren",
+      "returnsDescription": "Retourneren zonder gedoe.",
+      "supportTitle": "24/7 ondersteuning",
+      "supportDescription": "We staan voor je klaar.",
+      "deliveryTitle": "Snelle bezorging",
+      "deliveryDescription": "Op tijd, elke keer.",
+      "merchantsTitle": "Geverifieerde handelaren",
+      "merchantsDescription": "Betrouwbaar en vertrouwd."
+    },
+    "appDownload": {
+      "heading": "Alles wat je nodig hebt,",
+      "headingAccent": "in je zak.",
+      "chooseApp": "Kies een app",
+      "downloadOnThe": "Downloaden in de",
+      "appStore": "App Store",
+      "getItOn": "Ontdek het op",
+      "googlePlay": "Google Play",
+      "customerBadge": "Voor klanten",
+      "customerTab": "Klant",
+      "customerTitle": "Klanten-app",
+      "customerDescription": "Koop producten, boek professionele diensten en volg je bestellingen in realtime.",
+      "customerFeature1": "Live ordertracking",
+      "customerFeature2": "Meerdere betaalmethoden",
+      "customerFeature3": "Exclusieve deals",
+      "customerAlt": "Start- en productschermen van de klanten-app",
+      "merchantBadge": "Voor handelaren",
+      "merchantTab": "Handelaar",
+      "merchantTitle": "Handelaars-app",
+      "merchantDescription": "Beheer voorraad, verwerk bestellingen en bekijk verkopen onderweg.",
+      "merchantFeature1": "Voorraadbeheer",
+      "merchantFeature2": "Batchverzending",
+      "merchantFeature3": "Directe uitbetalingen",
+      "merchantAlt": "Handelaarsdashboard in de mobiele app",
+      "providerBadge": "Voor dienstverleners",
+      "providerTab": "Aanbieder",
+      "providerTitle": "Dienstverleners-app",
+      "providerDescription": "Ontvang boekingen, beheer afspraken en bouw je dienstverlening uit.",
+      "providerFeature1": "Boekingskalender",
+      "providerFeature2": "Directe klantberichten",
+      "providerFeature3": "Uitbetaling van inkomsten",
+      "providerAlt": "Dashboard van de dienstverlener in de mobiele app",
+      "driverBadge": "Voor chauffeurs",
+      "driverTab": "Chauffeur",
+      "driverTitle": "Chauffeurs-app",
+      "driverDescription": "Accepteer bezorgverzoeken, volg geoptimaliseerde routes en verdien op jouw schema.",
+      "driverFeature1": "Routenavigatie",
+      "driverFeature2": "Wekelijkse verdiensten",
+      "driverFeature3": "24/7 bezorgondersteuning",
+      "driverAlt": "Live bezorgtracking in de chauffeurs-app"
+    }
   }
 }

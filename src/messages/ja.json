@@ -82,5 +82,116 @@
     "title": "404 ページが見つかりません",
     "description": "アクセスしたページは見つかりませんでした。ホームページへお戻りください。",
     "backHome": "ホームへ戻る"
+  },
+  "Home": {
+    "viewAll": "すべて見る",
+    "banner": {
+      "shopNow": "今すぐ購入",
+      "viewService": "サービスを見る",
+      "previous": "前のバナー",
+      "next": "次のバナー"
+    },
+    "userTypes": {
+      "customerTitle": "お客様",
+      "customerSubtitle": "商品を購入し、サービスを予約",
+      "customerCta": "今すぐ購入",
+      "vendorTitle": "出品者 / 加盟店",
+      "vendorSubtitle": "商品を販売",
+      "vendorCta": "加盟店として参加",
+      "providerTitle": "サービス提供者",
+      "providerSubtitle": "サービスを提供",
+      "providerCta": "提供者として参加",
+      "driverTitle": "ドライバー",
+      "driverSubtitle": "配送パートナーになる",
+      "driverCta": "ドライバーとして参加"
+    },
+    "categories": {
+      "products": "商品カテゴリ",
+      "services": "サービスカテゴリ",
+      "emptyProducts": "商品カテゴリが見つかりません",
+      "emptyServices": "サービスカテゴリが見つかりません"
+    },
+    "featured": {
+      "title": "注目のカテゴリ",
+      "loading": "カテゴリを読み込み中...",
+      "empty": "注目のカテゴリが見つかりません。",
+      "exploreProducts": "商品を見る",
+      "exploreServices": "サービスを見る",
+      "previous": "前のカテゴリ",
+      "next": "次のカテゴリ"
+    },
+    "bestSelling": {
+      "eyebrow": "今月",
+      "title": "ベストセラー商品",
+      "empty": "ベストセラー商品が見つかりません。"
+    },
+    "newArrival": {
+      "eyebrow": "今月",
+      "title": "新着商品を見る",
+      "empty": "新着商品が見つかりません。"
+    },
+    "services": {
+      "title": "サービス",
+      "empty": "サービスが見つかりません。",
+      "unknown": "不明",
+      "fallbackCategory": "サービス"
+    },
+    "features": {
+      "badge": "選ばれる理由",
+      "title": "買い物と予約なら",
+      "titleHighlight": "私たち",
+      "subtitle": "商品購入とサービス予約のすべてで、安全・便利・満足を最優先にしています。",
+      "secureTitle": "安全な決済",
+      "secureDescription": "100%安全で安心。",
+      "returnsTitle": "かんたん返品",
+      "returnsDescription": "手間なく返品できます。",
+      "supportTitle": "24時間サポート",
+      "supportDescription": "いつでもお手伝いします。",
+      "deliveryTitle": "迅速配送",
+      "deliveryDescription": "毎回、時間どおりにお届け。",
+      "merchantsTitle": "認証済み加盟店",
+      "merchantsDescription": "信頼できる出品者。"
+    },
+    "appDownload": {
+      "heading": "必要なものはすべて、",
+      "headingAccent": "ポケットの中に。",
+      "chooseApp": "アプリを選ぶ",
+      "downloadOnThe": "ダウンロード",
+      "appStore": "App Store",
+      "getItOn": "入手",
+      "googlePlay": "Google Play",
+      "customerBadge": "お客様向け",
+      "customerTab": "お客様",
+      "customerTitle": "カスタマーアプリ",
+      "customerDescription": "商品の購入、専門サービスの予約、注文のリアルタイム追跡ができます。",
+      "customerFeature1": "リアルタイム注文追跡",
+      "customerFeature2": "複数の支払い方法",
+      "customerFeature3": "限定セール",
+      "customerAlt": "カスタマーアプリのホームと商品閲覧画面",
+      "merchantBadge": "加盟店向け",
+      "merchantTab": "加盟店",
+      "merchantTitle": "加盟店アプリ",
+      "merchantDescription": "在庫管理、注文処理、売上確認を外出先でも行えます。",
+      "merchantFeature1": "在庫管理",
+      "merchantFeature2": "一括出荷",
+      "merchantFeature3": "即時支払い",
+      "merchantAlt": "モバイルアプリの加盟店ダッシュボード",
+      "providerBadge": "サービス提供者向け",
+      "providerTab": "提供者",
+      "providerTitle": "サービス提供者アプリ",
+      "providerDescription": "予約の受付、スケジュール管理、サービス事業の拡大ができます。",
+      "providerFeature1": "予約カレンダー",
+      "providerFeature2": "顧客との直接メッセージ",
+      "providerFeature3": "収益の出金",
+      "providerAlt": "モバイルアプリのサービス提供者ダッシュボード",
+      "driverBadge": "ドライバー向け",
+      "driverTab": "ドライバー",
+      "driverTitle": "ドライバーアプリ",
+      "driverDescription": "配送依頼の受付、最適化されたルート案内、自分のペースでの収益化。",
+      "driverFeature1": "ルート案内",
+      "driverFeature2": "週間収益トラッカー",
+      "driverFeature3": "24時間配送サポート",
+      "driverAlt": "ドライバーアプリのリアルタイム配送追跡画面"
+    }
   }
 }

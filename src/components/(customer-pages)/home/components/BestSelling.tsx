@@ -3,10 +3,22 @@
 import { ArrowRight } from 'lucide-react';
 import ProductCard from '@/shared/ProductCard';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
-import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { useRouter } from '@/i18n/navigation';
+
+interface Product {
+    _id: string;
+    name: string;
+    images: string[];
+    price: number;
+    discountPrice?: number;
+    ratingAverage: number;
+    ratingCount: number;
+    slug: string;
+}
 
 interface BestSellingProps {
-    initialProducts?: any[];
+    initialProducts?: Product[];
     loading?: boolean;
 }
 
@@ -55,6 +67,7 @@ export const BestSellingSkeleton = ({ count = 8 }: { count?: number }) => {
 
 const BestSelling = ({ initialProducts = [], loading = false }: BestSellingProps) => {
     const router = useRouter();
+    const t = useTranslations("Home");
 
     if (loading) {
         return <BestSellingSkeleton count={8} />;
@@ -82,13 +95,13 @@ const BestSelling = ({ initialProducts = [], loading = false }: BestSellingProps
                 <div className="mb-3 md:mb-6">
                     <div className="flex items-center gap-3 mb-3">
                         {/* <div className="w-4 h-8 bg-primary rounded-xs"></div> */}
-                        <span className="text-foreground/80 font-semibold text-sm uppercase tracking-wider">This Month</span>
+                        <span className="text-foreground/80 font-semibold text-sm uppercase tracking-wider">{t("bestSelling.eyebrow")}</span>
                     </div>
                     <div className="flex justify-between items-end">
-                        <h2 className="title mb-0!">Best Selling Products</h2>
+                        <h2 className="title mb-0!">{t("bestSelling.title")}</h2>
                         <button className="flex items-center gap-2 text-foreground font-semibold hover:text-primary-hover transition-colors group cursor-pointer" onClick={handleClick}>
-                            View All
-                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            {t("viewAll")}
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform rtl:rotate-180" />
                         </button>
                     </div>
                 </div>
@@ -117,7 +130,7 @@ const BestSelling = ({ initialProducts = [], loading = false }: BestSellingProps
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center text-accent py-10">No best selling products found.</div>
+                        <div className="text-center text-accent py-10">{t("bestSelling.empty")}</div>
                     )}
                 </div>
             </div>

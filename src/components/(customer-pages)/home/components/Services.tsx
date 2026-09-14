@@ -2,15 +2,34 @@
 
 import ServiceCard from "@/shared/ServiceCard";
 import { ArrowRight } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
 
+interface HomeService {
+    _id: string;
+    slug?: string;
+    name?: string;
+    image?: string;
+    price?: number;
+    ratingAverage?: number;
+    ratingCount?: number;
+    creator?: {
+        name?: string;
+        profileImage?: string;
+    };
+    category?: {
+        name?: string;
+    };
+}
+
 interface ServicesProps {
-    initialServices?: any[];
+    initialServices?: HomeService[];
 }
 
 const Services = ({ initialServices = [] }: ServicesProps) => {
     const router = useRouter();
+    const t = useTranslations("Home");
     const services = initialServices;
 
     const handleClick = () => {
@@ -34,12 +53,12 @@ const Services = ({ initialServices = [] }: ServicesProps) => {
                     <div className="flex justify-between items-end">
                         <div className="flex items-center gap-4 mb-3">
                             <div className="w-5 h-10 bg-primary rounded-xs"></div>
-                            <h2 className="title mb-0!">Services</h2>
+                            <h2 className="title mb-0!">{t("services.title")}</h2>
                         </div>
 
                         <button className="flex items-center gap-2 text-accent px-6 py-3 rounded-md font-medium hover:underline underline-offset-4 transition-all group cursor-pointer" onClick={handleClick}>
-                            View All
-                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            {t("viewAll")}
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform rtl:rotate-180" />
                         </button>
                     </div>
                 </div>
@@ -51,11 +70,11 @@ const Services = ({ initialServices = [] }: ServicesProps) => {
                             <ServiceCard 
                                 key={service._id} 
                                 id={service.slug || service._id}
-                                name={service.creator?.name || "Unknown"}
-                                avatar={resolveImageUrl(service.creator?.profileImage) || `https://ui-avatars.com/api/?name=${encodeURIComponent(service.creator?.name || 'User')}&background=random`}
+                                name={service.creator?.name || t("services.unknown")}
+                                avatar={resolveImageUrl(service.creator?.profileImage) || `https://ui-avatars.com/api/?name=${encodeURIComponent(service.creator?.name || t("services.unknown"))}&background=random`}
                                 rating={service.ratingAverage || 0}
                                 reviewCount={service.ratingCount || 0}
-                                category={service.category?.name || "Service"}
+                                category={service.category?.name || t("services.fallbackCategory")}
                                 description={service.name || ""}
                                 price={service.price || 0}
                                 coverImage={resolveImageUrl(service.image) || "/placeholder.jpg"}
@@ -63,7 +82,7 @@ const Services = ({ initialServices = [] }: ServicesProps) => {
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center text-accent py-10">No services found.</div>
+                    <div className="text-center text-accent py-10">{t("services.empty")}</div>
                 )}
             </div>
         </section>

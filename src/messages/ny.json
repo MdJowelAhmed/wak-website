@@ -82,5 +82,116 @@
     "title": "404 Tsamba silikupezeka",
     "description": "Tsamba lomwe munaona silikupezeka. Mutha kubwerera patsamba loyamba.",
     "backHome": "Bwererani patsamba loyamba"
+  },
+  "Home": {
+    "viewAll": "Oneni onse",
+    "banner": {
+      "shopNow": "Gulani tsopano",
+      "viewService": "Onani ntchito",
+      "previous": "Mabanna am'mbuyo",
+      "next": "Mabanna otsatira"
+    },
+    "userTypes": {
+      "customerTitle": "Kasitomala",
+      "customerSubtitle": "Gulani zinthu ndi kusungitsa ntchito",
+      "customerCta": "Gulani tsopano",
+      "vendorTitle": "Wogulitsa",
+      "vendorSubtitle": "Gulitsani zinthu zanu",
+      "vendorCta": "Lowani ngati wogulitsa",
+      "providerTitle": "Wopereka ntchito",
+      "providerSubtitle": "Perekani ntchito zanu",
+      "providerCta": "Lowani ngati wopereka ntchito",
+      "driverTitle": "Woyendetsa",
+      "driverSubtitle": "Tengani katundu nafe",
+      "driverCta": "Lowani ngati woyendetsa"
+    },
+    "categories": {
+      "products": "Magulu a zinthu",
+      "services": "Magulu a ntchito",
+      "emptyProducts": "Palibe magulu a zinthu",
+      "emptyServices": "Palibe magulu a ntchito"
+    },
+    "featured": {
+      "title": "Magulu otsogola",
+      "loading": "Tikukweza magulu...",
+      "empty": "Palibe magulu otsogola.",
+      "exploreProducts": "Onani zinthu",
+      "exploreServices": "Onani ntchito",
+      "previous": "Magulu am'mbuyo",
+      "next": "Magulu otsatira"
+    },
+    "bestSelling": {
+      "eyebrow": "Mwezi uno",
+      "title": "Zinthu zogulitsidwa kwambiri",
+      "empty": "Palibe zinthu zogulitsidwa kwambiri."
+    },
+    "newArrival": {
+      "eyebrow": "Mwezi uno",
+      "title": "Gulani zinthu zatsopano",
+      "empty": "Palibe zinthu zatsopano."
+    },
+    "services": {
+      "title": "Ntchito",
+      "empty": "Palibe ntchito.",
+      "unknown": "Osadziwika",
+      "fallbackCategory": "Ntchito"
+    },
+    "features": {
+      "badge": "Chifukwa chosankha ife",
+      "title": "Chifukwa chogula ndi kusungitsa",
+      "titleHighlight": "nafe",
+      "subtitle": "Timayika patsogolo chitetezo chanu, kuwongolera, ndi kukhutitsidwa pa kugula chilichonse ndi kusungitsa ntchito.",
+      "secureTitle": "Malipiro otetezedwa",
+      "secureDescription": "100% otetezedwa.",
+      "returnsTitle": "Kubweza kosavuta",
+      "returnsDescription": "Kubweza kopanda vuto.",
+      "supportTitle": "Thandizo la 24/7",
+      "supportDescription": "Tili pano kuti tithandize.",
+      "deliveryTitle": "Kutumiza kofulumira",
+      "deliveryDescription": "Nthawi yake, nthawi zonse.",
+      "merchantsTitle": "Ogulitsa ovomerezeka",
+      "merchantsDescription": "Odalirika ndi ovomerezeka."
+    },
+    "appDownload": {
+      "heading": "Zonse zomwe mukufuna,",
+      "headingAccent": "m'thumba lanu.",
+      "chooseApp": "Sankhani pulogalamu",
+      "downloadOnThe": "Tsitsani pa",
+      "appStore": "App Store",
+      "getItOn": "Pezani pa",
+      "googlePlay": "Google Play",
+      "customerBadge": "Kwa makasitomala",
+      "customerTab": "Kasitomala",
+      "customerTitle": "Pulogalamu ya kasitomala",
+      "customerDescription": "Gulani zinthu, sungitsani ntchito, ndikuwona maoda anu nthawi yeniyeni.",
+      "customerFeature1": "Kuwona maoda nthawi yeniyeni",
+      "customerFeature2": "Njira zambiri zolipira",
+      "customerFeature3": "Malonda apadera",
+      "customerAlt": "Zithunzi za pulogalamu ya kasitomala",
+      "merchantBadge": "Kwa ogulitsa",
+      "merchantTab": "Wogulitsa",
+      "merchantTitle": "Pulogalamu ya wogulitsa",
+      "merchantDescription": "Yang'anani katundu, konzeni maoda, ndikuwona malonda uli kulikonse.",
+      "merchantFeature1": "Kuwongolera katundu",
+      "merchantFeature2": "Kutumiza mochulukira",
+      "merchantFeature3": "Kulipira mwamsanga",
+      "merchantAlt": "Dashboard ya wogulitsa pa pulogalamu",
+      "providerBadge": "Kwa opereka ntchito",
+      "providerTab": "Wopereka",
+      "providerTitle": "Pulogalamu ya wopereka ntchito",
+      "providerDescription": "Landirani ma booking, yang'anani nthawi, ndikumanga bizinesi yanu.",
+      "providerFeature1": "Kalendala ya booking",
+      "providerFeature2": "Kulembera makasitomala mwachindunji",
+      "providerFeature3": "Kutulutsa ndalama",
+      "providerAlt": "Dashboard ya wopereka ntchito pa pulogalamu",
+      "driverBadge": "Kwa oyendetsa",
+      "driverTab": "Woyendetsa",
+      "driverTitle": "Pulogalamu ya woyendetsa",
+      "driverDescription": "Landirani zotumiza, yendetsani njira zabwino, ndikupeza ndalama nthawi yanu.",
+      "driverFeature1": "Kuwongolera njira",
+      "driverFeature2": "Zopeza za sabata",
+      "driverFeature3": "Thandizo la kutumiza 24/7",
+      "driverAlt": "Zithunzi za kutumiza pa pulogalamu ya woyendetsa"
+    }
   }
 }

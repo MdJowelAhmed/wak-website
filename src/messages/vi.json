@@ -82,5 +82,116 @@
     "title": "404 Không tìm thấy trang",
     "description": "Trang bạn truy cập không tồn tại. Bạn có thể về trang chủ.",
     "backHome": "Về trang chủ"
+  },
+  "Home": {
+    "viewAll": "Xem tất cả",
+    "banner": {
+      "shopNow": "Mua ngay",
+      "viewService": "Xem dịch vụ",
+      "previous": "Banner trước",
+      "next": "Banner tiếp"
+    },
+    "userTypes": {
+      "customerTitle": "Khách hàng",
+      "customerSubtitle": "Mua sản phẩm và đặt dịch vụ",
+      "customerCta": "Mua ngay",
+      "vendorTitle": "Người bán / Thương nhân",
+      "vendorSubtitle": "Bán sản phẩm của bạn",
+      "vendorCta": "Tham gia với tư cách thương nhân",
+      "providerTitle": "Nhà cung cấp dịch vụ",
+      "providerSubtitle": "Cung cấp dịch vụ của bạn",
+      "providerCta": "Tham gia với tư cách nhà cung cấp",
+      "driverTitle": "Tài xế",
+      "driverSubtitle": "Giao hàng cùng chúng tôi",
+      "driverCta": "Tham gia với tư cách tài xế"
+    },
+    "categories": {
+      "products": "Danh mục sản phẩm",
+      "services": "Danh mục dịch vụ",
+      "emptyProducts": "Không tìm thấy danh mục sản phẩm",
+      "emptyServices": "Không tìm thấy danh mục dịch vụ"
+    },
+    "featured": {
+      "title": "Danh mục nổi bật",
+      "loading": "Đang tải danh mục...",
+      "empty": "Không tìm thấy danh mục nổi bật.",
+      "exploreProducts": "Khám phá sản phẩm",
+      "exploreServices": "Khám phá dịch vụ",
+      "previous": "Danh mục trước",
+      "next": "Danh mục tiếp"
+    },
+    "bestSelling": {
+      "eyebrow": "Tháng này",
+      "title": "Sản phẩm bán chạy",
+      "empty": "Không tìm thấy sản phẩm bán chạy."
+    },
+    "newArrival": {
+      "eyebrow": "Tháng này",
+      "title": "Mua hàng mới về",
+      "empty": "Không tìm thấy hàng mới."
+    },
+    "services": {
+      "title": "Dịch vụ",
+      "empty": "Không tìm thấy dịch vụ.",
+      "unknown": "Không xác định",
+      "fallbackCategory": "Dịch vụ"
+    },
+    "features": {
+      "badge": "Vì sao chọn chúng tôi",
+      "title": "Vì sao mua sắm và đặt lịch với",
+      "titleHighlight": "chúng tôi",
+      "subtitle": "Chúng tôi ưu tiên sự an toàn, tiện lợi và hài lòng của bạn trong mọi lần mua sản phẩm và đặt dịch vụ.",
+      "secureTitle": "Thanh toán an toàn",
+      "secureDescription": "An toàn và bảo mật 100%.",
+      "returnsTitle": "Đổi trả dễ dàng",
+      "returnsDescription": "Đổi trả không rắc rối.",
+      "supportTitle": "Hỗ trợ 24/7",
+      "supportDescription": "Chúng tôi luôn sẵn sàng hỗ trợ.",
+      "deliveryTitle": "Giao hàng nhanh",
+      "deliveryDescription": "Đúng giờ, mọi lúc.",
+      "merchantsTitle": "Thương nhân đã xác minh",
+      "merchantsDescription": "Đáng tin cậy."
+    },
+    "appDownload": {
+      "heading": "Mọi thứ bạn cần,",
+      "headingAccent": "trong túi bạn.",
+      "chooseApp": "Chọn một ứng dụng",
+      "downloadOnThe": "Tải trên",
+      "appStore": "App Store",
+      "getItOn": "Tải trên",
+      "googlePlay": "Google Play",
+      "customerBadge": "Dành cho khách hàng",
+      "customerTab": "Khách hàng",
+      "customerTitle": "Ứng dụng khách hàng",
+      "customerDescription": "Mua sản phẩm, đặt dịch vụ chuyên nghiệp và theo dõi đơn hàng theo thời gian thực.",
+      "customerFeature1": "Theo dõi đơn hàng trực tiếp",
+      "customerFeature2": "Nhiều phương thức thanh toán",
+      "customerFeature3": "Ưu đãi độc quyền",
+      "customerAlt": "Màn hình trang chủ và duyệt sản phẩm của ứng dụng khách hàng",
+      "merchantBadge": "Dành cho thương nhân",
+      "merchantTab": "Thương nhân",
+      "merchantTitle": "Ứng dụng thương nhân",
+      "merchantDescription": "Quản lý tồn kho, xử lý đơn hàng và xem doanh số mọi lúc mọi nơi.",
+      "merchantFeature1": "Kiểm soát tồn kho",
+      "merchantFeature2": "Xử lý theo lô",
+      "merchantFeature3": "Thanh toán tức thì",
+      "merchantAlt": "Bảng điều khiển thương nhân trên ứng dụng di động",
+      "providerBadge": "Dành cho nhà cung cấp dịch vụ",
+      "providerTab": "Nhà cung cấp",
+      "providerTitle": "Ứng dụng nhà cung cấp dịch vụ",
+      "providerDescription": "Nhận đặt lịch, quản lý lịch hẹn và phát triển dịch vụ của bạn.",
+      "providerFeature1": "Lịch đặt chỗ",
+      "providerFeature2": "Nhắn tin trực tiếp với khách",
+      "providerFeature3": "Rút thu nhập",
+      "providerAlt": "Bảng điều khiển nhà cung cấp trên ứng dụng di động",
+      "driverBadge": "Dành cho tài xế",
+      "driverTab": "Tài xế",
+      "driverTitle": "Ứng dụng tài xế",
+      "driverDescription": "Nhận yêu cầu giao hàng, đi theo tuyến tối ưu và kiếm tiền theo lịch của bạn.",
+      "driverFeature1": "Dẫn đường tuyến đường",
+      "driverFeature2": "Theo dõi thu nhập hàng tuần",
+      "driverFeature3": "Hỗ trợ giao hàng 24/7",
+      "driverAlt": "Màn hình theo dõi giao hàng trực tiếp của ứng dụng tài xế"
+    }
   }
 }

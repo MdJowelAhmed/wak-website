@@ -82,5 +82,116 @@
     "title": "404 Pagina non trovata",
     "description": "La pagina visitata non è stata trovata. Puoi tornare alla home.",
     "backHome": "Torna alla home"
+  },
+  "Home": {
+    "viewAll": "Vedi tutto",
+    "banner": {
+      "shopNow": "Acquista ora",
+      "viewService": "Vedi servizio",
+      "previous": "Banner precedenti",
+      "next": "Banner successivi"
+    },
+    "userTypes": {
+      "customerTitle": "Cliente",
+      "customerSubtitle": "Acquista prodotti e prenota servizi",
+      "customerCta": "Acquista ora",
+      "vendorTitle": "Venditore / Commerciante",
+      "vendorSubtitle": "Vendi i tuoi prodotti",
+      "vendorCta": "Diventa commerciante",
+      "providerTitle": "Fornitore di servizi",
+      "providerSubtitle": "Offri i tuoi servizi",
+      "providerCta": "Diventa fornitore",
+      "driverTitle": "Autista",
+      "driverSubtitle": "Consegna con noi",
+      "driverCta": "Diventa autista"
+    },
+    "categories": {
+      "products": "Categorie di prodotti",
+      "services": "Categorie di servizi",
+      "emptyProducts": "Nessuna categoria di prodotti trovata",
+      "emptyServices": "Nessuna categoria di servizi trovata"
+    },
+    "featured": {
+      "title": "Categorie in evidenza",
+      "loading": "Caricamento categorie...",
+      "empty": "Nessuna categoria in evidenza trovata.",
+      "exploreProducts": "Esplora i prodotti",
+      "exploreServices": "Esplora i servizi",
+      "previous": "Categorie precedenti",
+      "next": "Categorie successive"
+    },
+    "bestSelling": {
+      "eyebrow": "Questo mese",
+      "title": "Prodotti più venduti",
+      "empty": "Nessun prodotto più venduto trovato."
+    },
+    "newArrival": {
+      "eyebrow": "Questo mese",
+      "title": "Acquista i nuovi arrivi",
+      "empty": "Nessun nuovo arrivo trovato."
+    },
+    "services": {
+      "title": "Servizi",
+      "empty": "Nessun servizio trovato.",
+      "unknown": "Sconosciuto",
+      "fallbackCategory": "Servizio"
+    },
+    "features": {
+      "badge": "Perché sceglierci",
+      "title": "Perché acquistare e prenotare con",
+      "titleHighlight": "noi",
+      "subtitle": "Mettiamo al primo posto la tua sicurezza, comodità e soddisfazione in ogni acquisto e prenotazione.",
+      "secureTitle": "Pagamenti sicuri",
+      "secureDescription": "Sicuri e protetti al 100%.",
+      "returnsTitle": "Resi facili",
+      "returnsDescription": "Resi senza complicazioni.",
+      "supportTitle": "Supporto 24/7",
+      "supportDescription": "Siamo qui per aiutarti.",
+      "deliveryTitle": "Consegna rapida",
+      "deliveryDescription": "Puntuale, ogni volta.",
+      "merchantsTitle": "Commercianti verificati",
+      "merchantsDescription": "Affidabili e sicuri."
+    },
+    "appDownload": {
+      "heading": "Tutto ciò che ti serve,",
+      "headingAccent": "in tasca.",
+      "chooseApp": "Scegli un'app",
+      "downloadOnThe": "Scarica su",
+      "appStore": "App Store",
+      "getItOn": "Disponibile su",
+      "googlePlay": "Google Play",
+      "customerBadge": "Per i clienti",
+      "customerTab": "Cliente",
+      "customerTitle": "App cliente",
+      "customerDescription": "Acquista prodotti, prenota servizi professionali e segui gli ordini in tempo reale.",
+      "customerFeature1": "Tracciamento ordini in diretta",
+      "customerFeature2": "Più metodi di pagamento",
+      "customerFeature3": "Offerte esclusive",
+      "customerAlt": "Schermate home e prodotti dell'app cliente",
+      "merchantBadge": "Per i commercianti",
+      "merchantTab": "Commerciante",
+      "merchantTitle": "App commerciante",
+      "merchantDescription": "Gestisci l'inventario, elabora gli ordini e consulta le vendite ovunque.",
+      "merchantFeature1": "Controllo inventario",
+      "merchantFeature2": "Evasione in batch",
+      "merchantFeature3": "Pagamenti istantanei",
+      "merchantAlt": "Dashboard commerciante nell'app mobile",
+      "providerBadge": "Per i fornitori di servizi",
+      "providerTab": "Fornitore",
+      "providerTitle": "App fornitore di servizi",
+      "providerDescription": "Ricevi prenotazioni, gestisci gli appuntamenti e fai crescere la tua attività.",
+      "providerFeature1": "Calendario prenotazioni",
+      "providerFeature2": "Messaggi diretti con i clienti",
+      "providerFeature3": "Prelievo guadagni",
+      "providerAlt": "Dashboard del fornitore nell'app mobile",
+      "driverBadge": "Per gli autisti",
+      "driverTab": "Autista",
+      "driverTitle": "App autista",
+      "driverDescription": "Accetta consegne, segui percorsi ottimizzati e guadagna secondo i tuoi orari.",
+      "driverFeature1": "Navigazione del percorso",
+      "driverFeature2": "Tracker guadagni settimanali",
+      "driverFeature3": "Supporto consegne 24/7",
+      "driverAlt": "Schermata di tracciamento consegne in diretta dell'app autista"
+    }
   }
 }

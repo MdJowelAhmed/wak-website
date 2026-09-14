@@ -5,79 +5,43 @@ import Image from 'next/image';
 import type { LucideIcon } from 'lucide-react';
 import { User, Store, Briefcase, Truck, Check } from 'lucide-react';
 import { FaApple, FaGooglePlay } from 'react-icons/fa6';
+import { useTranslations } from 'next-intl';
 import { Tabs, TabsList, TabsTrigger } from '@/ui/tabs';
 import { cn } from '@/lib/utils';
 
 type AppRole = 'customer' | 'merchant' | 'provider' | 'driver';
 
-type AppDownloadItem = {
-    id: AppRole;
-    title: string;
-    tabLabel: string;
-    badge: string;
-    icon: LucideIcon;
-    description: string;
-    features: string[];
-    appStoreUrl: string;
-    playStoreUrl: string;
-    screenImage: string;
-    screenAlt: string;
+const APP_ICONS: Record<AppRole, LucideIcon> = {
+    customer: User,
+    merchant: Store,
+    provider: Briefcase,
+    driver: Truck,
 };
 
-const apps: AppDownloadItem[] = [
-    {
-        id: 'customer',
-        title: 'Customer App',
-        tabLabel: 'Customer',
-        badge: 'For Customers',
-        icon: User,
-        description: 'Shop products, book professional services, and track your orders in real-time.',
-        features: ['Live Order Tracking', 'Multi-payment Support', 'Exclusive Deals'],
+const APP_META: Record<AppRole, { appStoreUrl: string; playStoreUrl: string; screenImage: string }> = {
+    customer: {
         appStoreUrl: 'https://apple.com',
         playStoreUrl: 'https://google.com',
         screenImage: '/app-screens/customer-phone.png',
-        screenAlt: 'Customer App home and product browsing screens',
     },
-    {
-        id: 'merchant',
-        title: 'Merchant App',
-        tabLabel: 'Merchant',
-        badge: 'For Merchants',
-        icon: Store,
-        description: 'Manage store inventory, process customer orders, and view sales analytics on the go.',
-        features: ['Inventory Control', 'Batch Fulfillment', 'Instant Payouts'],
+    merchant: {
         appStoreUrl: 'https://apple.com',
         playStoreUrl: 'https://google.com',
         screenImage: '/app-screens/dashboard-phone.png',
-        screenAlt: 'Merchant dashboard overview on the mobile app',
     },
-    {
-        id: 'provider',
-        title: 'Service Provider App',
-        tabLabel: 'Provider',
-        badge: 'For Service Providers',
-        icon: Briefcase,
-        description: 'Receive client bookings, manage appointment schedules, and build your service business.',
-        features: ['Booking Calendar', 'Direct Client Messaging', 'Earnings Cashout'],
+    provider: {
         appStoreUrl: 'https://apple.com',
         playStoreUrl: 'https://google.com',
         screenImage: '/app-screens/dashboard-phone.png',
-        screenAlt: 'Service provider dashboard on the mobile app',
     },
-    {
-        id: 'driver',
-        title: 'Driver App',
-        tabLabel: 'Driver',
-        badge: 'For Drivers',
-        icon: Truck,
-        description: 'Accept delivery requests, navigate optimized routes, and earn money on your schedule.',
-        features: ['Route Navigation', 'Weekly Earnings Tracker', '24/7 Delivery Support'],
+    driver: {
         appStoreUrl: 'https://apple.com',
         playStoreUrl: 'https://google.com',
         screenImage: '/app-screens/driver-phone.png',
-        screenAlt: 'Driver app live delivery tracking screen',
     },
-];
+};
+
+const APP_ROLES: AppRole[] = ['customer', 'merchant', 'provider', 'driver'];
 
 const featureChipPositions = [
     'lg:left-0 lg:top-[16%]',
@@ -89,7 +53,21 @@ const storeButtonClass =
     'inline-flex min-w-[168px] items-center gap-3 rounded-2xl bg-white px-5 py-3.5 text-secondary shadow-lg shadow-dark-brown/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-section-bg hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary';
 
 const AppDownloadSection = () => {
+    const t = useTranslations('Home.appDownload');
     const [activeTab, setActiveTab] = useState<AppRole>('customer');
+
+    const apps = APP_ROLES.map((id) => ({
+        id,
+        title: t(`${id}Title`),
+        tabLabel: t(`${id}Tab`),
+        badge: t(`${id}Badge`),
+        description: t(`${id}Description`),
+        features: [t(`${id}Feature1`), t(`${id}Feature2`), t(`${id}Feature3`)],
+        screenAlt: t(`${id}Alt`),
+        icon: APP_ICONS[id],
+        ...APP_META[id],
+    }));
+
     const currentApp = apps.find((app) => app.id === activeTab) ?? apps[0];
 
     const handleTabChange = (value: string) => {
@@ -122,8 +100,8 @@ const AppDownloadSection = () => {
                             id="app-download-heading"
                             className="text-[2rem] font-bold leading-[1.15] tracking-tight text-white sm:text-4xl lg:text-[2.75rem]"
                         >
-                            Everything you need,
-                            <span className="block text-secondary">in your pocket.</span>
+                            {t('heading')}
+                            <span className="block text-secondary">{t('headingAccent')}</span>
                         </h2>
                         <p
                             key={`${currentApp.id}-desc`}
@@ -134,7 +112,7 @@ const AppDownloadSection = () => {
 
                         <Tabs value={activeTab} onValueChange={handleTabChange} className="mt-8">
                             <TabsList
-                                aria-label="Choose an app"
+                                aria-label={t('chooseApp')}
                                 className="grid h-auto w-full grid-cols-4 gap-2 bg-transparent p-0"
                             >
                                 {apps.map((app) => {
@@ -184,9 +162,9 @@ const AppDownloadSection = () => {
                                 <FaApple className="h-6 w-6 shrink-0" aria-hidden />
                                 <span className="flex flex-col items-start leading-none">
                                     <span className="text-[10px] font-medium uppercase tracking-wider text-secondary/60">
-                                        Download on the
+                                        {t('downloadOnThe')}
                                     </span>
-                                    <span className="mt-1 text-sm font-bold">App Store</span>
+                                    <span className="mt-1 text-sm font-bold">{t('appStore')}</span>
                                 </span>
                             </a>
                             <a
@@ -198,9 +176,9 @@ const AppDownloadSection = () => {
                                 <FaGooglePlay className="h-5 w-5 shrink-0" aria-hidden />
                                 <span className="flex flex-col items-start leading-none">
                                     <span className="text-[10px] font-medium uppercase tracking-wider text-secondary/60">
-                                        Get it on
+                                        {t('getItOn')}
                                     </span>
-                                    <span className="mt-1 text-sm font-bold">Google Play</span>
+                                    <span className="mt-1 text-sm font-bold">{t('googlePlay')}</span>
                                 </span>
                             </a>
                         </div>

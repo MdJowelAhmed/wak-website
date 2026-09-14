@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Category } from "../../helpers/categoryService";
 import { getCategoryHref, type CategoryKind } from "../../helpers/categoryUtils";
 import { resolveImageUrl } from "../../helpers/resolveImageUrl";

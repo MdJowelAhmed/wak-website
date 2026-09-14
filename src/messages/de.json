@@ -82,5 +82,116 @@
     "title": "404 Nicht gefunden",
     "description": "Die aufgerufene Seite wurde nicht gefunden. Sie können zur Startseite gehen.",
     "backHome": "Zur Startseite"
+  },
+  "Home": {
+    "viewAll": "Alle ansehen",
+    "banner": {
+      "shopNow": "Jetzt kaufen",
+      "viewService": "Service ansehen",
+      "previous": "Vorherige Banner",
+      "next": "Nächste Banner"
+    },
+    "userTypes": {
+      "customerTitle": "Kunde",
+      "customerSubtitle": "Produkte kaufen und Services buchen",
+      "customerCta": "Jetzt kaufen",
+      "vendorTitle": "Händler",
+      "vendorSubtitle": "Verkaufen Sie Ihre Produkte",
+      "vendorCta": "Als Händler beitreten",
+      "providerTitle": "Dienstleister",
+      "providerSubtitle": "Bieten Sie Ihre Services an",
+      "providerCta": "Als Anbieter beitreten",
+      "driverTitle": "Fahrer",
+      "driverSubtitle": "Liefern Sie mit uns",
+      "driverCta": "Als Fahrer beitreten"
+    },
+    "categories": {
+      "products": "Produktkategorien",
+      "services": "Servicekategorien",
+      "emptyProducts": "Keine Produktkategorien gefunden",
+      "emptyServices": "Keine Servicekategorien gefunden"
+    },
+    "featured": {
+      "title": "Empfohlene Kategorien",
+      "loading": "Kategorien werden geladen...",
+      "empty": "Keine empfohlenen Kategorien gefunden.",
+      "exploreProducts": "Produkte entdecken",
+      "exploreServices": "Services entdecken",
+      "previous": "Vorherige Kategorien",
+      "next": "Nächste Kategorien"
+    },
+    "bestSelling": {
+      "eyebrow": "Diesen Monat",
+      "title": "Bestseller",
+      "empty": "Keine Bestseller gefunden."
+    },
+    "newArrival": {
+      "eyebrow": "Diesen Monat",
+      "title": "Neuheiten entdecken",
+      "empty": "Keine Neuheiten gefunden."
+    },
+    "services": {
+      "title": "Services",
+      "empty": "Keine Services gefunden.",
+      "unknown": "Unbekannt",
+      "fallbackCategory": "Service"
+    },
+    "features": {
+      "badge": "Warum uns wählen",
+      "title": "Warum bei uns kaufen und buchen",
+      "titleHighlight": "uns",
+      "subtitle": "Bei jedem Kauf und jeder Buchung stehen Ihre Sicherheit, Ihr Komfort und Ihre Zufriedenheit an erster Stelle.",
+      "secureTitle": "Sichere Zahlungen",
+      "secureDescription": "100 % sicher und geschützt.",
+      "returnsTitle": "Einfache Rückgabe",
+      "returnsDescription": "Rückgabe ohne Aufwand.",
+      "supportTitle": "Support rund um die Uhr",
+      "supportDescription": "Wir sind für Sie da.",
+      "deliveryTitle": "Schnelle Lieferung",
+      "deliveryDescription": "Pünktlich, jedes Mal.",
+      "merchantsTitle": "Verifizierte Händler",
+      "merchantsDescription": "Vertrauenswürdig und zuverlässig."
+    },
+    "appDownload": {
+      "heading": "Alles, was Sie brauchen,",
+      "headingAccent": "in Ihrer Tasche.",
+      "chooseApp": "Eine App wählen",
+      "downloadOnThe": "Laden im",
+      "appStore": "App Store",
+      "getItOn": "Jetzt bei",
+      "googlePlay": "Google Play",
+      "customerBadge": "Für Kunden",
+      "customerTab": "Kunde",
+      "customerTitle": "Kunden-App",
+      "customerDescription": "Kaufen Sie Produkte, buchen Sie professionelle Services und verfolgen Sie Bestellungen in Echtzeit.",
+      "customerFeature1": "Live-Bestellverfolgung",
+      "customerFeature2": "Mehrere Zahlungsarten",
+      "customerFeature3": "Exklusive Angebote",
+      "customerAlt": "Start- und Produktdarstellung der Kunden-App",
+      "merchantBadge": "Für Händler",
+      "merchantTab": "Händler",
+      "merchantTitle": "Händler-App",
+      "merchantDescription": "Verwalten Sie Lagerbestände, bearbeiten Sie Bestellungen und sehen Sie Verkäufe unterwegs.",
+      "merchantFeature1": "Lagerverwaltung",
+      "merchantFeature2": "Sammelabwicklung",
+      "merchantFeature3": "Sofortauszahlungen",
+      "merchantAlt": "Händler-Dashboard in der mobilen App",
+      "providerBadge": "Für Dienstleister",
+      "providerTab": "Anbieter",
+      "providerTitle": "Dienstleister-App",
+      "providerDescription": "Erhalten Sie Buchungen, verwalten Sie Termine und bauen Sie Ihr Servicegeschäft auf.",
+      "providerFeature1": "Buchungskalender",
+      "providerFeature2": "Direkte Kundennachrichten",
+      "providerFeature3": "Auszahlung der Einnahmen",
+      "providerAlt": "Dienstleister-Dashboard in der mobilen App",
+      "driverBadge": "Für Fahrer",
+      "driverTab": "Fahrer",
+      "driverTitle": "Fahrer-App",
+      "driverDescription": "Nehmen Sie Lieferanfragen an, folgen Sie optimierten Routen und verdienen Sie nach Ihrem Zeitplan.",
+      "driverFeature1": "Routennavigation",
+      "driverFeature2": "Wöchentlicher Verdiensttracker",
+      "driverFeature3": "Liefersupport rund um die Uhr",
+      "driverAlt": "Live-Lieferverfolgung in der Fahrer-App"
+    }
   }
 }

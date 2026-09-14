@@ -82,5 +82,116 @@
     "title": "404 未找到页面",
     "description": "您访问的页面不存在。可以返回首页。",
     "backHome": "返回首页"
+  },
+  "Home": {
+    "viewAll": "查看全部",
+    "banner": {
+      "shopNow": "立即购买",
+      "viewService": "查看服务",
+      "previous": "上一组横幅",
+      "next": "下一组横幅"
+    },
+    "userTypes": {
+      "customerTitle": "顾客",
+      "customerSubtitle": "购买商品并预约服务",
+      "customerCta": "立即购买",
+      "vendorTitle": "商家",
+      "vendorSubtitle": "销售您的商品",
+      "vendorCta": "成为商家",
+      "providerTitle": "服务提供者",
+      "providerSubtitle": "提供您的服务",
+      "providerCta": "成为服务提供者",
+      "driverTitle": "司机",
+      "driverSubtitle": "与我们一起配送",
+      "driverCta": "成为司机"
+    },
+    "categories": {
+      "products": "商品分类",
+      "services": "服务分类",
+      "emptyProducts": "未找到商品分类",
+      "emptyServices": "未找到服务分类"
+    },
+    "featured": {
+      "title": "精选分类",
+      "loading": "正在加载分类...",
+      "empty": "未找到精选分类。",
+      "exploreProducts": "浏览商品",
+      "exploreServices": "浏览服务",
+      "previous": "上一组分类",
+      "next": "下一组分类"
+    },
+    "bestSelling": {
+      "eyebrow": "本月",
+      "title": "畅销商品",
+      "empty": "未找到畅销商品。"
+    },
+    "newArrival": {
+      "eyebrow": "本月",
+      "title": "选购新品",
+      "empty": "未找到新品。"
+    },
+    "services": {
+      "title": "服务",
+      "empty": "未找到服务。",
+      "unknown": "未知",
+      "fallbackCategory": "服务"
+    },
+    "features": {
+      "badge": "为什么选择我们",
+      "title": "为什么在这里购物和预约",
+      "titleHighlight": "我们",
+      "subtitle": "每一次商品购买和服务预约，我们都优先考虑您的安全、便利和满意。",
+      "secureTitle": "安全支付",
+      "secureDescription": "100% 安全可靠。",
+      "returnsTitle": "轻松退货",
+      "returnsDescription": "无忧退货。",
+      "supportTitle": "全天候支持",
+      "supportDescription": "我们随时为您提供帮助。",
+      "deliveryTitle": "快速配送",
+      "deliveryDescription": "每次都准时送达。",
+      "merchantsTitle": "认证商家",
+      "merchantsDescription": "值得信赖。"
+    },
+    "appDownload": {
+      "heading": "所需的一切，",
+      "headingAccent": "尽在口袋中。",
+      "chooseApp": "选择一款应用",
+      "downloadOnThe": "下载于",
+      "appStore": "App Store",
+      "getItOn": "获取于",
+      "googlePlay": "Google Play",
+      "customerBadge": "面向顾客",
+      "customerTab": "顾客",
+      "customerTitle": "顾客应用",
+      "customerDescription": "购买商品、预约专业服务，并实时追踪订单。",
+      "customerFeature1": "实时订单追踪",
+      "customerFeature2": "多种支付方式",
+      "customerFeature3": "专属优惠",
+      "customerAlt": "顾客应用首页和商品浏览界面",
+      "merchantBadge": "面向商家",
+      "merchantTab": "商家",
+      "merchantTitle": "商家应用",
+      "merchantDescription": "随时管理库存、处理订单并查看销售数据。",
+      "merchantFeature1": "库存管理",
+      "merchantFeature2": "批量履约",
+      "merchantFeature3": "即时结算",
+      "merchantAlt": "商家应用仪表盘",
+      "providerBadge": "面向服务提供者",
+      "providerTab": "服务者",
+      "providerTitle": "服务提供者应用",
+      "providerDescription": "接收客户预约、管理日程并发展您的服务业务。",
+      "providerFeature1": "预约日历",
+      "providerFeature2": "直接客户消息",
+      "providerFeature3": "收入提现",
+      "providerAlt": "服务提供者应用仪表盘",
+      "driverBadge": "面向司机",
+      "driverTab": "司机",
+      "driverTitle": "司机应用",
+      "driverDescription": "接单配送、使用优化路线，并按自己的时间赚钱。",
+      "driverFeature1": "路线导航",
+      "driverFeature2": "每周收入追踪",
+      "driverFeature3": "全天候配送支持",
+      "driverAlt": "司机应用实时配送追踪界面"
+    }
   }
 }

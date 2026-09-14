@@ -82,5 +82,116 @@
     "title": "۴۰۴ صفحہ نہیں ملا",
     "description": "آپ نے جو صفحہ دیکھا وہ نہیں ملا۔ آپ ہوم پیج پر جا سکتے ہیں۔",
     "backHome": "ہوم پیج پر واپس جائیں"
+  },
+  "Home": {
+    "viewAll": "سب دیکھیں",
+    "banner": {
+      "shopNow": "ابھی خریدیں",
+      "viewService": "سروس دیکھیں",
+      "previous": "پچھلے بینر",
+      "next": "اگلے بینر"
+    },
+    "userTypes": {
+      "customerTitle": "کسٹمر",
+      "customerSubtitle": "پروڈکٹس خریدیں اور سروسز بک کریں",
+      "customerCta": "ابھی خریدیں",
+      "vendorTitle": "وینڈر / مرچنٹ",
+      "vendorSubtitle": "اپنی پروڈکٹس فروخت کریں",
+      "vendorCta": "مرچنٹ کے طور پر شامل ہوں",
+      "providerTitle": "سروس فراہم کنندہ",
+      "providerSubtitle": "اپنی سروسز پیش کریں",
+      "providerCta": "فراہم کنندہ کے طور پر شامل ہوں",
+      "driverTitle": "ڈرائیور",
+      "driverSubtitle": "ہمارے ساتھ ڈیلیوری کریں",
+      "driverCta": "ڈرائیور کے طور پر شامل ہوں"
+    },
+    "categories": {
+      "products": "پروڈکٹ کیٹیگریز",
+      "services": "سروس کیٹیگریز",
+      "emptyProducts": "کوئی پروڈکٹ کیٹیگری نہیں ملی",
+      "emptyServices": "کوئی سروس کیٹیگری نہیں ملی"
+    },
+    "featured": {
+      "title": "نمایاں کیٹیگریز",
+      "loading": "کیٹیگریز لوڈ ہو رہی ہیں...",
+      "empty": "کوئی نمایاں کیٹیگری نہیں ملی۔",
+      "exploreProducts": "پروڈکٹس دیکھیں",
+      "exploreServices": "سروسز دیکھیں",
+      "previous": "پچھلی کیٹیگریز",
+      "next": "اگلی کیٹیگریز"
+    },
+    "bestSelling": {
+      "eyebrow": "اس مہینے",
+      "title": "سب سے زیادہ فروخت ہونے والی پروڈکٹس",
+      "empty": "کوئی بیسٹ سیلنگ پروڈکٹ نہیں ملی۔"
+    },
+    "newArrival": {
+      "eyebrow": "اس مہینے",
+      "title": "نئی آمد سے خریدیں",
+      "empty": "کوئی نئی آمد نہیں ملی۔"
+    },
+    "services": {
+      "title": "سروسز",
+      "empty": "کوئی سروس نہیں ملی۔",
+      "unknown": "نامعلوم",
+      "fallbackCategory": "سروس"
+    },
+    "features": {
+      "badge": "ہمیں کیوں منتخب کریں",
+      "title": "شاپنگ اور بکنگ کیوں کریں",
+      "titleHighlight": "ہمارے ساتھ",
+      "subtitle": "ہر پروڈکٹ خریداری اور سروس بکنگ میں ہم آپ کی حفاظت، سہولت اور مکمل اطمینان کو ترجیح دیتے ہیں۔",
+      "secureTitle": "محفوظ ادائیگیاں",
+      "secureDescription": "مکمل طور پر محفوظ۔",
+      "returnsTitle": "آسان واپسی",
+      "returnsDescription": "بغیر جھنجھٹ واپسی۔",
+      "supportTitle": "24/7 سپورٹ",
+      "supportDescription": "ہم مدد کے لیے حاضر ہیں۔",
+      "deliveryTitle": "تیز ڈیلیوری",
+      "deliveryDescription": "ہر بار وقت پر۔",
+      "merchantsTitle": "تصدیق شدہ مرچنٹس",
+      "merchantsDescription": "قابل اعتماد اور معتبر۔"
+    },
+    "appDownload": {
+      "heading": "جو کچھ چاہیے،",
+      "headingAccent": "آپ کی جیب میں۔",
+      "chooseApp": "ایک ایپ منتخب کریں",
+      "downloadOnThe": "ڈاؤن لوڈ کریں",
+      "appStore": "App Store",
+      "getItOn": "حاصل کریں",
+      "googlePlay": "Google Play",
+      "customerBadge": "کسٹمرز کے لیے",
+      "customerTab": "کسٹمر",
+      "customerTitle": "کسٹمر ایپ",
+      "customerDescription": "پروڈکٹس خریدیں، پیشہ ورانہ سروسز بک کریں، اور آرڈرز کو ریئل ٹائم میں ٹریک کریں۔",
+      "customerFeature1": "لائیو آرڈر ٹریکنگ",
+      "customerFeature2": "متعدد ادائیگی سپورٹ",
+      "customerFeature3": "خصوصی ڈیلز",
+      "customerAlt": "کسٹمر ایپ کے ہوم اور پروڈکٹ براؤزنگ اسکرینز",
+      "merchantBadge": "مرچنٹس کے لیے",
+      "merchantTab": "مرچنٹ",
+      "merchantTitle": "مرچنٹ ایپ",
+      "merchantDescription": "انوینٹری منظم کریں، آرڈرز پروسیس کریں، اور کہیں سے بھی سیلز دیکھیں۔",
+      "merchantFeature1": "انوینٹری کنٹرول",
+      "merchantFeature2": "بیچ فل فلمینٹ",
+      "merchantFeature3": "فوری ادائیگی",
+      "merchantAlt": "موبائل ایپ پر مرچنٹ ڈیش بورڈ",
+      "providerBadge": "سروس فراہم کنندگان کے لیے",
+      "providerTab": "فراہم کنندہ",
+      "providerTitle": "سروس فراہم کنندہ ایپ",
+      "providerDescription": "کلائنٹ بکنگز وصول کریں، اپوائنٹمنٹس منظم کریں، اور اپنا سروس کاروبار بنائیں۔",
+      "providerFeature1": "بکنگ کیلنڈر",
+      "providerFeature2": "براہ راست کلائنٹ میسجنگ",
+      "providerFeature3": "آمدنی کیش آؤٹ",
+      "providerAlt": "موبائل ایپ پر سروس فراہم کنندہ ڈیش بورڈ",
+      "driverBadge": "ڈرائیورز کے لیے",
+      "driverTab": "ڈرائیور",
+      "driverTitle": "ڈرائیور ایپ",
+      "driverDescription": "ڈیلیوری درخواستیں قبول کریں، بہتر راستے استعمال کریں، اور اپنے شیڈول پر کمائیں۔",
+      "driverFeature1": "روٹ نیویگیشن",
+      "driverFeature2": "ہفتہ وار آمدنی ٹریکر",
+      "driverFeature3": "24/7 ڈیلیوری سپورٹ",
+      "driverAlt": "ڈرائیور ایپ کی لائیو ڈیلیوری ٹریکنگ اسکرین"
+    }
   }
 }

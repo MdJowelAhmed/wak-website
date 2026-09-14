@@ -82,5 +82,116 @@
     "title": "৪০৪ পেজ পাওয়া যায়নি",
     "description": "আপনি যে পেজ দেখতে চেয়েছেন সেটি নেই। হোম পেজে যেতে পারেন।",
     "backHome": "হোম পেজে ফিরুন"
+  },
+  "Home": {
+    "viewAll": "সব দেখুন",
+    "banner": {
+      "shopNow": "এখনই কিনুন",
+      "viewService": "সার্ভিস দেখুন",
+      "previous": "আগের ব্যানার",
+      "next": "পরের ব্যানার"
+    },
+    "userTypes": {
+      "customerTitle": "কাস্টমার",
+      "customerSubtitle": "পণ্য কিনুন ও সার্ভিস বুক করুন",
+      "customerCta": "এখনই কিনুন",
+      "vendorTitle": "ভেন্ডর / মার্চেন্ট",
+      "vendorSubtitle": "আপনার পণ্য বিক্রি করুন",
+      "vendorCta": "মার্চেন্ট হিসেবে যোগ দিন",
+      "providerTitle": "সার্ভিস প্রোভাইডার",
+      "providerSubtitle": "আপনার সার্ভিস দিন",
+      "providerCta": "প্রোভাইডার হিসেবে যোগ দিন",
+      "driverTitle": "ড্রাইভার",
+      "driverSubtitle": "আমাদের সঙ্গে ডেলিভারি করুন",
+      "driverCta": "ড্রাইভার হিসেবে যোগ দিন"
+    },
+    "categories": {
+      "products": "পণ্যের ক্যাটাগরি",
+      "services": "সার্ভিসের ক্যাটাগরি",
+      "emptyProducts": "কোনো পণ্যের ক্যাটাগরি পাওয়া যায়নি",
+      "emptyServices": "কোনো সার্ভিসের ক্যাটাগরি পাওয়া যায়নি"
+    },
+    "featured": {
+      "title": "ফিচার্ড ক্যাটাগরি",
+      "loading": "ক্যাটাগরি লোড হচ্ছে...",
+      "empty": "কোনো ফিচার্ড ক্যাটাগরি পাওয়া যায়নি।",
+      "exploreProducts": "পণ্য দেখুন",
+      "exploreServices": "সার্ভিস দেখুন",
+      "previous": "আগের ক্যাটাগরি",
+      "next": "পরের ক্যাটাগরি"
+    },
+    "bestSelling": {
+      "eyebrow": "এই মাস",
+      "title": "বেস্ট সেলিং পণ্য",
+      "empty": "কোনো বেস্ট সেলিং পণ্য পাওয়া যায়নি।"
+    },
+    "newArrival": {
+      "eyebrow": "এই মাস",
+      "title": "নতুন আগমন থেকে কিনুন",
+      "empty": "কোনো নতুন পণ্য পাওয়া যায়নি।"
+    },
+    "services": {
+      "title": "সার্ভিস",
+      "empty": "কোনো সার্ভিস পাওয়া যায়নি।",
+      "unknown": "অজানা",
+      "fallbackCategory": "সার্ভিস"
+    },
+    "features": {
+      "badge": "কেন আমাদের বেছে নেবেন",
+      "title": "কেন কেনাকাটা ও বুকিং করবেন",
+      "titleHighlight": "আমাদের সাথে",
+      "subtitle": "প্রতিটি পণ্য কেনা ও সার্ভিস বুকিংয়ে আমরা আপনার নিরাপত্তা, সুবিধা এবং সম্পূর্ণ সন্তুষ্টিকে অগ্রাধিকার দিই।",
+      "secureTitle": "নিরাপদ পেমেন্ট",
+      "secureDescription": "১০০% নিরাপদ ও সুরক্ষিত।",
+      "returnsTitle": "সহজ রিটার্ন",
+      "returnsDescription": "ঝামেলাহীন রিটার্ন।",
+      "supportTitle": "২৪/৭ সাপোর্ট",
+      "supportDescription": "আমরা সাহায্য করতে প্রস্তুত।",
+      "deliveryTitle": "দ্রুত ডেলিভারি",
+      "deliveryDescription": "সময়মতো, প্রতিবার।",
+      "merchantsTitle": "যাচাইকৃত মার্চেন্ট",
+      "merchantsDescription": "বিশ্বস্ত ও নির্ভরযোগ্য।"
+    },
+    "appDownload": {
+      "heading": "আপনার যা দরকার,",
+      "headingAccent": "পকেটেই।",
+      "chooseApp": "একটি অ্যাপ বেছে নিন",
+      "downloadOnThe": "ডাউনলোড করুন",
+      "appStore": "App Store",
+      "getItOn": "পাবেন",
+      "googlePlay": "Google Play",
+      "customerBadge": "কাস্টমারদের জন্য",
+      "customerTab": "কাস্টমার",
+      "customerTitle": "কাস্টমার অ্যাপ",
+      "customerDescription": "পণ্য কিনুন, পেশাদার সার্ভিস বুক করুন এবং রিয়েল-টাইমে অর্ডার ট্র্যাক করুন।",
+      "customerFeature1": "লাইভ অর্ডার ট্র্যাকিং",
+      "customerFeature2": "মাল্টি-পেমেন্ট সাপোর্ট",
+      "customerFeature3": "এক্সক্লুসিভ অফার",
+      "customerAlt": "কাস্টমার অ্যাপের হোম ও পণ্য ব্রাউজিং স্ক্রিন",
+      "merchantBadge": "মার্চেন্টদের জন্য",
+      "merchantTab": "মার্চেন্ট",
+      "merchantTitle": "মার্চেন্ট অ্যাপ",
+      "merchantDescription": "স্টোর ইনভেন্টরি পরিচালনা করুন, অর্ডার প্রসেস করুন এবং যেকোনো জায়গা থেকে সেলস দেখুন।",
+      "merchantFeature1": "ইনভেন্টরি নিয়ন্ত্রণ",
+      "merchantFeature2": "ব্যাচ ফুলফিলমেন্ট",
+      "merchantFeature3": "তাৎক্ষণিক পেআউট",
+      "merchantAlt": "মোবাইল অ্যাপে মার্চেন্ট ড্যাশবোর্ড",
+      "providerBadge": "সার্ভিস প্রোভাইডারদের জন্য",
+      "providerTab": "প্রোভাইডার",
+      "providerTitle": "সার্ভিস প্রোভাইডার অ্যাপ",
+      "providerDescription": "ক্লায়েন্ট বুকিং নিন, অ্যাপয়েন্টমেন্ট পরিচালনা করুন এবং আপনার সার্ভিস ব্যবসা গড়ুন।",
+      "providerFeature1": "বুকিং ক্যালেন্ডার",
+      "providerFeature2": "সরাসরি ক্লায়েন্ট মেসেজিং",
+      "providerFeature3": "আয় ক্যাশআউট",
+      "providerAlt": "মোবাইল অ্যাপে সার্ভিস প্রোভাইডার ড্যাশবোর্ড",
+      "driverBadge": "ড্রাইভারদের জন্য",
+      "driverTab": "ড্রাইভার",
+      "driverTitle": "ড্রাইভার অ্যাপ",
+      "driverDescription": "ডেলিভারি রিকোয়েস্ট নিন, অপটিমাইজড রুটে চলুন এবং নিজের সময়ে আয় করুন।",
+      "driverFeature1": "রুট নেভিগেশন",
+      "driverFeature2": "সাপ্তাহিক আয় ট্র্যাকার",
+      "driverFeature3": "২৪/৭ ডেলিভারি সাপোর্ট",
+      "driverAlt": "ড্রাইভার অ্যাপের লাইভ ডেলিভারি ট্র্যাকিং স্ক্রিন"
+    }
   }
 }

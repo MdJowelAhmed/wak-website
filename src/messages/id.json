@@ -82,5 +82,116 @@
     "title": "404 Halaman tidak ditemukan",
     "description": "Halaman yang Anda kunjungi tidak ditemukan. Anda dapat ke beranda.",
     "backHome": "Kembali ke beranda"
+  },
+  "Home": {
+    "viewAll": "Lihat semua",
+    "banner": {
+      "shopNow": "Belanja sekarang",
+      "viewService": "Lihat layanan",
+      "previous": "Banner sebelumnya",
+      "next": "Banner berikutnya"
+    },
+    "userTypes": {
+      "customerTitle": "Pelanggan",
+      "customerSubtitle": "Beli produk dan pesan layanan",
+      "customerCta": "Belanja sekarang",
+      "vendorTitle": "Penjual / Pedagang",
+      "vendorSubtitle": "Jual produk Anda",
+      "vendorCta": "Gabung sebagai pedagang",
+      "providerTitle": "Penyedia layanan",
+      "providerSubtitle": "Tawarkan layanan Anda",
+      "providerCta": "Gabung sebagai penyedia",
+      "driverTitle": "Pengemudi",
+      "driverSubtitle": "Antar bersama kami",
+      "driverCta": "Gabung sebagai pengemudi"
+    },
+    "categories": {
+      "products": "Kategori produk",
+      "services": "Kategori layanan",
+      "emptyProducts": "Kategori produk tidak ditemukan",
+      "emptyServices": "Kategori layanan tidak ditemukan"
+    },
+    "featured": {
+      "title": "Kategori unggulan",
+      "loading": "Memuat kategori...",
+      "empty": "Kategori unggulan tidak ditemukan.",
+      "exploreProducts": "Jelajahi produk",
+      "exploreServices": "Jelajahi layanan",
+      "previous": "Kategori sebelumnya",
+      "next": "Kategori berikutnya"
+    },
+    "bestSelling": {
+      "eyebrow": "Bulan ini",
+      "title": "Produk terlaris",
+      "empty": "Produk terlaris tidak ditemukan."
+    },
+    "newArrival": {
+      "eyebrow": "Bulan ini",
+      "title": "Belanja produk baru",
+      "empty": "Produk baru tidak ditemukan."
+    },
+    "services": {
+      "title": "Layanan",
+      "empty": "Layanan tidak ditemukan.",
+      "unknown": "Tidak diketahui",
+      "fallbackCategory": "Layanan"
+    },
+    "features": {
+      "badge": "Mengapa memilih kami",
+      "title": "Mengapa belanja dan pesan bersama",
+      "titleHighlight": "kami",
+      "subtitle": "Kami mengutamakan keamanan, kenyamanan, dan kepuasan Anda di setiap pembelian produk dan pemesanan layanan.",
+      "secureTitle": "Pembayaran aman",
+      "secureDescription": "100% aman dan terlindungi.",
+      "returnsTitle": "Pengembalian mudah",
+      "returnsDescription": "Pengembalian tanpa ribet.",
+      "supportTitle": "Dukungan 24/7",
+      "supportDescription": "Kami siap membantu.",
+      "deliveryTitle": "Pengiriman cepat",
+      "deliveryDescription": "Tepat waktu, setiap saat.",
+      "merchantsTitle": "Pedagang terverifikasi",
+      "merchantsDescription": "Tepercaya dan andal."
+    },
+    "appDownload": {
+      "heading": "Semua yang Anda butuhkan,",
+      "headingAccent": "di saku Anda.",
+      "chooseApp": "Pilih aplikasi",
+      "downloadOnThe": "Unduh di",
+      "appStore": "App Store",
+      "getItOn": "Dapatkan di",
+      "googlePlay": "Google Play",
+      "customerBadge": "Untuk pelanggan",
+      "customerTab": "Pelanggan",
+      "customerTitle": "Aplikasi pelanggan",
+      "customerDescription": "Beli produk, pesan layanan profesional, dan lacak pesanan secara real-time.",
+      "customerFeature1": "Pelacakan pesanan langsung",
+      "customerFeature2": "Dukungan multi-pembayaran",
+      "customerFeature3": "Penawaran eksklusif",
+      "customerAlt": "Layar beranda dan penelusuran produk aplikasi pelanggan",
+      "merchantBadge": "Untuk pedagang",
+      "merchantTab": "Pedagang",
+      "merchantTitle": "Aplikasi pedagang",
+      "merchantDescription": "Kelola inventaris, proses pesanan, dan lihat penjualan di mana pun Anda berada.",
+      "merchantFeature1": "Kontrol inventaris",
+      "merchantFeature2": "Pemenuhan batch",
+      "merchantFeature3": "Pencairan instan",
+      "merchantAlt": "Dasbor pedagang di aplikasi seluler",
+      "providerBadge": "Untuk penyedia layanan",
+      "providerTab": "Penyedia",
+      "providerTitle": "Aplikasi penyedia layanan",
+      "providerDescription": "Terima pemesanan, kelola jadwal, dan kembangkan bisnis layanan Anda.",
+      "providerFeature1": "Kalender pemesanan",
+      "providerFeature2": "Pesan langsung dengan klien",
+      "providerFeature3": "Pencairan penghasilan",
+      "providerAlt": "Dasbor penyedia layanan di aplikasi seluler",
+      "driverBadge": "Untuk pengemudi",
+      "driverTab": "Pengemudi",
+      "driverTitle": "Aplikasi pengemudi",
+      "driverDescription": "Terima permintaan pengiriman, ikuti rute yang dioptimalkan, dan hasilkan uang sesuai jadwal Anda.",
+      "driverFeature1": "Navigasi rute",
+      "driverFeature2": "Pelacak penghasilan mingguan",
+      "driverFeature3": "Dukungan pengiriman 24/7",
+      "driverAlt": "Layar pelacakan pengiriman langsung aplikasi pengemudi"
+    }
   }
 }

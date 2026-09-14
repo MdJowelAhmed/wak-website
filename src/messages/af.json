@@ -82,5 +82,116 @@
     "title": "404 Nie gevind nie",
     "description": "Die bladsy wat jy besoek het, is nie gevind nie. Jy kan na die tuisblad gaan.",
     "backHome": "Terug na tuisblad"
+  },
+  "Home": {
+    "viewAll": "Sien alles",
+    "banner": {
+      "shopNow": "Koop nou",
+      "viewService": "Sien diens",
+      "previous": "Vorige baniere",
+      "next": "Volgende baniere"
+    },
+    "userTypes": {
+      "customerTitle": "Kliënt",
+      "customerSubtitle": "Koop produkte en bespreek dienste",
+      "customerCta": "Koop nou",
+      "vendorTitle": "Verkoper / Handelaar",
+      "vendorSubtitle": "Verkoop jou produkte",
+      "vendorCta": "Sluit aan as handelaar",
+      "providerTitle": "Diensverskaffer",
+      "providerSubtitle": "Bied jou dienste",
+      "providerCta": "Sluit aan as verskaffer",
+      "driverTitle": "Bestuurder",
+      "driverSubtitle": "Lewer saam met ons",
+      "driverCta": "Sluit aan as bestuurder"
+    },
+    "categories": {
+      "products": "Produkkategorieë",
+      "services": "Dienskategorieë",
+      "emptyProducts": "Geen produkkategorieë gevind nie",
+      "emptyServices": "Geen dienskategorieë gevind nie"
+    },
+    "featured": {
+      "title": "Uitgestalde kategorieë",
+      "loading": "Laai kategorieë...",
+      "empty": "Geen uitgestalde kategorieë gevind nie.",
+      "exploreProducts": "Verken produkte",
+      "exploreServices": "Verken dienste",
+      "previous": "Vorige kategorieë",
+      "next": "Volgende kategorieë"
+    },
+    "bestSelling": {
+      "eyebrow": "Hierdie maand",
+      "title": "Topverkopende produkte",
+      "empty": "Geen topverkopende produkte gevind nie."
+    },
+    "newArrival": {
+      "eyebrow": "Hierdie maand",
+      "title": "Koop by nuwe aankomste",
+      "empty": "Geen nuwe aankomste gevind nie."
+    },
+    "services": {
+      "title": "Dienste",
+      "empty": "Geen dienste gevind nie.",
+      "unknown": "Onbekend",
+      "fallbackCategory": "Diens"
+    },
+    "features": {
+      "badge": "Hoekom ons kies",
+      "title": "Hoekom koop en bespreek by",
+      "titleHighlight": "ons",
+      "subtitle": "Ons stel jou veiligheid, gerief en volle tevredenheid eerste by elke aankoop en diensbespreking.",
+      "secureTitle": "Veilige betalings",
+      "secureDescription": "100% veilig en beskerm.",
+      "returnsTitle": "Maklike opbrengste",
+      "returnsDescription": "Moeitelose opbrengste.",
+      "supportTitle": "24/7 ondersteuning",
+      "supportDescription": "Ons is hier om te help.",
+      "deliveryTitle": "Vinnige aflewering",
+      "deliveryDescription": "Betyds, elke keer.",
+      "merchantsTitle": "Geverifieerde handelaars",
+      "merchantsDescription": "Vertrouenswaardig en betroubaar."
+    },
+    "appDownload": {
+      "heading": "Alles wat jy nodig het,",
+      "headingAccent": "in jou sak.",
+      "chooseApp": "Kies 'n program",
+      "downloadOnThe": "Laai af op die",
+      "appStore": "App Store",
+      "getItOn": "Kry dit op",
+      "googlePlay": "Google Play",
+      "customerBadge": "Vir kliënte",
+      "customerTab": "Kliënt",
+      "customerTitle": "Kliënt-app",
+      "customerDescription": "Koop produkte, bespreek professionele dienste en volg jou bestellings intyds.",
+      "customerFeature1": "Lewendige bestellingopsporing",
+      "customerFeature2": "Verskeie betalingsopsies",
+      "customerFeature3": "Eksklusiewe aanbiedinge",
+      "customerAlt": "Kliënt-app tuis- en produkskerms",
+      "merchantBadge": "Vir handelaars",
+      "merchantTab": "Handelaar",
+      "merchantTitle": "Handelaar-app",
+      "merchantDescription": "Bestuur voorraad, verwerk bestellings en sien verkope onderweg.",
+      "merchantFeature1": "Voorraadbeheer",
+      "merchantFeature2": "Bondelversending",
+      "merchantFeature3": "Onmiddellike uitbetalings",
+      "merchantAlt": "Handelaar-dashboard op die mobiele app",
+      "providerBadge": "Vir diensverskaffers",
+      "providerTab": "Verskaffer",
+      "providerTitle": "Diensverskaffer-app",
+      "providerDescription": "Ontvang besprekings, bestuur afsprake en bou jou diensbesigheid.",
+      "providerFeature1": "Besprekingskalender",
+      "providerFeature2": "Direkte kliëntboodskappe",
+      "providerFeature3": "Verdienste-uitbetaling",
+      "providerAlt": "Diensverskaffer-dashboard op die mobiele app",
+      "driverBadge": "Vir bestuurders",
+      "driverTab": "Bestuurder",
+      "driverTitle": "Bestuurder-app",
+      "driverDescription": "Aanvaar afleweringsversoeke, volg geoptimaliseerde roetes en verdien op jou skedule.",
+      "driverFeature1": "Roetenavigasie",
+      "driverFeature2": "Weeklikse verdienste-naspoor",
+      "driverFeature3": "24/7 afleweringsondersteuning",
+      "driverAlt": "Bestuurder-app lewendige afleweringsskerm"
+    }
   }
 }

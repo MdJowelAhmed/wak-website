@@ -2,7 +2,8 @@
 
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
@@ -71,6 +72,7 @@ function goToBanner(item: HeroData, router: ReturnType<typeof useRouter>) {
 
 function BannerCard({ item, priority }: { item: HeroData; priority?: boolean }) {
     const router = useRouter();
+    const t = useTranslations("Home.banner");
 
     return (
         <div
@@ -106,7 +108,7 @@ function BannerCard({ item, priority }: { item: HeroData; priority?: boolean }) 
                     }}
                     className="group/btn mt-2 inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-semibold text-white shadow-md transition-all duration-300 hover:bg-primary-hover sm:text-sm"
                 >
-                    {item.type === "service" ? "View service" : "Shop Now"}
+                    {item.type === "service" ? t("viewService") : t("shopNow")}
                     <ArrowUpRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
                 </button>
             </div>
@@ -115,6 +117,8 @@ function BannerCard({ item, priority }: { item: HeroData; priority?: boolean }) 
 }
 
 const Banner = ({ initialBanners, loading = false, count }: BannerProps) => {
+    const t = useTranslations("Home.banner");
+
     if (loading) {
         return <BannerSkeleton count={count || initialBanners?.length || 4} />;
     }
@@ -132,16 +136,16 @@ const Banner = ({ initialBanners, loading = false, count }: BannerProps) => {
                         <button
                             type="button"
                             className="hero-banner-prev absolute top-1/2 left-1 z-20 flex h-10 w-10 -translate-y-[calc(50%+20px)] cursor-pointer items-center justify-center rounded-full bg-primary text-white shadow-md transition-all hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-40 [&.swiper-button-disabled]:pointer-events-none md:left-2"
-                            aria-label="Previous banners"
+                            aria-label={t("previous")}
                         >
-                            <ChevronLeft className="h-5 w-5" />
+                            <ChevronLeft className="h-5 w-5 rtl:rotate-180" />
                         </button>
                         <button
                             type="button"
                             className="hero-banner-next absolute top-1/2 right-1 z-20 flex h-10 w-10 -translate-y-[calc(50%+20px)] cursor-pointer items-center justify-center rounded-full bg-primary text-white shadow-md transition-all hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-40 [&.swiper-button-disabled]:pointer-events-none md:right-2"
-                            aria-label="Next banners"
+                            aria-label={t("next")}
                         >
-                            <ChevronRight className="h-5 w-5" />
+                            <ChevronRight className="h-5 w-5 rtl:rotate-180" />
                         </button>
 
                         <Swiper
