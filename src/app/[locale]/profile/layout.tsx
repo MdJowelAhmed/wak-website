@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import ProfileSidebar from "@/components/(customer-pages)/profile/sidebar/ProfileSidebar";
 import SidebarSkeleton from "@/components/(customer-pages)/profile/sidebar/SidebarSkeleton";
 
+export const dynamic = "force-dynamic";
+
 export default function ProfileLayout({
   children,
 }: {

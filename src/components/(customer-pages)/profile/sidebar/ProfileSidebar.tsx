@@ -5,13 +5,7 @@ import getProfile from "../../../../../helpers/getProfile";
 
 export default async function ProfileSidebar() {
   const t = await getTranslations("Profile.sidebar");
-
-  let profile = null;
-  try {
-    profile = await getProfile();
-  } catch {
-    profile = null;
-  }
+  const profile = await getProfile();
 
   const imageUrl = profile?.profileImage || "/user.svg";
   const name = profile?.name || t("guest");
