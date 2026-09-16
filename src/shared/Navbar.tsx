@@ -14,6 +14,12 @@ import CustomerMobileMenu from '@/ui/CustomerMobileMenu';
 import LocationModal from '@/ui/LocationModal';
 import LanguageRegionModal, { languagesList } from '@/ui/LanguageRegionModal';
 import { useCurrency } from '@/hooks/use-currency';
+import {
+    readDeliveryLocation,
+    shoppingCountryShortName,
+    writeDeliveryLocation,
+    type DeliveryLocation,
+} from '../../helpers/delivery-location';
 
 interface NavbarProps {
     userMode?: string;
@@ -24,24 +30,22 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
     const [isLocationOpen, setIsLocationOpen] = useState(false);
     const [isLangOpen, setIsLangOpen] = useState(false);
 
-    const [currentLocation, setCurrentLocation] = useState('Lilongwe, 20100');
+    const [currentLocation, setCurrentLocation] = useState<DeliveryLocation | null>(null);
     const locale = useLocale();
     const t = useTranslations();
 
     const { isLoggedIn, logout } = useAuth();
     const { country, currency, rate, setCountry } = useCurrency();
+    const deliveryLabel = currentLocation?.label || shoppingCountryShortName(country.code);
 
     useEffect(() => {
-        const savedLoc = localStorage.getItem('user_location');
-        if (savedLoc) setCurrentLocation(savedLoc);
+        setCurrentLocation(readDeliveryLocation());
         localStorage.setItem('user_language', locale);
     }, [locale]);
 
-    const handleSelectLocation = (loc: string) => {
-        setCurrentLocation(loc);
-        if (typeof window !== 'undefined') {
-            localStorage.setItem('user_location', loc);
-        }
+    const handleSelectLocation = (location: DeliveryLocation) => {
+        setCurrentLocation(location);
+        writeDeliveryLocation(location);
     };
 
     const activeLangObj = languagesList.find((l) => l.code === locale) || languagesList[0];
@@ -52,19 +56,21 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
             <div className="bg-secondary border-b border-border/20 py-1.5 px-4 sm:px-6 text-xs text-body-text font-medium">
                 <div className="container mx-auto flex items-center justify-between gap-4">
                     {/* Left: Deliver to Location Control */}
-                    <div className="flex items-center gap-2">
-                        <MapPin className="w-3.5 h-3.5 text-accent-foreground shrink-0" />
-                        <span className="hidden sm:inline text-accent-foreground">{t("Navbar.deliverTo")}</span>
-                        <button
-                            onClick={() => setIsLocationOpen(true)}
-                            className="font-bold text-accent-foreground hover:text-accent-foreground transition-colors cursor-pointer flex items-center gap-1"
-                        >
-                            <span>{currentLocation}</span>
-                            <span className="text-[10px] text-accent-foreground underline ml-1 font-semibold">
-                                {t("Navbar.updateLocation")}
+                    <button
+                        type="button"
+                        onClick={() => setIsLocationOpen(true)}
+                        className="flex min-w-0 items-center gap-1.5 text-left text-accent-foreground transition-colors cursor-pointer hover:opacity-90"
+                    >
+                        <MapPin className="w-4 h-4 shrink-0" />
+                        <span className="flex min-w-0 flex-col leading-tight">
+                            <span className="text-[11px] font-medium text-accent-foreground/80">
+                                {t("Navbar.deliverTo")}
                             </span>
-                        </button>
-                    </div>
+                            <span className="max-w-[160px] truncate text-xs font-bold sm:max-w-[240px]">
+                                {deliveryLabel}
+                            </span>
+                        </span>
+                    </button>
 
                     {/* Right: Quick Links & Language/Region Selector */}
                     <div className="flex items-center gap-4 sm:gap-6 shrink-0">
@@ -152,6 +158,7 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
             <LocationModal
                 isOpen={isLocationOpen}
                 onClose={() => setIsLocationOpen(false)}
+                countryCode={country.code}
                 currentLocation={currentLocation}
                 onSelectLocation={handleSelectLocation}
             />
@@ -163,7 +170,7 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
                     isLoggedIn={isLoggedIn}
                     logout={logout}
                     userMode={userMode}
-                    currentLocation={currentLocation}
+                    currentLocation={deliveryLabel}
                     onOpenLocationModal={() => setIsLocationOpen(true)}
                     onOpenLangModal={() => setIsLangOpen(true)}
                     currentCurrencyLabel={`${country.flag} ${currency}`}

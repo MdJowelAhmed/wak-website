@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { MapPin, Navigation, Check, X, Building } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { MapPin, Navigation, Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import {
     Dialog,
     DialogContent,
@@ -9,190 +10,277 @@ import {
     DialogTitle,
     DialogDescription,
 } from '@/ui/dialog';
-
-interface Address {
-    id: string;
-    label: string;
-    city: string;
-    postalCode: string;
-    addressLine: string;
-    isDefault?: boolean;
-}
-
-const defaultAddresses: Address[] = [
-    {
-        id: 'addr-1',
-        label: 'Home',
-        city: 'Lilongwe',
-        postalCode: '20100',
-        addressLine: 'Area 10, Plot 42, Lilongwe, Malawi',
-        isDefault: true,
-    },
-    {
-        id: 'addr-2',
-        label: 'Office',
-        city: 'Blantyre',
-        postalCode: '31200',
-        addressLine: 'Victoria Avenue, Blantyre, Malawi',
-    },
-    {
-        id: 'addr-3',
-        label: 'Warehouse',
-        city: 'Mzuzu',
-        postalCode: '10100',
-        addressLine: 'Mzuzu Central, Mzuzu, Malawi',
-    },
-];
+import { Button } from '@/ui/button';
+import { getGoogleMapsKey, loadGoogleMaps } from '../../helpers/google-maps';
+import {
+    hasCoordinates,
+    labelFromAddressComponents,
+    mapCenterForCountry,
+    type DeliveryLocation,
+} from '../../helpers/delivery-location';
 
 interface LocationModalProps {
     isOpen: boolean;
     onClose: () => void;
-    currentLocation: string;
-    onSelectLocation: (locationStr: string) => void;
+    countryCode: string;
+    currentLocation: DeliveryLocation | null;
+    onSelectLocation: (location: DeliveryLocation) => void;
+}
+
+function locationFromGeocoderResult(
+    result: google.maps.GeocoderResult,
+    lat: number,
+    lng: number,
+): DeliveryLocation {
+    const get = (type: string) =>
+        result.address_components.find((item) => item.types.includes(type))?.long_name;
+
+    return {
+        label: labelFromAddressComponents(result.address_components, result.formatted_address),
+        formattedAddress: result.formatted_address,
+        lat,
+        lng,
+        city: get('locality') || get('administrative_area_level_2') || get('administrative_area_level_1'),
+        country: get('country'),
+        postalCode: get('postal_code'),
+    };
 }
 
 export default function LocationModal({
     isOpen,
     onClose,
+    countryCode,
     currentLocation,
     onSelectLocation,
 }: LocationModalProps) {
-    const [manualZip, setManualZip] = useState('');
-    const [manualCity, setManualCity] = useState('');
-    const [detecting, setDetecting] = useState(false);
-    const [selectedId, setSelectedId] = useState('addr-1');
+    const t = useTranslations('LocationModal');
+    const searchRef = useRef<HTMLInputElement>(null);
+    const mapNodeRef = useRef<HTMLDivElement>(null);
+    const mapRef = useRef<google.maps.Map | null>(null);
+    const markerRef = useRef<google.maps.Marker | null>(null);
+    const [draft, setDraft] = useState<DeliveryLocation | null>(currentLocation);
+    const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'detecting'>('idle');
+    const [error, setError] = useState('');
+
+    useEffect(() => {
+        if (isOpen) setDraft(currentLocation);
+    }, [isOpen, currentLocation]);
+
+    useEffect(() => {
+        if (!isOpen) return;
+
+        let cancelled = false;
+        let autocomplete: google.maps.places.Autocomplete | null = null;
+        const listeners: google.maps.MapsEventListener[] = [];
+
+        const applyLatLng = async (latLng: google.maps.LatLng) => {
+            const geocoder = new google.maps.Geocoder();
+            const response = await geocoder.geocode({ location: latLng });
+            const result = response.results[0];
+            if (!result || cancelled) return;
+            setDraft(locationFromGeocoderResult(result, latLng.lat(), latLng.lng()));
+        };
+
+        const timer = window.setTimeout(async () => {
+            if (!getGoogleMapsKey()) {
+                setStatus('error');
+                setError(t('missingKey'));
+                return;
+            }
+
+            setStatus('loading');
+            setError('');
+
+            try {
+                await loadGoogleMaps();
+                if (cancelled || !mapNodeRef.current) return;
+
+                const fallback = mapCenterForCountry(countryCode);
+                const saved = hasCoordinates(currentLocation) ? currentLocation : null;
+                const center = saved
+                    ? { lat: saved.lat, lng: saved.lng }
+                    : { lat: fallback.lat, lng: fallback.lng };
+
+                const map = new google.maps.Map(mapNodeRef.current, {
+                    center,
+                    zoom: saved ? 15 : fallback.zoom,
+                    streetViewControl: false,
+                    mapTypeControl: false,
+                    fullscreenControl: false,
+                    clickableIcons: false,
+                });
+                const marker = new google.maps.Marker({
+                    map,
+                    position: center,
+                    draggable: true,
+                });
+
+                listeners.push(
+                    map.addListener('click', (event: google.maps.MapMouseEvent) => {
+                        if (!event.latLng) return;
+                        marker.setPosition(event.latLng);
+                        void applyLatLng(event.latLng);
+                    }),
+                );
+                listeners.push(
+                    marker.addListener('dragend', () => {
+                        const position = marker.getPosition();
+                        if (position) void applyLatLng(position);
+                    }),
+                );
+
+                if (searchRef.current) {
+                    autocomplete = new google.maps.places.Autocomplete(searchRef.current, {
+                        fields: ['formatted_address', 'geometry', 'address_components', 'name'],
+                    });
+                    listeners.push(
+                        autocomplete.addListener('place_changed', () => {
+                            const place = autocomplete?.getPlace();
+                            const location = place?.geometry?.location;
+                            if (!place || !location) return;
+                            map.panTo(location);
+                            map.setZoom(16);
+                            marker.setPosition(location);
+                            if (place.formatted_address && place.address_components) {
+                                setDraft(
+                                    locationFromGeocoderResult(
+                                        {
+                                            address_components: place.address_components,
+                                            formatted_address: place.formatted_address,
+                                        } as google.maps.GeocoderResult,
+                                        location.lat(),
+                                        location.lng(),
+                                    ),
+                                );
+                                return;
+                            }
+                            void applyLatLng(location);
+                        }),
+                    );
+                }
+
+                mapRef.current = map;
+                markerRef.current = marker;
+                setStatus('idle');
+            } catch {
+                if (!cancelled) {
+                    setStatus('error');
+                    setError(t('loadError'));
+                }
+            }
+        }, 80);
+
+        return () => {
+            cancelled = true;
+            window.clearTimeout(timer);
+            listeners.forEach((listener) => listener.remove());
+            autocomplete = null;
+            mapRef.current = null;
+            markerRef.current = null;
+        };
+    }, [isOpen, countryCode, currentLocation, t]);
 
     const handleDetectLocation = () => {
         if (!navigator.geolocation) {
-            alert('Geolocation is not supported by your browser.');
+            setError(t('geoUnsupported'));
             return;
         }
-        setDetecting(true);
+
+        setStatus('detecting');
+        setError('');
         navigator.geolocation.getCurrentPosition(
-            () => {
-                const detectedLoc = 'Lilongwe, 20100';
-                onSelectLocation(detectedLoc);
-                setDetecting(false);
-                onClose();
+            async (position) => {
+                try {
+                    await loadGoogleMaps();
+                    const latLng = new google.maps.LatLng(
+                        position.coords.latitude,
+                        position.coords.longitude,
+                    );
+                    mapRef.current?.panTo(latLng);
+                    mapRef.current?.setZoom(16);
+                    markerRef.current?.setPosition(latLng);
+                    const geocoder = new google.maps.Geocoder();
+                    const response = await geocoder.geocode({ location: latLng });
+                    const result = response.results[0];
+                    if (result) {
+                        setDraft(locationFromGeocoderResult(result, latLng.lat(), latLng.lng()));
+                    }
+                } catch {
+                    setError(t('geoDenied'));
+                } finally {
+                    setStatus('idle');
+                }
             },
             () => {
-                alert('Could not retrieve location. Please enter manually.');
-                setDetecting(false);
-            }
+                setStatus('idle');
+                setError(t('geoDenied'));
+            },
         );
     };
 
-    const handleApplyManual = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!manualCity.trim() && !manualZip.trim()) return;
-        const loc = `${manualCity.trim() || 'Custom'}, ${manualZip.trim() || '00000'}`;
-        onSelectLocation(loc);
-        onClose();
-    };
-
-    const handleSelectAddress = (addr: Address) => {
-        setSelectedId(addr.id);
-        onSelectLocation(`${addr.city}, ${addr.postalCode}`);
+    const handleApply = () => {
+        if (!draft?.label) return;
+        onSelectLocation(draft);
         onClose();
     };
 
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-            <DialogContent className="sm:max-w-md bg-card text-foreground border border-border rounded-2xl shadow-xl p-6">
-                <DialogHeader className="flex flex-row items-center justify-between border-b border-border pb-3 mb-3">
-                    <div>
-                        <DialogTitle className="text-lg font-bold text-foreground flex items-center gap-2">
-                            <MapPin className="w-5 h-5 text-primary" />
-                            Choose Delivery Location
-                        </DialogTitle>
-                        <DialogDescription className="text-xs text-body-text mt-1">
-                            Delivery options and item availability depend on your location.
-                        </DialogDescription>
-                    </div>
+            <DialogContent className="sm:max-w-lg bg-card text-foreground border border-border rounded-2xl shadow-xl p-6">
+                <DialogHeader className="border-b border-border pb-3">
+                    <DialogTitle className="text-lg font-bold text-foreground flex items-center gap-2">
+                        <MapPin className="w-5 h-5 text-primary" />
+                        {t('title')}
+                    </DialogTitle>
+                    <DialogDescription className="text-xs text-body-text">
+                        {t('description')}
+                    </DialogDescription>
                 </DialogHeader>
 
-                <div className="space-y-4">
-                    {/* Device Location Auto Detect */}
+                <div className="space-y-3">
+                    <input
+                        ref={searchRef}
+                        type="search"
+                        placeholder={t('searchPlaceholder')}
+                        className="w-full rounded-xl border border-border bg-section-bg px-3 py-2.5 text-sm text-foreground outline-none placeholder:text-muted-text focus:border-primary"
+                    />
+
                     <button
+                        type="button"
                         onClick={handleDetectLocation}
-                        disabled={detecting}
-                        className="w-full flex items-center justify-center gap-2 bg-primary/5 hover:bg-primary/20 text-primary border border-primary/30 py-2.5 px-4 rounded-xl font-semibold text-xs transition-all cursor-pointer shadow-2xs"
+                        disabled={status === 'detecting' || status === 'loading'}
+                        className="w-full flex items-center justify-center gap-2 bg-primary/5 hover:bg-primary/20 text-primary border border-primary/30 py-2.5 px-4 rounded-xl font-semibold text-xs transition-all cursor-pointer disabled:opacity-60"
                     >
-                        <Navigation className={`w-4 h-4 ${detecting ? 'animate-spin' : ''}`} />
-                        {detecting ? 'Detecting location...' : 'Use current location'}
+                        {status === 'detecting' ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                            <Navigation className="w-4 h-4" />
+                        )}
+                        {status === 'detecting' ? t('detecting') : t('useCurrent')}
                     </button>
 
-                    {/* Saved Addresses Section */}
-                    <div>
-                        <span className="text-xs font-bold text-body-text uppercase tracking-wider block mb-2">
-                            Saved Addresses
-                        </span>
-                        <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
-                            {defaultAddresses.map((addr) => {
-                                const isSelected = selectedId === addr.id;
-                                return (
-                                    <div
-                                        key={addr.id}
-                                        onClick={() => handleSelectAddress(addr)}
-                                        className={`p-3 rounded-xl border transition-all cursor-pointer flex items-start justify-between gap-3 ${
-                                            isSelected
-                                                ? 'bg-primary/5 border-primary shadow-2xs'
-                                                : 'bg-section-bg border-border hover:border-primary/50'
-                                        }`}
-                                    >
-                                        <div className="flex items-start gap-2.5">
-                                            <Building className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                                            <div>
-                                                <div className="flex items-center gap-2">
-                                                    <span className="text-xs font-bold text-foreground">
-                                                        {addr.label}
-                                                    </span>
-                                                    {addr.isDefault && (
-                                                        <span className="text-[9px] bg-secondary text-white px-1.5 py-0.2 rounded font-semibold">
-                                                            Default
-                                                        </span>
-                                                    )}
-                                                </div>
-                                                <p className="text-[11px] text-body-text mt-0.5 leading-snug">
-                                                    {addr.addressLine}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        {isSelected && <Check className="w-4 h-4 text-primary shrink-0" />}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
+                    <div
+                        ref={mapNodeRef}
+                        className="h-56 w-full overflow-hidden rounded-xl border border-border bg-section-bg"
+                    />
 
-                    {/* Manual Entry */}
-                    <div className="pt-3 border-t border-border">
-                        <span className="text-xs font-bold text-body-text uppercase tracking-wider block mb-2">
-                            Or Enter City / Postal Code
-                        </span>
-                        <form onSubmit={handleApplyManual} className="flex gap-2">
-                            <input
-                                type="text"
-                                placeholder="City"
-                                value={manualCity}
-                                onChange={(e) => setManualCity(e.target.value)}
-                                className="flex-1 bg-section-bg border border-border text-foreground placeholder:text-muted-text rounded-xl px-3 py-2 text-xs focus:border-primary outline-none"
-                            />
-                            <input
-                                type="text"
-                                placeholder="Postal Code"
-                                value={manualZip}
-                                onChange={(e) => setManualZip(e.target.value)}
-                                className="w-28 bg-section-bg border border-border text-foreground placeholder:text-muted-text rounded-xl px-3 py-2 text-xs focus:border-primary outline-none"
-                            />
-                            <button
-                                type="submit"
-                                className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer"
-                            >
-                                Apply
-                            </button>
-                        </form>
-                    </div>
+                    {error ? <p className="text-xs text-error">{error}</p> : null}
+
+                    {draft?.label ? (
+                        <p className="rounded-xl bg-section-bg px-3 py-2 text-xs text-foreground">
+                            <span className="font-semibold">{t('selected')}: </span>
+                            {draft.formattedAddress || draft.label}
+                        </p>
+                    ) : null}
+
+                    <Button
+                        type="button"
+                        onClick={handleApply}
+                        disabled={!draft?.label}
+                        className="w-full rounded-xl"
+                    >
+                        {t('deliverHere')}
+                    </Button>
                 </div>
             </DialogContent>
         </Dialog>

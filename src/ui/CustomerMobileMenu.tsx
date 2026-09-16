@@ -27,7 +27,7 @@ export default function CustomerMobileMenu({
     isLoggedIn,
     userMode,
     logout,
-    currentLocation = 'Lilongwe, 20100',
+    currentLocation = 'Malawi',
     onOpenLocationModal,
     onOpenLangModal,
     currentCurrencyLabel = '🇲🇼 MWK',

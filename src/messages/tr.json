@@ -25,6 +25,19 @@
     "languageCurrency": "Dil ve para birimini değiştir",
     "toggleMenu": "Mobil menüyü aç"
   },
+  "LocationModal": {
+    "title": "Choose your location",
+    "description": "Delivery options and availability depend on your location.",
+    "searchPlaceholder": "Search address, city, or postal code",
+    "useCurrent": "Use my current location",
+    "detecting": "Detecting location...",
+    "deliverHere": "Deliver here",
+    "selected": "Selected",
+    "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
+    "missingKey": "Google Maps is not configured.",
+    "geoUnsupported": "Location is not supported in this browser.",
+    "geoDenied": "Could not access your location. Search or pick a point on the map."
+  },
   "LanguageSwitcher": {
     "changeLanguage": "Dili değiştir",
     "changeCurrency": "Para birimini değiştir",
@@ -199,10 +212,10 @@
       "merchantFeature3": "Anında ödeme",
       "merchantAlt": "Mobil uygulamada satıcı panosu",
       "providerBadge": "Hizmet sağlayıcılar için",
-      "providerTab": "Sağlayıcı",
+      "providerTab": "Hizmet sağlayıcı",
       "providerTitle": "Hizmet sağlayıcı uygulaması",
       "providerDescription": "Rezervasyon alın, randevuları yönetin ve hizmet işinizi büyütün.",
-      "providerFeature1": "Rezervasyon takvimi",
+      "providerFeature1": "Rezervasyon hizmeti",
       "providerFeature2": "Doğrudan müşteri mesajları",
       "providerFeature3": "Kazanç çekimi",
       "providerAlt": "Mobil uygulamada hizmet sağlayıcı panosu",

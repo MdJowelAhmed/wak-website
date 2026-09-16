@@ -242,6 +242,10 @@ body {
   animation: shop-drawer-out 0.32s cubic-bezier(0.4, 0, 1, 1) both;
 }
 
+.pac-container {
+  z-index: 2000 !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .shop-filter-overlay[data-state="open"],
   .shop-filter-overlay[data-state="closed"],

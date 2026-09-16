@@ -25,6 +25,19 @@
     "languageCurrency": "Изменить язык и валюту",
     "toggleMenu": "Открыть мобильное меню"
   },
+  "LocationModal": {
+    "title": "Choose your location",
+    "description": "Delivery options and availability depend on your location.",
+    "searchPlaceholder": "Search address, city, or postal code",
+    "useCurrent": "Use my current location",
+    "detecting": "Detecting location...",
+    "deliverHere": "Deliver here",
+    "selected": "Selected",
+    "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
+    "missingKey": "Google Maps is not configured.",
+    "geoUnsupported": "Location is not supported in this browser.",
+    "geoDenied": "Could not access your location. Search or pick a point on the map."
+  },
   "LanguageSwitcher": {
     "changeLanguage": "Изменить язык",
     "changeCurrency": "Изменить валюту",
@@ -199,10 +212,10 @@
       "merchantFeature3": "Мгновенные выплаты",
       "merchantAlt": "Панель продавца в мобильном приложении",
       "providerBadge": "Для исполнителей услуг",
-      "providerTab": "Исполнитель",
+      "providerTab": "Исполнитель услуг",
       "providerTitle": "Приложение исполнителя услуг",
       "providerDescription": "Принимайте бронирования, управляйте расписанием и развивайте сервисный бизнес.",
-      "providerFeature1": "Календарь бронирований",
+      "providerFeature1": "Бронирование услуг",
       "providerFeature2": "Прямые сообщения клиентам",
       "providerFeature3": "Вывод дохода",
       "providerAlt": "Панель исполнителя в мобильном приложении",

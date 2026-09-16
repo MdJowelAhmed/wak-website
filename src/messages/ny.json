@@ -25,6 +25,19 @@
     "languageCurrency": "Sinthani chinenero ndi ndalama",
     "toggleMenu": "Tsegulani menyu"
   },
+  "LocationModal": {
+    "title": "Choose your location",
+    "description": "Delivery options and availability depend on your location.",
+    "searchPlaceholder": "Search address, city, or postal code",
+    "useCurrent": "Use my current location",
+    "detecting": "Detecting location...",
+    "deliverHere": "Deliver here",
+    "selected": "Selected",
+    "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
+    "missingKey": "Google Maps is not configured.",
+    "geoUnsupported": "Location is not supported in this browser.",
+    "geoDenied": "Could not access your location. Search or pick a point on the map."
+  },
   "LanguageSwitcher": {
     "changeLanguage": "Sinthani chinenero",
     "changeCurrency": "Sinthani ndalama",
@@ -199,10 +212,10 @@
       "merchantFeature3": "Kulipira mwamsanga",
       "merchantAlt": "Dashboard ya wogulitsa pa pulogalamu",
       "providerBadge": "Kwa opereka ntchito",
-      "providerTab": "Wopereka",
+      "providerTab": "Wopereka ntchito",
       "providerTitle": "Pulogalamu ya wopereka ntchito",
       "providerDescription": "Landirani ma booking, yang'anani nthawi, ndikumanga bizinesi yanu.",
-      "providerFeature1": "Kalendala ya booking",
+      "providerFeature1": "Ntchito za booking",
       "providerFeature2": "Kulembera makasitomala mwachindunji",
       "providerFeature3": "Kutulutsa ndalama",
       "providerAlt": "Dashboard ya wopereka ntchito pa pulogalamu",

@@ -25,6 +25,19 @@
     "languageCurrency": "เปลี่ยนภาษาและสกุลเงิน",
     "toggleMenu": "เปิดเมนูมือถือ"
   },
+  "LocationModal": {
+    "title": "Choose your location",
+    "description": "Delivery options and availability depend on your location.",
+    "searchPlaceholder": "Search address, city, or postal code",
+    "useCurrent": "Use my current location",
+    "detecting": "Detecting location...",
+    "deliverHere": "Deliver here",
+    "selected": "Selected",
+    "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
+    "missingKey": "Google Maps is not configured.",
+    "geoUnsupported": "Location is not supported in this browser.",
+    "geoDenied": "Could not access your location. Search or pick a point on the map."
+  },
   "LanguageSwitcher": {
     "changeLanguage": "เปลี่ยนภาษา",
     "changeCurrency": "เปลี่ยนสกุลเงิน",
@@ -202,7 +215,7 @@
       "providerTab": "ผู้ให้บริการ",
       "providerTitle": "แอปผู้ให้บริการ",
       "providerDescription": "รับการจอง จัดการนัดหมาย และสร้างธุรกิจบริการของคุณ",
-      "providerFeature1": "ปฏิทินการจอง",
+      "providerFeature1": "การจองบริการ",
       "providerFeature2": "แชทตรงกับลูกค้า",
       "providerFeature3": "ถอนรายได้",
       "providerAlt": "แดชบอร์ดผู้ให้บริการบนแอปมือถือ",
