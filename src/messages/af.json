@@ -35,7 +35,9 @@
     "change": "Verander",
     "done": "Klaar",
     "shoppingOn": "Jy koop op",
-    "changeCountry": "Verander land/streek."
+    "changeCountry": "Verander land/streek.",
+    "searchCountry": "Soek land/streek...",
+    "noCountry": "Geen land gevind nie"
   },
   "MobileMenu": {
     "deliverTo": "Lewer aan:",

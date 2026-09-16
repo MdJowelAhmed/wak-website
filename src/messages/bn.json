@@ -35,7 +35,9 @@
     "change": "পরিবর্তন",
     "done": "হয়ে গেছে",
     "shoppingOn": "আপনি কেনাকাটা করছেন",
-    "changeCountry": "দেশ/অঞ্চল পরিবর্তন করুন।"
+    "changeCountry": "দেশ/অঞ্চল পরিবর্তন করুন।",
+    "searchCountry": "দেশ/অঞ্চল খুঁজুন...",
+    "noCountry": "কোনো দেশ পাওয়া যায়নি"
   },
   "MobileMenu": {
     "deliverTo": "ডেলিভারি ঠিকানা:",

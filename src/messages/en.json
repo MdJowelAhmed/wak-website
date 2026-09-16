@@ -35,7 +35,9 @@
     "change": "Change",
     "done": "Done",
     "shoppingOn": "You are shopping on",
-    "changeCountry": "Change country/region."
+    "changeCountry": "Change country/region.",
+    "searchCountry": "Search country/region...",
+    "noCountry": "No country found"
   },
   "MobileMenu": {
     "deliverTo": "Deliver to:",

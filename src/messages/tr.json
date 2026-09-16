@@ -35,7 +35,9 @@
     "change": "Değiştir",
     "done": "Tamam",
     "shoppingOn": "Alışveriş yaptığınız yer",
-    "changeCountry": "Ülke/bölge değiştir."
+    "changeCountry": "Ülke/bölge değiştir.",
+    "searchCountry": "Ülke/bölge ara...",
+    "noCountry": "Ülke bulunamadı"
   },
   "MobileMenu": {
     "deliverTo": "Teslimat adresi:",

@@ -35,7 +35,9 @@
     "change": "Cambia",
     "done": "Fatto",
     "shoppingOn": "Stai acquistando su",
-    "changeCountry": "Cambia paese/regione."
+    "changeCountry": "Cambia paese/regione.",
+    "searchCountry": "Cerca paese/regione...",
+    "noCountry": "Nessun paese trovato"
   },
   "MobileMenu": {
     "deliverTo": "Consegna a:",

@@ -35,7 +35,9 @@
     "change": "Изменить",
     "done": "Готово",
     "shoppingOn": "Вы покупаете на",
-    "changeCountry": "Изменить страну/регион."
+    "changeCountry": "Изменить страну/регион.",
+    "searchCountry": "Искать страну/регион...",
+    "noCountry": "Страна не найдена"
   },
   "MobileMenu": {
     "deliverTo": "Доставка в:",

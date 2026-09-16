@@ -35,7 +35,9 @@
     "change": "Sinthani",
     "done": "Zatheka",
     "shoppingOn": "Mukugula pa",
-    "changeCountry": "Sinthani dziko/dera."
+    "changeCountry": "Sinthani dziko/dera.",
+    "searchCountry": "Sakani dziko/dera...",
+    "noCountry": "Palibe dziko lopezeka"
   },
   "MobileMenu": {
     "deliverTo": "Tumizani ku:",

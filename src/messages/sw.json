@@ -35,7 +35,9 @@
     "change": "Badilisha",
     "done": "Imekamilika",
     "shoppingOn": "Unanunua kwenye",
-    "changeCountry": "Badilisha nchi/eneo."
+    "changeCountry": "Badilisha nchi/eneo.",
+    "searchCountry": "Tafuta nchi/eneo...",
+    "noCountry": "Hakuna nchi iliyopatikana"
   },
   "MobileMenu": {
     "deliverTo": "Peleka kwa:",

@@ -35,7 +35,9 @@
     "change": "Wijzigen",
     "done": "Klaar",
     "shoppingOn": "U winkelt op",
-    "changeCountry": "Land/regio wijzigen."
+    "changeCountry": "Land/regio wijzigen.",
+    "searchCountry": "Land/regio zoeken...",
+    "noCountry": "Geen land gevonden"
   },
   "MobileMenu": {
     "deliverTo": "Bezorgen bij:",

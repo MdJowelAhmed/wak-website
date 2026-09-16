@@ -35,7 +35,9 @@
     "change": "更改",
     "done": "完成",
     "shoppingOn": "您正在购物于",
-    "changeCountry": "更改国家/地区。"
+    "changeCountry": "更改国家/地区。",
+    "searchCountry": "搜索国家/地区...",
+    "noCountry": "未找到国家"
   },
   "MobileMenu": {
     "deliverTo": "配送至：",

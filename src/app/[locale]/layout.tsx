@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Noto_Naskh_Arabic, Noto_Sans_Bengali, Noto_Sans_Devanagari, Noto_Sans_JP, Noto_Sans_KR, Noto_Sans_SC, Noto_Sans_Thai } from "next/font/google";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
@@ -117,14 +117,18 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 
   setRequestLocale(locale);
 
-  const [cookieStore, exchangeRates, messages] = await Promise.all([
+  const [cookieStore, headerStore, exchangeRates, messages] = await Promise.all([
     cookies(),
+    headers(),
     getExchangeRates(),
     getMessages(),
   ]);
 
   const userMode = cookieStore.get("user-mode")?.value || "customer";
-  const initialCountry = cookieStore.get("user_country")?.value || DEFAULT_COUNTRY;
+  const initialCountry =
+    headerStore.get("x-country-code") ||
+    cookieStore.get("user_country")?.value ||
+    DEFAULT_COUNTRY;
   const initialCurrency = cookieStore.get("user_currency")?.value || DEFAULT_CURRENCY;
   const direction = isRtlLocale(locale) ? "rtl" : "ltr";
   const fontClass = bodyFontClass(locale);

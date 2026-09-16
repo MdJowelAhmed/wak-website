@@ -35,7 +35,9 @@
     "change": "Ubah",
     "done": "Selesai",
     "shoppingOn": "Anda berbelanja di",
-    "changeCountry": "Ubah negara/wilayah."
+    "changeCountry": "Ubah negara/wilayah.",
+    "searchCountry": "Cari negara/wilayah...",
+    "noCountry": "Negara tidak ditemukan"
   },
   "MobileMenu": {
     "deliverTo": "Kirim ke:",

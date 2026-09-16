@@ -35,7 +35,9 @@
     "change": "बदलें",
     "done": "हो गया",
     "shoppingOn": "आप यहाँ खरीदारी कर रहे हैं",
-    "changeCountry": "देश/क्षेत्र बदलें।"
+    "changeCountry": "देश/क्षेत्र बदलें।",
+    "searchCountry": "देश/क्षेत्र खोजें...",
+    "noCountry": "कोई देश नहीं मिला"
   },
   "MobileMenu": {
     "deliverTo": "डिलीवरी पता:",

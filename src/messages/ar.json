@@ -35,7 +35,9 @@
     "change": "تغيير",
     "done": "تم",
     "shoppingOn": "أنت تتسوق على",
-    "changeCountry": "تغيير الدولة/المنطقة."
+    "changeCountry": "تغيير الدولة/المنطقة.",
+    "searchCountry": "ابحث عن الدولة/المنطقة...",
+    "noCountry": "لم يتم العثور على بلد"
   },
   "MobileMenu": {
     "deliverTo": "التوصيل إلى:",

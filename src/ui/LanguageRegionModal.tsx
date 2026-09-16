@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { ChevronRight } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useCurrency } from '@/hooks/use-currency';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import {
@@ -11,6 +11,7 @@ import {
     type CountryOption,
     type LanguageOption,
 } from '../../helpers/regions';
+import { stripCountryFromPathname } from '../../helpers/country-url';
 
 export type { CountryOption, LanguageOption };
 export { countriesList, languagesList };
@@ -28,17 +29,27 @@ export default function LanguageRegionModal({
     isOpen,
     onClose,
     currentLang,
-    currentCountry: _currentCountry,
+    currentCountry,
     onSelectLanguage,
     onSelectCountry,
 }: LanguageRegionDropdownProps) {
     const [selectedLang, setSelectedLang] = useState(currentLang);
     const [isChangingCurrency, setIsChangingCurrency] = useState(false);
+    const [isChangingCountry, setIsChangingCountry] = useState(false);
     const [currencyQuery, setCurrencyQuery] = useState("");
+    const [countryQuery, setCountryQuery] = useState("");
     const [languageQuery, setLanguageQuery] = useState("");
     const popoverRef = useRef<HTMLDivElement>(null);
-    const { rateLabel, currency, country, availableCurrencies, setCurrencyCode } = useCurrency();
+    const {
+        rateLabel,
+        currency,
+        country,
+        currencyOption,
+        availableCurrencies,
+        setCurrencyCode,
+    } = useCurrency();
     const t = useTranslations("LanguageSwitcher");
+    const locale = useLocale();
     const pathname = usePathname();
     const router = useRouter();
 
@@ -46,7 +57,6 @@ export default function LanguageRegionModal({
         setSelectedLang(currentLang);
     }, [currentLang]);
 
-    // Close on outside click
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
@@ -62,7 +72,13 @@ export default function LanguageRegionModal({
 
     if (!isOpen) return null;
 
-    const activeCountryObj = country;
+    const navigateWithCountry = (countryCode: string, nextLocale = locale) => {
+        const countryPath = countryCode.toLowerCase();
+        const rest = stripCountryFromPathname(pathname);
+        const suffix = rest === "/" ? "" : rest;
+        const search = typeof window !== "undefined" ? window.location.search : "";
+        router.replace(`/${countryPath}${suffix}${search}`, { locale: nextLocale });
+    };
 
     const handleSelectLang = (code: string) => {
         setSelectedLang(code);
@@ -70,15 +86,22 @@ export default function LanguageRegionModal({
         if (typeof window !== "undefined") {
             localStorage.setItem("user_language", code);
         }
-        router.replace(pathname, { locale: code });
+        navigateWithCountry(country.code, code);
         onClose();
     };
 
-    const handleSelectCurrency = (nextCurrency: string, countryCode: string) => {
+    const handleSelectCurrency = (nextCurrency: string) => {
         setCurrencyCode(nextCurrency);
-        onSelectCountry(countryCode);
         setIsChangingCurrency(false);
         setCurrencyQuery("");
+    };
+
+    const handleSelectCountry = (countryCode: string) => {
+        onSelectCountry(countryCode);
+        setIsChangingCountry(false);
+        setCountryQuery("");
+        navigateWithCountry(countryCode);
+        onClose();
     };
 
     const filteredLanguages = languagesList.filter((lang) => {
@@ -100,6 +123,17 @@ export default function LanguageRegionModal({
             item.symbol.toLowerCase().includes(query)
         );
     });
+
+    const filteredCountries = countriesList.filter((item) => {
+        const query = countryQuery.trim().toLowerCase();
+        if (!query) return true;
+        return (
+            item.name.toLowerCase().includes(query) ||
+            item.code.toLowerCase().includes(query)
+        );
+    });
+
+    const selectedCountryCode = currentCountry || country.code;
 
     return (
         <div
@@ -134,7 +168,6 @@ export default function LanguageRegionModal({
                                 onClick={() => handleSelectLang(lang.code)}
                                 className="flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-section-bg cursor-pointer transition-colors group select-none"
                             >
-                                {/* Radio Button (Amazon Style) */}
                                 <div
                                     className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all ${
                                         isSelected
@@ -160,10 +193,8 @@ export default function LanguageRegionModal({
                 </div>
             </div>
 
-            {/* Divider */}
             <div className="my-3 border-t border-border" />
 
-            {/* 2. Currency Section */}
             <div>
                 <span className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                     {t("changeCurrency")}
@@ -171,21 +202,23 @@ export default function LanguageRegionModal({
 
                 <div className="flex items-center justify-between rounded-lg px-2 py-1 transition-colors hover:bg-section-bg/60">
                     <span className="text-xs font-semibold text-card-foreground">
-                        {activeCountryObj.symbol} - {currency} - {activeCountryObj.name}
+                        {currencyOption.symbol} - {currency} - {currencyOption.name}
                         <span className="mt-0.5 block text-[10px] font-medium text-muted-foreground">
                             {rateLabel}
                         </span>
                     </span>
                     <button
                         type="button"
-                        onClick={() => setIsChangingCurrency(!isChangingCurrency)}
+                        onClick={() => {
+                            setIsChangingCurrency(!isChangingCurrency);
+                            setIsChangingCountry(false);
+                        }}
                         className="text-xs font-semibold text-primary hover:text-primary-hover hover:underline cursor-pointer ml-2 shrink-0"
                     >
                         {isChangingCurrency ? t("done") : t("change")}
                     </button>
                 </div>
 
-                {/* Inline Currency / Country Picker when "Change" is clicked */}
                 {isChangingCurrency && (
                     <div className="mt-2 rounded-xl border border-border bg-section-bg p-1.5 animate-in fade-in slide-in-from-top-1 duration-150">
                         <input
@@ -202,10 +235,11 @@ export default function LanguageRegionModal({
                                 filteredCurrencies.map((item) => {
                                     const isSelected = currency === item.currency;
                                     return (
-                                        <div
+                                        <button
+                                            type="button"
                                             key={item.currency}
-                                            onClick={() => handleSelectCurrency(item.currency, item.code)}
-                                            className={`flex cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-xs transition-colors ${
+                                            onClick={() => handleSelectCurrency(item.currency)}
+                                            className={`flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-left text-xs transition-colors ${
                                                 isSelected
                                                     ? 'bg-primary/10 font-bold text-primary'
                                                     : 'text-card-foreground hover:bg-card'
@@ -218,7 +252,7 @@ export default function LanguageRegionModal({
                                             <span className="text-[11px] text-body-text">
                                                 {item.symbol} ({item.currency})
                                             </span>
-                                        </div>
+                                        </button>
                                     );
                                 })
                             )}
@@ -227,17 +261,15 @@ export default function LanguageRegionModal({
                 )}
             </div>
 
-            {/* Divider */}
             <div className="my-3 border-t border-border" />
 
-            {/* 3. Shopping Region & Country Link */}
             <div>
                 <div className="flex items-center gap-2 px-2 text-xs text-body-text">
-                    <span className="text-base">{activeCountryObj.flag}</span>
+                    <span className="text-base">{country.flag}</span>
                     <span className="leading-snug">
                         {t("shoppingOn")}{" "}
                         <strong className="font-semibold text-card-foreground">
-                            WAK {activeCountryObj.name}
+                            WAK {country.name}
                         </strong>
                     </span>
                 </div>
@@ -245,17 +277,60 @@ export default function LanguageRegionModal({
                 <div className="mt-2.5 text-center">
                     <button
                         type="button"
-                        onClick={() => setIsChangingCurrency(!isChangingCurrency)}
+                        onClick={() => {
+                            setIsChangingCountry(!isChangingCountry);
+                            setIsChangingCurrency(false);
+                        }}
                         className="text-xs font-semibold text-primary hover:text-primary-hover hover:underline cursor-pointer inline-flex items-center gap-1"
                     >
-                        {t("changeCountry")}
-                        <ChevronRight className="w-3.5 h-3.5" />
+                        {isChangingCountry ? t("done") : t("changeCountry")}
+                        <ChevronRight className={`h-3.5 w-3.5 transition-transform ${isChangingCountry ? "rotate-90" : ""}`} />
                     </button>
                 </div>
+
+                {isChangingCountry && (
+                    <div className="mt-2 rounded-xl border border-border bg-section-bg p-1.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                        <input
+                            type="search"
+                            value={countryQuery}
+                            onChange={(event) => setCountryQuery(event.target.value)}
+                            placeholder={t("searchCountry")}
+                            className="mb-1.5 w-full rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-card-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
+                        />
+                        <div className="max-h-56 space-y-1 overflow-y-auto">
+                            {filteredCountries.length === 0 ? (
+                                <p className="px-2 py-2 text-[11px] text-muted-foreground">{t("noCountry")}</p>
+                            ) : (
+                                filteredCountries.map((item) => {
+                                    const isSelected = selectedCountryCode === item.code;
+                                    return (
+                                        <button
+                                            type="button"
+                                            key={item.code}
+                                            onClick={() => handleSelectCountry(item.code)}
+                                            className={`flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg px-2 py-1.5 text-left text-xs transition-colors ${
+                                                isSelected
+                                                    ? 'bg-primary/10 font-bold text-primary'
+                                                    : 'text-card-foreground hover:bg-card'
+                                            }`}
+                                        >
+                                            <span className="flex min-w-0 items-start gap-1.5">
+                                                <span className="shrink-0">{item.flag}</span>
+                                                <span className="leading-snug">{item.name}</span>
+                                            </span>
+                                            <span className="shrink-0 text-[11px] text-body-text">
+                                                {item.code}
+                                            </span>
+                                        </button>
+                                    );
+                                })
+                            )}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
 }
 
 export { LanguageRegionModal as LanguageRegionDropdown };
-

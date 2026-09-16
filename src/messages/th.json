@@ -35,7 +35,9 @@
     "change": "เปลี่ยน",
     "done": "เสร็จสิ้น",
     "shoppingOn": "คุณกำลังช็อปที่",
-    "changeCountry": "เปลี่ยนประเทศ/ภูมิภาค"
+    "changeCountry": "เปลี่ยนประเทศ/ภูมิภาค",
+    "searchCountry": "ค้นหาประเทศ/ภูมิภาค...",
+    "noCountry": "ไม่พบประเทศ"
   },
   "MobileMenu": {
     "deliverTo": "จัดส่งถึง:",

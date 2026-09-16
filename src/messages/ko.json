@@ -35,7 +35,9 @@
     "change": "변경",
     "done": "완료",
     "shoppingOn": "현재 쇼핑 중",
-    "changeCountry": "국가/지역 변경."
+    "changeCountry": "국가/지역 변경.",
+    "searchCountry": "국가/지역 검색...",
+    "noCountry": "국가를 찾을 수 없음"
   },
   "MobileMenu": {
     "deliverTo": "배송지:",

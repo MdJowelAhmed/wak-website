@@ -35,7 +35,9 @@
     "change": "変更",
     "done": "完了",
     "shoppingOn": "ご利用中のストア",
-    "changeCountry": "国/地域を変更。"
+    "changeCountry": "国/地域を変更。",
+    "searchCountry": "国/地域を検索...",
+    "noCountry": "国が見つかりません"
   },
   "MobileMenu": {
     "deliverTo": "お届け先：",

@@ -35,7 +35,9 @@
     "change": "تبدیل کریں",
     "done": "ہو گیا",
     "shoppingOn": "آپ خریداری کر رہے ہیں",
-    "changeCountry": "ملک/علاقہ تبدیل کریں۔"
+    "changeCountry": "ملک/علاقہ تبدیل کریں۔",
+    "searchCountry": "ملک/علاقہ تلاش کریں...",
+    "noCountry": "کوئی ملک نہیں ملا"
   },
   "MobileMenu": {
     "deliverTo": "ڈیلیوری پتہ:",

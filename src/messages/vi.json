@@ -35,7 +35,9 @@
     "change": "Đổi",
     "done": "Xong",
     "shoppingOn": "Bạn đang mua sắm trên",
-    "changeCountry": "Đổi quốc gia/khu vực."
+    "changeCountry": "Đổi quốc gia/khu vực.",
+    "searchCountry": "Tìm quốc gia/khu vực...",
+    "noCountry": "Không tìm thấy quốc gia"
   },
   "MobileMenu": {
     "deliverTo": "Giao đến:",
