@@ -2,8 +2,6 @@ import OrdersPage from "@/components/(customer-pages)/profile/orders";
 import { myFetch } from "../../../../../helpers/myFetch";
 import { mapOrders } from "@/components/(customer-pages)/profile/orders/mapOrders";
 
-export const fetchCache = "force-cache";
-
 interface ProductOrdersPageProps {
   searchParams:
     | Promise<{ [key: string]: string | string[] | undefined }>
@@ -15,8 +13,7 @@ export default async function ProductOrdersRoute({ searchParams }: ProductOrders
   const page = resolvedSearchParams?.page ? String(resolvedSearchParams.page) : "1";
 
   const ordersRes = await myFetch(`/product-orders/my-orders?page=${page}&limit=10`, {
-    cache: "force-cache",
-    next: { revalidate: 3600, tags: ["product-orders"] },
+    cache: "no-store",
   });
 
   const orders = Array.isArray(ordersRes?.data)

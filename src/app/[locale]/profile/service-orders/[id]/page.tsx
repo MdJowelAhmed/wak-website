@@ -5,8 +5,6 @@ import { mapServiceOrder } from "@/components/(customer-pages)/profile/orders/ma
 import { resolveServiceOrderTab } from "@/components/(customer-pages)/profile/orders/types";
 import { myFetch } from "../../../../../../helpers/myFetch";
 
-export const fetchCache = "force-cache";
-
 export default async function ServiceOrderDetailPage({
   params,
   searchParams,
@@ -24,8 +22,7 @@ export default async function ServiceOrderDetailPage({
   }
 
   const res = await myFetch(`/service-orders/${id}`, {
-    cache: "force-cache",
-    next: { revalidate: 3600, tags: ["service-orders"] },
+    cache: "no-store",
   });
 
   if (!res?.success || !res.data) {
