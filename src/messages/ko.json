@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "Saved addresses",
+    "addNewAddress": "Add a new address",
+    "mapHint": "Click or drag the pin. Latitude and longitude are taken from this map pin.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Pick a point on the map to set latitude and longitude.",
+    "searchNoResults": "No matching location found. Try a different search."
   },
   "LanguageSwitcher": {
     "changeLanguage": "언어 변경",
@@ -235,6 +241,14 @@
     "sessionId": "세션 ID: {id}",
     "viewOrders": "내 주문 보기",
     "continueShopping": "쇼핑 계속하기",
+    "loading": "불러오는 중..."
+  },
+  "OrderFailed": {
+    "title": "결제에 실패했습니다",
+    "description": "결제를 완료하지 못했습니다. 청구되지 않았습니다. 다시 시도하거나 장바구니로 돌아갈 수 있습니다.",
+    "sessionId": "세션 ID: {id}",
+    "tryAgain": "다시 시도",
+    "backToCart": "장바구니로 돌아가기",
     "loading": "불러오는 중..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "저장된 주소",
     "selectSavedAddress": "저장된 주소 선택...",
     "newAddress": "새 주소 사용",
+    "defaultBadge": "Default",
+    "isDefault": "Set as default address",
     "pickupHint": "픽업에 사용할 주소를 선택하거나 저장하세요.",
     "deliveryHint": "이 주문을 배송받을 주소를 선택하거나 저장하세요.",
     "fullName": "성명",

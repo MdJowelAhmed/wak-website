@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "Saved addresses",
+    "addNewAddress": "Add a new address",
+    "mapHint": "Click or drag the pin. Latitude and longitude are taken from this map pin.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Pick a point on the map to set latitude and longitude.",
+    "searchNoResults": "No matching location found. Try a different search."
   },
   "LanguageSwitcher": {
     "changeLanguage": "言語を変更",
@@ -235,6 +241,14 @@
     "sessionId": "セッション ID: {id}",
     "viewOrders": "注文を見る",
     "continueShopping": "買い物を続ける",
+    "loading": "読み込み中..."
+  },
+  "OrderFailed": {
+    "title": "支払いに失敗しました",
+    "description": "支払いを完了できませんでした。料金は請求されていません。もう一度試すか、カートに戻ることができます。",
+    "sessionId": "セッション ID: {id}",
+    "tryAgain": "もう一度試す",
+    "backToCart": "カートに戻る",
     "loading": "読み込み中..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "保存済みの住所",
     "selectSavedAddress": "保存済みの住所を選択...",
     "newAddress": "新しい住所を使う",
+    "defaultBadge": "Default",
+    "isDefault": "Set as default address",
     "pickupHint": "受け取りに使う住所を選択または保存してください。",
     "deliveryHint": "この注文の配送先住所を選択または保存してください。",
     "fullName": "氏名",

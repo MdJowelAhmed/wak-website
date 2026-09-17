@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { myFetch } from "../../../../helpers/myFetch";
 import { useCurrency } from "@/hooks/use-currency";
 import CheckoutChoices from "./CheckoutChoices";
@@ -19,6 +19,12 @@ import type {
     ShippingEstimate,
 } from "./types";
 import { readEstimate } from "./types";
+import {
+    addressFromSaveResponse,
+    isShippingFormComplete,
+    toShippingPayload,
+    upsertShippingAddress,
+} from "../../../../helpers/shipping-address";
 
 interface CheckoutProps {
     cartItems: CartItem[];
@@ -47,6 +53,7 @@ export default function Checkout({
     const [isPlacingOrder, setIsPlacingOrder] = useState(false);
     const { formatPrice } = useCurrency();
     const t = useTranslations("Checkout");
+    const router = useRouter();
 
     const fallbackSubtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const subtotal = estimate?.grandSubTotal ?? fallbackSubtotal;
@@ -61,11 +68,12 @@ export default function Checkout({
             city: address.city || "",
             state: address.state || "",
             address: address.address || "",
-            country: address.country || "Bangladesh",
-            countryCode: address.countryCode || "BD",
+            country: address.country || "",
+            countryCode: address.countryCode || "",
             postalCode: address.postalCode || "",
-            latitude: address.latitude ?? 23.7465,
-            longitude: address.longitude ?? 90.376,
+            latitude: address.latitude,
+            longitude: address.longitude,
+            isDefault: address.isDefault,
         }));
     };
 
@@ -106,6 +114,7 @@ export default function Checkout({
                 country: "",
                 countryCode: "",
                 postalCode: "",
+                isDefault: addresses.length === 0,
             }));
             return;
         }
@@ -144,7 +153,7 @@ export default function Checkout({
     };
 
     const handleSaveAddress = async () => {
-        if (!formData.fullName || !formData.phone || !formData.address || !formData.city) {
+        if (!isShippingFormComplete(formData)) {
             toast.error(t("requiredFields"));
             return;
         }
@@ -152,49 +161,42 @@ export default function Checkout({
         setIsCalculating(true);
         try {
             let savedAddressId = selectedAddressId;
-            const payload = { ...formData };
+            const payload = toShippingPayload(formData);
 
             if (savedAddressId) {
                 const res = await myFetch(`/shipping-addresses/${savedAddressId}`, {
                     method: "PATCH",
                     body: payload,
                 });
-                if (res?.success && typeof res.data?._id === "string") {
-                    savedAddressId = res.data._id;
-                } else if (!res?.success) {
+                if (!res?.success) {
                     toast.error(res?.message || t("updateAddressError"));
                     return;
                 }
+                const saved = addressFromSaveResponse(res.data, {
+                    ...payload,
+                    _id: savedAddressId,
+                });
+                setAddresses((prev) => upsertShippingAddress(prev, saved));
             } else {
                 const res = await myFetch("/shipping-addresses", {
                     method: "POST",
                     body: payload,
                 });
-                if (typeof res?.data?._id === "string") {
-                    savedAddressId = res.data._id;
-                    setSelectedAddressId(savedAddressId);
-                    setAddresses((prev) => [
-                        ...prev,
-                        {
-                            _id: res.data._id,
-                            fullName: formData.fullName,
-                            phone: formData.phone,
-                            address: formData.address,
-                            city: formData.city,
-                            state: formData.state,
-                            country: formData.country,
-                            countryCode: formData.countryCode,
-                            postalCode: formData.postalCode,
-                            isDefault: false,
-                            latitude: formData.latitude,
-                            longitude: formData.longitude,
-                        },
-                    ]);
-                } else {
+                if (typeof res?.data?._id !== "string") {
                     toast.error(res?.message || t("saveAddressError"));
                     return;
                 }
+                const saved = addressFromSaveResponse(res.data, {
+                    ...payload,
+                    _id: res.data._id,
+                });
+                savedAddressId = saved._id;
+                setSelectedAddressId(saved._id);
+                setFormData((prev) => ({ ...prev, isDefault: saved.isDefault }));
+                setAddresses((prev) => upsertShippingAddress(prev, saved));
             }
+
+            router.refresh();
 
             if (savedAddressId && deliveryOption === "delivery") {
                 await fetchEstimate(savedAddressId);

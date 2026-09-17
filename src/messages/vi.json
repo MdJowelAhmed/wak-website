@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "Saved addresses",
+    "addNewAddress": "Add a new address",
+    "mapHint": "Click or drag the pin. Latitude and longitude are taken from this map pin.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Pick a point on the map to set latitude and longitude.",
+    "searchNoResults": "No matching location found. Try a different search."
   },
   "LanguageSwitcher": {
     "changeLanguage": "Đổi ngôn ngữ",
@@ -235,6 +241,14 @@
     "sessionId": "Mã phiên: {id}",
     "viewOrders": "Xem đơn hàng của tôi",
     "continueShopping": "Tiếp tục mua sắm",
+    "loading": "Đang tải..."
+  },
+  "OrderFailed": {
+    "title": "Thanh toán thất bại",
+    "description": "Không thể hoàn tất thanh toán. Bạn chưa bị trừ tiền. Bạn có thể thử lại hoặc quay lại giỏ hàng.",
+    "sessionId": "Mã phiên: {id}",
+    "tryAgain": "Thử lại",
+    "backToCart": "Quay lại giỏ hàng",
     "loading": "Đang tải..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "Địa chỉ đã lưu",
     "selectSavedAddress": "Chọn địa chỉ đã lưu...",
     "newAddress": "Dùng địa chỉ mới",
+    "defaultBadge": "Default",
+    "isDefault": "Set as default address",
     "pickupHint": "Chọn hoặc lưu địa chỉ bạn sẽ dùng để nhận hàng.",
     "deliveryHint": "Chọn hoặc lưu địa chỉ giao đơn hàng này.",
     "fullName": "Họ và tên",

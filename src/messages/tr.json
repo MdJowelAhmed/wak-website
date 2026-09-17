@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "Saved addresses",
+    "addNewAddress": "Add a new address",
+    "mapHint": "Click or drag the pin. Latitude and longitude are taken from this map pin.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Pick a point on the map to set latitude and longitude.",
+    "searchNoResults": "No matching location found. Try a different search."
   },
   "LanguageSwitcher": {
     "changeLanguage": "Dili değiştir",
@@ -235,6 +241,14 @@
     "sessionId": "Oturum kimliği: {id}",
     "viewOrders": "Siparişlerimi görüntüle",
     "continueShopping": "Alışverişe devam et",
+    "loading": "Yükleniyor..."
+  },
+  "OrderFailed": {
+    "title": "Ödeme başarısız",
+    "description": "Ödemeniz tamamlanamadı. Ücret alınmadı. Ödemeyi yeniden deneyebilir veya sepete dönebilirsiniz.",
+    "sessionId": "Oturum kimliği: {id}",
+    "tryAgain": "Tekrar dene",
+    "backToCart": "Sepete dön",
     "loading": "Yükleniyor..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "Kayıtlı adres",
     "selectSavedAddress": "Kayıtlı bir adres seçin...",
     "newAddress": "Yeni adres kullan",
+    "defaultBadge": "Default",
+    "isDefault": "Set as default address",
     "pickupHint": "Teslim almak için kullanacağınız adresi seçin veya kaydedin.",
     "deliveryHint": "Siparişin teslim edileceği adresi seçin veya kaydedin.",
     "fullName": "Ad soyad",

@@ -3,7 +3,14 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, MapPin, HelpCircle, ChevronDown } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
-import { Link } from '@/i18n/navigation';
+import { Link, useRouter } from '@/i18n/navigation';
+import { myFetch } from '../../helpers/myFetch';
+import {
+    defaultShippingAddress,
+    mapShippingAddresses,
+    shippingAddressLabel,
+    type ShippingAddress,
+} from '../../helpers/shipping-address';
 import NavLinks from '@/ui/NavLinks';
 import { useAuth } from '@/hooks/use-auth';
 import Logo from '@/ui/Logo';
@@ -23,29 +30,65 @@ import {
 
 interface NavbarProps {
     userMode?: string;
+    initialShippingAddresses?: ShippingAddress[];
 }
 
-export default function Navbar({ userMode = 'customer' }: NavbarProps) {
+export default function Navbar({
+    userMode = 'customer',
+    initialShippingAddresses = [],
+}: NavbarProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isLocationOpen, setIsLocationOpen] = useState(false);
     const [isLangOpen, setIsLangOpen] = useState(false);
-
+    const [addresses, setAddresses] = useState(initialShippingAddresses);
     const [currentLocation, setCurrentLocation] = useState<DeliveryLocation | null>(null);
     const locale = useLocale();
     const t = useTranslations();
+    const router = useRouter();
 
     const { isLoggedIn, logout } = useAuth();
     const { country, currency, rate, setCountry } = useCurrency();
-    const deliveryLabel = currentLocation?.label || shoppingCountryShortName(country.code);
+    const defaultAddress = defaultShippingAddress(addresses);
+    const deliveryLabel =
+        (defaultAddress && shippingAddressLabel(defaultAddress)) ||
+        currentLocation?.label ||
+        shoppingCountryShortName(country.code);
+
+    const addressSyncKey = initialShippingAddresses
+        .map((address) => `${address._id}:${Number(address.isDefault)}:${address.address}`)
+        .join(",");
+
+    useEffect(() => {
+        setAddresses(initialShippingAddresses);
+    }, [addressSyncKey, initialShippingAddresses]);
 
     useEffect(() => {
         setCurrentLocation(readDeliveryLocation());
         localStorage.setItem('user_language', locale);
     }, [locale]);
 
+    useEffect(() => {
+        const refreshAddresses = async () => {
+            if (!isLoggedIn) {
+                setAddresses([]);
+                return;
+            }
+            const res = await myFetch('/shipping-addresses', { cache: 'no-store' });
+            setAddresses(mapShippingAddresses(res?.data));
+        };
+
+        window.addEventListener('auth-change', refreshAddresses);
+        return () => window.removeEventListener('auth-change', refreshAddresses);
+    }, [isLoggedIn]);
+
     const handleSelectLocation = (location: DeliveryLocation) => {
         setCurrentLocation(location);
         writeDeliveryLocation(location);
+    };
+
+    const handleAddressesChange = (next: ShippingAddress[]) => {
+        setAddresses(next);
+        router.refresh();
     };
 
     const activeLangObj = languagesList.find((l) => l.code === locale) || languagesList[0];
@@ -161,6 +204,9 @@ export default function Navbar({ userMode = 'customer' }: NavbarProps) {
                 countryCode={country.code}
                 currentLocation={currentLocation}
                 onSelectLocation={handleSelectLocation}
+                addresses={addresses}
+                onAddressesChange={handleAddressesChange}
+                isLoggedIn={isLoggedIn}
             />
 
             {isMenuOpen && (

@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "सहेजे गए पते",
+    "addNewAddress": "नया पता जोड़ें",
+    "mapHint": "पिन पर क्लिक करें या खींचें। Latitude और longitude इसी पिन से लिए जाएंगे।",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Latitude और longitude सेट करने के लिए मैप पर एक पॉइंट चुनें।",
+    "searchNoResults": "No matching location found. Try a different search."
   },
   "LanguageSwitcher": {
     "changeLanguage": "भाषा बदलें",
@@ -235,6 +241,14 @@
     "sessionId": "सेशन आईडी: {id}",
     "viewOrders": "मेरे ऑर्डर देखें",
     "continueShopping": "खरीदारी जारी रखें",
+    "loading": "लोड हो रहा है..."
+  },
+  "OrderFailed": {
+    "title": "भुगतान असफल",
+    "description": "आपका भुगतान पूरा नहीं हो सका। कोई राशि नहीं काटी गई। आप फिर से कोशिश कर सकते हैं या कार्ट पर वापस जा सकते हैं।",
+    "sessionId": "सेशन आईडी: {id}",
+    "tryAgain": "फिर से कोशिश करें",
+    "backToCart": "कार्ट पर वापस जाएँ",
     "loading": "लोड हो रहा है..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "सहेजा गया पता",
     "selectSavedAddress": "सहेजा गया पता चुनें...",
     "newAddress": "नया पता उपयोग करें",
+    "defaultBadge": "डिफ़ॉल्ट",
+    "isDefault": "डिफ़ॉल्ट पता के रूप में सेट करें",
     "pickupHint": "पिकअप के लिए उपयोग किया जाने वाला पता चुनें या सहेजें।",
     "deliveryHint": "जहाँ यह ऑर्डर भेजा जाना है वह पता चुनें या सहेजें।",
     "fullName": "पूरा नाम",

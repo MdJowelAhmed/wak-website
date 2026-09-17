@@ -36,7 +36,13 @@
     "loadError": "Google Maps konnte nicht geladen werden. API-Schlüssel und Maps JavaScript / Places APIs prüfen.",
     "missingKey": "Google Maps ist nicht konfiguriert.",
     "geoUnsupported": "Standort wird in diesem Browser nicht unterstützt.",
-    "geoDenied": "Standortzugriff nicht möglich. Suchen Sie oder wählen Sie einen Punkt auf der Karte."
+    "geoDenied": "Standortzugriff nicht möglich. Suchen Sie oder wählen Sie einen Punkt auf der Karte.",
+    "savedAddresses": "Gespeicherte Adressen",
+    "addNewAddress": "Neue Adresse hinzufügen",
+    "mapHint": "Klicken oder ziehen Sie die Stecknadel. Breiten- und Längengrad kommen von diesem Pin.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Wählen Sie einen Punkt auf der Karte, um Breiten- und Längengrad festzulegen.",
+    "searchNoResults": "Kein passender Ort gefunden. Versuchen Sie eine andere Suche."
   },
   "LanguageSwitcher": {
     "changeLanguage": "Sprache ändern",
@@ -235,6 +241,14 @@
     "sessionId": "Sitzungs-ID: {id}",
     "viewOrders": "Meine Bestellungen ansehen",
     "continueShopping": "Weiter einkaufen",
+    "loading": "Wird geladen..."
+  },
+  "OrderFailed": {
+    "title": "Zahlung fehlgeschlagen",
+    "description": "Deine Zahlung konnte nicht abgeschlossen werden. Es wurde nichts abgebucht. Du kannst den Checkout erneut versuchen oder zum Warenkorb zurückkehren.",
+    "sessionId": "Sitzungs-ID: {id}",
+    "tryAgain": "Erneut versuchen",
+    "backToCart": "Zurück zum Warenkorb",
     "loading": "Wird geladen..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "Gespeicherte Adresse",
     "selectSavedAddress": "Gespeicherte Adresse wählen...",
     "newAddress": "Neue Adresse verwenden",
+    "defaultBadge": "Standard",
+    "isDefault": "Als Standardadresse festlegen",
     "pickupHint": "Wählen oder speichern Sie die Adresse für die Abholung.",
     "deliveryHint": "Wählen oder speichern Sie die Adresse, an die diese Bestellung geliefert werden soll.",
     "fullName": "Vollständiger Name",

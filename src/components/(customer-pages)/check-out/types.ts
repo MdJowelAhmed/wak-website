@@ -1,22 +1,12 @@
 import { resolveImageUrl } from "../../../../helpers/resolveImageUrl";
+import {
+    mapShippingAddresses,
+    type ShippingAddress,
+} from "../../../../helpers/shipping-address";
 
 export type DeliveryOption = "delivery" | "pickup";
 export type PaymentMethod = "stripe" | "paychangu";
-
-export interface Address {
-    _id: string;
-    fullName: string;
-    phone: string;
-    address: string;
-    city: string;
-    state: string;
-    country: string;
-    countryCode?: string;
-    postalCode?: string;
-    isDefault: boolean;
-    latitude?: number;
-    longitude?: number;
-}
+export type Address = ShippingAddress;
 
 export interface Country {
     name: string;
@@ -45,7 +35,7 @@ export interface CheckoutAddressForm {
     postalCode: string;
     latitude: number;
     longitude: number;
-    saveAddress: boolean;
+    isDefault: boolean;
 }
 
 export interface ShippingEstimate {
@@ -90,41 +80,8 @@ export function mapCartItems(items: unknown): CartItem[] {
     });
 }
 
-function asAddressList(data: unknown): unknown[] {
-    if (Array.isArray(data)) return data;
-    if (!data || typeof data !== "object") return [];
-    const row = data as { addresses?: unknown; items?: unknown; data?: unknown };
-    if (Array.isArray(row.addresses)) return row.addresses;
-    if (Array.isArray(row.items)) return row.items;
-    if (Array.isArray(row.data)) return row.data;
-    return [];
-}
-
 export function mapAddresses(data: unknown): Address[] {
-    const list = asAddressList(data);
-    const addresses: Address[] = [];
-    for (const item of list) {
-        const row = item as Partial<Address> & { _id?: string; id?: string };
-        const id = row._id || row.id;
-        if (!id) continue;
-
-        const address: Address = {
-            _id: id,
-            fullName: row.fullName || "",
-            phone: row.phone || "",
-            address: row.address || "",
-            city: row.city || "",
-            state: row.state || "",
-            country: row.country || "",
-            isDefault: Boolean(row.isDefault),
-        };
-        if (row.countryCode) address.countryCode = row.countryCode;
-        if (row.postalCode) address.postalCode = row.postalCode;
-        if (typeof row.latitude === "number") address.latitude = row.latitude;
-        if (typeof row.longitude === "number") address.longitude = row.longitude;
-        addresses.push(address);
-    }
-    return addresses;
+    return mapShippingAddresses(data);
 }
 
 export function mapCountries(data: unknown): Country[] {
@@ -150,12 +107,12 @@ export function formFromAddress(
         city: address?.city || "",
         state: address?.state || "",
         address: address?.address || "",
-        country: address?.country || "Bangladesh",
-        countryCode: address?.countryCode || "BD",
+        country: address?.country || "",
+        countryCode: address?.countryCode || "",
         postalCode: address?.postalCode || "",
-        latitude: address?.latitude ?? 23.7465,
-        longitude: address?.longitude ?? 90.376,
-        saveAddress: false,
+        latitude: address?.latitude ?? 0,
+        longitude: address?.longitude ?? 0,
+        isDefault: address?.isDefault ?? true,
     };
 }
 

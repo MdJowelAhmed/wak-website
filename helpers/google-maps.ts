@@ -1,3 +1,5 @@
+/// <reference types="google.maps" />
+
 const SCRIPT_ID = "google-maps-js";
 
 let mapsPromise: Promise<typeof google> | null = null;

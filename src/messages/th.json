@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "Saved addresses",
+    "addNewAddress": "Add a new address",
+    "mapHint": "Click or drag the pin. Latitude and longitude are taken from this map pin.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Pick a point on the map to set latitude and longitude.",
+    "searchNoResults": "No matching location found. Try a different search."
   },
   "LanguageSwitcher": {
     "changeLanguage": "เปลี่ยนภาษา",
@@ -235,6 +241,14 @@
     "sessionId": "รหัสเซสชัน: {id}",
     "viewOrders": "ดูคำสั่งซื้อของฉัน",
     "continueShopping": "เลือกซื้อต่อ",
+    "loading": "กำลังโหลด..."
+  },
+  "OrderFailed": {
+    "title": "ชำระเงินไม่สำเร็จ",
+    "description": "ไม่สามารถชำระเงินให้เสร็จสิ้นได้ คุณยังไม่ถูกเรียกเก็บเงิน สามารถลองอีกครั้งหรือกลับไปที่ตะกร้าได้",
+    "sessionId": "รหัสเซสชัน: {id}",
+    "tryAgain": "ลองอีกครั้ง",
+    "backToCart": "กลับไปที่ตะกร้า",
     "loading": "กำลังโหลด..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "ที่อยู่ที่บันทึกไว้",
     "selectSavedAddress": "เลือกที่อยู่ที่บันทึกไว้...",
     "newAddress": "ใช้ที่อยู่ใหม่",
+    "defaultBadge": "Default",
+    "isDefault": "Set as default address",
     "pickupHint": "เลือกหรือบันทึกที่อยู่ที่จะใช้รับสินค้า",
     "deliveryHint": "เลือกหรือบันทึกที่อยู่ที่ต้องการให้จัดส่งคำสั่งซื้อนี้",
     "fullName": "ชื่อ-นามสกุล",

@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "Saved addresses",
+    "addNewAddress": "Add a new address",
+    "mapHint": "Click or drag the pin. Latitude and longitude are taken from this map pin.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Pick a point on the map to set latitude and longitude.",
+    "searchNoResults": "No matching location found. Try a different search."
   },
   "LanguageSwitcher": {
     "changeLanguage": "Ubah bahasa",
@@ -235,6 +241,14 @@
     "sessionId": "ID sesi: {id}",
     "viewOrders": "Lihat pesanan saya",
     "continueShopping": "Lanjut belanja",
+    "loading": "Memuat..."
+  },
+  "OrderFailed": {
+    "title": "Pembayaran gagal",
+    "description": "Pembayaran Anda tidak dapat diselesaikan. Tidak ada biaya yang dikenakan. Anda dapat mencoba lagi atau kembali ke keranjang.",
+    "sessionId": "ID sesi: {id}",
+    "tryAgain": "Coba lagi",
+    "backToCart": "Kembali ke keranjang",
     "loading": "Memuat..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "Alamat tersimpan",
     "selectSavedAddress": "Pilih alamat tersimpan...",
     "newAddress": "Gunakan alamat baru",
+    "defaultBadge": "Default",
+    "isDefault": "Set as default address",
     "pickupHint": "Pilih atau simpan alamat untuk pengambilan.",
     "deliveryHint": "Pilih atau simpan alamat tempat pesanan akan dikirim.",
     "fullName": "Nama lengkap",

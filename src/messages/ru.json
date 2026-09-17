@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "Saved addresses",
+    "addNewAddress": "Add a new address",
+    "mapHint": "Click or drag the pin. Latitude and longitude are taken from this map pin.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Pick a point on the map to set latitude and longitude.",
+    "searchNoResults": "No matching location found. Try a different search."
   },
   "LanguageSwitcher": {
     "changeLanguage": "Изменить язык",
@@ -235,6 +241,14 @@
     "sessionId": "ID сессии: {id}",
     "viewOrders": "Мои заказы",
     "continueShopping": "Продолжить покупки",
+    "loading": "Загрузка..."
+  },
+  "OrderFailed": {
+    "title": "Оплата не прошла",
+    "description": "Не удалось завершить оплату. Списание не выполнено. Вы можете попробовать снова или вернуться в корзину.",
+    "sessionId": "ID сессии: {id}",
+    "tryAgain": "Попробовать снова",
+    "backToCart": "Вернуться в корзину",
     "loading": "Загрузка..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "Сохранённый адрес",
     "selectSavedAddress": "Выберите сохранённый адрес...",
     "newAddress": "Использовать новый адрес",
+    "defaultBadge": "Default",
+    "isDefault": "Set as default address",
     "pickupHint": "Выберите или сохраните адрес для самовывоза.",
     "deliveryHint": "Выберите или сохраните адрес, куда нужно доставить заказ.",
     "fullName": "Полное имя",

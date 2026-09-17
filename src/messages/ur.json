@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "Saved addresses",
+    "addNewAddress": "Add a new address",
+    "mapHint": "Click or drag the pin. Latitude and longitude are taken from this map pin.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Pick a point on the map to set latitude and longitude.",
+    "searchNoResults": "No matching location found. Try a different search."
   },
   "LanguageSwitcher": {
     "changeLanguage": "زبان تبدیل کریں",
@@ -235,6 +241,14 @@
     "sessionId": "سیشن آئی ڈی: {id}",
     "viewOrders": "میرے آرڈر دیکھیں",
     "continueShopping": "خریداری جاری رکھیں",
+    "loading": "لوڈ ہو رہا ہے..."
+  },
+  "OrderFailed": {
+    "title": "ادائیگی ناکام",
+    "description": "آپ کی ادائیگی مکمل نہیں ہو سکی۔ کوئی رقم نہیں کاٹی گئی۔ آپ دوبارہ کوشش کر سکتے ہیں یا کارٹ پر واپس جا سکتے ہیں۔",
+    "sessionId": "سیشن آئی ڈی: {id}",
+    "tryAgain": "دوبارہ کوشش کریں",
+    "backToCart": "کارٹ پر واپس جائیں",
     "loading": "لوڈ ہو رہا ہے..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "محفوظ پتہ",
     "selectSavedAddress": "محفوظ پتہ منتخب کریں...",
     "newAddress": "نیا پتہ استعمال کریں",
+    "defaultBadge": "Default",
+    "isDefault": "Set as default address",
     "pickupHint": "وصولی کے لیے وہ پتہ منتخب یا محفوظ کریں جو آپ استعمال کریں گے۔",
     "deliveryHint": "وہ پتہ منتخب یا محفوظ کریں جہاں یہ آرڈر پہنچانا ہے۔",
     "fullName": "مکمل نام",

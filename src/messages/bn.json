@@ -36,7 +36,13 @@
     "loadError": "Google Maps লোড হয়নি। API key এবং Maps JavaScript / Places API চেক করুন।",
     "missingKey": "Google Maps কনফিগার করা নেই।",
     "geoUnsupported": "এই ব্রাউজারে লোকেশন সাপোর্ট করে না।",
-    "geoDenied": "লোকেশন পাওয়া যায়নি। সার্চ করুন অথবা ম্যাপে পিন দিন।"
+    "geoDenied": "লোকেশন পাওয়া যায়নি। সার্চ করুন অথবা ম্যাপে পিন দিন।",
+    "savedAddresses": "সেভ করা ঠিকানা",
+    "addNewAddress": "নতুন ঠিকানা যোগ করুন",
+    "mapHint": "ম্যাপে পিন ক্লিক বা ড্র্যাগ করুন। Latitude ও longitude এই পিন থেকে নেওয়া হবে।",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Latitude ও longitude সেট করতে ম্যাপে একটি পয়েন্ট বেছে নিন।",
+    "searchNoResults": "এই সার্চের সাথে কোনো লোকেশন মেলেনি। অন্য কিছু খুঁজে দেখুন।"
   },
   "LanguageSwitcher": {
     "changeLanguage": "ভাষা পরিবর্তন করুন",
@@ -235,6 +241,14 @@
     "sessionId": "সেশন আইডি: {id}",
     "viewOrders": "আমার অর্ডার দেখুন",
     "continueShopping": "কেনাকাটা চালিয়ে যান",
+    "loading": "লোড হচ্ছে..."
+  },
+  "OrderFailed": {
+    "title": "পেমেন্ট ব্যর্থ হয়েছে",
+    "description": "আপনার পেমেন্ট সম্পন্ন করা যায়নি। কোনো চার্জ কাটা হয়নি। আপনি আবার চেষ্টা করতে পারেন অথবা কার্টে ফিরে যেতে পারেন।",
+    "sessionId": "সেশন আইডি: {id}",
+    "tryAgain": "আবার চেষ্টা করুন",
+    "backToCart": "কার্টে ফিরুন",
     "loading": "লোড হচ্ছে..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "সেভ করা ঠিকানা",
     "selectSavedAddress": "সেভ করা ঠিকানা বেছে নিন...",
     "newAddress": "নতুন ঠিকানা ব্যবহার করুন",
+    "defaultBadge": "ডিফল্ট",
+    "isDefault": "ডিফল্ট ঠিকানা হিসেবে সেট করুন",
     "pickupHint": "পিকআপের জন্য যে ঠিকানা ব্যবহার করবেন সেটি বেছে নিন বা সেভ করুন।",
     "deliveryHint": "এই অর্ডার যেখানে পৌঁছাবে সেই ঠিকানা বেছে নিন বা সেভ করুন।",
     "fullName": "পুরো নাম",

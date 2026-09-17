@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "Saved addresses",
+    "addNewAddress": "Add a new address",
+    "mapHint": "Click or drag the pin. Latitude and longitude are taken from this map pin.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Pick a point on the map to set latitude and longitude.",
+    "searchNoResults": "No matching location found. Try a different search."
   },
   "LanguageSwitcher": {
     "changeLanguage": "Badilisha lugha",
@@ -235,6 +241,14 @@
     "sessionId": "Kitambulisho cha kipindi: {id}",
     "viewOrders": "Tazama maagizo yangu",
     "continueShopping": "Endelea kununua",
+    "loading": "Inapakia..."
+  },
+  "OrderFailed": {
+    "title": "Malipo yameshindikana",
+    "description": "Malipo yako hayakuweza kukamilika. Hujatozwa chochote. Unaweza kujaribu tena au kurudi kwenye kikapu.",
+    "sessionId": "Kitambulisho cha kipindi: {id}",
+    "tryAgain": "Jaribu tena",
+    "backToCart": "Rudi kwenye kikapu",
     "loading": "Inapakia..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "Anuani iliyohifadhiwa",
     "selectSavedAddress": "Chagua anuani iliyohifadhiwa...",
     "newAddress": "Tumia anuani mpya",
+    "defaultBadge": "Default",
+    "isDefault": "Set as default address",
     "pickupHint": "Chagua au hifadhi anuani utakayotumia kuchukua bidhaa.",
     "deliveryHint": "Chagua au hifadhi anuani ambapo agizo hili litafikishwa.",
     "fullName": "Jina kamili",

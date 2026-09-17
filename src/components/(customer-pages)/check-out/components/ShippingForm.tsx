@@ -72,6 +72,7 @@ export default function ShippingForm({
                             <SelectItem value="new">{t("newAddress")}</SelectItem>
                             {addresses.map((addr) => (
                                 <SelectItem key={addr._id} value={addr._id}>
+                                    {addr.isDefault ? `${t("defaultBadge")} · ` : ""}
                                     {addr.fullName ? `${addr.fullName} — ` : ""}
                                     {addr.address}, {addr.city}
                                 </SelectItem>
@@ -222,12 +223,12 @@ export default function ShippingForm({
                     <label className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
                         <input
                             type="checkbox"
-                            name="saveAddress"
-                            checked={formData.saveAddress}
+                            name="isDefault"
+                            checked={formData.isDefault}
                             onChange={handleInputChange}
                             className="h-4 w-4 rounded border-card-border text-primary focus:ring-primary"
                         />
-                        {t("saveForNext")}
+                        {t("isDefault")}
                     </label>
                     <Button type="button" onClick={handleSaveAddress} disabled={isCalculating}>
                         {isCalculating ? t("saving") : saveLabel}

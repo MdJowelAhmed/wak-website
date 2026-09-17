@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "Saved addresses",
+    "addNewAddress": "Add a new address",
+    "mapHint": "Click or drag the pin. Latitude and longitude are taken from this map pin.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Pick a point on the map to set latitude and longitude.",
+    "searchNoResults": "No matching location found. Try a different search."
   },
   "LanguageSwitcher": {
     "changeLanguage": "Taal wijzigen",
@@ -235,6 +241,14 @@
     "sessionId": "Sessie-ID: {id}",
     "viewOrders": "Mijn bestellingen bekijken",
     "continueShopping": "Verder winkelen",
+    "loading": "Laden..."
+  },
+  "OrderFailed": {
+    "title": "Betaling mislukt",
+    "description": "Je betaling kon niet worden afgerond. Er is niets afgeschreven. Je kunt het opnieuw proberen of terug naar je winkelwagen gaan.",
+    "sessionId": "Sessie-ID: {id}",
+    "tryAgain": "Opnieuw proberen",
+    "backToCart": "Terug naar winkelwagen",
     "loading": "Laden..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "Opgeslagen adres",
     "selectSavedAddress": "Kies een opgeslagen adres...",
     "newAddress": "Nieuw adres gebruiken",
+    "defaultBadge": "Default",
+    "isDefault": "Set as default address",
     "pickupHint": "Kies of sla het adres op dat je voor afhalen gebruikt.",
     "deliveryHint": "Kies of sla het adres op waar deze bestelling bezorgd moet worden.",
     "fullName": "Volledige naam",

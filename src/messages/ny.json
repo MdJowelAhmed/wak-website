@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "Saved addresses",
+    "addNewAddress": "Add a new address",
+    "mapHint": "Click or drag the pin. Latitude and longitude are taken from this map pin.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Pick a point on the map to set latitude and longitude.",
+    "searchNoResults": "No matching location found. Try a different search."
   },
   "LanguageSwitcher": {
     "changeLanguage": "Sinthani chinenero",
@@ -235,6 +241,14 @@
     "sessionId": "ID ya gawo: {id}",
     "viewOrders": "Onani maodala anga",
     "continueShopping": "Pitirizani kugula",
+    "loading": "Ikukweza..."
+  },
+  "OrderFailed": {
+    "title": "Kulipira kwalephera",
+    "description": "Kulipira kwanu sikunathe. Simunalipidwe. Mutha kuyesanso kapena kubwerera ku ngolo.",
+    "sessionId": "ID ya gawo: {id}",
+    "tryAgain": "Yesaninso",
+    "backToCart": "Bwererani ku ngolo",
     "loading": "Ikukweza..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "Adilesi yosungidwa",
     "selectSavedAddress": "Sankhani adilesi yosungidwa...",
     "newAddress": "Gwiritsani adilesi yatsopano",
+    "defaultBadge": "Default",
+    "isDefault": "Set as default address",
     "pickupHint": "Sankhani kapena sungani adilesi mudzagwiritsa ntchito kuchotsa.",
     "deliveryHint": "Sankhani kapena sungani adilesi kumene odala awa adzapita.",
     "fullName": "Dzina lonse",

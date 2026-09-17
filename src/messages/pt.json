@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "Saved addresses",
+    "addNewAddress": "Add a new address",
+    "mapHint": "Click or drag the pin. Latitude and longitude are taken from this map pin.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Pick a point on the map to set latitude and longitude.",
+    "searchNoResults": "No matching location found. Try a different search."
   },
   "LanguageSwitcher": {
     "changeLanguage": "Alterar idioma",
@@ -235,6 +241,14 @@
     "sessionId": "ID da sessão: {id}",
     "viewOrders": "Ver os meus pedidos",
     "continueShopping": "Continuar a comprar",
+    "loading": "A carregar..."
+  },
+  "OrderFailed": {
+    "title": "Pagamento falhou",
+    "description": "Não foi possível concluir o pagamento. Não foi cobrado nenhum valor. Pode tentar novamente ou voltar ao carrinho.",
+    "sessionId": "ID da sessão: {id}",
+    "tryAgain": "Tentar novamente",
+    "backToCart": "Voltar ao carrinho",
     "loading": "A carregar..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "Morada guardada",
     "selectSavedAddress": "Selecione uma morada guardada...",
     "newAddress": "Usar uma nova morada",
+    "defaultBadge": "Default",
+    "isDefault": "Set as default address",
     "pickupHint": "Escolha ou guarde a morada que usará para o levantamento.",
     "deliveryHint": "Escolha ou guarde a morada onde este pedido deve ser entregue.",
     "fullName": "Nome completo",

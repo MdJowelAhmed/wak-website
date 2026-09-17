@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "Saved addresses",
+    "addNewAddress": "Add a new address",
+    "mapHint": "Click or drag the pin. Latitude and longitude are taken from this map pin.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Pick a point on the map to set latitude and longitude.",
+    "searchNoResults": "No matching location found. Try a different search."
   },
   "LanguageSwitcher": {
     "changeLanguage": "更改语言",
@@ -235,6 +241,14 @@
     "sessionId": "会话 ID：{id}",
     "viewOrders": "查看我的订单",
     "continueShopping": "继续购物",
+    "loading": "加载中..."
+  },
+  "OrderFailed": {
+    "title": "支付失败",
+    "description": "未能完成付款。您未被扣款。您可以重试结账，或返回购物车。",
+    "sessionId": "会话 ID：{id}",
+    "tryAgain": "再试一次",
+    "backToCart": "返回购物车",
     "loading": "加载中..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "已保存地址",
     "selectSavedAddress": "选择已保存的地址...",
     "newAddress": "使用新地址",
+    "defaultBadge": "Default",
+    "isDefault": "Set as default address",
     "pickupHint": "选择或保存您用于自提的地址。",
     "deliveryHint": "选择或保存此订单的收货地址。",
     "fullName": "全名",

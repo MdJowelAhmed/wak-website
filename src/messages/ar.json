@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "العناوين المحفوظة",
+    "addNewAddress": "إضافة عنوان جديد",
+    "mapHint": "انقر أو اسحب الدبوس. خط العرض وخط الطول يُؤخذان من هذا الدبوس.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "اختر نقطة على الخريطة لتعيين خط العرض وخط الطول.",
+    "searchNoResults": "No matching location found. Try a different search."
   },
   "LanguageSwitcher": {
     "changeLanguage": "تغيير اللغة",
@@ -235,6 +241,14 @@
     "sessionId": "معرّف الجلسة: {id}",
     "viewOrders": "عرض طلباتي",
     "continueShopping": "متابعة التسوق",
+    "loading": "جارٍ التحميل..."
+  },
+  "OrderFailed": {
+    "title": "فشل الدفع",
+    "description": "تعذّر إكمال عملية الدفع. لم يتم خصم أي مبلغ. يمكنك المحاولة مرة أخرى أو العودة إلى السلة.",
+    "sessionId": "معرّف الجلسة: {id}",
+    "tryAgain": "حاول مرة أخرى",
+    "backToCart": "العودة إلى السلة",
     "loading": "جارٍ التحميل..."
   },
   "Profile": {
@@ -588,6 +602,8 @@
     "savedAddress": "عنوان محفوظ",
     "selectSavedAddress": "اختر عنوانًا محفوظًا...",
     "newAddress": "استخدام عنوان جديد",
+    "defaultBadge": "افتراضي",
+    "isDefault": "تعيين كعنوان افتراضي",
     "pickupHint": "اختر أو احفظ العنوان الذي ستستخدمه للاستلام.",
     "deliveryHint": "اختر أو احفظ العنوان الذي يُسلَّم إليه هذا الطلب.",
     "fullName": "الاسم الكامل",

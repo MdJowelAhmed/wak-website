@@ -11,6 +11,6 @@ export async function generateMetadata({
     return { title: t("title") };
 }
 
-export default function OrderSuccessPage() {
+export default function PaymentSuccessPage() {
     return <PaymentStatusPage status="success" />;
 }

@@ -15,6 +15,8 @@ import { routing } from "@/i18n/routing";
 import { isRtlLocale } from "@/i18n/locales";
 import { getExchangeRates } from "../../../helpers/getExchangeRates";
 import { DEFAULT_COUNTRY, DEFAULT_CURRENCY } from "../../../helpers/currency";
+import { myFetch } from "../../../helpers/myFetch";
+import { mapShippingAddresses } from "../../../helpers/shipping-address";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext", "cyrillic", "vietnamese"],
@@ -117,14 +119,18 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 
   setRequestLocale(locale);
 
-  const [cookieStore, headerStore, exchangeRates, messages] = await Promise.all([
-    cookies(),
+  const cookieStore = await cookies();
+  const [headerStore, exchangeRates, messages, addressRes] = await Promise.all([
     headers(),
     getExchangeRates(),
     getMessages(),
+    cookieStore.get("accessToken")?.value
+      ? myFetch("/shipping-addresses", { cache: "no-store" })
+      : Promise.resolve(null),
   ]);
 
   const userMode = cookieStore.get("user-mode")?.value || "customer";
+  const initialShippingAddresses = mapShippingAddresses(addressRes?.data);
   const initialCountry =
     headerStore.get("x-country-code") ||
     cookieStore.get("user_country")?.value ||
@@ -145,7 +151,10 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
             >
               <CartProvider>
                 <Toaster richColors position="top-center" />
-                <CustomerNavbar userMode={userMode} />
+                <CustomerNavbar
+                  userMode={userMode}
+                  initialShippingAddresses={initialShippingAddresses}
+                />
                 <div>{children}</div>
                 <Footer />
                 <ChatwootWidget />
