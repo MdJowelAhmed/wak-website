@@ -7,10 +7,10 @@ export async function generateMetadata({
     params: Promise<{ locale: string }>;
 }) {
     const { locale } = await params;
-    const t = await getTranslations({ locale, namespace: "OrderFailed" });
+    const t = await getTranslations({ locale, namespace: "OrderSuccess" });
     return { title: t("title") };
 }
 
-export default function PaymentFailedPage() {
-    return <PaymentStatusPage status="failed" />;
+export default function OrderSuccessPage() {
+    return <PaymentStatusPage status="success" />;
 }

@@ -11,6 +11,6 @@ export async function generateMetadata({
     return { title: t("title") };
 }
 
-export default function PaymentFailedPage() {
+export default function OrderFailedPage() {
     return <PaymentStatusPage status="failed" />;
 }
