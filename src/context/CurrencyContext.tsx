@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -13,6 +14,7 @@ import { getExchangeRates } from "../../helpers/getExchangeRates";
 import {
   DEFAULT_COUNTRY,
   DEFAULT_CURRENCY,
+  STORAGE_COUNTRY,
   STORAGE_CURRENCY,
   STORAGE_RATE,
   formatConvertedPrice,
@@ -26,6 +28,7 @@ import {
   currenciesFromRates,
   currencyToOption,
   fallbackCurrencies,
+  resolvePreferredCurrency,
   type CountryOption,
 } from "../../helpers/regions";
 
@@ -84,6 +87,7 @@ export function CurrencyProvider({
   const [countryCode, setCountryCode] = useState(startingCountry.code);
   const [currency, setCurrency] = useState(startingCurrency);
   const [rate, setRate] = useState(resolveRate(startingRates, startingCurrency));
+  const syncedCountryRef = useRef(startingCountry.code);
 
   const applyCurrency = useCallback(
     (
@@ -102,21 +106,36 @@ export function CurrencyProvider({
   );
 
   useEffect(() => {
+    const savedCountry = localStorage.getItem(STORAGE_COUNTRY);
     const savedCurrency = localStorage.getItem(STORAGE_CURRENCY);
+    if (!savedCountry && !savedCurrency) return;
+
+    const preferredCurrency = resolvePreferredCurrency(
+      startingCountry.code,
+      savedCountry,
+      savedCurrency,
+    );
     const savedRate = Number(localStorage.getItem(STORAGE_RATE));
+    const keepStoredRate = preferredCurrency === savedCurrency;
     applyCurrency(
-      savedCurrency || startingCurrency,
+      preferredCurrency,
       startingRates,
       startingCountry.code,
-      Number.isFinite(savedRate) && savedRate > 0 ? savedRate : undefined,
+      keepStoredRate && Number.isFinite(savedRate) && savedRate > 0 ? savedRate : undefined,
     );
-    // Hydrate currency from localStorage; country stays URL/cookie-driven.
+    // Hydrate from localStorage only when it belongs to the current country.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    setCountryCode(countryByCode(initialCountry).code);
-  }, [initialCountry]);
+    const option = countryByCode(initialCountry);
+    if (option.code === syncedCountryRef.current) return;
+    syncedCountryRef.current = option.code;
+    setCountryCode(option.code);
+    applyCurrency(option.currency, rates, option.code);
+    // URL country changed; live rates update the displayed number in the persist effect.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [applyCurrency, initialCountry]);
 
   useEffect(() => {
     if (initialRates?.rates) {
@@ -143,10 +162,11 @@ export function CurrencyProvider({
   const setCountry = useCallback(
     (nextCountryCode: string) => {
       const option = countryByCode(nextCountryCode);
+      syncedCountryRef.current = option.code;
       setCountryCode(option.code);
-      persistCurrencyPreference(option.code, currency, rate);
+      applyCurrency(option.currency, rates, option.code);
     },
-    [currency, rate],
+    [applyCurrency, rates],
   );
 
   const setCurrencyCode = useCallback(

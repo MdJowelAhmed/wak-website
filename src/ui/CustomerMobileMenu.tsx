@@ -1,6 +1,7 @@
 // src/ui/CustomerMobileMenu.tsx
 'use client';
 
+import type { ReactNode } from 'react';
 import { LogOut, MapPin, Truck, HelpCircle, Globe } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
@@ -17,7 +18,7 @@ interface CustomerMobileMenuProps {
     currentLocation?: string;
     onOpenLocationModal?: () => void;
     onOpenLangModal?: () => void;
-    currentCurrencyLabel?: string;
+    currentCurrencyLabel?: ReactNode;
     currentLangName?: string;
 }
 
@@ -81,7 +82,7 @@ export default function CustomerMobileMenu({
                             <Globe className="w-4 h-4 text-primary" />
                             <span>{t("MobileMenu.languageCountry")}</span>
                         </div>
-                        <span className="text-[10px] bg-primary/5 text-primary px-2 py-0.5 rounded font-bold">
+                        <span className="inline-flex items-center gap-1 text-[10px] bg-primary/5 text-primary px-2 py-0.5 rounded font-bold">
                             {currentCurrencyLabel} / {currentLangName}
                         </span>
                     </button>

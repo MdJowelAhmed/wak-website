@@ -14,7 +14,8 @@ import ChatwootWidget from "@/components/ChatwootWidget";
 import { routing } from "@/i18n/routing";
 import { isRtlLocale } from "@/i18n/locales";
 import { getExchangeRates } from "../../../helpers/getExchangeRates";
-import { DEFAULT_COUNTRY, DEFAULT_CURRENCY } from "../../../helpers/currency";
+import { DEFAULT_COUNTRY } from "../../../helpers/currency";
+import { resolvePreferredCurrency } from "../../../helpers/regions";
 import { myFetch } from "../../../helpers/myFetch";
 import { mapShippingAddresses } from "../../../helpers/shipping-address";
 
@@ -131,11 +132,16 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 
   const userMode = cookieStore.get("user-mode")?.value || "customer";
   const initialShippingAddresses = mapShippingAddresses(addressRes?.data);
+  const cookieCountry = cookieStore.get("user_country")?.value;
   const initialCountry =
     headerStore.get("x-country-code") ||
-    cookieStore.get("user_country")?.value ||
+    cookieCountry ||
     DEFAULT_COUNTRY;
-  const initialCurrency = cookieStore.get("user_currency")?.value || DEFAULT_CURRENCY;
+  const initialCurrency = resolvePreferredCurrency(
+    initialCountry,
+    cookieCountry,
+    cookieStore.get("user_currency")?.value,
+  );
   const direction = isRtlLocale(locale) ? "rtl" : "ltr";
   const fontClass = bodyFontClass(locale);
 

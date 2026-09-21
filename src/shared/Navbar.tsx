@@ -20,6 +20,7 @@ import SearchBar from '@/ui/SearchBar';
 import CustomerMobileMenu from '@/ui/CustomerMobileMenu';
 import LocationModal from '@/ui/LocationModal';
 import LanguageRegionModal, { languagesList } from '@/ui/LanguageRegionModal';
+import Flag from '@/ui/Flag';
 import { useCurrency } from '@/hooks/use-currency';
 import {
     readDeliveryLocation,
@@ -47,7 +48,7 @@ export default function Navbar({
     const router = useRouter();
 
     const { isLoggedIn, logout } = useAuth();
-    const { country, currency, rate, setCountry } = useCurrency();
+    const { country, currency, setCountry } = useCurrency();
     const defaultAddress = defaultShippingAddress(addresses);
     const deliveryLabel =
         (defaultAddress && shippingAddressLabel(defaultAddress)) ||
@@ -124,11 +125,8 @@ export default function Navbar({
                                 className="flex items-center gap-1.5 hover:text-accent-foreground transition-colors cursor-pointer text-accent-foreground font-semibold py-0.5"
                                 aria-label={t("Navbar.languageCurrency")}
                             >
-                                <span>{country.flag}</span>
+                                <Flag countryCode={country.code} loading="eager" />
                                 <span>{currency}</span>
-                                <span className="hidden sm:inline text-accent-foreground/80 font-medium">
-                                    {rate.toLocaleString("en-US", { maximumFractionDigits: 2 })}
-                                </span>
                                 <span className="text-border">|</span>
                                 <span>{activeLangObj.name}</span>
                                 <ChevronDown className={`w-3 h-3 text-accent-foreground/70 transition-transform duration-200 ${isLangOpen ? 'rotate-180' : ''}`} />
@@ -219,7 +217,12 @@ export default function Navbar({
                     currentLocation={deliveryLabel}
                     onOpenLocationModal={() => setIsLocationOpen(true)}
                     onOpenLangModal={() => setIsLangOpen(true)}
-                    currentCurrencyLabel={`${country.flag} ${currency}`}
+                    currentCurrencyLabel={
+                        <>
+                            <Flag countryCode={country.code} className="align-middle" />
+                            {currency}
+                        </>
+                    }
                     currentLangName={activeLangObj.name}
                 />
             )}

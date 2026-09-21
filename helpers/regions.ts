@@ -75,6 +75,22 @@ export function countryByCode(code: string | undefined): CountryOption {
   return countriesList.find((item) => item.code === normalized) ?? countriesList[0];
 }
 
+export function resolvePreferredCurrency(
+  countryCode: string | undefined,
+  savedCountry: string | null | undefined,
+  savedCurrency: string | null | undefined,
+): string {
+  const country = countryByCode(countryCode);
+  if (
+    savedCountry &&
+    countryByCode(savedCountry).code === country.code &&
+    savedCurrency
+  ) {
+    return currencyToOption(savedCurrency).currency;
+  }
+  return country.currency;
+}
+
 export function countryByCurrency(currency: string | undefined): CountryOption | undefined {
   return currency ? currencyToOption(currency) : undefined;
 }

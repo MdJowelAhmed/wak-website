@@ -5,6 +5,7 @@ import { ChevronRight } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useCurrency } from '@/hooks/use-currency';
 import { usePathname, useRouter } from '@/i18n/navigation';
+import Flag from '@/ui/Flag';
 import {
     countriesList,
     languagesList,
@@ -246,7 +247,7 @@ export default function LanguageRegionModal({
                                             }`}
                                         >
                                             <span className="flex items-center gap-1.5">
-                                                <span>{item.flag}</span>
+                                                <Flag countryCode={item.code} />
                                                 <span>{item.name}</span>
                                             </span>
                                             <span className="text-[11px] text-body-text">
@@ -265,7 +266,7 @@ export default function LanguageRegionModal({
 
             <div>
                 <div className="flex items-center gap-2 px-2 text-xs text-body-text">
-                    <span className="text-base">{country.flag}</span>
+                    <Flag countryCode={country.code} className="h-4 w-[22px]" />
                     <span className="leading-snug">
                         {t("shoppingOn")}{" "}
                         <strong className="font-semibold text-card-foreground">
@@ -315,11 +316,11 @@ export default function LanguageRegionModal({
                                             }`}
                                         >
                                             <span className="flex min-w-0 items-start gap-1.5">
-                                                <span className="shrink-0">{item.flag}</span>
+                                                <Flag countryCode={item.code} className="mt-0.5" />
                                                 <span className="leading-snug">{item.name}</span>
                                             </span>
                                             <span className="shrink-0 text-[11px] text-body-text">
-                                                {item.code}
+                                                {item.currency}
                                             </span>
                                         </button>
                                     );

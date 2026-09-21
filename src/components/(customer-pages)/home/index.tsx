@@ -10,9 +10,13 @@ import Services from "./components/Services";
 import AppDownloadSection from "./components/AppDownloadSection";
 import { getActiveCategories } from "../../../../helpers/categoryService";
 import { myFetch } from "../../../../helpers/myFetch";
+import { normalizeShoppingCountryCode } from "../../../../helpers/regions";
+import { headers } from "next/headers";
 
 const Home = async () => {
-    // Server-side cached parallel fetch for all sections
+    const headerStore = await headers();
+    const countryCode = normalizeShoppingCountryCode(headerStore.get("x-country-code"));
+
     const [
         prodRes,
         servRes,
@@ -35,7 +39,7 @@ const Home = async () => {
             cache: 'force-cache',
             next: { revalidate: 3600, tags: ['services'] },
         }),
-        myFetch('/hero-section', {
+        myFetch(`/hero-section?countryCode=${encodeURIComponent(countryCode)}`, {
             cache: 'no-store',
             next: {},
         }),
