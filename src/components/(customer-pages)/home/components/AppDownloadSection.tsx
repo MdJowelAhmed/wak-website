@@ -77,8 +77,9 @@ const AppDownloadSection = () => {
 
     return (
         <section
-            className="relative overflow-hidden bg-primary py-16 md:py-20 lg:py-24"
+            className="relative scroll-mt-24 overflow-hidden bg-primary py-16 md:py-20 lg:py-24"
             aria-labelledby="app-download-heading"
+            id="app-download-section"
         >
             <div
                 className="pointer-events-none absolute inset-0 opacity-25"
