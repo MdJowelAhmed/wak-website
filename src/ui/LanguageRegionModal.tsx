@@ -139,12 +139,13 @@ export default function LanguageRegionModal({
     return (
         <div
             ref={popoverRef}
-            className="absolute end-0 top-full mt-2.5 w-72 sm:w-80 rounded-2xl border border-card-border bg-card p-4 text-card-foreground shadow-2xl sm:p-5 z-[300] animate-in fade-in zoom-in-95 duration-150"
+            className="absolute end-0 top-full z-[300] mt-2.5 flex w-72 max-h-[calc(100dvh-5rem)] flex-col overflow-hidden rounded-2xl border border-card-border bg-card text-card-foreground shadow-2xl sm:w-80 animate-in fade-in zoom-in-95 duration-150"
             role="menu"
             aria-label={t("changeLanguage")}
         >
-            <div className="absolute -top-1.5 end-6 w-3 h-3 bg-card border-t border-s border-border rotate-45 z-10" />
+            <div className="absolute -top-1.5 end-6 z-10 h-3 w-3 rotate-45 border-s border-t border-border bg-card" />
 
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 sm:p-5">
             <div>
                 <span className="mb-2 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                     {t("changeLanguage")}
@@ -329,6 +330,7 @@ export default function LanguageRegionModal({
                         </div>
                     </div>
                 )}
+            </div>
             </div>
         </div>
     );
