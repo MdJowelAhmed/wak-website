@@ -1,7 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { cookies } from "next/headers";
 import { getAccessToken } from "./getAccessToken";
+import { logServerApi } from "./logServerApi";
+
+async function signalApiDebugToBrowser() {
+  try {
+    (await cookies()).set("__api_debug_tick", String(Date.now()), {
+      path: "/",
+      maxAge: 60,
+      sameSite: "lax",
+    });
+  } catch {
+    // Server Components cannot set cookies; DevApiLogBridge covers those logs.
+  }
+}
 
 interface Pagination {
   total: number;
@@ -29,6 +43,8 @@ interface FetchOptions {
   cache?: RequestCache;
   tags?: string[];
   next?: RequestInit["next"];
+  /** Dev-only. Logs this request's endpoint and response in the terminal and browser console. */
+  debug?: boolean;
 }
 
 export const nextFetch = async <T = any>(
@@ -41,6 +57,7 @@ export const nextFetch = async <T = any>(
     headers = {},
     cache,
     next,
+    debug = false,
   }: FetchOptions = {}
 ): Promise<FetchResponse<T>> => {
   const isGet = method === "GET";
@@ -60,8 +77,11 @@ export const nextFetch = async <T = any>(
     ...(token ? { Authorization: `${token}` } : {}),
   };
 
+  const requestUrl = `${process.env.BASE_URL}${url}`;
+  const shouldLog = debug && process.env.NODE_ENV === "development";
+
   try {
-    const res = await fetch(`${process.env.BASE_URL}${url}`, {
+    const res = await fetch(requestUrl, {
       method,
       headers: reqHeaders,
       ...(hasBody && {
@@ -81,15 +101,26 @@ export const nextFetch = async <T = any>(
     }
 
     if (!res.ok) {
-      return {
+      const failed = {
         success: false,
         message: json?.message || "Request failed",
         data: null as any,
         error: json?.errorMessages || json?.message || `HTTP Error ${res.status}`,
       };
+      if (shouldLog) {
+        logServerApi({
+          method,
+          url: requestUrl,
+          status: res.status,
+          body: hasBody ? body : undefined,
+          response: failed,
+        });
+        await signalApiDebugToBrowser();
+      }
+      return failed;
     }
 
-    return {
+    const ok = {
       success: json?.success ?? true,
       message: json?.message,
       data: json?.data,
@@ -97,13 +128,35 @@ export const nextFetch = async <T = any>(
       pagination: json?.pagination,
       meta: json?.meta,
     };
+    if (shouldLog) {
+      logServerApi({
+        method,
+        url: requestUrl,
+        status: res.status,
+        body: hasBody ? body : undefined,
+        response: ok,
+      });
+      await signalApiDebugToBrowser();
+    }
+    return ok;
   } catch (err) {
-    return {
+    const failed = {
       success: false,
       data: null as any,
       message: "Network error",
       error: err instanceof Error ? err.message : "Unknown error",
     };
+    if (shouldLog) {
+      logServerApi({
+        method,
+        url: requestUrl,
+        body: hasBody ? body : undefined,
+        response: failed,
+        error: failed.error,
+      });
+      await signalApiDebugToBrowser();
+    }
+    return failed;
   }
 };
 

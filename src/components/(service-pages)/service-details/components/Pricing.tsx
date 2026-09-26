@@ -10,10 +10,14 @@ import { useCurrency } from "@/hooks/use-currency";
 import { useRouter } from "@/i18n/navigation";
 import { type ServiceDetailsData } from "../types";
 
+type PaymentMethod = "stripe" | "paychangu";
+
 export default function Pricing({ service }: { service: ServiceDetailsData }) {
     const t = useTranslations("ServiceDetails");
+    const checkoutT = useTranslations("Checkout");
     const router = useRouter();
     const { formatPrice } = useCurrency();
+    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("paychangu");
     const [isCheckingOut, setIsCheckingOut] = useState(false);
     const [isCreatingChat, setIsCreatingChat] = useState(false);
 
@@ -23,6 +27,8 @@ export default function Pricing({ service }: { service: ServiceDetailsData }) {
         try {
             const res = await myFetch(`/service-orders/services/${service.id}/checkout`, {
                 method: "POST",
+                body: { paymentMethod },
+                
             });
             const checkoutUrl =
                 res?.success && typeof res.data?.checkoutUrl === "string"
@@ -94,6 +100,36 @@ export default function Pricing({ service }: { service: ServiceDetailsData }) {
                         </ul>
                     </div>
                 )}
+
+                <div className="mb-4">
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-white/60">
+                        {checkoutT("paymentMethod")}
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                        <button
+                            type="button"
+                            onClick={() => setPaymentMethod("stripe")}
+                            className={`cursor-pointer rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors ${
+                                paymentMethod === "stripe"
+                                    ? "bg-primary text-white"
+                                    : "border border-white/20 bg-white/5 text-white hover:border-primary/50"
+                            }`}
+                        >
+                            Stripe
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setPaymentMethod("paychangu")}
+                            className={`cursor-pointer rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors ${
+                                paymentMethod === "paychangu"
+                                    ? "bg-primary text-white"
+                                    : "border border-white/20 bg-white/5 text-white hover:border-primary/50"
+                            }`}
+                        >
+                            PayChangu
+                        </button>
+                    </div>
+                </div>
 
                 <Button
                     type="button"

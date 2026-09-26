@@ -11,6 +11,7 @@ import { CartProvider } from "@/context/CartContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 import ChatwootWidget from "@/components/ChatwootWidget";
+import DevApiLogBridge from "@/components/DevApiLogBridge";
 import { routing } from "@/i18n/routing";
 import { isRtlLocale } from "@/i18n/locales";
 import { getExchangeRates } from "../../../helpers/getExchangeRates";
@@ -161,7 +162,13 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
                   userMode={userMode}
                   initialShippingAddresses={initialShippingAddresses}
                 />
-                <div>{children}</div>
+                {process.env.NODE_ENV === "development" ? (
+                  <DevApiLogBridge>
+                    <div>{children}</div>
+                  </DevApiLogBridge>
+                ) : (
+                  <div>{children}</div>
+                )}
                 <Footer />
                 <ChatwootWidget />
               </CartProvider>
