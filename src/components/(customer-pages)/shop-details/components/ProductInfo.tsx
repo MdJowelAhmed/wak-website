@@ -35,11 +35,10 @@ function OptionPicker({
                             type="button"
                             onClick={() => onChange(selected ? "" : option)}
                             aria-pressed={selected}
-                            className={`cursor-pointer rounded-xl border px-3 py-2 text-sm font-semibold transition-colors ${
-                                selected
+                            className={`cursor-pointer rounded-xl border px-2 py-[2px] text-sm font-semibold transition-colors ${selected
                                     ? "border-primary bg-primary text-white"
                                     : "border-white/15 bg-white/10 text-white hover:border-primary/60"
-                            }`}
+                                }`}
                         >
                             {option}
                         </button>
@@ -138,11 +137,10 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
                     {Array.from({ length: 5 }).map((_, index) => (
                         <Star
                             key={index}
-                            className={`h-4 w-4 ${
-                                index < Math.floor(product.rating)
+                            className={`h-4 w-4 ${index < Math.floor(product.rating)
                                     ? "fill-primary text-primary"
                                     : "fill-white/15 text-white/15"
-                            }`}
+                                }`}
                         />
                     ))}
                 </div>
@@ -168,22 +166,24 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
             </dl>
 
             <div className="mt-6 flex flex-col gap-4">
-                {hasColors ? (
-                    <OptionPicker
-                        label={t("color")}
-                        options={product.colors}
-                        value={color}
-                        onChange={setColor}
-                    />
-                ) : null}
-                {hasSizes ? (
-                    <OptionPicker
-                        label={t("size")}
-                        options={product.sizes}
-                        value={size}
-                        onChange={setSize}
-                    />
-                ) : null}
+                <div className="flex flex-col gap-2">
+                    {hasColors ? (
+                        <OptionPicker
+                            label={t("color")}
+                            options={product.colors}
+                            value={color}
+                            onChange={setColor}
+                        />
+                    ) : null}
+                    {hasSizes ? (
+                        <OptionPicker
+                            label={t("size")}
+                            options={product.sizes}
+                            value={size}
+                            onChange={setSize}
+                        />
+                    ) : null}
+                </div>
 
                 <div className="flex items-center gap-4">
                     <span className="text-sm font-medium text-white">{t("quantity")}</span>
