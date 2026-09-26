@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
-const LENS_SIZE = 200;
+const LENS_SIZE = 230;
 
 interface ProductGalleryProps {
     images: string[];
