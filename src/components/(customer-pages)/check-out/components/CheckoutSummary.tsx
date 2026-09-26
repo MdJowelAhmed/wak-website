@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Button } from "@/ui/button";
+import { formatVariantLabel } from "../../../../../helpers/product-variant";
 import type { CartItem, DeliveryOption, PaymentMethod } from "../types";
 
 interface CheckoutSummaryProps {
@@ -36,27 +37,37 @@ export default function CheckoutSummary({
             <section className="rounded-2xl border border-white/10 bg-secondary p-5 shadow-lg sm:p-6">
                 <h2 className="mb-5 text-lg font-bold text-white">{t("orderSummary")}</h2>
                 <div className="space-y-4">
-                    {cartItems.map((item) => (
-                        <div key={item.id} className="flex items-center gap-3">
-                            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-white/10">
-                                <Image
-                                    src={item.image}
-                                    alt={item.name}
-                                    fill
-                                    sizes="48px"
-                                    unoptimized
-                                    className="object-cover"
-                                />
+                    {cartItems.map((item) => {
+                        const variantLabel = formatVariantLabel(item, {
+                            color: (color) => t("colorValue", { color }),
+                            size: (size) => t("sizeValue", { size }),
+                        });
+
+                        return (
+                            <div key={`${item.id}-${item.color ?? ""}-${item.size ?? ""}`} className="flex items-center gap-3">
+                                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-white/10">
+                                    <Image
+                                        src={item.image}
+                                        alt={item.name}
+                                        fill
+                                        sizes="48px"
+                                        unoptimized
+                                        className="object-cover"
+                                    />
+                                </div>
+                                <div className="min-w-0 flex-1">
+                                    <p className="truncate text-sm font-medium text-white">{item.name}</p>
+                                    {variantLabel ? (
+                                        <p className="truncate text-xs text-white/55">{variantLabel}</p>
+                                    ) : null}
+                                    <p className="text-xs text-white/55">{t("qty", { count: item.quantity })}</p>
+                                </div>
+                                <p className="text-sm font-semibold text-white">
+                                    {formatMoney(item.price * item.quantity)}
+                                </p>
                             </div>
-                            <div className="min-w-0 flex-1">
-                                <p className="truncate text-sm font-medium text-white">{item.name}</p>
-                                <p className="text-xs text-white/55">{t("qty", { count: item.quantity })}</p>
-                            </div>
-                            <p className="text-sm font-semibold text-white">
-                                {formatMoney(item.price * item.quantity)}
-                            </p>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
 
                 <dl className="mt-5 space-y-2.5 border-t border-white/10 pt-4 text-sm">

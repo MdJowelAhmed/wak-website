@@ -8,8 +8,47 @@ import { Button } from "@/ui/button";
 import { useCart } from "@/context/CartContext";
 import { useCurrency } from "@/hooks/use-currency";
 import { useRouter } from "@/i18n/navigation";
+import { cartAddBody } from "../../../../../helpers/product-variant";
 import { myFetch } from "../../../../../helpers/myFetch";
 import { type ProductDetailsData } from "../types";
+
+function OptionPicker({
+    label,
+    options,
+    value,
+    onChange,
+}: {
+    label: string;
+    options: string[];
+    value: string;
+    onChange: (next: string) => void;
+}) {
+    return (
+        <div>
+            <p className="text-sm font-medium text-white">{label}</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+                {options.map((option) => {
+                    const selected = value === option;
+                    return (
+                        <button
+                            key={option}
+                            type="button"
+                            onClick={() => onChange(selected ? "" : option)}
+                            aria-pressed={selected}
+                            className={`cursor-pointer rounded-xl border px-3 py-2 text-sm font-semibold transition-colors ${
+                                selected
+                                    ? "border-primary bg-primary text-white"
+                                    : "border-white/15 bg-white/10 text-white hover:border-primary/60"
+                            }`}
+                        >
+                            {option}
+                        </button>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
 
 export default function ProductInfo({ product }: { product: ProductDetailsData }) {
     const t = useTranslations("ShopDetails");
@@ -17,16 +56,35 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
     const { refreshCart } = useCart();
     const { formatPrice } = useCurrency();
     const [qty, setQty] = useState(1);
+    const [color, setColor] = useState("");
+    const [size, setSize] = useState("");
     const [isAdding, setIsAdding] = useState(false);
     const [isBuying, setIsBuying] = useState(false);
     const inStock = product.stock > 0;
     const maxQty = Math.max(1, product.stock);
     const busy = isAdding || isBuying;
+    const hasColors = product.colors.length > 0;
+    const hasSizes = product.sizes.length > 0;
+
+    const selectedVariant = () => {
+        if (hasColors && !color) {
+            toast.error(t("selectColor"));
+            return null;
+        }
+        if (hasSizes && !size) {
+            toast.error(t("selectSize"));
+            return null;
+        }
+        return { color, size };
+    };
 
     const addToCart = async () => {
+        const variant = selectedVariant();
+        if (!variant) return false;
+
         const res = await myFetch("/carts/", {
             method: "POST",
-            body: { product: product.id, quantity: qty },
+            body: cartAddBody(product.id, qty, variant),
         });
         if (!res?.success) {
             toast.error(res?.message || t("addError"));
@@ -110,6 +168,23 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
             </dl>
 
             <div className="mt-6 flex flex-col gap-4">
+                {hasColors ? (
+                    <OptionPicker
+                        label={t("color")}
+                        options={product.colors}
+                        value={color}
+                        onChange={setColor}
+                    />
+                ) : null}
+                {hasSizes ? (
+                    <OptionPicker
+                        label={t("size")}
+                        options={product.sizes}
+                        value={size}
+                        onChange={setSize}
+                    />
+                ) : null}
+
                 <div className="flex items-center gap-4">
                     <span className="text-sm font-medium text-white">{t("quantity")}</span>
                     <div className="flex items-center rounded-xl border border-white/15 bg-white/10">

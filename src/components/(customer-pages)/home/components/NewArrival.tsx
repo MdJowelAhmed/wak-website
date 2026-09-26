@@ -2,6 +2,7 @@
 
 import { ArrowRight } from 'lucide-react';
 import ProductCard from '@/shared/ProductCard';
+import { productRequiresVariant } from '../../../../../helpers/product-variant';
 import { resolveImageUrl } from '../../../../../helpers/resolveImageUrl';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
@@ -15,6 +16,8 @@ export interface Product {
     ratingAverage: number;
     ratingCount: number;
     slug: string;
+    colors?: string[];
+    sizes?: string[];
 }
 
 interface NewArrivalProps {
@@ -70,7 +73,8 @@ const NewArrival = ({ initialProducts = [] }: NewArrivalProps) => {
                                     originalPrice: product.price,
                                     discount: product.discountPrice ? Math.round(((product.price - product.discountPrice) / product.price) * 100) : 0,
                                     rating: product.ratingAverage || 0,
-                                    reviews: product.ratingCount || 0
+                                    reviews: product.ratingCount || 0,
+                                    requiresVariant: productRequiresVariant(product),
                                 }} />
                             ))}
                         </div>

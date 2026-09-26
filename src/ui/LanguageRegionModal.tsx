@@ -13,6 +13,7 @@ import {
     type LanguageOption,
 } from '../../helpers/regions';
 import { stripCountryFromPathname } from '../../helpers/country-url';
+import { revalidateHeroSection } from '../../helpers/revalidateTags';
 
 export type { CountryOption, LanguageOption };
 export { countriesList, languagesList };
@@ -78,7 +79,18 @@ export default function LanguageRegionModal({
         const rest = stripCountryFromPathname(pathname);
         const suffix = rest === "/" ? "" : rest;
         const search = typeof window !== "undefined" ? window.location.search : "";
-        router.replace(`/${countryPath}${suffix}${search}`, { locale: nextLocale });
+        const nextPath = `/${nextLocale}/${countryPath}${suffix}${search}`;
+        const currentPath =
+            typeof window !== "undefined"
+                ? `${window.location.pathname}${window.location.search}`
+                : "";
+
+        if (currentPath === nextPath) {
+            router.refresh();
+            return;
+        }
+
+        window.location.assign(nextPath);
     };
 
     const handleSelectLang = (code: string) => {
@@ -97,12 +109,17 @@ export default function LanguageRegionModal({
         setCurrencyQuery("");
     };
 
-    const handleSelectCountry = (countryCode: string) => {
+    const selectedCountryCode = currentCountry || country.code;
+
+    const handleSelectCountry = async (countryCode: string) => {
         onSelectCountry(countryCode);
         setIsChangingCountry(false);
         setCountryQuery("");
-        navigateWithCountry(countryCode);
         onClose();
+        if (countryCode.toUpperCase() !== selectedCountryCode.toUpperCase()) {
+            await revalidateHeroSection(countryCode);
+        }
+        navigateWithCountry(countryCode);
     };
 
     const filteredLanguages = languagesList.filter((lang) => {
@@ -133,8 +150,6 @@ export default function LanguageRegionModal({
             item.code.toLowerCase().includes(query)
         );
     });
-
-    const selectedCountryCode = currentCountry || country.code;
 
     return (
         <div

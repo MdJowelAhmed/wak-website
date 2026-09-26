@@ -50,6 +50,7 @@ export default function RelatedItems({ products }: { products: RelatedProduct[] 
                                 discount: product.discount,
                                 rating: product.rating,
                                 reviews: product.reviews,
+                                requiresVariant: product.requiresVariant,
                             }}
                         />
                     </SwiperSlide>

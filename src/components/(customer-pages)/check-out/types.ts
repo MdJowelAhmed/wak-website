@@ -1,3 +1,4 @@
+import { variantFields, type ProductVariant } from "../../../../helpers/product-variant";
 import { resolveImageUrl } from "../../../../helpers/resolveImageUrl";
 import {
     mapShippingAddresses,
@@ -13,7 +14,7 @@ export interface Country {
     countryCode: string;
 }
 
-export interface CartItem {
+export interface CartItem extends ProductVariant {
     id: string;
     productId: string;
     slug?: string;
@@ -58,6 +59,8 @@ export function mapCartItems(items: unknown): CartItem[] {
         const row = item as {
             _id?: string;
             quantity?: number;
+            color?: string;
+            size?: string;
             product?: {
                 _id?: string;
                 slug?: string;
@@ -65,6 +68,8 @@ export function mapCartItems(items: unknown): CartItem[] {
                 discountPrice?: number;
                 price?: number;
                 images?: string[];
+                color?: string;
+                size?: string;
             };
         };
 
@@ -76,6 +81,10 @@ export function mapCartItems(items: unknown): CartItem[] {
             price: row.product?.discountPrice || row.product?.price || 0,
             image: resolveImageUrl(row.product?.images?.[0], "/placeholder.jpg") || "/placeholder.jpg",
             quantity: row.quantity || 1,
+            ...variantFields({
+                color: row.color || row.product?.color,
+                size: row.size || row.product?.size,
+            }),
         };
     });
 }

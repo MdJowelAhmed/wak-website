@@ -5,6 +5,7 @@ import { ArrowLeft, CheckCircle2, Loader2, MapPin, MessageCircle, Store } from "
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/ui/button";
+import { formatVariantLabel } from "../../../../../helpers/product-variant";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
 import OrderTimeline from "./OrderTimeline";
 import {
@@ -128,6 +129,10 @@ export default function OrderDetails({
             {items.map((item) => {
               const href = item.slug || item.productId ? `/shop/${item.slug || item.productId}` : undefined;
               const imageSrc = resolveImageUrl(item.image, "/placeholder.jpg") || "/placeholder.jpg";
+              const variantLabel = formatVariantLabel(item, {
+                color: (color) => t("colorValue", { color }),
+                size: (size) => t("sizeValue", { size }),
+              });
               const content = (
                 <>
                   <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-white/10">
@@ -135,6 +140,9 @@ export default function OrderDetails({
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-semibold text-white">{item.name}</p>
+                    {variantLabel ? (
+                      <p className="mt-1 text-xs text-white/60">{variantLabel}</p>
+                    ) : null}
                     <p className="mt-1 text-xs text-white/60">
                       {t("qtyEach", { quantity: item.quantity, price: money(item.unitPrice) })}
                     </p>
@@ -144,7 +152,7 @@ export default function OrderDetails({
               );
 
               return (
-                <li key={item.id || item.name}>
+                <li key={`${item.id || item.name}-${item.color ?? ""}-${item.size ?? ""}`}>
                   {href ? (
                     <Link href={href} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0 hover:opacity-90">
                       {content}

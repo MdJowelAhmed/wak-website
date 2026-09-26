@@ -15,6 +15,7 @@ export default async function ShopDetailsPage({
     const productRes = await myFetch(`/products/slug/${id}`, {
         cache: "force-cache",
         next: { revalidate: 3600, tags: ["products"] },
+        
     });
 
     const product = mapProductDetails(productRes?.data);

@@ -20,10 +20,11 @@ interface ProductCardProps {
     discount?: number;
     rating: number;
     reviews: number;
+    requiresVariant?: boolean;
 }
 
 const ProductCard = ({ product }: { product: ProductCardProps }) => {
-    const { id, productId, name, image, currentPrice, originalPrice, discount, rating, reviews } = product;
+    const { id, productId, name, image, currentPrice, originalPrice, discount, rating, reviews, requiresVariant } = product;
     const t = useTranslations("ShopDetails");
     const router = useRouter();
     const { refreshCart } = useCart();
@@ -46,6 +47,11 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
         e.preventDefault();
         e.stopPropagation();
         if (addingToCart) return;
+
+        if (requiresVariant) {
+            handleClick();
+            return;
+        }
 
         setAddingToCart(true);
         try {

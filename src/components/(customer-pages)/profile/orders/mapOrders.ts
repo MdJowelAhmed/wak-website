@@ -1,3 +1,4 @@
+import { variantFields } from "../../../../../helpers/product-variant";
 import type { Order, OrderAddress, OrderLineItem } from "./types";
 import { formatMoney } from "./types";
 
@@ -16,6 +17,8 @@ type ApiItem = {
   quantity?: number;
   unitPrice?: number;
   unitTotal?: number;
+  color?: string;
+  size?: string;
   alreadyReviewed?: boolean;
   canReview?: boolean;
   product?: {
@@ -179,7 +182,7 @@ export function mapServiceOrder(apiOrder: ApiOrder): Order {
 
 function mapItems(items: ApiItem[] = []): OrderLineItem[] {
   return items.map((item) => ({
-    id: item._id || item.product?._id || "",
+    id: item._id || [item.product?._id, item.color, item.size].filter(Boolean).join("-") || "",
     productId: item.product?._id,
     name: item.product?.name || "Product",
     image: item.product?.images?.[0],
@@ -189,6 +192,7 @@ function mapItems(items: ApiItem[] = []): OrderLineItem[] {
     unitTotal: item.unitTotal ?? (item.unitPrice || 0) * (item.quantity || 1),
     canReview: item.canReview === true,
     alreadyReviewed: item.alreadyReviewed === true,
+    ...variantFields({ color: item.color, size: item.size }),
   }));
 }
 

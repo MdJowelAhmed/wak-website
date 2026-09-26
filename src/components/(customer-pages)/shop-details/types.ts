@@ -1,3 +1,4 @@
+import { mapOptionList } from "../../../../helpers/product-variant";
 import { resolveImageUrl } from "../../../../helpers/resolveImageUrl";
 
 export interface ProductHighlight {
@@ -29,6 +30,8 @@ export interface ProductDetailsData {
     rating: number;
     reviews: number;
     localDeliveryFee?: number;
+    colors: string[];
+    sizes: string[];
 }
 
 export interface RelatedProduct {
@@ -41,6 +44,7 @@ export interface RelatedProduct {
     discount?: number;
     rating: number;
     reviews: number;
+    requiresVariant?: boolean;
 }
 
 function asNumber(value: unknown): number | undefined {
@@ -74,6 +78,8 @@ export function mapProductDetails(raw: unknown): ProductDetailsData | null {
         ratingAverage?: number;
         ratingCount?: number;
         localDeliveryFee?: number;
+        colors?: unknown;
+        sizes?: unknown;
     };
 
     if (!row._id || !row.name) return null;
@@ -126,6 +132,8 @@ export function mapProductDetails(raw: unknown): ProductDetailsData | null {
         rating: asNumber(row.ratingAverage) ?? 0,
         reviews: asNumber(row.ratingCount) ?? 0,
         localDeliveryFee: asNumber(row.localDeliveryFee),
+        colors: mapOptionList(row.colors),
+        sizes: mapOptionList(row.sizes),
     };
 }
 
@@ -146,6 +154,7 @@ export function mapRelatedProducts(raw: unknown): RelatedProduct[] {
                 discount: mapped.discount,
                 rating: mapped.rating,
                 reviews: mapped.reviews,
+                requiresVariant: mapped.colors.length > 0 || mapped.sizes.length > 0,
             },
         ];
     });

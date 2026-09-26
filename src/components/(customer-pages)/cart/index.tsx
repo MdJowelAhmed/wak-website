@@ -8,6 +8,7 @@ import { Link } from "@/i18n/navigation";
 import CartItemRow from "./CartItemRow";
 import OrderSummary from "./OrderSummary";
 import { Button } from "@/ui/button";
+import { cartRemovePath, cartUpdateBody } from "../../../../helpers/product-variant";
 import { myFetch } from "../../../../helpers/myFetch";
 import { useCart } from "@/context/CartContext";
 import type { CartItem } from "../check-out/types";
@@ -34,7 +35,7 @@ export default function ProductCart({ initialItems }: { initialItems: CartItem[]
         setItems(items.filter((item) => item.id !== id));
 
         try {
-            const res = await myFetch(`/carts/products/${itemToRemove.productId}`, {
+            const res = await myFetch(cartRemovePath(itemToRemove.productId, itemToRemove), {
                 method: "DELETE",
             });
             if (!res?.success) {
@@ -65,7 +66,7 @@ export default function ProductCart({ initialItems }: { initialItems: CartItem[]
                 isIncrementing ? "/carts/increment" : "/carts/decrement",
                 {
                     method: "PATCH",
-                    body: { product: itemToUpdate.productId },
+                    body: cartUpdateBody(itemToUpdate.productId, itemToUpdate),
                 },
             );
             if (!res?.success) {

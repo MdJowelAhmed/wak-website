@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import ProductCard from "@/shared/ProductCard";
+import { productRequiresVariant } from "../../../../../helpers/product-variant";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
 import {
     Pagination,
@@ -78,7 +79,8 @@ export default function ShopProductGrid({ products = [], pagination }: ShopProdu
                             originalPrice: product.price,
                             discount: product.discountPrice ? Math.round(((product.price - product.discountPrice) / product.price) * 100) : 0,
                             rating: product.ratingAverage || 0,
-                            reviews: product.ratingCount || 0
+                            reviews: product.ratingCount || 0,
+                            requiresVariant: productRequiresVariant(product),
                         }} />
                     ))}
                 </div>

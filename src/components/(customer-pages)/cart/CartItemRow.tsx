@@ -5,6 +5,7 @@ import { Minus, Plus, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useCurrency } from "@/hooks/use-currency";
+import { formatVariantLabel } from "../../../../helpers/product-variant";
 import { type CartItem } from "../check-out/types";
 
 interface CartItemRowProps {
@@ -24,6 +25,10 @@ export default function CartItemRow({
     const t = useTranslations("Cart");
     const lineTotal = item.price * item.quantity;
     const href = `/shop/${item.slug || item.productId}`;
+    const variantLabel = formatVariantLabel(item, {
+        color: (color) => t("colorValue", { color }),
+        size: (size) => t("sizeValue", { size }),
+    });
 
     return (
         <article className="rounded-2xl border border-white/10 bg-secondary p-4 shadow-lg sm:p-5">
@@ -49,6 +54,9 @@ export default function CartItemRow({
                     >
                         {item.name}
                     </Link>
+                    {variantLabel ? (
+                        <p className="mt-1 text-xs text-white/60">{variantLabel}</p>
+                    ) : null}
                     <p className="mt-1 text-sm text-white/70">
                         {t("each", { price: formatPrice(item.price) })}
                     </p>

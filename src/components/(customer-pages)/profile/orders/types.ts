@@ -17,6 +17,8 @@ export interface OrderLineItem {
   quantity: number;
   unitPrice: number;
   unitTotal: number;
+  color?: string;
+  size?: string;
   canReview: boolean;
   alreadyReviewed: boolean;
 }

@@ -40,6 +40,7 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
     const servicesRes = await nextFetch<any[]>(`/services${queryString}`, {
         cache: 'force-cache',
         next: { revalidate: 3600, tags: ['services'] },
+        debug: true,
     });
 
     const services = servicesRes?.data || [];

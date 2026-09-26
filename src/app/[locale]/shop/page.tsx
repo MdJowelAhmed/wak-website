@@ -44,6 +44,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     const productsRes = await nextFetch<Product[]>(`/products?${params.toString()}`, {
         cache: 'force-cache',
         next: { revalidate: 3600, tags: ['products'] },
+        debug: true,
     });
 
     const products = productsRes?.data || [];
@@ -62,4 +63,4 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
             searchParams={resolvedSearchParams || {}}
         />
     );
-}
+}

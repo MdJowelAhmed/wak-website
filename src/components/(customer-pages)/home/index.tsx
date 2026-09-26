@@ -16,6 +16,7 @@ import { headers } from "next/headers";
 const Home = async () => {
     const headerStore = await headers();
     const countryCode = normalizeShoppingCountryCode(headerStore.get("x-country-code"));
+    const countryQuery = `countryCode=${encodeURIComponent(countryCode)}`;
 
     const [
         prodRes,
@@ -27,21 +28,22 @@ const Home = async () => {
     ] = await Promise.all([
         getActiveCategories({ type: 'product' }),
         getActiveCategories({ type: 'service' }),
-        myFetch('/products/best-selling', {
+        myFetch(`/products/best-selling?${countryQuery}`, {
             cache: 'force-cache',
-            next: { revalidate: 3600, tags: ['products'] },
+            next: { revalidate: 3600, tags: ['products', `products-best-selling-${countryCode}`] },
+            
         }),
-        myFetch('/products', {
+        myFetch(`/products?${countryQuery}`, {
             cache: 'force-cache',
-            next: { revalidate: 3600, tags: ['products'] },
+            next: { revalidate: 3600, tags: ['products', `products-${countryCode}`] },
         }),
         myFetch('/services', {
             cache: 'force-cache',
             next: { revalidate: 3600, tags: ['services'] },
         }),
         myFetch(`/hero-section?countryCode=${encodeURIComponent(countryCode)}`, {
-            cache: 'no-store',
-            next: {},
+            cache: 'force-cache',
+            next: { revalidate: 3600, tags: [`hero-section-${countryCode}`] },
         }),
     ]);
 
@@ -56,7 +58,7 @@ const Home = async () => {
         <main className="w-full">
             <UserModeReset />
             <Suspense fallback={<BannerSkeleton />}>
-                <Banner initialBanners={heroBanners} />
+                <Banner key={countryCode} initialBanners={heroBanners} />
             </Suspense>
             <UserTypes />
             <AllBrands
@@ -64,9 +66,9 @@ const Home = async () => {
                 serviceCategories={serviceCategories}
             />
             <Suspense fallback={<BestSellingSkeleton />}>
-                <BestSelling initialProducts={bestSellingProducts} />
+                <BestSelling key={countryCode} initialProducts={bestSellingProducts} />
             </Suspense>
-            <NewArrival initialProducts={newArrivalProducts} />
+            <NewArrival key={countryCode} initialProducts={newArrivalProducts} />
             <Services initialServices={servicesList} />
             <AppDownloadSection />
             <Features />
