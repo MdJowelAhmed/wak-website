@@ -45,14 +45,14 @@ function AddressBlock({ title, address }: { title: string; address: OrderAddress
 
   return (
     <div>
-      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-white/50">{title}</p>
-      {address.fullName && <p className="text-sm font-semibold text-white">{address.fullName}</p>}
+      <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">{title}</p>
+      {address.fullName && <p className="text-sm font-bold text-white">{address.fullName}</p>}
       {address.phone && (
-        <a href={`tel:${address.phone}`} className="mt-0.5 block text-sm text-white/75 hover:text-white">
+        <a href={`tel:${address.phone}`} className="mt-0.5 block text-sm font-medium text-body-text hover:text-primary transition-colors">
           {address.phone}
         </a>
       )}
-      {lines && <p className="mt-1 text-sm leading-relaxed text-white/70">{lines}</p>}
+      {lines && <p className="mt-1 text-sm leading-relaxed text-body-text">{lines}</p>}
     </div>
   );
 }
@@ -87,19 +87,19 @@ export default function OrderDetails({
       <button
         type="button"
         onClick={onBack}
-        className="group mb-6 flex items-center gap-2 text-xs font-semibold text-white/70 transition-colors hover:text-white"
+        className="group mb-6 flex items-center gap-2 text-xs font-semibold text-white transition-colors hover:text-primary cursor-pointer"
       >
         <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1 rtl:rotate-180" />
         {t("backTo", { title: listTitle })}
       </button>
 
-      <div className="mb-8 flex flex-col justify-between gap-4 border-b border-white/15 pb-6 sm:flex-row sm:items-start">
+      <div className="mb-8 flex flex-col justify-between gap-4 border-b border-card-border pb-6 sm:flex-row sm:items-start">
         <div>
-          <p className="text-xs font-medium tracking-wide text-white/60">
+          <p className="text-xs font-bold uppercase tracking-wider text-white">
             {type === "product" ? t("productOrder") : t("serviceOrder")}
           </p>
           <h1 className="mt-1 text-2xl font-bold text-white">{order.id}</h1>
-          <p className="mt-1 text-sm text-white/70">
+          <p className="mt-1 text-sm font-medium text-white/70">
             {order.date}
             {deliveryLabel ? ` · ${deliveryLabel}` : ""}
           </p>
@@ -121,11 +121,11 @@ export default function OrderDetails({
       </div>
 
       {items.length > 0 && (
-        <section className="mb-6 rounded-xl border border-white/10 bg-white/5 p-4 sm:p-5">
-          <h2 className="mb-4 text-sm font-semibold text-white">
+        <section className="mb-6 rounded-2xl border border-card-border bg-card p-4 sm:p-5 shadow-xs">
+          <h2 className="mb-4 text-sm font-bold text-secondary">
             {order.totalQuantity ? t("itemsWithCount", { count: order.totalQuantity }) : t("items")}
           </h2>
-          <ul className="divide-y divide-white/10">
+          <ul className="divide-y divide-card-border">
             {items.map((item) => {
               const href = item.slug || item.productId ? `/shop/${item.slug || item.productId}` : undefined;
               const imageSrc = resolveImageUrl(item.image, "/placeholder.jpg") || "/placeholder.jpg";
@@ -135,15 +135,15 @@ export default function OrderDetails({
               });
               const content = (
                 <>
-                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-white/10">
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-card-border bg-section-bg">
                     <Image src={imageSrc} alt={item.name} fill sizes="64px" unoptimized className="object-cover" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-semibold text-white">{item.name}</p>
+                    <p className="text-sm font-bold text-secondary truncate">{item.name}</p>
                     {variantLabel ? (
-                      <p className="mt-1 text-xs text-white/60">{variantLabel}</p>
+                      <p className="mt-0.5 text-xs font-medium text-muted-foreground">{variantLabel}</p>
                     ) : null}
-                    <p className="mt-1 text-xs text-white/60">
+                    <p className="mt-0.5 text-xs font-medium text-muted-foreground">
                       {t("qtyEach", { quantity: item.quantity, price: money(item.unitPrice) })}
                     </p>
                   </div>
@@ -154,7 +154,7 @@ export default function OrderDetails({
               return (
                 <li key={`${item.id || item.name}-${item.color ?? ""}-${item.size ?? ""}`}>
                   {href ? (
-                    <Link href={href} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0 hover:opacity-90">
+                    <Link href={href} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0 hover:opacity-90 transition-opacity">
                       {content}
                     </Link>
                   ) : (
@@ -168,37 +168,37 @@ export default function OrderDetails({
       )}
 
       <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <section className="rounded-xl border border-white/10 bg-white/5 p-4 sm:p-5">
-          <h2 className="mb-4 text-sm font-semibold text-white">{t("summary")}</h2>
+        <section className="rounded-2xl border border-card-border bg-card p-4 sm:p-5 shadow-xs">
+          <h2 className="mb-4 text-sm font-bold text-secondary">{t("summary")}</h2>
           <dl className="space-y-2.5 text-sm">
             {order.subTotal != null && (
               <div className="flex justify-between gap-4">
-                <dt className="text-white/65">{t("subtotal")}</dt>
-                <dd className="font-medium text-white">{money(order.subTotal)}</dd>
+                <dt className="text-body-text">{t("subtotal")}</dt>
+                <dd className="font-semibold text-secondary">{money(order.subTotal)}</dd>
               </div>
             )}
             {order.shippingFee != null && (
               <div className="flex justify-between gap-4">
-                <dt className="text-white/65">{t("shipping")}</dt>
-                <dd className="font-medium text-white">{money(order.shippingFee)}</dd>
+                <dt className="text-body-text">{t("shipping")}</dt>
+                <dd className="font-semibold text-secondary">{money(order.shippingFee)}</dd>
               </div>
             )}
             {order.discount != null && order.discount > 0 && (
               <div className="flex justify-between gap-4">
-                <dt className="text-white/65">{t("discount")}</dt>
-                <dd className="font-medium text-white">-{money(order.discount)}</dd>
+                <dt className="text-body-text">{t("discount")}</dt>
+                <dd className="font-semibold text-secondary">-{money(order.discount)}</dd>
               </div>
             )}
-            <div className="flex justify-between gap-4 border-t border-white/10 pt-2.5">
-              <dt className="font-semibold text-white">{t("total")}</dt>
-              <dd className="font-bold text-primary">
+            <div className="flex justify-between gap-4 border-t border-card-border pt-2.5">
+              <dt className="font-bold text-secondary">{t("total")}</dt>
+              <dd className="font-bold text-primary text-base">
                 {order.grandTotal != null ? money(order.grandTotal) : order.amount}
               </dd>
             </div>
             {order.paymentMethod && (
               <div className="flex justify-between gap-4">
-                <dt className="text-white/65">{t("payment")}</dt>
-                <dd className="font-medium text-white">
+                <dt className="text-body-text">{t("payment")}</dt>
+                <dd className="font-semibold text-secondary">
                   {formatLabel(order.paymentMethod)}
                   {order.paymentStatus ? ` · ${formatLabel(order.paymentStatus)}` : ""}
                 </dd>
@@ -207,8 +207,8 @@ export default function OrderDetails({
           </dl>
         </section>
 
-        <section className="rounded-xl border border-white/10 bg-white/5 p-4 sm:p-5">
-          <h2 className="mb-4 text-sm font-semibold text-white">
+        <section className="rounded-2xl border border-card-border bg-card p-4 sm:p-5 shadow-xs">
+          <h2 className="mb-4 text-sm font-bold text-secondary">
             {type === "product" ? t("fulfillment") : t("details")}
           </h2>
           <div className="space-y-4">
@@ -218,15 +218,15 @@ export default function OrderDetails({
                 <AddressBlock title={fulfillmentTitle} address={fulfillmentAddress} />
               </div>
             ) : (
-              <p className="text-sm text-white/60">{order.title}</p>
+              <p className="text-sm font-medium text-body-text">{order.title}</p>
             )}
             {order.trackingStatus && (
-              <p className="text-sm text-white/70">
+              <p className="text-sm font-medium text-body-text">
                 {t("tracking", { status: trackingLabel })}
               </p>
             )}
-            <div className="flex items-center gap-3 border-t border-white/10 pt-4">
-              <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-white/10">
+            <div className="flex items-center gap-3 border-t border-card-border pt-4">
+              <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-card-border bg-section-bg">
                 <Image
                   src={resolveImageUrl(order.sellerAvatar, "/user.svg") || "/user.svg"}
                   alt={order.sellerName}
@@ -237,11 +237,11 @@ export default function OrderDetails({
                 />
               </div>
               <div className="min-w-0">
-                <p className="flex items-center gap-1.5 text-xs text-white/50">
+                <p className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
                   <Store className="h-3.5 w-3.5" aria-hidden />
                   {type === "product" ? t("seller") : t("provider")}
                 </p>
-                <p className="truncate text-sm font-semibold text-white">{order.sellerName}</p>
+                <p className="truncate text-sm font-bold text-secondary">{order.sellerName}</p>
               </div>
             </div>
           </div>
@@ -250,7 +250,7 @@ export default function OrderDetails({
 
       <div className="mb-6 flex items-center gap-2">
         <CheckCircle2 className="h-4 w-4 text-primary" />
-        <h2 className="text-sm font-semibold text-white/80">
+        <h2 className="text-sm font-bold text-secondary">
           {type === "product" ? t("orderMilestones") : t("serviceMilestones")}
         </h2>
       </div>

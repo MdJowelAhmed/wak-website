@@ -161,191 +161,187 @@ export default function LanguageRegionModal({
             <div className="absolute -top-1.5 end-6 z-10 h-3 w-3 rotate-45 border-s border-t border-border bg-card" />
 
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 sm:p-5">
-            <div>
-                <span className="mb-2 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-                    {t("changeLanguage")}
-                </span>
-                <input
-                    type="search"
-                    value={languageQuery}
-                    onChange={(event) => setLanguageQuery(event.target.value)}
-                    placeholder={t("searchLanguage")}
-                    className="mb-1.5 w-full rounded-lg border border-border bg-section-bg px-2.5 py-1.5 text-xs text-card-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
-                />
+                <div>
+                    <span className="mb-2 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                        {t("changeLanguage")}
+                    </span>
+                    <input
+                        type="search"
+                        value={languageQuery}
+                        onChange={(event) => setLanguageQuery(event.target.value)}
+                        placeholder={t("searchLanguage")}
+                        className="mb-1.5 w-full rounded-lg border border-border bg-section-bg px-2.5 py-1.5 text-xs text-card-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
+                    />
 
-                <div className="max-h-64 space-y-1 overflow-y-auto">
-                    {filteredLanguages.length === 0 ? (
-                        <p className="px-2 py-2 text-[11px] text-muted-foreground">{t("noLanguage")}</p>
-                    ) : null}
-                    {filteredLanguages.map((lang) => {
-                        const isSelected = selectedLang === lang.code;
-                        return (
-                            <label
-                                key={lang.code}
-                                onClick={() => handleSelectLang(lang.code)}
-                                className="flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-section-bg cursor-pointer transition-colors group select-none"
-                            >
-                                <div
-                                    className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all ${
-                                        isSelected
-                                            ? 'border-primary'
-                                            : 'border-border group-hover:border-primary/60'
-                                    }`}
+                    <div className="max-h-64 space-y-1 overflow-y-auto">
+                        {filteredLanguages.length === 0 ? (
+                            <p className="px-2 py-2 text-[11px] text-muted-foreground">{t("noLanguage")}</p>
+                        ) : null}
+                        {filteredLanguages.map((lang) => {
+                            const isSelected = selectedLang === lang.code;
+                            return (
+                                <label
+                                    key={lang.code}
+                                    onClick={() => handleSelectLang(lang.code)}
+                                    className="flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-section-bg cursor-pointer transition-colors group select-none"
                                 >
-                                    {isSelected && <div className="w-2 h-2 rounded-full bg-primary" />}
-                                </div>
+                                    <div
+                                        className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all ${isSelected
+                                                ? 'border-primary'
+                                                : 'border-border group-hover:border-primary/60'
+                                            }`}
+                                    >
+                                        {isSelected && <div className="w-2 h-2 rounded-full bg-primary" />}
+                                    </div>
 
-                                <span
-                                    className={`text-xs ${
-                                        isSelected
-                                            ? 'font-bold text-card-foreground'
-                                            : 'font-medium text-body-text group-hover:text-card-foreground'
-                                    }`}
-                                >
-                                    {lang.nativeName} — {lang.name}
-                                </span>
-                            </label>
-                        );
-                    })}
+                                    <span
+                                        className={`text-xs ${isSelected
+                                                ? 'font-bold text-card-foreground'
+                                                : 'font-medium text-body-text group-hover:text-card-foreground'
+                                            }`}
+                                    >
+                                        {lang.nativeName} — {lang.name}
+                                    </span>
+                                </label>
+                            );
+                        })}
+                    </div>
                 </div>
-            </div>
 
-            <div className="my-3 border-t border-border" />
+                <div className="my-3 border-t border-border" />
 
-            <div>
-                <span className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-                    {t("changeCurrency")}
-                </span>
+                <div>
+                    <span className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                        {t("changeCurrency")}
+                    </span>
 
-                <div className="flex items-center justify-between rounded-lg px-2 py-1 transition-colors hover:bg-section-bg/60">
-                    <span className="text-xs font-semibold text-card-foreground">
-                        {currencyOption.symbol} - {currency} - {currencyOption.name}
-                        <span className="mt-0.5 block text-[10px] font-medium text-muted-foreground">
-                            {rateLabel}
+                    <div className="flex items-center justify-between rounded-lg px-2 py-1 transition-colors hover:bg-section-bg/60">
+                        <span className="text-xs font-semibold text-card-foreground">
+                            {currencyOption.symbol} - {currency} - {currencyOption.name}
+                            <span className="mt-0.5 block text-[10px] font-medium text-muted-foreground">
+                                {rateLabel}
+                            </span>
                         </span>
-                    </span>
-                    <button
-                        type="button"
-                        onClick={() => {
-                            setIsChangingCurrency(!isChangingCurrency);
-                            setIsChangingCountry(false);
-                        }}
-                        className="text-xs font-semibold text-primary hover:text-primary-hover hover:underline cursor-pointer ml-2 shrink-0"
-                    >
-                        {isChangingCurrency ? t("done") : t("change")}
-                    </button>
-                </div>
-
-                {isChangingCurrency && (
-                    <div className="mt-2 rounded-xl border border-border bg-section-bg p-1.5 animate-in fade-in slide-in-from-top-1 duration-150">
-                        <input
-                            type="search"
-                            value={currencyQuery}
-                            onChange={(event) => setCurrencyQuery(event.target.value)}
-                            placeholder={t("searchCurrency")}
-                            className="mb-1.5 w-full rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-card-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
-                        />
-                        <div className="max-h-56 space-y-1 overflow-y-auto">
-                            {filteredCurrencies.length === 0 ? (
-                                <p className="px-2 py-2 text-[11px] text-muted-foreground">{t("noCurrency")}</p>
-                            ) : (
-                                filteredCurrencies.map((item) => {
-                                    const isSelected = currency === item.currency;
-                                    return (
-                                        <button
-                                            type="button"
-                                            key={item.currency}
-                                            onClick={() => handleSelectCurrency(item.currency)}
-                                            className={`flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-left text-xs transition-colors ${
-                                                isSelected
-                                                    ? 'bg-primary/10 font-bold text-primary'
-                                                    : 'text-card-foreground hover:bg-card'
-                                            }`}
-                                        >
-                                            <span className="flex items-center gap-1.5">
-                                                <Flag countryCode={item.code} />
-                                                <span>{item.name}</span>
-                                            </span>
-                                            <span className="text-[11px] text-body-text">
-                                                {item.symbol} ({item.currency})
-                                            </span>
-                                        </button>
-                                    );
-                                })
-                            )}
-                        </div>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setIsChangingCurrency(!isChangingCurrency);
+                                setIsChangingCountry(false);
+                            }}
+                            className="text-xs font-semibold text-primary hover:text-primary-hover hover:underline cursor-pointer ml-2 shrink-0"
+                        >
+                            {isChangingCurrency ? t("done") : t("change")}
+                        </button>
                     </div>
-                )}
-            </div>
 
-            <div className="my-3 border-t border-border" />
-
-            <div>
-                <div className="flex items-center gap-2 px-2 text-xs text-body-text">
-                    <Flag countryCode={country.code} className="h-4 w-[22px]" />
-                    <span className="leading-snug">
-                        {t("shoppingOn")}{" "}
-                        <strong className="font-semibold text-card-foreground">
-                            WAK {country.name}
-                        </strong>
-                    </span>
-                </div>
-
-                <div className="mt-2.5 text-center">
-                    <button
-                        type="button"
-                        onClick={() => {
-                            setIsChangingCountry(!isChangingCountry);
-                            setIsChangingCurrency(false);
-                        }}
-                        className="text-xs font-semibold text-primary hover:text-primary-hover hover:underline cursor-pointer inline-flex items-center gap-1"
-                    >
-                        {isChangingCountry ? t("done") : t("changeCountry")}
-                        <ChevronRight className={`h-3.5 w-3.5 transition-transform ${isChangingCountry ? "rotate-90" : ""}`} />
-                    </button>
-                </div>
-
-                {isChangingCountry && (
-                    <div className="mt-2 rounded-xl border border-border bg-section-bg p-1.5 animate-in fade-in slide-in-from-top-1 duration-150">
-                        <input
-                            type="search"
-                            value={countryQuery}
-                            onChange={(event) => setCountryQuery(event.target.value)}
-                            placeholder={t("searchCountry")}
-                            className="mb-1.5 w-full rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-card-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
-                        />
-                        <div className="max-h-56 space-y-1 overflow-y-auto">
-                            {filteredCountries.length === 0 ? (
-                                <p className="px-2 py-2 text-[11px] text-muted-foreground">{t("noCountry")}</p>
-                            ) : (
-                                filteredCountries.map((item) => {
-                                    const isSelected = selectedCountryCode === item.code;
-                                    return (
-                                        <button
-                                            type="button"
-                                            key={item.code}
-                                            onClick={() => handleSelectCountry(item.code)}
-                                            className={`flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg px-2 py-1.5 text-left text-xs transition-colors ${
-                                                isSelected
-                                                    ? 'bg-primary/10 font-bold text-primary'
-                                                    : 'text-card-foreground hover:bg-card'
-                                            }`}
-                                        >
-                                            <span className="flex min-w-0 items-start gap-1.5">
-                                                <Flag countryCode={item.code} className="mt-0.5" />
-                                                <span className="leading-snug">{item.name}</span>
-                                            </span>
-                                            <span className="shrink-0 text-[11px] text-body-text">
-                                                {item.currency}
-                                            </span>
-                                        </button>
-                                    );
-                                })
-                            )}
+                    {isChangingCurrency && (
+                        <div className="mt-2 rounded-xl border border-border bg-section-bg p-1.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                            <input
+                                type="search"
+                                value={currencyQuery}
+                                onChange={(event) => setCurrencyQuery(event.target.value)}
+                                placeholder={t("searchCurrency")}
+                                className="mb-1.5 w-full rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-card-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
+                            />
+                            <div className="max-h-56 space-y-1 overflow-y-auto">
+                                {filteredCurrencies.length === 0 ? (
+                                    <p className="px-2 py-2 text-[11px] text-muted-foreground">{t("noCurrency")}</p>
+                                ) : (
+                                    filteredCurrencies.map((item) => {
+                                        const isSelected = currency === item.currency;
+                                        return (
+                                            <button
+                                                type="button"
+                                                key={item.currency}
+                                                onClick={() => handleSelectCurrency(item.currency)}
+                                                className={`flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-left text-xs transition-colors ${isSelected
+                                                        ? 'bg-primary/10 font-bold text-primary'
+                                                        : 'text-card-foreground hover:bg-card'
+                                                    }`}
+                                            >
+                                                <span className="flex items-center gap-1.5">
+                                                    <Flag countryCode={item.code} />
+                                                    <span>{item.name}</span>
+                                                </span>
+                                                <span className="text-[11px] text-body-text">
+                                                    {item.symbol} ({item.currency})
+                                                </span>
+                                            </button>
+                                        );
+                                    })
+                                )}
+                            </div>
                         </div>
+                    )}
+                </div>
+
+                <div className="my-3 border-t border-border" />
+
+                <div>
+                    <div className="flex items-center gap-2 px-2 text-xs text-body-text">
+                        <Flag countryCode={country.code} className="h-4 w-[22px]" />
+                        <span className="leading-snug">
+                            {t("shoppingOn")}{" "}
+                            <strong className="font-semibold text-card-foreground">
+                                WAK {country.name}
+                            </strong>
+                        </span>
                     </div>
-                )}
-            </div>
+
+                    <div className="mt-2.5 text-center">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setIsChangingCountry(!isChangingCountry);
+                                setIsChangingCurrency(false);
+                            }}
+                            className="text-xs font-semibold text-primary hover:text-primary-hover hover:underline cursor-pointer inline-flex items-center gap-1"
+                        >
+                            {isChangingCountry ? t("done") : t("changeCountry")}
+                            <ChevronRight className={`h-3.5 w-3.5 transition-transform ${isChangingCountry ? "rotate-90" : ""}`} />
+                        </button>
+                    </div>
+
+                    {isChangingCountry && (
+                        <div className="mt-2 rounded-xl border border-border bg-section-bg p-1.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                            <input
+                                type="search"
+                                value={countryQuery}
+                                onChange={(event) => setCountryQuery(event.target.value)}
+                                placeholder={t("searchCountry")}
+                                className="mb-1.5 w-full rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-card-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
+                            />
+                            <div className="max-h-56 space-y-1 overflow-y-auto">
+                                {filteredCountries.length === 0 ? (
+                                    <p className="px-2 py-2 text-[11px] text-muted-foreground">{t("noCountry")}</p>
+                                ) : (
+                                    filteredCountries.map((item) => {
+                                        const isSelected = selectedCountryCode === item.code;
+                                        return (
+                                            <button
+                                                type="button"
+                                                key={item.code}
+                                                onClick={() => handleSelectCountry(item.code)}
+                                                className={`flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg px-2 py-1.5 text-left text-xs transition-colors ${isSelected
+                                                        ? 'bg-primary/10 font-bold text-primary'
+                                                        : 'text-card-foreground hover:bg-card'
+                                                    }`}
+                                            >
+                                                <span className="flex min-w-0 items-start gap-1.5">
+                                                    <Flag countryCode={item.code} className="mt-0.5" />
+                                                    <span className="leading-snug">{item.name}</span>
+                                                </span>
+                                                <span className="shrink-0 text-[11px] text-body-text">
+                                                    {item.currency}
+                                                </span>
+                                            </button>
+                                        );
+                                    })
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

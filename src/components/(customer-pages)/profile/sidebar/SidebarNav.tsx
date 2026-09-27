@@ -17,6 +17,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import type { ComponentType } from "react";
 import type { SidebarItem } from "../config/sidebar-config";
 import { useAuth } from "@/hooks/use-auth";
+import { stripCountryFromPathname } from "../../../../../helpers/country-url";
 
 const iconMap: Record<string, ComponentType<{ className?: string }>> = {
   User,
@@ -34,6 +35,12 @@ interface SidebarNavProps {
   items: SidebarItem[];
 }
 
+function isActivePath(pathname: string, href: string) {
+  const path = stripCountryFromPathname(pathname);
+  if (href === "/") return path === "/";
+  return path === href || path.startsWith(`${href}/`);
+}
+
 export default function SidebarNav({ items }: SidebarNavProps) {
   const pathname = usePathname();
   const { logout } = useAuth();
@@ -43,7 +50,7 @@ export default function SidebarNav({ items }: SidebarNavProps) {
     <div className="flex flex-col h-full">
       <nav className="flex flex-col gap-3.5 mb-6">
         {items.map((item) => {
-          const isActive = pathname === item.href;
+          const isActive = isActivePath(pathname, item.href);
           const Icon = iconMap[item.icon] || User;
 
           return (
@@ -55,7 +62,7 @@ export default function SidebarNav({ items }: SidebarNavProps) {
                 text-sm font-semibold transition-all duration-200
                 ${isActive
                   ? "bg-primary text-white shadow-lg shadow-primary/20"
-                  : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 bg-transparent cursor-pointer"
+                  : "text-body-text hover:text-white hover:bg-primary cursor-pointer"
                 }`}
             >
               <Icon className="w-[18px] h-[18px] shrink-0" />

@@ -64,12 +64,12 @@ export default function UserAuthMenu({ isLoggedIn, logout }: UserAuthMenuProps) 
                 <div className="bg-card border border-border rounded-2xl shadow-xl p-1.5 flex flex-col gap-1 text-sm">
                     <div className="px-3 py-2 border-b border-border">
                         <p className="text-[10px] text-body-text uppercase font-bold tracking-wider">{t("signedInAs")}</p>
-                        <p className="font-bold text-foreground truncate text-xs mt-0.5">{userName || t("myAccount")}</p>
+                        <p className="font-bold text-secondary truncate text-xs mt-0.5">{userName || t("myAccount")}</p>
                     </div>
 
                     <Link
                         href="/profile"
-                        className="flex items-center gap-2.5 px-3 py-2 text-body-text hover:text-foreground hover:bg-section-bg rounded-xl transition-colors cursor-pointer text-xs font-medium"
+                        className="flex items-center gap-2.5 px-3 py-2 text-body-text hover:text-secondary hover:bg-section-bg rounded-xl transition-colors cursor-pointer text-xs font-medium"
                     >
                         <User className="w-4 h-4 text-primary" />
                         <span>{t("myProfile")}</span>

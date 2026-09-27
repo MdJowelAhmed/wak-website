@@ -88,19 +88,19 @@ export function isDeliveredStatus(status?: string): boolean {
 export function statusBadgeClass(status?: string): string {
   const value = (status || "").toLowerCase();
   if (value === "delivered") {
-    return "border-primary bg-primary text-white shadow-lg shadow-primary/40 ring-2 ring-white/30";
+    return "border-primary/30 bg-primary/10 text-primary font-bold";
   }
   if (
     value === "completed" ||
     value === "paid" ||
     value === "confirmed"
   ) {
-    return "border-green-300/40 bg-green-400/15 text-green-200";
+    return "border-emerald-200 bg-emerald-50 text-emerald-700 font-bold";
   }
   if (value === "cancelled" || value === "canceled" || value === "failed") {
-    return "border-red-300/40 bg-red-400/15 text-red-200";
+    return "border-red-200 bg-red-50 text-red-700 font-bold";
   }
-  return "border-amber-300/40 bg-amber-400/15 text-amber-200";
+  return "border-amber-200 bg-amber-50 text-amber-700 font-bold";
 }
 
 export function formatDate(value?: string | null, locale = "en"): string {
