@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Clock, Loader2, MessageCircle, Shield } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -16,8 +16,14 @@ export default function Pricing({ service }: { service: ServiceDetailsData }) {
     const t = useTranslations("ServiceDetails");
     const checkoutT = useTranslations("Checkout");
     const router = useRouter();
-    const { formatPrice } = useCurrency();
-    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("paychangu");
+    const { countryCode, formatPrice } = useCurrency();
+    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(() =>
+        countryCode?.toUpperCase() === "MW" ? "paychangu" : "stripe"
+    );
+
+    useEffect(() => {
+        setPaymentMethod(countryCode?.toUpperCase() === "MW" ? "paychangu" : "stripe");
+    }, [countryCode]);
     const [isCheckingOut, setIsCheckingOut] = useState(false);
     const [isCreatingChat, setIsCreatingChat] = useState(false);
 
