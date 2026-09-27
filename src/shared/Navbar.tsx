@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Menu, X, MapPin, HelpCircle, ChevronDown } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
+import { AnimatePresence } from 'framer-motion';
 import { myFetch } from '../../helpers/myFetch';
 import {
     defaultShippingAddress,
@@ -207,25 +208,27 @@ export default function Navbar({
                 isLoggedIn={isLoggedIn}
             />
 
-            {isMenuOpen && (
-                <CustomerMobileMenu
-                    isOpen={isMenuOpen}
-                    onClose={() => setIsMenuOpen(false)}
-                    isLoggedIn={isLoggedIn}
-                    logout={logout}
-                    userMode={userMode}
-                    currentLocation={deliveryLabel}
-                    onOpenLocationModal={() => setIsLocationOpen(true)}
-                    onOpenLangModal={() => setIsLangOpen(true)}
-                    currentCurrencyLabel={
-                        <>
-                            <Flag countryCode={country.code} className="align-middle" />
-                            {currency}
-                        </>
-                    }
-                    currentLangName={activeLangObj.name}
-                />
-            )}
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <CustomerMobileMenu
+                        isOpen={isMenuOpen}
+                        onClose={() => setIsMenuOpen(false)}
+                        isLoggedIn={isLoggedIn}
+                        logout={logout}
+                        userMode={userMode}
+                        currentLocation={deliveryLabel}
+                        onOpenLocationModal={() => setIsLocationOpen(true)}
+                        onOpenLangModal={() => setIsLangOpen(true)}
+                        currentCurrencyLabel={
+                            <>
+                                <Flag countryCode={country.code} className="align-middle" />
+                                {currency}
+                            </>
+                        }
+                        currentLangName={activeLangObj.name}
+                    />
+                )}
+            </AnimatePresence>
         </header>
     );
 }
