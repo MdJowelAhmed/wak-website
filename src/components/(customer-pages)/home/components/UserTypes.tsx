@@ -57,9 +57,13 @@ const UserTypes = () => {
         },
     ] as const;
 
-    const scrollToSection = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    const scrollToSection = (event: MouseEvent<HTMLAnchorElement>, href: string, roleId: string) => {
         if (!href.startsWith('#')) return;
         event.preventDefault();
+        const role = roleId === 'vendor' ? 'merchant' : roleId;
+        if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('select-app-tab', { detail: role }));
+        }
         document.getElementById(href.slice(1))?.scrollIntoView({
             behavior: 'smooth',
             block: 'start',
@@ -95,7 +99,7 @@ const UserTypes = () => {
                                     <a
                                         href={href}
                                         className={className}
-                                        onClick={(event) => scrollToSection(event, href)}
+                                        onClick={(event) => scrollToSection(event, href, id)}
                                         {...(openInNewTab
                                             ? { target: '_blank', rel: 'noopener noreferrer' }
                                             : undefined)}

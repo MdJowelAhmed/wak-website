@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import type { LucideIcon } from 'lucide-react';
 import { User, Store, Briefcase, Truck, Check } from 'lucide-react';
@@ -55,6 +55,27 @@ const storeButtonClass =
 const AppDownloadSection = () => {
     const t = useTranslations('Home.appDownload');
     const [activeTab, setActiveTab] = useState<AppRole>('customer');
+
+    useEffect(() => {
+        const handleSelectTab = (e: Event) => {
+            const customEvent = e as CustomEvent<string>;
+            const role = customEvent.detail;
+            const targetRole = role === 'vendor' ? 'merchant' : role;
+            if (APP_ROLES.includes(targetRole as AppRole)) {
+                setActiveTab(targetRole as AppRole);
+            }
+        };
+
+        window.addEventListener('select-app-tab', handleSelectTab);
+
+        if (typeof window !== 'undefined' && window.location.hash === '#driver') {
+            setActiveTab('driver');
+        }
+
+        return () => {
+            window.removeEventListener('select-app-tab', handleSelectTab);
+        };
+    }, []);
 
     const apps = APP_ROLES.map((id) => ({
         id,
