@@ -55,35 +55,60 @@ export function formatCheckoutMoney(amount: number): string {
 export function mapCartItems(items: unknown): CartItem[] {
     if (!Array.isArray(items)) return [];
 
-    return items.map((item) => {
+    return items.map((item, index) => {
         const row = item as {
             _id?: string;
+            id?: string;
+            productId?: string;
             quantity?: number;
             color?: string;
             size?: string;
-            product?: {
-                _id?: string;
-                slug?: string;
-                name?: string;
-                discountPrice?: number;
-                price?: number;
-                images?: string[];
-                color?: string;
-                size?: string;
-            };
+            price?: number;
+            product?:
+                | {
+                      _id?: string;
+                      id?: string;
+                      slug?: string;
+                      name?: string;
+                      discountPrice?: number;
+                      price?: number;
+                      images?: string[];
+                      color?: string;
+                      size?: string;
+                  }
+                | string;
         };
 
+        const productObj =
+            typeof row.product === "object" && row.product !== null ? row.product : null;
+        const productId =
+            (typeof row.product === "string" ? row.product : "") ||
+            productObj?._id ||
+            productObj?.id ||
+            row.productId ||
+            "";
+
+        const itemId =
+            row._id ||
+            row.id ||
+            (productId ? `${productId}-${row.color || ""}-${row.size || ""}` : String(index));
+
+        const price =
+            typeof row.price === "number"
+                ? row.price
+                : productObj?.discountPrice || productObj?.price || 0;
+
         return {
-            id: row._id || "",
-            productId: row.product?._id || "",
-            slug: row.product?.slug,
-            name: row.product?.name || "Unknown Product",
-            price: row.product?.discountPrice || row.product?.price || 0,
-            image: resolveImageUrl(row.product?.images?.[0], "/placeholder.jpg") || "/placeholder.jpg",
+            id: itemId,
+            productId,
+            slug: productObj?.slug,
+            name: productObj?.name || "Unknown Product",
+            price,
+            image: resolveImageUrl(productObj?.images?.[0], "/placeholder.jpg") || "/placeholder.jpg",
             quantity: row.quantity || 1,
             ...variantFields({
-                color: row.color || row.product?.color,
-                size: row.size || row.product?.size,
+                color: row.color || productObj?.color,
+                size: row.size || productObj?.size,
             }),
         };
     });

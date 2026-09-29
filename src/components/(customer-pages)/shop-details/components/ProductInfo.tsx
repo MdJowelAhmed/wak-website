@@ -19,8 +19,7 @@ import { Button } from "@/ui/button";
 import { useCart } from "@/context/CartContext";
 import { useCurrency } from "@/hooks/use-currency";
 import { useRouter } from "@/i18n/navigation";
-import { cartAddBody } from "../../../../../helpers/product-variant";
-import { myFetch } from "../../../../../helpers/myFetch";
+import { apiAddToCart } from "../../../../../helpers/cartService";
 import { type ProductDetailsData, type ProductVariantItem } from "../types";
 
 interface ProductInfoProps {
@@ -96,25 +95,52 @@ export default function ProductInfo({ product, onSelectImage }: ProductInfoProps
         }
     };
 
-    const selectedVariant = () => {
-        if (hasColors && !color) {
-            toast.error(t("selectColor"));
-            return null;
+    const selectedVariant = (): { color?: string; size?: string } | null => {
+        const hasVariants = (product.variants && product.variants.length > 0) || product.colors.length > 0;
+
+        if (hasVariants) {
+            // If product has variants, color is REQUIRED
+            if (!color) {
+                toast.error(t("selectColor"));
+                return null;
+            }
+
+            // Check if the selected variant has sizes
+            const matchedVariant = product.variants.find(
+                (v) => v.color.toLowerCase() === color.toLowerCase()
+            );
+            const variantSizes = matchedVariant?.sizes || [];
+            const variantHasSizes = variantSizes.length > 0;
+
+            if (variantHasSizes) {
+                // Size is REQUIRED if the selected variant has sizes
+                if (!size) {
+                    toast.error(t("selectSize"));
+                    return null;
+                }
+                return { color, size };
+            }
+
+            // Selected variant does not have sizes: omit size
+            return { color };
         }
-        if (hasSizes && !size) {
-            toast.error(t("selectSize"));
-            return null;
-        }
-        return { color, size };
+
+        // If product does not have variants, omit color and size unless selected
+        const result: { color?: string; size?: string } = {};
+        if (color) result.color = color;
+        if (size) result.size = size;
+        return result;
     };
 
     const addToCart = async () => {
         const variant = selectedVariant();
         if (!variant) return false;
 
-        const res = await myFetch("/carts/", {
-            method: "POST",
-            body: cartAddBody(product.id, qty, variant),
+        const res = await apiAddToCart({
+            product: product.id,
+            quantity: qty,
+            color: variant.color,
+            size: variant.size,
         });
         if (!res?.success) {
             toast.error(res?.message || t("addError"));

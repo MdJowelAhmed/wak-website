@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
-import { myFetch } from "../../helpers/myFetch";
+import { apiGetCart } from "../../helpers/cartService";
 
 interface CartContextValue {
     cartCount: number;
@@ -18,7 +18,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     const refreshCart = useCallback(async () => {
         try {
-            const res = await myFetch("/carts/", { cache: "no-store" });
+            const res = await apiGetCart();
             if (res?.data?.items) {
                 setCartCount(res.data.items.length);
             } else {

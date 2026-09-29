@@ -62,7 +62,7 @@ export function cartRemovePath(productId: string, variant?: ProductVariant) {
     if (fields.color) params.set("color", fields.color);
     if (fields.size) params.set("size", fields.size);
     const query = params.toString();
-    return query ? `/carts/products/${productId}?${query}` : `/carts/products/${productId}`;
+    return query ? `/cart/products/${productId}?${query}` : `/cart/products/${productId}`;
 }
 
 export function formatVariantLabel(

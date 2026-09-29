@@ -1,5 +1,6 @@
 import Checkout from "@/components/(customer-pages)/check-out";
 import { myFetch } from "../../../../helpers/myFetch";
+import { apiGetCart } from "../../../../helpers/cartService";
 import {
     formFromAddress,
     mapAddresses,
@@ -10,7 +11,7 @@ import {
 
 export default async function CheckoutPage() {
     const [cartRes, addressRes, profileRes, countriesRes] = await Promise.all([
-        myFetch("/carts/", { cache: "no-store" }),
+        apiGetCart(),
         myFetch("/shipping-addresses", { cache: "no-store" }),
         myFetch("/users/profile", { cache: "no-store" }),
         myFetch("/meta/countries", {

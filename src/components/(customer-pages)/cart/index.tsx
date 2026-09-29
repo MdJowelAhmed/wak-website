@@ -8,8 +8,11 @@ import { Link } from "@/i18n/navigation";
 import CartItemRow from "./CartItemRow";
 import OrderSummary from "./OrderSummary";
 import { Button } from "@/ui/button";
-import { cartRemovePath, cartUpdateBody } from "../../../../helpers/product-variant";
-import { myFetch } from "../../../../helpers/myFetch";
+import {
+    apiDecrementCartItem,
+    apiIncrementCartItem,
+    apiRemoveCartItem,
+} from "../../../../helpers/cartService";
 import { useCart } from "@/context/CartContext";
 import type { CartItem } from "../check-out/types";
 
@@ -35,8 +38,9 @@ export default function ProductCart({ initialItems }: { initialItems: CartItem[]
         setItems(items.filter((item) => item.id !== id));
 
         try {
-            const res = await myFetch(cartRemovePath(itemToRemove.productId, itemToRemove), {
-                method: "DELETE",
+            const res = await apiRemoveCartItem(itemToRemove.productId, {
+                color: itemToRemove.color,
+                size: itemToRemove.size,
             });
             if (!res?.success) {
                 setItems(previous);
@@ -62,13 +66,15 @@ export default function ProductCart({ initialItems }: { initialItems: CartItem[]
         setItems(items.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item)));
 
         try {
-            const res = await myFetch(
-                isIncrementing ? "/carts/increment" : "/carts/decrement",
-                {
-                    method: "PATCH",
-                    body: cartUpdateBody(itemToUpdate.productId, itemToUpdate),
-                },
-            );
+            const variantParam = {
+                product: itemToUpdate.productId,
+                color: itemToUpdate.color,
+                size: itemToUpdate.size,
+            };
+            const res = isIncrementing
+                ? await apiIncrementCartItem(variantParam)
+                : await apiDecrementCartItem(variantParam);
+
             if (!res?.success) {
                 setItems(previous);
                 toast.error(res?.message || t("quantityError"));

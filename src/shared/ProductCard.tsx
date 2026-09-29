@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { useRouter } from "@/i18n/navigation";
 import { useCart } from "@/context/CartContext";
 import { useCurrency } from "@/hooks/use-currency";
-import { myFetch } from "../../helpers/myFetch";
+import { apiAddToCart } from "../../helpers/cartService";
 
 interface ProductCardProps {
     id: string | number;
@@ -55,9 +55,9 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
 
         setAddingToCart(true);
         try {
-            const res = await myFetch("/carts/", {
-                method: "POST",
-                body: { product: productId || String(id), quantity: 1 },
+            const res = await apiAddToCart({
+                product: productId || String(id),
+                quantity: 1,
             });
             if (res?.success) {
                 toast.success(t("addedToCart"));
