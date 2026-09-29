@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import ProductGallery from "./components/ProductGallery";
-import ProductInfo from "./components/ProductInfo";
+import ProductInteractiveSection from "./components/ProductInteractiveSection";
 import ProductSpecs from "./components/ProductSpecs";
 import RelatedItems from "./components/RelatedItems";
 import type { ProductDetailsData, RelatedProduct } from "./types";
@@ -31,17 +30,7 @@ export default async function ShopDetails({
                     </h1>
                 </header>
 
-                <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_1.05fr] xl:gap-12">
-                    <div className="lg:sticky lg:top-24">
-                        <ProductGallery
-                            images={product.images}
-                            name={product.name}
-                            inStock={product.stock > 0}
-                            discount={product.discount}
-                        />
-                    </div>
-                    <ProductInfo product={product} />
-                </div>
+                <ProductInteractiveSection product={product} />
 
                 <div className="mt-8 space-y-6">
                     <ProductSpecs product={product} />

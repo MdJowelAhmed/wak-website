@@ -12,11 +12,18 @@ export default async function ShopDetailsPage({
     params: Promise<{ id: string }>;
 }) {
     const { id } = await params;
-    const productRes = await myFetch(`/products/slug/${id}`, {
+    let productRes = await myFetch(`/products/slug/${id}`, {
         cache: "force-cache",
         next: { revalidate: 3600, tags: ["products"] },
-        
     });
+
+    // Fallback to fetch by direct product ID if slug is not found
+    if (!productRes?.data) {
+        productRes = await myFetch(`/products/${id}`, {
+            cache: "force-cache",
+            next: { revalidate: 3600, tags: ["products"] },
+        });
+    }
 
     const product = mapProductDetails(productRes?.data);
     if (!product) notFound();

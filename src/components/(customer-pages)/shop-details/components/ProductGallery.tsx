@@ -11,6 +11,8 @@ interface ProductGalleryProps {
     name: string;
     inStock: boolean;
     discount?: number;
+    activeIndex?: number;
+    onActiveIndexChange?: (index: number) => void;
 }
 
 type ZoomLevel = 2 | 3;
@@ -19,9 +21,19 @@ function clamp(value: number, min: number, max: number) {
     return Math.min(Math.max(value, min), max);
 }
 
-export default function ProductGallery({ images, name, inStock, discount }: ProductGalleryProps) {
+export default function ProductGallery({
+    images,
+    name,
+    inStock,
+    discount,
+    activeIndex: activeIndexProp,
+    onActiveIndexChange,
+}: ProductGalleryProps) {
     const t = useTranslations("ShopDetails");
-    const [activeIndex, setActiveIndex] = useState(0);
+    const [uncontrolledIndex, setUncontrolledIndex] = useState(0);
+    const activeIndex = activeIndexProp !== undefined ? activeIndexProp : uncontrolledIndex;
+    const setActiveIndex = onActiveIndexChange || setUncontrolledIndex;
+
     const [zoomLevel, setZoomLevel] = useState<ZoomLevel>(2);
     const [pointer, setPointer] = useState<{ x: number; y: number } | null>(null);
     const [stageSize, setStageSize] = useState({ width: 0, height: 0 });

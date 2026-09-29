@@ -1,7 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { Loader2, Minus, Plus, Shield, ShoppingCart, Star, Truck, Zap } from "lucide-react";
+import {
+    Loader2,
+    Minus,
+    Plus,
+    Shield,
+    ShoppingCart,
+    Star,
+    Truck,
+    Zap,
+    AlertTriangle,
+    CheckCircle2,
+} from "lucide-react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Button } from "@/ui/button";
@@ -10,60 +22,70 @@ import { useCurrency } from "@/hooks/use-currency";
 import { useRouter } from "@/i18n/navigation";
 import { cartAddBody } from "../../../../../helpers/product-variant";
 import { myFetch } from "../../../../../helpers/myFetch";
-import { type ProductDetailsData } from "../types";
+import { type ProductDetailsData, type ProductVariantItem } from "../types";
 
-function OptionPicker({
-    label,
-    options,
-    value,
-    onChange,
-}: {
-    label: string;
-    options: string[];
-    value: string;
-    onChange: (next: string) => void;
-}) {
-    return (
-        <div>
-            <p className="text-sm font-medium text-white">{label}</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-                {options.map((option) => {
-                    const selected = value === option;
-                    return (
-                        <button
-                            key={option}
-                            type="button"
-                            onClick={() => onChange(selected ? "" : option)}
-                            aria-pressed={selected}
-                            className={`cursor-pointer rounded-xl border px-2 py-[2px] text-sm font-semibold transition-colors ${selected
-                                    ? "border-primary bg-primary text-white"
-                                    : "border-white/15 bg-white/10 text-white hover:border-primary/60"
-                                }`}
-                        >
-                            {option}
-                        </button>
-                    );
-                })}
-            </div>
-        </div>
-    );
+interface ProductInfoProps {
+    product: ProductDetailsData;
+    onSelectImage?: (imgUrl: string) => void;
 }
 
-export default function ProductInfo({ product }: { product: ProductDetailsData }) {
+export default function ProductInfo({ product, onSelectImage }: ProductInfoProps) {
     const t = useTranslations("ShopDetails");
     const router = useRouter();
     const { refreshCart } = useCart();
     const { formatPrice } = useCurrency();
-    const [qty, setQty] = useState(1);
+
     const [color, setColor] = useState("");
     const [size, setSize] = useState("");
+    const [qty, setQty] = useState(1);
     const [isAdding, setIsAdding] = useState(false);
     const [isBuying, setIsBuying] = useState(false);
-    const inStock = product.stock > 0;
-    const maxQty = Math.max(1, product.stock);
+
+    // Active variant matching the selected color
+    const activeVariant: ProductVariantItem | undefined = color
+        ? product.variants.find((v) => v.color.toLowerCase() === color.toLowerCase())
+        : undefined;
+
+    // Available sizes: scoped to active variant if available, otherwise all product sizes
+    const availableSizes: string[] =
+        activeVariant && activeVariant.sizes.length > 0
+            ? activeVariant.sizes
+            : product.sizes;
+
+    // Determine current stock depending on whether a color variant is selected
+    const currentStock = activeVariant !== undefined ? activeVariant.stock : product.stock;
+    const inStock = currentStock > 0;
+    const maxQty = Math.max(1, currentStock);
     const busy = isAdding || isBuying;
+
     const hasColors = product.colors.length > 0;
     const hasSizes = product.sizes.length > 0;
+    const lowStockLimit = product.lowStockThreshold ?? 5;
+    const isLowStock = inStock && currentStock <= lowStockLimit;
+
+    // Handle Color Change
+    const handleColorChange = (newColor: string) => {
+        const nextColor = color === newColor ? "" : newColor;
+        setColor(nextColor);
+
+        if (nextColor) {
+            const variant = product.variants.find((v) => v.color.toLowerCase() === nextColor.toLowerCase());
+            if (variant) {
+                // If variant has an image, switch gallery
+                if (variant.image && onSelectImage) {
+                    onSelectImage(variant.image);
+                }
+                // If currently chosen size is not in this variant's sizes, reset size
+                if (size && variant.sizes.length > 0 && !variant.sizes.includes(size)) {
+                    setSize("");
+                }
+                // Clamp quantity to variant stock
+                if (qty > variant.stock && variant.stock > 0) {
+                    setQty(variant.stock);
+                }
+            }
+        }
+    };
 
     const selectedVariant = () => {
         if (hasColors && !color) {
@@ -121,6 +143,7 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
 
     return (
         <section className="rounded-2xl border border-white/10 bg-secondary p-5 shadow-lg sm:p-6">
+            {/* Price & Discounts */}
             <div className="flex flex-wrap items-end gap-3">
                 <p className="text-3xl font-bold tracking-tight text-primary">
                     {formatPrice(product.price)}
@@ -130,17 +153,24 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
                         {formatPrice(product.originalPrice)}
                     </p>
                 ) : null}
+                {product.discount ? (
+                    <span className="rounded-lg bg-primary/20 px-2 py-0.5 text-xs font-bold text-primary border border-primary/30">
+                        -{product.discount}% OFF
+                    </span>
+                ) : null}
             </div>
 
+            {/* Ratings & Reviews */}
             <div className="mt-4 flex flex-wrap items-center gap-3">
                 <div className="flex gap-0.5">
                     {Array.from({ length: 5 }).map((_, index) => (
                         <Star
                             key={index}
-                            className={`h-4 w-4 ${index < Math.floor(product.rating)
+                            className={`h-4 w-4 ${
+                                index < Math.floor(product.rating)
                                     ? "fill-primary text-primary"
                                     : "fill-white/15 text-white/15"
-                                }`}
+                            }`}
                         />
                     ))}
                 </div>
@@ -150,11 +180,20 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
                 </span>
             </div>
 
-            <dl className="mt-5 grid grid-cols-2 gap-3 text-sm">
+            {/* Stock & SKU Info */}
+            <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
                 <div>
                     <dt className="text-white/55">{t("stock")}</dt>
                     <dd className="mt-0.5 font-semibold text-white">
-                        {inStock ? t("available", { count: product.stock }) : t("outOfStock")}
+                        {inStock ? (
+                            <span>
+                                {activeVariant
+                                    ? `${currentStock} available (${activeVariant.color})`
+                                    : t("available", { count: currentStock })}
+                            </span>
+                        ) : (
+                            <span className="text-red-400 font-semibold">{t("outOfStock")}</span>
+                        )}
                     </dd>
                 </div>
                 {product.sku ? (
@@ -165,26 +204,146 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
                 ) : null}
             </dl>
 
-            <div className="mt-6 flex flex-col gap-4">
-                <div className="flex flex-col gap-2">
-                    {hasColors ? (
-                        <OptionPicker
-                            label={t("color")}
-                            options={product.colors}
-                            value={color}
-                            onChange={setColor}
-                        />
-                    ) : null}
-                    {hasSizes ? (
-                        <OptionPicker
-                            label={t("size")}
-                            options={product.sizes}
-                            value={size}
-                            onChange={setSize}
-                        />
-                    ) : null}
+            {/* Low Stock Warning Banner */}
+            {isLowStock && (
+                <div className="mt-4 flex items-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3.5 py-2 text-xs font-medium text-amber-200">
+                    <AlertTriangle className="h-4 w-4 shrink-0 text-amber-400" />
+                    <span>
+                        Only {currentStock} left in stock
+                        {activeVariant ? ` for ${activeVariant.color}` : ""} - order soon!
+                    </span>
                 </div>
+            )}
 
+            {/* Description (Right Side of Image) */}
+            {product.description && (
+                <div className="mt-5 border-t border-white/10 pt-4">
+                    <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-white/60">
+                        {t("description") || "Description"}
+                    </h3>
+                    {/<[a-z][\s\S]*>/i.test(product.description) ? (
+                        <div
+                            className="text-sm leading-relaxed text-white/85 [&_p]:mb-2.5 [&_p:last-child]:mb-0 [&_strong]:text-white [&_strong]:font-semibold"
+                            dangerouslySetInnerHTML={{ __html: product.description }}
+                        />
+                    ) : (
+                        <p className="text-sm leading-relaxed text-white/85">{product.description}</p>
+                    )}
+                </div>
+            )}
+
+            {/* Top Highlights (Right Side of Image) */}
+            {product.highlights && product.highlights.length > 0 && (
+                <div className="mt-4 border-t border-white/10 pt-4">
+                    <h3 className="mb-2.5 text-xs font-bold uppercase tracking-wider text-white/60">
+                        {t("topHighlights") || "Top Highlights"}
+                    </h3>
+                    <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                        {product.highlights.map((highlight, idx) => (
+                            <li
+                                key={`${highlight.label}-${idx}`}
+                                className="flex items-start gap-2 rounded-xl border border-white/10 bg-white/5 p-2.5 text-xs text-white/90"
+                            >
+                                <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
+                                <div>
+                                    <span className="font-semibold text-white">{highlight.label}: </span>
+                                    <span>{highlight.value}</span>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+
+            {/* Variant Selectors */}
+            <div className="mt-5 border-t border-white/10 pt-5 flex flex-col gap-5">
+                {/* Color Picker with Variant Image Thumbnails */}
+                {hasColors && (
+                    <div>
+                        <div className="flex items-center justify-between text-sm">
+                            <span className="font-medium text-white">{t("color")}</span>
+                            {color && (
+                                <span className="text-xs font-semibold text-primary">{color}</span>
+                            )}
+                        </div>
+                        <div className="mt-2.5 flex flex-wrap gap-2.5">
+                            {product.colors.map((c) => {
+                                const selected = color.toLowerCase() === c.toLowerCase();
+                                const variantItem = product.variants.find(
+                                    (v) => v.color.toLowerCase() === c.toLowerCase()
+                                );
+                                const isOutOfStock = variantItem !== undefined && variantItem.stock === 0;
+
+                                return (
+                                    <button
+                                        key={c}
+                                        type="button"
+                                        onClick={() => handleColorChange(c)}
+                                        aria-pressed={selected}
+                                        disabled={isOutOfStock}
+                                        className={`group relative flex cursor-pointer items-center gap-2 rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all ${
+                                            selected
+                                                ? "border-primary bg-primary text-white shadow-md shadow-primary/25"
+                                                : "border-white/15 bg-white/10 text-white hover:border-primary/60 hover:bg-white/15"
+                                        } ${isOutOfStock ? "opacity-40 cursor-not-allowed line-through" : ""}`}
+                                    >
+                                        {variantItem?.image ? (
+                                            <span className="relative h-5 w-5 shrink-0 overflow-hidden rounded-md border border-white/20">
+                                                <Image
+                                                    src={variantItem.image}
+                                                    alt={c}
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                            </span>
+                                        ) : null}
+                                        <span>{c}</span>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+
+                {/* Size Picker */}
+                {hasSizes && (
+                    <div>
+                        <div className="flex items-center justify-between text-sm">
+                            <span className="font-medium text-white">{t("size")}</span>
+                            {size && (
+                                <span className="text-xs font-semibold text-primary">{size}</span>
+                            )}
+                        </div>
+                        <div className="mt-2.5 flex flex-wrap gap-2">
+                            {product.sizes.map((s) => {
+                                const selected = size === s;
+                                const isAvailableInActiveVariant =
+                                    availableSizes.length === 0 || availableSizes.includes(s);
+
+                                return (
+                                    <button
+                                        key={s}
+                                        type="button"
+                                        onClick={() => setSize(selected ? "" : s)}
+                                        aria-pressed={selected}
+                                        disabled={!isAvailableInActiveVariant}
+                                        className={`cursor-pointer rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all ${
+                                            selected
+                                                ? "border-primary bg-primary text-white shadow-md shadow-primary/25"
+                                                : isAvailableInActiveVariant
+                                                ? "border-white/15 bg-white/10 text-white hover:border-primary/60 hover:bg-white/15"
+                                                : "border-white/10 bg-white/5 text-white/30 cursor-not-allowed line-through"
+                                        }`}
+                                    >
+                                        {s}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+
+                {/* Quantity Controls */}
                 <div className="flex items-center gap-4">
                     <span className="text-sm font-medium text-white">{t("quantity")}</span>
                     <div className="flex items-center rounded-xl border border-white/15 bg-white/10">
@@ -210,6 +369,7 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
                     </div>
                 </div>
 
+                {/* Add to Cart & Buy Now Buttons */}
                 <div className="flex flex-col gap-3 sm:flex-row">
                     <Button
                         type="button"
@@ -233,6 +393,7 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
                 </div>
             </div>
 
+            {/* Delivery & Security Badges */}
             <div className="mt-6 grid gap-3 border-t border-white/10 pt-5 sm:grid-cols-2">
                 <div className="flex items-start gap-3">
                     <Truck className="mt-0.5 h-4 w-4 text-primary" />
@@ -240,7 +401,9 @@ export default function ProductInfo({ product }: { product: ProductDetailsData }
                         <p className="text-sm font-semibold text-white">{t("delivery")}</p>
                         <p className="text-xs text-white/65">
                             {product.localDeliveryFee != null
-                                ? t("localDelivery", { price: formatPrice(product.localDeliveryFee) })
+                                ? product.localDeliveryFee === 0
+                                    ? "Free Local Delivery"
+                                    : t("localDelivery", { price: formatPrice(product.localDeliveryFee) })
                                 : t("calculatedAtCheckout")}
                         </p>
                     </div>
