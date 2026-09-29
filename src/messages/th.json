@@ -555,7 +555,8 @@
     "viewAll": "ดูทั้งหมด",
     "description": "คำอธิบายสินค้า",
     "topHighlights": "ไฮไลท์สำคัญ",
-    "productDetails": "รายละเอียดสินค้า"
+    "productDetails": "รายละเอียดสินค้า",
+    "selectVariant": "กรุณาเลือกตัวเลือกเพื่อเพิ่มลงในตะกร้า"
   },
   "Services": {
     "home": "หน้าแรก",

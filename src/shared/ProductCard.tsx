@@ -40,7 +40,6 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
         }
 
         router.push(`/shop/${id}`);
-        router.refresh();
     };
 
     const handleCartClick = async (e: React.MouseEvent) => {
@@ -49,6 +48,7 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
         if (addingToCart) return;
 
         if (requiresVariant) {
+            toast.info(t("selectVariant"));
             handleClick();
             return;
         }
@@ -63,7 +63,19 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
                 toast.success(t("addedToCart"));
                 await refreshCart();
             } else {
-                toast.error(res?.message || t("addError"));
+                const errorText = `${res?.message || ""} ${res?.error || ""}`.toLowerCase();
+                const isVariantError =
+                    errorText.includes("variant") ||
+                    errorText.includes("color") ||
+                    errorText.includes("size") ||
+                    errorText.includes("select");
+
+                if (isVariantError) {
+                    toast.info(t("selectVariant"));
+                    handleClick();
+                } else {
+                    toast.error(res?.message || t("addError"));
+                }
             }
         } catch {
             toast.error(t("addError"));

@@ -18,6 +18,8 @@ export interface Product {
     slug: string;
     colors?: string[];
     sizes?: string[];
+    variants?: unknown[];
+    hasVariant?: boolean;
 }
 
 interface NewArrivalProps {

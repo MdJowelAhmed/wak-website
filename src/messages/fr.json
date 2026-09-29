@@ -555,7 +555,8 @@
     "viewAll": "Tout voir",
     "description": "Description",
     "topHighlights": "Points forts",
-    "productDetails": "Détails du produit"
+    "productDetails": "Détails du produit",
+    "selectVariant": "Veuillez sélectionner les options pour ajouter au panier."
   },
   "Services": {
     "home": "Accueil",

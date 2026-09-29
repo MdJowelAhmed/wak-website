@@ -555,7 +555,8 @@
     "viewAll": "すべて見る",
     "description": "商品の説明",
     "topHighlights": "主な特徴",
-    "productDetails": "商品の詳細"
+    "productDetails": "商品の詳細",
+    "selectVariant": "カートに追加するオプションを選択してください。"
   },
   "Services": {
     "home": "ホーム",

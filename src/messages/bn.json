@@ -555,7 +555,8 @@
     "dimensions": "মাত্রা",
     "dimensionsValue": "{length} × {width} × {height} সেমি",
     "related": "সম্পর্কিত পণ্য",
-    "viewAll": "সব দেখুন"
+    "viewAll": "সব দেখুন",
+    "selectVariant": "কার্টে যোগ করতে অনুগ্রহ করে অপশন বেছে নিন।"
   },
   "Services": {
     "home": "হোম",

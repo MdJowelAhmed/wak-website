@@ -555,7 +555,8 @@
     "viewAll": "Tazama zote",
     "description": "Maelezo",
     "topHighlights": "Mambo Muhimu",
-    "productDetails": "Maelezo ya Bidhaa"
+    "productDetails": "Maelezo ya Bidhaa",
+    "selectVariant": "Tafadhali chagua chaguo ili kuongeza kwenye kikapu."
   },
   "Services": {
     "home": "Nyumbani",

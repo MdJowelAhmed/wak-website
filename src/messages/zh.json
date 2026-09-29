@@ -555,7 +555,8 @@
     "viewAll": "查看全部",
     "description": "商品描述",
     "topHighlights": "核心亮点",
-    "productDetails": "商品详情"
+    "productDetails": "商品详情",
+    "selectVariant": "请选择选项以加入购物车。"
   },
   "Services": {
     "home": "首页",

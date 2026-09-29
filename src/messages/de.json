@@ -555,7 +555,8 @@
     "viewAll": "Alle ansehen",
     "description": "Beschreibung",
     "topHighlights": "Top-Highlights",
-    "productDetails": "Produktdetails"
+    "productDetails": "Produktdetails",
+    "selectVariant": "Bitte wählen Sie Optionen aus, um sie in den Warenkorb zu legen."
   },
   "Services": {
     "home": "Startseite",

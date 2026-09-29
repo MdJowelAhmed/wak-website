@@ -555,7 +555,8 @@
     "viewAll": "Alles bekijken",
     "description": "Beschrijving",
     "topHighlights": "Belangrijkste kenmerken",
-    "productDetails": "Productdetails"
+    "productDetails": "Productdetails",
+    "selectVariant": "Selecteer opties om toe te voegen aan de winkelwagen."
   },
   "Services": {
     "home": "Home",

@@ -555,7 +555,8 @@
     "viewAll": "Смотреть все",
     "description": "Описание",
     "topHighlights": "Главные особенности",
-    "productDetails": "Информация о товаре"
+    "productDetails": "Информация о товаре",
+    "selectVariant": "Пожалуйста, выберите параметры для добавления в корзину."
   },
   "Services": {
     "home": "Главная",

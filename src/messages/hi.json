@@ -555,7 +555,8 @@
     "viewAll": "सभी देखें",
     "description": "विवरण",
     "topHighlights": "मुख्य विशेषताएं",
-    "productDetails": "उत्पाद विवरण"
+    "productDetails": "उत्पाद विवरण",
+    "selectVariant": "कार्ट में जोड़ने के लिए कृपया विकल्प चुनें।"
   },
   "Services": {
     "home": "होम",

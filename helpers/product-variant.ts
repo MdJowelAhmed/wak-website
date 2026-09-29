@@ -20,10 +20,20 @@ export function mapOptionList(value: unknown): string[] {
     return options;
 }
 
-export function productRequiresVariant(product: {
+export function productRequiresVariant(product?: {
     colors?: unknown;
     sizes?: unknown;
-}): boolean {
+    variants?: unknown;
+    hasVariant?: unknown;
+} | null): boolean {
+    if (!product || typeof product !== "object") return false;
+
+    if (Array.isArray(product.variants) && product.variants.length > 0) {
+        return true;
+    }
+    if (Boolean(product.hasVariant)) {
+        return true;
+    }
     return mapOptionList(product.colors).length > 0 || mapOptionList(product.sizes).length > 0;
 }
 

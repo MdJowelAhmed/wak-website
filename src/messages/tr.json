@@ -555,7 +555,8 @@
     "viewAll": "Tümünü gör",
     "description": "Açıklama",
     "topHighlights": "Öne Çıkanlar",
-    "productDetails": "Ürün Detayları"
+    "productDetails": "Ürün Detayları",
+    "selectVariant": "Sepete eklemek için lütfen seçenekleri belirleyin."
   },
   "Services": {
     "home": "Ana sayfa",

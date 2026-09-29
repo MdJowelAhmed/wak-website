@@ -555,7 +555,8 @@
     "viewAll": "Xem tất cả",
     "description": "Mô tả sản phẩm",
     "topHighlights": "Đặc điểm nổi bật",
-    "productDetails": "Chi tiết sản phẩm"
+    "productDetails": "Chi tiết sản phẩm",
+    "selectVariant": "Vui lòng chọn tùy chọn để thêm vào giỏ hàng."
   },
   "Services": {
     "home": "Trang chủ",

@@ -555,7 +555,8 @@
     "viewAll": "Lihat semua",
     "description": "Deskripsi",
     "topHighlights": "Sorotan Utama",
-    "productDetails": "Detail Produk"
+    "productDetails": "Detail Produk",
+    "selectVariant": "Silakan pilih opsi untuk menambahkan ke keranjang."
   },
   "Services": {
     "home": "Beranda",

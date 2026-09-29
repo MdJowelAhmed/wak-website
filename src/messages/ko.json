@@ -555,7 +555,8 @@
     "viewAll": "모두 보기",
     "description": "상품 설명",
     "topHighlights": "주요 특징",
-    "productDetails": "상품 상세 정보"
+    "productDetails": "상품 상세 정보",
+    "selectVariant": "장바구니에 담으려면 옵션을 선택해 주세요."
   },
   "Services": {
     "home": "홈",

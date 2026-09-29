@@ -555,7 +555,8 @@
     "dimensions": "Dimensions",
     "dimensionsValue": "{length} × {width} × {height} cm",
     "related": "Related products",
-    "viewAll": "View all"
+    "viewAll": "View all",
+    "selectVariant": "Please select options to add to cart."
   },
   "Services": {
     "home": "Home",

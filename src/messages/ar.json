@@ -555,7 +555,8 @@
     "viewAll": "عرض الكل",
     "description": "الوصف",
     "topHighlights": "أهم المميزات",
-    "productDetails": "تفاصيل المنتج"
+    "productDetails": "تفاصيل المنتج",
+    "selectVariant": "يرجى تحديد الخيارات لإضافتها إلى سلة التسوق."
   },
   "Services": {
     "home": "الرئيسية",
