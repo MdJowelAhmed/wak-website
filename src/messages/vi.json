@@ -552,7 +552,10 @@
     "dimensions": "Kích thước",
     "dimensionsValue": "{length} × {width} × {height} cm",
     "related": "Sản phẩm liên quan",
-    "viewAll": "Xem tất cả"
+    "viewAll": "Xem tất cả",
+    "description": "Mô tả sản phẩm",
+    "topHighlights": "Đặc điểm nổi bật",
+    "productDetails": "Chi tiết sản phẩm"
   },
   "Services": {
     "home": "Trang chủ",

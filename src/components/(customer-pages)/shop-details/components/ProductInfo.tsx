@@ -35,6 +35,16 @@ export default function ProductInfo({ product, onSelectImage }: ProductInfoProps
     const { refreshCart } = useCart();
     const { formatPrice } = useCurrency();
 
+    const safeT = (key: string, fallback: string) => {
+        try {
+            const val = t(key);
+            if (!val || val.startsWith("ShopDetails.")) return fallback;
+            return val;
+        } catch {
+            return fallback;
+        }
+    };
+
     const [color, setColor] = useState("");
     const [size, setSize] = useState("");
     const [qty, setQty] = useState(1);
@@ -357,7 +367,7 @@ export default function ProductInfo({ product, onSelectImage }: ProductInfoProps
             {product.highlights && product.highlights.length > 0 && (
                 <div className="mt-6 border-t border-white/10 pt-5">
                     <h3 className="mb-2.5 text-xs font-bold uppercase tracking-wider text-white/60">
-                        {t("topHighlights") || "Top Highlights"}
+                        {safeT("topHighlights", "Top Highlights")}
                     </h3>
                     <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                         {product.highlights.map((highlight, idx) => (
@@ -380,7 +390,7 @@ export default function ProductInfo({ product, onSelectImage }: ProductInfoProps
             {product.description && (
                 <div className="mt-5 border-t border-white/10 pt-4">
                     <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-white/60">
-                        {t("description") || "Description"}
+                        {safeT("description", "Description")}
                     </h3>
                     {/<[a-z][\s\S]*>/i.test(product.description) ? (
                         <div

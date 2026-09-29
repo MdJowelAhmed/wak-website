@@ -36,7 +36,13 @@
     "loadError": "Google Maps could not load. Check your API key and Maps JavaScript / Places APIs.",
     "missingKey": "Google Maps is not configured.",
     "geoUnsupported": "Location is not supported in this browser.",
-    "geoDenied": "Could not access your location. Search or pick a point on the map."
+    "geoDenied": "Could not access your location. Search or pick a point on the map.",
+    "savedAddresses": "Adresses enregistrées",
+    "addNewAddress": "Ajouter une nouvelle adresse",
+    "mapHint": "Cliquez ou déplacez le repère. La latitude et la longitude proviennent de ce repère.",
+    "coordinates": "Lat {lat} · Lng {lng}",
+    "pickOnMap": "Choisissez un point sur la carte pour définir la latitude et la longitude.",
+    "searchNoResults": "Aucun résultat trouvé. Essayez une autre recherche."
   },
   "LanguageSwitcher": {
     "changeLanguage": "Changer de langue",
@@ -546,7 +552,10 @@
     "dimensions": "Dimensions",
     "dimensionsValue": "{length} × {width} × {height} cm",
     "related": "Produits associés",
-    "viewAll": "Tout voir"
+    "viewAll": "Tout voir",
+    "description": "Description",
+    "topHighlights": "Points forts",
+    "productDetails": "Détails du produit"
   },
   "Services": {
     "home": "Accueil",

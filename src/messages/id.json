@@ -552,7 +552,10 @@
     "dimensions": "Dimensi",
     "dimensionsValue": "{length} × {width} × {height} cm",
     "related": "Produk terkait",
-    "viewAll": "Lihat semua"
+    "viewAll": "Lihat semua",
+    "description": "Deskripsi",
+    "topHighlights": "Sorotan Utama",
+    "productDetails": "Detail Produk"
   },
   "Services": {
     "home": "Beranda",

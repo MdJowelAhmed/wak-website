@@ -552,7 +552,10 @@
     "dimensions": "ابعاد",
     "dimensionsValue": "{length} × {width} × {height} سینٹی میٹر",
     "related": "متعلقہ مصنوعات",
-    "viewAll": "سب دیکھیں"
+    "viewAll": "سب دیکھیں",
+    "description": "تفصیل",
+    "topHighlights": "اہم خصوصیات",
+    "productDetails": "مصنوعات کی تفصیلات"
   },
   "Services": {
     "home": "ہوم",

@@ -552,7 +552,10 @@
     "dimensions": "サイズ",
     "dimensionsValue": "{length} × {width} × {height} cm",
     "related": "関連商品",
-    "viewAll": "すべて見る"
+    "viewAll": "すべて見る",
+    "description": "商品の説明",
+    "topHighlights": "主な特徴",
+    "productDetails": "商品の詳細"
   },
   "Services": {
     "home": "ホーム",

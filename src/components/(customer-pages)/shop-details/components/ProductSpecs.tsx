@@ -16,6 +16,17 @@ function HtmlOrText({ content, className }: { content: string; className?: strin
 
 export default async function ProductSpecs({ product }: { product: ProductDetailsData }) {
     const t = await getTranslations("ShopDetails");
+
+    const safeT = (key: string, fallback: string) => {
+        try {
+            const val = t(key);
+            if (!val || val.startsWith("ShopDetails.")) return fallback;
+            return val;
+        } catch {
+            return fallback;
+        }
+    };
+
     const hasDetails = Boolean(product.productDetails);
     const hasDescriptionOnly = !hasDetails && Boolean(product.description);
     const hasAbout = hasDetails || hasDescriptionOnly;
@@ -41,7 +52,7 @@ export default async function ProductSpecs({ product }: { product: ProductDetail
             {hasAbout && (
                 <div className="space-y-5">
                     <h2 className="text-lg font-bold text-white">
-                        {hasDetails ? (t("productDetails") || "Product Details") : t("about")}
+                        {hasDetails ? safeT("productDetails", "Product Details") : safeT("about", "About this product")}
                     </h2>
 
                     {hasDetails ? (

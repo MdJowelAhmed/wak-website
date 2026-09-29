@@ -552,7 +552,10 @@
     "dimensions": "ขนาด",
     "dimensionsValue": "{length} × {width} × {height} ซม.",
     "related": "สินค้าที่เกี่ยวข้อง",
-    "viewAll": "ดูทั้งหมด"
+    "viewAll": "ดูทั้งหมด",
+    "description": "คำอธิบายสินค้า",
+    "topHighlights": "ไฮไลท์สำคัญ",
+    "productDetails": "รายละเอียดสินค้า"
   },
   "Services": {
     "home": "หน้าแรก",

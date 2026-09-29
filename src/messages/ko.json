@@ -552,7 +552,10 @@
     "dimensions": "크기",
     "dimensionsValue": "{length} × {width} × {height} cm",
     "related": "관련 상품",
-    "viewAll": "모두 보기"
+    "viewAll": "모두 보기",
+    "description": "상품 설명",
+    "topHighlights": "주요 특징",
+    "productDetails": "상품 상세 정보"
   },
   "Services": {
     "home": "홈",

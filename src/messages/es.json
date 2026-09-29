@@ -552,7 +552,10 @@
     "dimensions": "Dimensiones",
     "dimensionsValue": "{length} × {width} × {height} cm",
     "related": "Productos relacionados",
-    "viewAll": "Ver todo"
+    "viewAll": "Ver todo",
+    "description": "Descripción",
+    "topHighlights": "Puntos destacados",
+    "productDetails": "Detalles del producto"
   },
   "Services": {
     "home": "Inicio",

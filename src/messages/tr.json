@@ -552,7 +552,10 @@
     "dimensions": "Boyutlar",
     "dimensionsValue": "{length} × {width} × {height} cm",
     "related": "İlgili ürünler",
-    "viewAll": "Tümünü gör"
+    "viewAll": "Tümünü gör",
+    "description": "Açıklama",
+    "topHighlights": "Öne Çıkanlar",
+    "productDetails": "Ürün Detayları"
   },
   "Services": {
     "home": "Ana sayfa",

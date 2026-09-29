@@ -552,7 +552,10 @@
     "dimensions": "Vipimo vya ukubwa",
     "dimensionsValue": "{length} × {width} × {height} cm",
     "related": "Bidhaa zinazohusiana",
-    "viewAll": "Tazama zote"
+    "viewAll": "Tazama zote",
+    "description": "Maelezo",
+    "topHighlights": "Mambo Muhimu",
+    "productDetails": "Maelezo ya Bidhaa"
   },
   "Services": {
     "home": "Nyumbani",

@@ -552,7 +552,10 @@
     "dimensions": "الأبعاد",
     "dimensionsValue": "{length} × {width} × {height} سم",
     "related": "منتجات ذات صلة",
-    "viewAll": "عرض الكل"
+    "viewAll": "عرض الكل",
+    "description": "الوصف",
+    "topHighlights": "أهم المميزات",
+    "productDetails": "تفاصيل المنتج"
   },
   "Services": {
     "home": "الرئيسية",

@@ -552,7 +552,10 @@
     "dimensions": "Размеры",
     "dimensionsValue": "{length} × {width} × {height} см",
     "related": "Похожие товары",
-    "viewAll": "Смотреть все"
+    "viewAll": "Смотреть все",
+    "description": "Описание",
+    "topHighlights": "Главные особенности",
+    "productDetails": "Информация о товаре"
   },
   "Services": {
     "home": "Главная",

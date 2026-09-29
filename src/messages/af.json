@@ -552,7 +552,10 @@
     "dimensions": "Afmetings",
     "dimensionsValue": "{length} × {width} × {height} cm",
     "related": "Verwante produkte",
-    "viewAll": "Sien alles"
+    "viewAll": "Sien alles",
+    "description": "Beskrywing",
+    "topHighlights": "Top Hoogtepunte",
+    "productDetails": "Produkbesonderhede"
   },
   "Services": {
     "home": "Tuis",

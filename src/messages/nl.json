@@ -552,7 +552,10 @@
     "dimensions": "Afmetingen",
     "dimensionsValue": "{length} × {width} × {height} cm",
     "related": "Gerelateerde producten",
-    "viewAll": "Alles bekijken"
+    "viewAll": "Alles bekijken",
+    "description": "Beschrijving",
+    "topHighlights": "Belangrijkste kenmerken",
+    "productDetails": "Productdetails"
   },
   "Services": {
     "home": "Home",

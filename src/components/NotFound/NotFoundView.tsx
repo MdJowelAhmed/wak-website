@@ -9,12 +9,16 @@ interface NotFoundViewProps {
   title?: string;
   description?: string;
   backHomeText?: string;
+  loginText?: string;
+  supportText?: string;
 }
 
 export default function NotFoundView({
   title = "Page Not Found",
   description = "The page you are looking for does not exist or has been moved.",
   backHomeText = "Go to Home",
+  loginText = "Go to Login",
+  supportText = "Go to Support",
 }: NotFoundViewProps) {
   return (
     <div className="flex min-h-[65vh] w-full flex-col items-center justify-center px-4 py-16 text-center text-white">
@@ -50,7 +54,7 @@ export default function NotFoundView({
               className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-white/25 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-sm shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/20 hover:border-white/40 active:translate-y-0"
             >
               <LogIn className="h-4 w-4" />
-              <span>Go to Login</span>
+              <span>{loginText}</span>
             </button>
           }
         />
@@ -61,7 +65,7 @@ export default function NotFoundView({
           className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-white/25 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-sm shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/20 hover:border-white/40 active:translate-y-0"
         >
           <Headset className="h-4 w-4" />
-          <span>Go to Support</span>
+          <span>{supportText}</span>
         </Link>
       </div>
     </div>

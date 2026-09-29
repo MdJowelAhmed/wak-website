@@ -552,7 +552,10 @@
     "dimensions": "आयाम",
     "dimensionsValue": "{length} × {width} × {height} सेमी",
     "related": "संबंधित उत्पाद",
-    "viewAll": "सभी देखें"
+    "viewAll": "सभी देखें",
+    "description": "विवरण",
+    "topHighlights": "मुख्य विशेषताएं",
+    "productDetails": "उत्पाद विवरण"
   },
   "Services": {
     "home": "होम",

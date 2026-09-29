@@ -552,7 +552,10 @@
     "dimensions": "Kukula",
     "dimensionsValue": "{length} × {width} × {height} cm",
     "related": "Zinthu zofananira",
-    "viewAll": "Onani zonse"
+    "viewAll": "Onani zonse",
+    "description": "Kufotokozera",
+    "topHighlights": "Zofunika Kwambiri",
+    "productDetails": "Zambiri za Katundu"
   },
   "Services": {
     "home": "Nyumba",

@@ -552,7 +552,10 @@
     "dimensions": "尺寸",
     "dimensionsValue": "{length} × {width} × {height} 厘米",
     "related": "相关商品",
-    "viewAll": "查看全部"
+    "viewAll": "查看全部",
+    "description": "商品描述",
+    "topHighlights": "核心亮点",
+    "productDetails": "商品详情"
   },
   "Services": {
     "home": "首页",
