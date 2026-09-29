@@ -13,7 +13,6 @@ import {
     AlertTriangle,
     CheckCircle2,
 } from "lucide-react";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Button } from "@/ui/button";
@@ -227,7 +226,7 @@ export default function ProductInfo({ product, onSelectImage }: ProductInfoProps
 
             {/* Variant Selectors & Quantity */}
             <div className="mt-5 border-t border-white/10 pt-5 flex flex-col gap-5">
-                {/* Color Picker with Variant Image Thumbnails */}
+                {/* Color Picker */}
                 {hasColors && (
                     <div>
                         <div className="flex items-center justify-between text-sm">
@@ -236,7 +235,7 @@ export default function ProductInfo({ product, onSelectImage }: ProductInfoProps
                                 <span className="text-xs font-semibold text-primary">{color}</span>
                             )}
                         </div>
-                        <div className="mt-2.5 flex flex-wrap gap-2.5">
+                        <div className="mt-2.5 flex flex-wrap gap-2">
                             {product.colors.map((c) => {
                                 const selected = color.toLowerCase() === c.toLowerCase();
                                 const variantItem = product.variants.find(
@@ -251,23 +250,13 @@ export default function ProductInfo({ product, onSelectImage }: ProductInfoProps
                                         onClick={() => handleColorChange(c)}
                                         aria-pressed={selected}
                                         disabled={isOutOfStock}
-                                        className={`group relative flex cursor-pointer items-center gap-2 rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all ${
+                                        className={`cursor-pointer rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all ${
                                             selected
                                                 ? "border-primary bg-primary text-white shadow-md shadow-primary/25"
                                                 : "border-white/15 bg-white/10 text-white hover:border-primary/60 hover:bg-white/15"
                                         } ${isOutOfStock ? "opacity-40 cursor-not-allowed line-through" : ""}`}
                                     >
-                                        {variantItem?.image ? (
-                                            <span className="relative h-5 w-5 shrink-0 overflow-hidden rounded-md border border-white/20">
-                                                <Image
-                                                    src={variantItem.image}
-                                                    alt={c}
-                                                    fill
-                                                    className="object-cover"
-                                                />
-                                            </span>
-                                        ) : null}
-                                        <span>{c}</span>
+                                        {c}
                                     </button>
                                 );
                             })}
