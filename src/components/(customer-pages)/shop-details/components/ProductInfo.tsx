@@ -152,8 +152,13 @@ export default function ProductInfo({ product, onSelectImage }: ProductInfoProps
 
     return (
         <section className="rounded-2xl border border-white/10 bg-secondary p-5 shadow-lg sm:p-6">
+            {/* Product Title */}
+            <h1 className="text-xl font-bold tracking-tight text-white sm:text-2xl lg:text-3xl leading-snug">
+                {product.name}
+            </h1>
+
             {/* Price & Discounts */}
-            <div className="flex flex-wrap items-end gap-3">
+            <div className="mt-4 flex flex-wrap items-end gap-3">
                 <p className="text-3xl font-bold tracking-tight text-primary">
                     {formatPrice(product.price)}
                 </p>
