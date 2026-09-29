@@ -215,47 +215,7 @@ export default function ProductInfo({ product, onSelectImage }: ProductInfoProps
                 </div>
             )}
 
-            {/* Description (Right Side of Image) */}
-            {product.description && (
-                <div className="mt-5 border-t border-white/10 pt-4">
-                    <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-white/60">
-                        {t("description") || "Description"}
-                    </h3>
-                    {/<[a-z][\s\S]*>/i.test(product.description) ? (
-                        <div
-                            className="text-sm leading-relaxed text-white/85 [&_p]:mb-2.5 [&_p:last-child]:mb-0 [&_strong]:text-white [&_strong]:font-semibold"
-                            dangerouslySetInnerHTML={{ __html: product.description }}
-                        />
-                    ) : (
-                        <p className="text-sm leading-relaxed text-white/85">{product.description}</p>
-                    )}
-                </div>
-            )}
-
-            {/* Top Highlights (Right Side of Image) */}
-            {product.highlights && product.highlights.length > 0 && (
-                <div className="mt-4 border-t border-white/10 pt-4">
-                    <h3 className="mb-2.5 text-xs font-bold uppercase tracking-wider text-white/60">
-                        {t("topHighlights") || "Top Highlights"}
-                    </h3>
-                    <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                        {product.highlights.map((highlight, idx) => (
-                            <li
-                                key={`${highlight.label}-${idx}`}
-                                className="flex items-start gap-2 rounded-xl border border-white/10 bg-white/5 p-2.5 text-xs text-white/90"
-                            >
-                                <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
-                                <div>
-                                    <span className="font-semibold text-white">{highlight.label}: </span>
-                                    <span>{highlight.value}</span>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-
-            {/* Variant Selectors */}
+            {/* Variant Selectors & Quantity */}
             <div className="mt-5 border-t border-white/10 pt-5 flex flex-col gap-5">
                 {/* Color Picker with Variant Image Thumbnails */}
                 {hasColors && (
@@ -392,6 +352,46 @@ export default function ProductInfo({ product, onSelectImage }: ProductInfoProps
                     </Button>
                 </div>
             </div>
+
+            {/* Top Highlights (Below Add to Cart & Buy Now) */}
+            {product.highlights && product.highlights.length > 0 && (
+                <div className="mt-6 border-t border-white/10 pt-5">
+                    <h3 className="mb-2.5 text-xs font-bold uppercase tracking-wider text-white/60">
+                        {t("topHighlights") || "Top Highlights"}
+                    </h3>
+                    <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                        {product.highlights.map((highlight, idx) => (
+                            <li
+                                key={`${highlight.label}-${idx}`}
+                                className="flex items-start gap-2 rounded-xl border border-white/10 bg-white/5 p-2.5 text-xs text-white/90"
+                            >
+                                <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
+                                <div>
+                                    <span className="font-semibold text-white">{highlight.label}: </span>
+                                    <span>{highlight.value}</span>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+
+            {/* Description (Below Top Highlights) */}
+            {product.description && (
+                <div className="mt-5 border-t border-white/10 pt-4">
+                    <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-white/60">
+                        {t("description") || "Description"}
+                    </h3>
+                    {/<[a-z][\s\S]*>/i.test(product.description) ? (
+                        <div
+                            className="text-sm leading-relaxed text-white/85 [&_p]:mb-2.5 [&_p:last-child]:mb-0 [&_strong]:text-white [&_strong]:font-semibold"
+                            dangerouslySetInnerHTML={{ __html: product.description }}
+                        />
+                    ) : (
+                        <p className="text-sm leading-relaxed text-white/85">{product.description}</p>
+                    )}
+                </div>
+            )}
 
             {/* Delivery & Security Badges */}
             <div className="mt-6 grid gap-3 border-t border-white/10 pt-5 sm:grid-cols-2">
