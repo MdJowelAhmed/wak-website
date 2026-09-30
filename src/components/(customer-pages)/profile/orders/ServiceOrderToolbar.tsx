@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { useRouter } from "@/i18n/navigation";
-import { Check, Loader2, MessageCircle, Star } from "lucide-react";
+import { Check, Loader2, MessageCircle, Star, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { Button } from "@/ui/button";
 import { myFetch } from "../../../../../helpers/myFetch";
 import { completeServiceOrder } from "./completeServiceOrder";
 import ReviewModal from "./ReviewModal";
+import RejectDeliveryModal from "./RejectDeliveryModal";
 import { isDeliveredStatus, type Order } from "./types";
 
 export default function ServiceOrderToolbar({ order }: { order: Order }) {
@@ -17,6 +18,7 @@ export default function ServiceOrderToolbar({ order }: { order: Order }) {
   const [isCreatingChat, setIsCreatingChat] = useState(false);
   const [isAccepting, setIsAccepting] = useState(false);
   const [reviewOpen, setReviewOpen] = useState(false);
+  const [rejectOpen, setRejectOpen] = useState(false);
   const isDelivered = isDeliveredStatus(order.orderStatus);
 
   const handleMessage = async () => {
@@ -67,15 +69,27 @@ export default function ServiceOrderToolbar({ order }: { order: Order }) {
   return (
     <div className="flex flex-wrap gap-2">
       {isDelivered && (
-        <Button
-          type="button"
-          onClick={handleAccept}
-          disabled={isAccepting}
-          className="rounded-xl shadow-md shadow-primary/30"
-        >
-          {isAccepting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
-          {t("accept")}
-        </Button>
+        <>
+          <Button
+            type="button"
+            onClick={handleAccept}
+            disabled={isAccepting}
+            className="rounded-xl shadow-md shadow-primary/30"
+          >
+            {isAccepting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
+            {t("accept")}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setRejectOpen(true)}
+            disabled={isAccepting}
+            className="rounded-xl border-red-500/40 text-red-300 hover:bg-red-500/20 hover:text-red-100"
+          >
+            <XCircle className="h-4 w-4 text-red-400" />
+            {t.has?.("reject") ? t("reject") : "Reject"}
+          </Button>
+        </>
       )}
       <Button
         type="button"
@@ -108,6 +122,12 @@ export default function ServiceOrderToolbar({ order }: { order: Order }) {
         isOpen={reviewOpen}
         onClose={() => setReviewOpen(false)}
         type="service"
+      />
+      <RejectDeliveryModal
+        orderId={order.dbId || ""}
+        orderTitle={order.title}
+        isOpen={rejectOpen}
+        onClose={() => setRejectOpen(false)}
       />
     </div>
   );
