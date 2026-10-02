@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Link, useRouter } from "@/i18n/navigation";
@@ -43,17 +43,23 @@ export default function Checkout({
     initialAddressId,
     initialEstimate,
 }: CheckoutProps) {
+    const { countryCode, formatPrice } = useCurrency();
     const [addresses, setAddresses] = useState(initialAddresses);
     const [selectedAddressId, setSelectedAddressId] = useState(initialAddressId);
     const [formData, setFormData] = useState(initialForm);
     const [deliveryOption, setDeliveryOption] = useState<DeliveryOption>("delivery");
-    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("stripe");
+    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(() =>
+        countryCode?.toUpperCase() === "MW" ? "paychangu" : "stripe"
+    );
     const [estimate, setEstimate] = useState(initialEstimate);
     const [isCalculating, setIsCalculating] = useState(false);
     const [isPlacingOrder, setIsPlacingOrder] = useState(false);
-    const { formatPrice } = useCurrency();
     const t = useTranslations("Checkout");
     const router = useRouter();
+
+    useEffect(() => {
+        setPaymentMethod(countryCode?.toUpperCase() === "MW" ? "paychangu" : "stripe");
+    }, [countryCode]);
 
     const fallbackSubtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const subtotal = estimate?.grandSubTotal ?? fallbackSubtotal;
