@@ -15,16 +15,28 @@ export interface DeliveryLocation {
 
 export const COUNTRY_MAP_CENTERS: Record<string, { lat: number; lng: number; zoom: number }> = {
   US: { lat: 39.8283, lng: -98.5795, zoom: 4 },
-  MW: { lat: -13.2543, lng: 34.3015, zoom: 6 },
   CA: { lat: 56.1304, lng: -106.3468, zoom: 4 },
+  MX: { lat: 23.6345, lng: -102.5528, zoom: 5 },
+  IN: { lat: 20.5937, lng: 78.9629, zoom: 5 },
+  MW: { lat: -13.2543, lng: 34.3015, zoom: 6 },
   ZA: { lat: -30.5595, lng: 22.9375, zoom: 5 },
+  TZ: { lat: -6.3690, lng: 34.8888, zoom: 5 },
+  NA: { lat: -22.5609, lng: 17.0658, zoom: 5 },
+  ZM: { lat: -13.1339, lng: 27.8493, zoom: 5 },
+  KE: { lat: -0.0236, lng: 37.9062, zoom: 6 },
 };
 
 const SHORT_NAMES: Record<string, string> = {
   US: "USA",
-  MW: "Malawi",
   CA: "Canada",
+  MX: "Mexico",
+  IN: "India",
+  MW: "Malawi",
   ZA: "South Africa",
+  TZ: "Tanzania",
+  NA: "Namibia",
+  ZM: "Zambia",
+  KE: "Kenya",
 };
 
 export function shoppingCountryShortName(countryCode: string | undefined): string {

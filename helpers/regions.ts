@@ -20,7 +20,18 @@ export const languagesList: LanguageOption[] = APP_LOCALES.map((code) => ({
   nativeName: localeMeta[code].nativeName,
 }));
 
-export const SHOPPING_COUNTRY_CODES = ["US", "MW", "CA", "ZA"] as const;
+export const SHOPPING_COUNTRY_CODES = [
+  "US",
+  "CA",
+  "MX",
+  "IN",
+  "MW",
+  "ZA",
+  "TZ",
+  "NA",
+  "ZM",
+  "KE",
+] as const;
 export type ShoppingCountryCode = (typeof SHOPPING_COUNTRY_CODES)[number];
 
 function region(currency: string, name: string): CountryOption {
@@ -29,9 +40,15 @@ function region(currency: string, name: string): CountryOption {
 
 export const countriesList: CountryOption[] = [
   region("USD", "USA"),
-  region("MWK", "Malawi and parts of Zambia and Mozambique"),
   region("CAD", "Canada"),
+  region("MXN", "Mexico"),
+  region("INR", "India"),
+  region("MWK", "Malawi"),
   region("ZAR", "South Africa"),
+  region("TZS", "Tanzania"),
+  region("NAD", "Namibia"),
+  region("ZMW", "Zambia"),
+  region("KES", "Kenya"),
 ];
 
 export const fallbackCurrencies: CountryOption[] = [
@@ -49,10 +66,11 @@ export const fallbackCurrencies: CountryOption[] = [
   currencyToOption("AED"),
   currencyToOption("INR"),
   currencyToOption("CAD"),
+  currencyToOption("MXN"),
+  currencyToOption("NAD"),
 ];
 
 const COUNTRY_ALIASES: Record<string, string> = {
-  ZM: "MW",
   MZ: "MW",
 };
 
