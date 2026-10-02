@@ -196,7 +196,10 @@ export default function LocationModal({
     const [searching, setSearching] = useState(false);
     const countriesRef = useRef<CountryOption[]>([]);
     const searchTimerRef = useRef<number>(0);
-    countriesRef.current = countries;
+
+    useEffect(() => {
+        countriesRef.current = countries;
+    }, [countries]);
 
     const applyGeocode = (location: DeliveryLocation & { state?: string; countryCode?: string }) => {
         setDraft(location);
@@ -221,7 +224,10 @@ export default function LocationModal({
         });
     };
     const applyGeocodeRef = useRef(applyGeocode);
-    applyGeocodeRef.current = applyGeocode;
+
+    useEffect(() => {
+        applyGeocodeRef.current = applyGeocode;
+    }, [applyGeocode]);
 
     useEffect(() => {
         if (!isOpen) return;

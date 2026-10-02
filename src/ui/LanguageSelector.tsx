@@ -24,12 +24,10 @@ const countries = [
 
 interface LanguageSelectorProps {
     className?: string;
-    iconClassName?: string;
 }
 
 export default function LanguageSelector({
     className = "flex items-center gap-3 bg-[#4f2c1d] px-4 py-2 rounded-lg cursor-pointer hover:bg-[#4f2c1d]/90 transition-colors border border-white/20 text-white shrink-0",
-    iconClassName,
 }: LanguageSelectorProps) {
     return (
         <Select defaultValue="United States">

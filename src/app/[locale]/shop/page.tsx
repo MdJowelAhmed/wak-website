@@ -1,5 +1,4 @@
 import Shop from "@/components/(customer-pages)/shop";
-import { Category } from "@/components/(customer-pages)/shop/components/ShopFilter";
 import { Product } from "@/components/(customer-pages)/home/components/NewArrival";
 import { nextFetch } from "../../../../helpers/myFetch";
 import { getActiveCategories } from "../../../../helpers/categoryService";

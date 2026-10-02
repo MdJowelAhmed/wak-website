@@ -32,6 +32,7 @@ export default function ChatSidebar({
 }: ChatSidebarProps) {
   const t = useTranslations("Messages");
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    if (!chatHasMore || isLoadingMoreChats) return;
     const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
     if (scrollHeight - scrollTop <= clientHeight + 50) {
       onLoadMoreChats?.();

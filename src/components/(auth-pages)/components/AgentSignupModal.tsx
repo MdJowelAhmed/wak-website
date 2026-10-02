@@ -9,7 +9,6 @@ import {
   DialogTrigger,
 } from "@/ui/dialog";
 import { AgentSignupForm } from "../forms/agent-signup-form";
-import AuthModal from "../index";
 
 interface AgentSignupModalProps {
   trigger: React.ReactNode;

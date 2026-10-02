@@ -41,7 +41,6 @@ const HorizontalServiceCard = ({
     reviewCount,
     category,
     description,
-    price,
     coverImage,
     fromLabel,
 }: {
@@ -52,7 +51,7 @@ const HorizontalServiceCard = ({
     reviewCount: number;
     category: string;
     description: string;
-    price: number;
+    price?: number;
     coverImage: string;
     fromLabel: string;
 }) => {
