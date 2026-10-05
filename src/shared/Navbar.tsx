@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, X, MapPin, HelpCircle, ChevronDown } from 'lucide-react';
+import { Menu, X, MapPin, HelpCircle, ChevronDown, ShoppingBag } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
 import { AnimatePresence } from 'framer-motion';
@@ -143,13 +143,13 @@ export default function Navbar({
                             />
                         </div>
 
-                        {/* <Link
-                            href="/profile"
-                            className="hidden md:flex items-center gap-1 text-accent-foreground transition-colors"
+                        <Link
+                            href="/profile/orders"
+                            className="hidden sm:flex items-center gap-1 text-accent-foreground transition-colors hover:opacity-90"
                         >
-                            <Truck className="w-3.5 h-3.5 text-accent-foreground" />
-                            <span>Track Order</span>
-                        </Link> */}
+                            <ShoppingBag className="w-3.5 h-3.5 text-accent-foreground" />
+                            <span>{t("Profile.sidebar.orders")}</span>
+                        </Link>
 
                         <Link
                             href="/contact-us"

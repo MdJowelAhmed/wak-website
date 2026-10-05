@@ -3,7 +3,7 @@
 
 import type { ReactNode } from 'react';
 import { motion, type Variants } from 'framer-motion';
-import { LogOut, MapPin, Truck, HelpCircle, Globe, X } from 'lucide-react';
+import { LogOut, MapPin, Truck, HelpCircle, Globe, X, ShoppingBag } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import NavLinks from '@/ui/NavLinks';
@@ -149,6 +149,11 @@ export default function CustomerMobileMenu({
                                 {currentCurrencyLabel} / {currentLangName}
                             </span>
                         </button>
+
+                        <Link href="/profile/orders" onClick={onClose} className="flex items-center gap-2 py-2 text-white/90 hover:text-primary transition-colors">
+                            <ShoppingBag className="w-4 h-4 text-primary shrink-0" />
+                            <span>{t("Profile.sidebar.orders")}</span>
+                        </Link>
 
                         <Link href="/profile" onClick={onClose} className="flex items-center gap-2 py-2 text-white/90 hover:text-primary transition-colors">
                             <Truck className="w-4 h-4 text-primary shrink-0" />
