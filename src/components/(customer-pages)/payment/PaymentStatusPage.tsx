@@ -42,7 +42,7 @@ function PaymentStatusContent({ status }: { status: PaymentStatus }) {
                 {isSuccess ? (
                     <>
                         <Link
-                            href="/profile/product-orders"
+                            href="/profile/orders?tab=products"
                             className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 font-semibold text-white shadow-md shadow-primary/20 transition-colors hover:bg-primary-hover"
                         >
                             <ShoppingBag className="h-5 w-5" />

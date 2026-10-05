@@ -261,6 +261,7 @@
       "settings": "Setting",
       "productOrders": "Product Orders",
       "serviceOrders": "Service Orders",
+      "orders": "Orders",
       "message": "Message",
       "logout": "Logout",
       "profileAlt": "Profile",

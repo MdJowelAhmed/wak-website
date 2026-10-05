@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
+import { ShoppingBag, Briefcase } from "lucide-react";
 import DashboardCard from "../../../../shared/DashboardCard";
 import type { Order } from "./types";
 import OrdersTable from "./OrdersTable";
@@ -19,13 +20,13 @@ export interface OrdersPagination {
 }
 
 interface OrdersPageProps {
-  type?: "product" | "service";
+  activeTab?: "products" | "services";
   initialOrders?: Order[];
   pagination?: OrdersPagination;
 }
 
 export default function OrdersPage({
-  type = "product",
+  activeTab = "products",
   initialOrders = [],
   pagination,
 }: OrdersPageProps) {
@@ -38,9 +39,16 @@ export default function OrdersPage({
 
   const currentPage = pagination?.page ?? 1;
   const totalPages = pagination?.totalPage ?? 1;
+  const currentType: "product" | "service" = activeTab === "services" ? "service" : "product";
+
+  const handleTabChange = (tab: "products" | "services") => {
+    if (tab === activeTab) return;
+    setSelectedOrder(null);
+    router.push(`/profile/orders?tab=${tab}`);
+  };
 
   const handleSelectOrder = (order: Order) => {
-    if (type === "service" && order.dbId) {
+    if (currentType === "service" && order.dbId) {
       router.push(`/profile/service-orders/${order.dbId}`);
       return;
     }
@@ -49,6 +57,7 @@ export default function OrdersPage({
 
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams();
+    params.set("tab", activeTab);
     if (page > 1) params.set("page", String(page));
     const query = params.toString();
     router.push(query ? `${pathname}?${query}` : pathname);
@@ -84,41 +93,67 @@ export default function OrdersPage({
     }
   };
 
-  const heading = type === "product" ? t("productOrders") : t("serviceOrders");
-
-  if (!selectedOrder) {
-    return (
-      <DashboardCard className="border-white/10 bg-secondary p-6 md:p-8">
-        <OrdersTable
-          title={heading}
-          type={type}
-          orders={initialOrders}
-          onSelectOrder={handleSelectOrder}
-          onReviewOrder={setReviewOrder}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-        <ReviewModal
-          order={reviewOrder}
-          isOpen={!!reviewOrder}
-          onClose={() => setReviewOrder(null)}
-          type={type}
-        />
-      </DashboardCard>
-    );
-  }
+  const heading = currentType === "product" ? t("productOrders") : t("serviceOrders");
 
   return (
     <DashboardCard className="border-white/10 bg-secondary p-6 md:p-8">
-      <OrderDetails
-        order={selectedOrder}
-        type={type}
-        listTitle={heading}
-        isCreatingChat={isCreatingChat}
-        onBack={() => setSelectedOrder(null)}
-        onMessageSeller={handleMessageSeller}
-      />
+      {/* Tabs Header */}
+      <div className="mb-6 flex items-center gap-2 border-b border-white/15 pb-4 overflow-x-auto">
+        <button
+          type="button"
+          onClick={() => handleTabChange("products")}
+          className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 cursor-pointer flex items-center gap-2 whitespace-nowrap ${
+            activeTab === "products"
+              ? "bg-primary text-white shadow-lg shadow-primary/25"
+              : "text-white/70 hover:text-white hover:bg-white/10"
+          }`}
+        >
+          <ShoppingBag className="w-4 h-4" />
+          <span>{t("productOrders")}</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => handleTabChange("services")}
+          className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 cursor-pointer flex items-center gap-2 whitespace-nowrap ${
+            activeTab === "services"
+              ? "bg-primary text-white shadow-lg shadow-primary/25"
+              : "text-white/70 hover:text-white hover:bg-white/10"
+          }`}
+        >
+          <Briefcase className="w-4 h-4" />
+          <span>{t("serviceOrders")}</span>
+        </button>
+      </div>
+
+      {!selectedOrder ? (
+        <>
+          <OrdersTable
+            title={heading}
+            type={currentType}
+            orders={initialOrders}
+            onSelectOrder={handleSelectOrder}
+            onReviewOrder={setReviewOrder}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+          <ReviewModal
+            order={reviewOrder}
+            isOpen={!!reviewOrder}
+            onClose={() => setReviewOrder(null)}
+            type={currentType}
+          />
+        </>
+      ) : (
+        <OrderDetails
+          order={selectedOrder}
+          type={currentType}
+          listTitle={heading}
+          isCreatingChat={isCreatingChat}
+          onBack={() => setSelectedOrder(null)}
+          onMessageSeller={handleMessageSeller}
+        />
+      )}
     </DashboardCard>
   );
 }

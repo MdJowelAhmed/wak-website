@@ -34,14 +34,9 @@ export const serviceSidebar: SidebarItem[] = [
     icon: "User",
   },
   {
-    label: "productOrders",
-    href: "/profile/product-orders",
+    label: "orders",
+    href: "/profile/orders",
     icon: "FolderKanban",
-  },
-  {
-    label: "serviceOrders",
-    href: "/profile/service-orders",
-    icon: "Briefcase",
   },
   {
     label: "message",

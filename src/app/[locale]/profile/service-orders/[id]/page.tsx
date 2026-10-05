@@ -33,7 +33,11 @@ export default async function ServiceOrderDetailPage({
 
   return (
     <DashboardCard className="border-white/10 bg-secondary p-6 md:p-8">
-      <ServiceOrderDetails order={order} activeTab={activeTab} />
+      <ServiceOrderDetails
+        order={order}
+        activeTab={activeTab}
+        backHref="/profile/orders?tab=services"
+      />
     </DashboardCard>
   );
 }
