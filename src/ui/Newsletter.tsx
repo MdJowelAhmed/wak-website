@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
+import { myFetch } from "../../helpers/myFetch";
 
 const STORAGE_KEY = "newsletter_subscription";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -19,18 +21,45 @@ function readSubscription(): string | null {
     }
 }
 
-export default function Newsletter() {
+interface NewsletterProps {
+    source?: string;
+    className?: string;
+}
+
+function subscribe(callback: () => void) {
+    if (typeof window === "undefined") return () => {};
+    window.addEventListener("storage", callback);
+    window.addEventListener("newsletter_subscription_change", callback);
+    return () => {
+        window.removeEventListener("storage", callback);
+        window.removeEventListener("newsletter_subscription_change", callback);
+    };
+}
+
+function getSnapshot(): string | null {
+    return readSubscription();
+}
+
+function getServerSnapshot(): string | null {
+    return null;
+}
+
+export default function Newsletter({
+    source = "website_footer",
+    className = "",
+}: NewsletterProps) {
     const t = useTranslations("Newsletter");
     const [email, setEmail] = useState("");
     const [consent, setConsent] = useState(false);
-    const [subscribedEmail, setSubscribedEmail] = useState<string | null>(null);
+    const [hideSubscribed, setHideSubscribed] = useState(false);
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [unsubscribing, setUnsubscribing] = useState(false);
 
-    useEffect(() => {
-        setSubscribedEmail(readSubscription());
-    }, []);
+    const storeEmail = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+    const subscribedEmail = hideSubscribed ? null : storeEmail;
 
-    const handleSubscribe = (event: React.FormEvent) => {
+    const handleSubscribe = async (event: React.FormEvent) => {
         event.preventDefault();
         const nextEmail = email.trim().toLowerCase();
 
@@ -42,31 +71,78 @@ export default function Newsletter() {
             setError(t("needConsent"));
             return;
         }
-        if (subscribedEmail === nextEmail) {
-            setError(t("alreadySubscribed"));
-            return;
-        }
 
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify({ email: nextEmail, subscribedAt: Date.now() }),
-        );
-        setSubscribedEmail(nextEmail);
-        setEmail("");
-        setConsent(false);
+        setLoading(true);
         setError("");
-        toast.success(t("success"));
+
+        try {
+            const res = await myFetch<{
+                email?: string;
+                status?: string;
+                source?: string;
+                subscribedAt?: string;
+            }>("/newsletters/subscribe", {
+                method: "POST",
+                body: {
+                    email: nextEmail,
+                    source,
+                },
+            });
+
+            if (res.success) {
+                localStorage.setItem(
+                    STORAGE_KEY,
+                    JSON.stringify({ email: nextEmail, subscribedAt: Date.now() }),
+                );
+                window.dispatchEvent(new Event("newsletter_subscription_change"));
+                setHideSubscribed(false);
+                setEmail("");
+                setConsent(false);
+                setError("");
+                toast.success(res.message || t("success"));
+            } else {
+                const message = res.error || res.message || "Failed to subscribe";
+                setError(message);
+                toast.error(message);
+            }
+        } catch {
+            const message = "Failed to subscribe. Please try again.";
+            setError(message);
+            toast.error(message);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleUnsubscribe = () => {
-        localStorage.removeItem(STORAGE_KEY);
-        setSubscribedEmail(null);
-        setError("");
-        toast.success(t("unsubscribed"));
+    const handleUnsubscribe = async () => {
+        if (!subscribedEmail) return;
+        setUnsubscribing(true);
+        try {
+            const res = await myFetch("/newsletters/unsubscribe", {
+                method: "POST",
+                body: {
+                    email: subscribedEmail,
+                },
+            });
+
+            if (res.success) {
+                localStorage.removeItem(STORAGE_KEY);
+                window.dispatchEvent(new Event("newsletter_subscription_change"));
+                setHideSubscribed(false);
+                setError("");
+                toast.success(res.message || t("unsubscribed"));
+            } else {
+                toast.error(res.error || res.message || "Failed to unsubscribe");
+            }
+        } catch {
+            toast.error("Failed to unsubscribe");
+        } finally {
+            setUnsubscribing(false);
+        }
     };
 
     return (
-        <div className="max-w-sm">
+        <div className={`max-w-sm ${className}`.trim()}>
             <h3 className="mb-2 text-lg font-bold text-white">{t("title")}</h3>
             <p className="mb-4 text-sm leading-relaxed text-zinc-300">
                 {t("description")}
@@ -77,13 +153,24 @@ export default function Newsletter() {
                     <p className="text-sm text-white">
                         {t("subscribedAs")} <span className="font-semibold">{subscribedEmail}</span>
                     </p>
-                    <button
-                        type="button"
-                        onClick={handleUnsubscribe}
-                        className="mt-2 text-xs font-semibold text-primary hover:underline"
-                    >
-                        {t("unsubscribe")}
-                    </button>
+                    <div className="mt-2 flex items-center gap-3">
+                        <button
+                            type="button"
+                            onClick={handleUnsubscribe}
+                            disabled={unsubscribing}
+                            className="text-xs font-semibold text-primary hover:underline disabled:opacity-50 cursor-pointer"
+                        >
+                            {unsubscribing ? "Unsubscribing..." : t("unsubscribe")}
+                        </button>
+                        <span className="text-white/20">|</span>
+                        <button
+                            type="button"
+                            onClick={() => setHideSubscribed(true)}
+                            className="text-xs font-semibold text-zinc-400 hover:text-white hover:underline cursor-pointer"
+                        >
+                            Change email
+                        </button>
+                    </div>
                 </div>
             ) : (
                 <form onSubmit={handleSubscribe} className="space-y-3" noValidate>
@@ -98,11 +185,12 @@ export default function Newsletter() {
                             setEmail(event.target.value);
                             if (error) setError("");
                         }}
+                        disabled={loading}
                         placeholder={t("placeholder")}
                         autoComplete="email"
-                        className="h-11 w-full rounded-xl border border-white/15 bg-white/5 px-3 text-sm text-white outline-none placeholder:text-white/45 focus:border-primary"
+                        className="h-11 w-full rounded-xl border border-white/15 bg-white/5 px-3 text-sm text-white outline-none placeholder:text-white/45 focus:border-primary disabled:opacity-60"
                     />
-                    <label className="flex items-start gap-2 text-xs leading-relaxed text-zinc-300">
+                    <label className="flex items-start gap-2 text-xs leading-relaxed text-zinc-300 cursor-pointer">
                         <input
                             type="checkbox"
                             checked={consent}
@@ -110,16 +198,19 @@ export default function Newsletter() {
                                 setConsent(event.target.checked);
                                 if (error) setError("");
                             }}
-                            className="mt-0.5 h-3.5 w-3.5 shrink-0 accent-primary"
+                            disabled={loading}
+                            className="mt-0.5 h-3.5 w-3.5 shrink-0 accent-primary cursor-pointer"
                         />
-                        {t("consent")}
+                        <span>{t("consent")}</span>
                     </label>
                     {error ? <p className="text-xs text-red-300">{error}</p> : null}
                     <button
                         type="submit"
-                        className="h-11 w-full rounded-xl bg-primary text-sm font-semibold text-white transition-colors hover:bg-primary-hover"
+                        disabled={loading}
+                        className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary text-sm font-semibold text-white transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-70 cursor-pointer"
                     >
-                        {t("subscribe")}
+                        {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+                        {loading ? "Subscribing..." : t("subscribe")}
                     </button>
                 </form>
             )}
