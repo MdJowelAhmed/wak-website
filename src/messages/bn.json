@@ -179,6 +179,24 @@
       "unknown": "অজানা",
       "fallbackCategory": "সার্ভিস"
     },
+    "recommendations": {
+      "eyebrow": "আপনার জন্য বাছাইকৃত",
+      "title": "আপনার জন্য সুপারিশ",
+      "subtitle": "আপনার পছন্দ ও রুচির ওপর ভিত্তি করে AI সুপারিশকৃত পণ্য ও সার্ভিস",
+      "badge": "AI বাছাই",
+      "all": "সব",
+      "products": "পণ্য",
+      "services": "সার্ভিস",
+      "recommendedProducts": "সুপারিশকৃত পণ্য",
+      "recommendedServices": "সুপারিশকৃত সার্ভিস",
+      "viewAllProducts": "সব পণ্য দেখুন",
+      "viewAllServices": "সব সার্ভিস দেখুন",
+      "topMatch": "সেরা মিল",
+      "trending": "আপনার জন্য ট্রেন্ডিং",
+      "empty": "এখনও কোনো সুপারিশ পাওয়া যায়নি।",
+      "emptyProducts": "কোনো সুপারিশকৃত পণ্য পাওয়া যায়নি।",
+      "emptyServices": "কোনো সুপারিশকৃত সার্ভিস পাওয়া যায়নি।"
+    },
     "features": {
       "badge": "কেন আমাদের বেছে নেবেন",
       "title": "কেন কেনাকাটা ও বুকিং করবেন",

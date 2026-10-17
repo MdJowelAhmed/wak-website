@@ -179,6 +179,24 @@
       "unknown": "Unknown",
       "fallbackCategory": "Service"
     },
+    "recommendations": {
+      "eyebrow": "Personalized For You",
+      "title": "Recommended For You",
+      "subtitle": "AI-tailored products and services handpicked based on your taste",
+      "badge": "AI Pick",
+      "all": "All",
+      "products": "Products",
+      "services": "Services",
+      "recommendedProducts": "Recommended Products",
+      "recommendedServices": "Recommended Services",
+      "viewAllProducts": "View All Products",
+      "viewAllServices": "View All Services",
+      "topMatch": "Top Match",
+      "trending": "Trending For You",
+      "empty": "No recommendations found yet.",
+      "emptyProducts": "No recommended products found.",
+      "emptyServices": "No recommended services found."
+    },
     "features": {
       "badge": "Why Choose Us",
       "title": "Why Shop & Book With",

@@ -8,15 +8,24 @@ import Features from "./components/Features";
 import NewArrival from "./components/NewArrival";
 import Services from "./components/Services";
 import AppDownloadSection from "./components/AppDownloadSection";
+import RecommendedProducts, { RecommendedProductsSkeleton } from "./components/RecommendedProducts";
+import RecommendedServices, { RecommendedServicesSkeleton } from "./components/RecommendedServices";
 import { getActiveCategories } from "../../../../helpers/categoryService";
 import { myFetch } from "../../../../helpers/myFetch";
+import { getAccessToken } from "../../../../helpers/getAccessToken";
 import { normalizeShoppingCountryCode } from "../../../../helpers/regions";
+import {
+    RecommendationResponseData,
+    RecommendedProductData,
+    RecommendedServiceData,
+} from "../../../../helpers/recommendationService";
 import { headers } from "next/headers";
 
 const Home = async () => {
     const headerStore = await headers();
     const countryCode = normalizeShoppingCountryCode(headerStore.get("x-country-code"));
     const countryQuery = `countryCode=${encodeURIComponent(countryCode)}`;
+    const token = await getAccessToken();
 
     const [
         prodRes,
@@ -25,13 +34,14 @@ const Home = async () => {
         newArrivalsRes,
         servicesRes,
         heroRes,
+        recProdRes,
+        recServRes,
     ] = await Promise.all([
         getActiveCategories({ type: 'product' }),
         getActiveCategories({ type: 'service' }),
         myFetch(`/products/best-selling?${countryQuery}`, {
             cache: 'force-cache',
             next: { revalidate: 3600, tags: ['products', `products-best-selling-${countryCode}`] },
-            
         }),
         myFetch(`/products?${countryQuery}`, {
             cache: 'force-cache',
@@ -45,6 +55,16 @@ const Home = async () => {
             cache: 'force-cache',
             next: { revalidate: 3600, tags: [`hero-section-${countryCode}`] },
         }),
+        token
+            ? myFetch<RecommendationResponseData>(`/recommendations/me?limit=10&itemType=Product`, {
+                cache: 'no-store',
+            })
+            : Promise.resolve(null),
+        token
+            ? myFetch<RecommendationResponseData>(`/recommendations/me?limit=10&itemType=Service`, {
+                cache: 'no-store',
+            })
+            : Promise.resolve(null),
     ]);
 
     const productCategories = prodRes?.data || [];
@@ -53,6 +73,14 @@ const Home = async () => {
     const newArrivalProducts = newArrivalsRes?.data || [];
     const servicesList = servicesRes?.data || [];
     const heroBanners = heroRes?.data || [];
+
+    const recProducts = (recProdRes?.data?.items
+        ?.filter((it) => it.type === "Product")
+        ?.map((it) => it.data) || []) as RecommendedProductData[];
+
+    const recServices = (recServRes?.data?.items
+        ?.filter((it) => it.type === "Service")
+        ?.map((it) => it.data) || []) as RecommendedServiceData[];
 
     return (
         <main className="w-full">
@@ -65,10 +93,30 @@ const Home = async () => {
                 productCategories={productCategories}
                 serviceCategories={serviceCategories}
             />
+
+            {/* Recommended Products Section */}
+            <Suspense fallback={<RecommendedProductsSkeleton />}>
+                <RecommendedProducts
+                    key={`rec-products-${countryCode}`}
+                    initialProducts={recProducts}
+                    fallbackProducts={bestSellingProducts.slice(0, 5)}
+                />
+            </Suspense>
+
             <Suspense fallback={<BestSellingSkeleton />}>
                 <BestSelling key={countryCode} initialProducts={bestSellingProducts} />
             </Suspense>
             <NewArrival key={countryCode} initialProducts={newArrivalProducts} />
+
+            {/* Recommended Services Section */}
+            <Suspense fallback={<RecommendedServicesSkeleton />}>
+                <RecommendedServices
+                    key="rec-services"
+                    initialServices={recServices}
+                    fallbackServices={servicesList.slice(0, 5)}
+                />
+            </Suspense>
+
             <Services initialServices={servicesList} />
             <AppDownloadSection />
             <Features />
