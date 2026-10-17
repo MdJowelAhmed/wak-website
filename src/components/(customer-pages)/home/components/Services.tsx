@@ -48,15 +48,15 @@ const Services = ({ initialServices = [] }: ServicesProps) => {
             <div className="container mx-auto px-4">
                 {/* Header */}
 
-                <div className="mb-12">
+                <div className="mb-6">
 
                     <div className="flex justify-between items-end">
                         <div className="flex items-center gap-4 mb-3">
-                            <div className="w-5 h-10 bg-primary rounded-xs"></div>
+                            {/* <div className="w-5 h-10 bg-primary rounded-xs"></div> */}
                             <h2 className="title mb-0!">{t("services.title")}</h2>
                         </div>
 
-                        <button className="flex items-center gap-2 text-accent px-6 py-3 rounded-md font-medium hover:underline underline-offset-4 transition-all group cursor-pointer" onClick={handleClick}>
+                        <button className="flex items-center gap-2 text-white px-6 py-3 rounded-md font-medium hover:underline underline-offset-4 transition-all group cursor-pointer" onClick={handleClick}>
                             {t("viewAll")}
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform rtl:rotate-180" />
                         </button>

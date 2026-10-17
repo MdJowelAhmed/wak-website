@@ -104,7 +104,7 @@ const RecommendedServices = ({
                 {/* Header */}
                 <div className="mb-4 md:mb-6">
                     <div className="flex items-center gap-2 mb-2">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-accent/10 text-accent border border-accent/20">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-accent/10 text-white border border-accent/20">
                             <Sparkles className="w-3.5 h-3.5 animate-pulse" />
                             {isAi
                                 ? safeT("recommendations.eyebrow", "Personalized For You")
@@ -114,13 +114,13 @@ const RecommendedServices = ({
 
                     <div className="flex justify-between items-end">
                         <div className="flex items-center gap-3">
-                            <div className="w-4 h-8 bg-accent rounded-xs hidden sm:block"></div>
+                            {/* <div className="w-4 h-8 bg-accent rounded-xs hidden sm:block"></div> */}
                             <h2 className="title mb-0!">
                                 {safeT("recommendations.recommendedServices", "Recommended Services")}
                             </h2>
                         </div>
                         <button
-                            className="flex items-center gap-2 text-accent px-4 py-2 rounded-md font-medium hover:underline underline-offset-4 transition-all group cursor-pointer"
+                            className="flex items-center gap-2 text-white px-4 py-2 rounded-md font-medium hover:underline underline-offset-4 transition-all group cursor-pointer"
                             onClick={handleClick}
                         >
                             {safeT("viewAll", "View All")}

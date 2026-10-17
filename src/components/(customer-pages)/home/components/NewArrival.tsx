@@ -49,8 +49,8 @@ const NewArrival = ({ initialProducts = [] }: NewArrivalProps) => {
                 {/* Header */}
                 <div className="mb-10">
                     <div className="flex items-center gap-3 mb-3">
-                        <div className="w-4 h-8 bg-primary rounded-xs"></div>
-                        <span className="text-body-text font-semibold text-sm uppercase tracking-wider">{t("newArrival.eyebrow")}</span>
+                        {/* <div className="w-4 h-8 bg-primary rounded-xs"></div> */}
+                        <span className="text-white font-semibold text-sm uppercase tracking-wider">{t("newArrival.eyebrow")}</span>
                     </div>
                     <div className="flex justify-between items-end">
                         <h2 className="title mb-0!">{t("newArrival.title")}</h2>

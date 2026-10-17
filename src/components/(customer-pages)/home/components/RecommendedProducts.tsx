@@ -100,7 +100,7 @@ const RecommendedProducts = ({
                 {/* Header */}
                 <div className="mb-4 md:mb-6">
                     <div className="flex items-center gap-2 mb-2">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-white border border-primary/20">
                             <Sparkles className="w-3.5 h-3.5 animate-pulse" />
                             {isAi
                                 ? safeT("recommendations.eyebrow", "Personalized For You")
@@ -110,7 +110,7 @@ const RecommendedProducts = ({
 
                     <div className="flex justify-between items-end">
                         <div className="flex items-center gap-3">
-                            <div className="w-4 h-8 bg-primary rounded-xs hidden sm:block"></div>
+                            {/* <div className="w-4 h-8 bg-primary rounded-xs hidden sm:block"></div> */}
                             <h2 className="title mb-0!">
                                 {safeT("recommendations.recommendedProducts", "Recommended Products")}
                             </h2>
