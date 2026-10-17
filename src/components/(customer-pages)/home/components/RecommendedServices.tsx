@@ -1,20 +1,38 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Sparkles, ArrowRight } from "lucide-react";
 import ServiceCard from "@/shared/ServiceCard";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
-import {
-    RecommendedServiceData,
-    getPersonalizedRecommendations,
-} from "../../../../../helpers/recommendationService";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
-import { useAuth } from "@/hooks/use-auth";
+
+export interface RecommendedService {
+    _id: string;
+    name: string;
+    slug?: string;
+    price: number;
+    image?: string;
+    images?: string[];
+    category?: {
+        _id?: string;
+        name?: string;
+        slug?: string;
+    };
+    averageRating?: number;
+    ratingAverage?: number;
+    bookingsCount?: number;
+    ratingCount?: number;
+    deliveryTime?: number;
+    status?: string;
+    creator?: {
+        name?: string;
+        profileImage?: string;
+    };
+}
 
 interface RecommendedServicesProps {
-    initialServices?: RecommendedServiceData[];
-    fallbackServices?: RecommendedServiceData[];
+    initialServices?: RecommendedService[];
+    isAi?: boolean;
 }
 
 export const RecommendedServicesSkeleton = ({ count = 5 }: { count?: number }) => {
@@ -53,16 +71,11 @@ export const RecommendedServicesSkeleton = ({ count = 5 }: { count?: number }) =
 
 const RecommendedServices = ({
     initialServices = [],
-    fallbackServices = [],
+    isAi = false,
 }: RecommendedServicesProps) => {
     const router = useRouter();
-    const { isLoggedIn } = useAuth();
     const t = useTranslations("Home");
-
-    const [services, setServices] = useState<RecommendedServiceData[]>(
-        initialServices.length > 0 ? initialServices : fallbackServices
-    );
-    const [isAi, setIsAi] = useState<boolean>(initialServices.length > 0);
+    const services = initialServices.slice(0, 5);
 
     const safeT = (key: string, fallback: string): string => {
         try {
@@ -71,38 +84,6 @@ const RecommendedServices = ({
             return fallback;
         }
     };
-
-    // Client-side fetch if user is logged in
-    useEffect(() => {
-        if (!isLoggedIn) return;
-
-        let isMounted = true;
-        const fetchRecommendations = async () => {
-            try {
-                const res = await getPersonalizedRecommendations({
-                    itemType: "Service",
-                    limit: 10,
-                });
-                if (isMounted && res.success && res.data?.items?.length) {
-                    const recServs = res.data.items
-                        .filter((it) => it.type === "Service")
-                        .map((it) => it.data as RecommendedServiceData);
-                    if (recServs.length > 0) {
-                        setServices(recServs);
-                        setIsAi(res.data.source === "ai_collaborative");
-                    }
-                }
-            } catch {
-                // Silently keep fallback services
-            }
-        };
-
-        fetchRecommendations();
-
-        return () => {
-            isMounted = false;
-        };
-    }, [isLoggedIn]);
 
     const handleClick = () => {
         const cookies = document.cookie;
@@ -113,12 +94,9 @@ const RecommendedServices = ({
         router.refresh();
     };
 
-    // If no services available at all
     if (services.length === 0) {
         return null;
     }
-
-    const displayServices = services.slice(0, 5);
 
     return (
         <section className="py-[40px] bg-background">
@@ -153,7 +131,7 @@ const RecommendedServices = ({
 
                 {/* Services Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-6">
-                    {displayServices.map((service) => {
+                    {services.map((service) => {
                         const creatorName =
                             service.creator?.name || safeT("services.unknown", "Wak Provider");
                         return (

@@ -1,21 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Sparkles, ArrowRight } from "lucide-react";
 import ProductCard from "@/shared/ProductCard";
 import { productRequiresVariant } from "../../../../../helpers/product-variant";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
-import {
-    RecommendedProductData,
-    getPersonalizedRecommendations,
-} from "../../../../../helpers/recommendationService";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
-import { useAuth } from "@/hooks/use-auth";
+
+export interface RecommendedProduct {
+    _id: string;
+    name: string;
+    images: string[];
+    price: number;
+    discountPrice?: number;
+    ratingAverage?: number;
+    ratingCount?: number;
+    slug?: string;
+    colors?: string[];
+    sizes?: string[];
+    variants?: unknown[];
+    hasVariant?: boolean;
+}
 
 interface RecommendedProductsProps {
-    initialProducts?: RecommendedProductData[];
-    fallbackProducts?: RecommendedProductData[];
+    initialProducts?: RecommendedProduct[];
+    isAi?: boolean;
 }
 
 export const RecommendedProductsSkeleton = ({ count = 5 }: { count?: number }) => {
@@ -58,16 +67,11 @@ export const RecommendedProductsSkeleton = ({ count = 5 }: { count?: number }) =
 
 const RecommendedProducts = ({
     initialProducts = [],
-    fallbackProducts = [],
+    isAi = false,
 }: RecommendedProductsProps) => {
     const router = useRouter();
-    const { isLoggedIn } = useAuth();
     const t = useTranslations("Home");
-
-    const [products, setProducts] = useState<RecommendedProductData[]>(
-        initialProducts.length > 0 ? initialProducts : fallbackProducts
-    );
-    const [isAi, setIsAi] = useState<boolean>(initialProducts.length > 0);
+    const products = initialProducts.slice(0, 5);
 
     const safeT = (key: string, fallback: string): string => {
         try {
@@ -76,38 +80,6 @@ const RecommendedProducts = ({
             return fallback;
         }
     };
-
-    // Client-side fetch if user is logged in
-    useEffect(() => {
-        if (!isLoggedIn) return;
-
-        let isMounted = true;
-        const fetchRecommendations = async () => {
-            try {
-                const res = await getPersonalizedRecommendations({
-                    itemType: "Product",
-                    limit: 10,
-                });
-                if (isMounted && res.success && res.data?.items?.length) {
-                    const recProds = res.data.items
-                        .filter((it) => it.type === "Product")
-                        .map((it) => it.data as RecommendedProductData);
-                    if (recProds.length > 0) {
-                        setProducts(recProds);
-                        setIsAi(res.data.source === "ai_collaborative");
-                    }
-                }
-            } catch {
-                // Silently keep fallback products
-            }
-        };
-
-        fetchRecommendations();
-
-        return () => {
-            isMounted = false;
-        };
-    }, [isLoggedIn]);
 
     const handleClick = () => {
         const cookies = document.cookie;
@@ -118,12 +90,9 @@ const RecommendedProducts = ({
         router.refresh();
     };
 
-    // If no products available at all
     if (products.length === 0) {
         return null;
     }
-
-    const displayProducts = products.slice(0, 5);
 
     return (
         <section className="py-[40px] bg-background">
@@ -158,7 +127,7 @@ const RecommendedProducts = ({
 
                 {/* Products Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
-                    {displayProducts.map((product) => (
+                    {products.map((product) => (
                         <ProductCard
                             key={product._id}
                             product={{

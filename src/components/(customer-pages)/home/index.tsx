@@ -12,7 +12,6 @@ import RecommendedProducts, { RecommendedProductsSkeleton } from "./components/R
 import RecommendedServices, { RecommendedServicesSkeleton } from "./components/RecommendedServices";
 import { getActiveCategories } from "../../../../helpers/categoryService";
 import { myFetch } from "../../../../helpers/myFetch";
-import { getAccessToken } from "../../../../helpers/getAccessToken";
 import { normalizeShoppingCountryCode } from "../../../../helpers/regions";
 import {
     RecommendationResponseData,
@@ -25,7 +24,6 @@ const Home = async () => {
     const headerStore = await headers();
     const countryCode = normalizeShoppingCountryCode(headerStore.get("x-country-code"));
     const countryQuery = `countryCode=${encodeURIComponent(countryCode)}`;
-    const token = await getAccessToken();
 
     const [
         prodRes,
@@ -55,16 +53,12 @@ const Home = async () => {
             cache: 'force-cache',
             next: { revalidate: 3600, tags: [`hero-section-${countryCode}`] },
         }),
-        token
-            ? myFetch<RecommendationResponseData>(`/recommendations/me?limit=10&itemType=Product`, {
-                cache: 'no-store',
-            })
-            : Promise.resolve(null),
-        token
-            ? myFetch<RecommendationResponseData>(`/recommendations/me?limit=10&itemType=Service`, {
-                cache: 'no-store',
-            })
-            : Promise.resolve(null),
+        myFetch<RecommendationResponseData>(`/recommendations/me?limit=10&itemType=Product`, {
+            cache: 'no-store',
+        }),
+        myFetch<RecommendationResponseData>(`/recommendations/me?limit=10&itemType=Service`, {
+            cache: 'no-store',
+        }),
     ]);
 
     const productCategories = prodRes?.data || [];
@@ -82,6 +76,14 @@ const Home = async () => {
         ?.filter((it) => it.type === "Service")
         ?.map((it) => it.data) || []) as RecommendedServiceData[];
 
+    const recommendedProducts = recProducts.length > 0
+        ? recProducts
+        : bestSellingProducts.slice(0, 5);
+
+    const recommendedServices = recServices.length > 0
+        ? recServices
+        : servicesList.slice(0, 5);
+
     return (
         <main className="w-full">
             <UserModeReset />
@@ -98,8 +100,8 @@ const Home = async () => {
             <Suspense fallback={<RecommendedProductsSkeleton />}>
                 <RecommendedProducts
                     key={`rec-products-${countryCode}`}
-                    initialProducts={recProducts}
-                    fallbackProducts={bestSellingProducts.slice(0, 5)}
+                    initialProducts={recommendedProducts}
+                    isAi={recProducts.length > 0}
                 />
             </Suspense>
 
@@ -112,8 +114,8 @@ const Home = async () => {
             <Suspense fallback={<RecommendedServicesSkeleton />}>
                 <RecommendedServices
                     key="rec-services"
-                    initialServices={recServices}
-                    fallbackServices={servicesList.slice(0, 5)}
+                    initialServices={recommendedServices}
+                    isAi={recServices.length > 0}
                 />
             </Suspense>
 
