@@ -29,6 +29,7 @@ import {
     writeDeliveryLocation,
     type DeliveryLocation,
 } from '../../helpers/delivery-location';
+import Image from 'next/image';
 
 interface NavbarProps {
     userMode?: string;
@@ -166,7 +167,16 @@ export default function Navbar({
             <div className="bg-secondary  py-3 px-4 sm:px-6">
                 <div className="container mx-auto flex items-center justify-between gap-4 lg:gap-6">
                     {/* Logo & Tagline */}
-                    <Logo />
+                    {/* <Logo /> */}
+
+                    <Link href="/">
+                        <Image
+                            src="/logo.png"
+                            alt="Logo"
+                            width={70}
+                            height={70}
+                            className='rounded-full object-cover h-[70px] w-[70px]'
+                        /></Link>
 
                     {/* All Categories & Search Bar */}
                     <div className="hidden md:flex flex-1 max-w-2xl mx-2">
