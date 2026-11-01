@@ -3,9 +3,7 @@ import { myFetch } from "../../../../../helpers/myFetch";
 import { mapOrders } from "@/components/(customer-pages)/profile/orders/mapOrders";
 
 interface OrdersPageProps {
-  searchParams:
-    | Promise<{ [key: string]: string | string[] | undefined }>
-    | { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function OrdersRoute({ searchParams }: OrdersPageProps) {

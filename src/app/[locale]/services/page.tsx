@@ -1,4 +1,5 @@
 import Services from "@/components/(service-pages)/services";
+import { type ServiceItem } from "@/components/(service-pages)/services/components/ServiceList";
 import { Metadata } from "next";
 import { nextFetch } from "../../../../helpers/myFetch";
 import { getActiveCategories } from "../../../../helpers/categoryService";
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 interface ServicesPageProps {
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }> | { [key: string]: string | string[] | undefined };
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function ServicesPage({ searchParams }: ServicesPageProps) {
@@ -37,7 +38,7 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
     params.append("limit", "12");
 
     const queryString = params.toString() ? `?${params.toString()}` : "";
-    const servicesRes = await nextFetch<any[]>(`/services${queryString}`, {
+    const servicesRes = await nextFetch<ServiceItem[]>(`/services${queryString}`, {
         cache: 'force-cache',
         next: { revalidate: 3600, tags: ['services'] },
         debug: true,

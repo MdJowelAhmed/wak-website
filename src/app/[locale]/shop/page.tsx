@@ -4,7 +4,7 @@ import { nextFetch } from "../../../../helpers/myFetch";
 import { getActiveCategories } from "../../../../helpers/categoryService";
 
 interface ShopPageProps {
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }> | { [key: string]: string | string[] | undefined };
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function ShopPage({ searchParams }: ShopPageProps) {
