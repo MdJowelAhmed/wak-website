@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
 import { apiGetCart } from "../../helpers/cartService";
+import { useAuth } from "./AuthContext";
 
 interface CartContextValue {
     cartCount: number;
@@ -14,9 +15,14 @@ const CartContext = createContext<CartContextValue>({
 });
 
 export function CartProvider({ children }: { children: ReactNode }) {
+    const { isLoggedIn } = useAuth();
     const [cartCount, setCartCount] = useState(0);
 
     const refreshCart = useCallback(async () => {
+        if (!isLoggedIn) {
+            setCartCount(0);
+            return;
+        }
         try {
             const res = await apiGetCart();
             if (res?.data?.items) {
@@ -27,10 +33,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
         } catch {
             // silently fail — navbar shouldn't break on cart error
         }
-    }, []);
+    }, [isLoggedIn]);
 
     // Fetch on mount and when auth changes
     useEffect(() => {
+        if (!isLoggedIn) {
+            setCartCount(0);
+            return;
+        }
+
         refreshCart();
 
         const handleAuthChange = () => {
@@ -39,7 +50,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
         window.addEventListener("auth-change", handleAuthChange);
         return () => window.removeEventListener("auth-change", handleAuthChange);
-    }, [refreshCart]);
+    }, [isLoggedIn, refreshCart]);
 
     return (
         <CartContext.Provider value={{ cartCount, refreshCart }}>

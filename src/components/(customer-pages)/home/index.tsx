@@ -18,12 +18,13 @@ import {
     RecommendedProductData,
     RecommendedServiceData,
 } from "../../../../helpers/recommendationService";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 const Home = async () => {
-    const headerStore = await headers();
+    const [headerStore, cookieStore] = await Promise.all([headers(), cookies()]);
     const countryCode = normalizeShoppingCountryCode(headerStore.get("x-country-code"));
     const countryQuery = `countryCode=${encodeURIComponent(countryCode)}`;
+    const hasAuthToken = Boolean(cookieStore.get("accessToken")?.value);
 
     const [
         prodRes,
@@ -53,12 +54,17 @@ const Home = async () => {
             cache: 'force-cache',
             next: { revalidate: 3600, tags: [`hero-section-${countryCode}`] },
         }),
-        myFetch<RecommendationResponseData>(`/recommendations/me?limit=10&itemType=Product`, {
-            cache: 'no-store',
-        }),
-        myFetch<RecommendationResponseData>(`/recommendations/me?limit=10&itemType=Service`, {
-            cache: 'no-store',
-        }),
+        // Only request personalized recommendations when the user is logged in
+        hasAuthToken
+            ? myFetch<RecommendationResponseData>(`/recommendations/me?limit=10&itemType=Product`, {
+                cache: 'no-store',
+            })
+            : Promise.resolve(null),
+        hasAuthToken
+            ? myFetch<RecommendationResponseData>(`/recommendations/me?limit=10&itemType=Service`, {
+                cache: 'no-store',
+            })
+            : Promise.resolve(null),
     ]);
 
     const productCategories = prodRes?.data || [];

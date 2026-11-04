@@ -14,11 +14,27 @@ import { useCategories } from '../hooks/useCategories';
 
 export default function BrowseCategoriesButton() {
     const [isOpen, setIsOpen] = useState(false);
+    const [hasBeenOpened, setHasBeenOpened] = useState(false);
     const [activeTab, setActiveTab] = useState<'products' | 'services'>('products');
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const { categories: productCategories } = useCategories({ type: 'product' });
-    const { categories: serviceCategories } = useCategories({ type: 'service' });
+    // Only fetch categories when the user hovers or opens the dropdown
+    const { categories: productCategories } = useCategories({ type: 'product' }, hasBeenOpened);
+    const { categories: serviceCategories } = useCategories({ type: 'service' }, hasBeenOpened);
+
+    const handleToggle = () => {
+        setIsOpen((prev) => {
+            const next = !prev;
+            if (next) setHasBeenOpened(true);
+            return next;
+        });
+    };
+
+    const handleMouseEnter = () => {
+        if (!hasBeenOpened) {
+            setHasBeenOpened(true);
+        }
+    };
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -37,9 +53,9 @@ export default function BrowseCategoriesButton() {
     }, [isOpen]);
 
     return (
-        <div className="relative" ref={dropdownRef}>
+        <div className="relative" ref={dropdownRef} onMouseEnter={handleMouseEnter}>
             <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={handleToggle}
                 className="flex items-center gap-3 bg-[#FF6700] hover:bg-orange-500 transition-colors text-white px-5 py-2.5 rounded-lg font-semibold text-sm cursor-pointer shrink-0 w-64 justify-between"
                 aria-expanded={isOpen}
             >

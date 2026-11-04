@@ -3,12 +3,13 @@
 import { useState, useEffect } from "react";
 import { getActiveCategories, Category, CategoryQueryParams } from "../../helpers/categoryService";
 
-export function useCategories(params?: CategoryQueryParams) {
+export function useCategories(params?: CategoryQueryParams, enabled: boolean = true) {
     const [categories, setCategories] = useState<Category[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(enabled);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        if (!enabled) return;
         let isMounted = true;
 
         const fetchCategories = async () => {
@@ -41,7 +42,7 @@ export function useCategories(params?: CategoryQueryParams) {
         return () => {
             isMounted = false;
         };
-    }, [params?.type, params?.isFeatured, params?.limit]);
+    }, [enabled, params?.type, params?.isFeatured, params?.limit]);
 
     return { categories, loading, error };
 }

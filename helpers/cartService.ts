@@ -2,6 +2,7 @@
 "use server";
 
 import { myFetch, type FetchResponse } from "./myFetch";
+import { getAccessToken } from "./getAccessToken";
 
 export interface CartVariantParam {
     product: string;
@@ -158,6 +159,10 @@ export async function apiRemoveCartItem(
  * Endpoint: GET /api/v1/cart
  */
 export async function apiGetCart() {
+    const token = await getAccessToken();
+    if (!token) {
+        return { success: false, data: null, error: "Not authenticated" };
+    }
     return cartApiFetch("/cart", {
         cache: "no-store",
     });

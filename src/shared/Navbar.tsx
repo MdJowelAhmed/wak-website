@@ -63,7 +63,8 @@ export default function Navbar({
 
     useEffect(() => {
         setAddresses(initialShippingAddresses);
-    }, [addressSyncKey, initialShippingAddresses]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [addressSyncKey]);
 
     useEffect(() => {
         setCurrentLocation(readDeliveryLocation());

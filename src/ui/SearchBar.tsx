@@ -52,9 +52,11 @@ export default function SearchBar({
     const inputRef = useRef<HTMLInputElement>(null);
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const cacheRef = useRef<Map<string, SearchResult[]>>(new Map());
+    const searchIdRef = useRef(0);
 
     // Debounced search API call with caching
     const performSearch = useCallback(async (term: string) => {
+        const currentRequestId = ++searchIdRef.current;
         const trimmed = term.trim().toLowerCase();
         if (!trimmed) {
             setResults([]);
@@ -84,9 +86,13 @@ export default function SearchBar({
 
             setResults(data);
         } catch {
-            setResults([]);
+            if (currentRequestId === searchIdRef.current) {
+                setResults([]);
+            }
         } finally {
-            setIsLoading(false);
+            if (currentRequestId === searchIdRef.current) {
+                setIsLoading(false);
+            }
         }
     }, []);
 

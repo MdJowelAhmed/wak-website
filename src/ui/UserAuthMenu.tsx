@@ -19,19 +19,28 @@ export default function UserAuthMenu({ isLoggedIn, logout }: UserAuthMenuProps) 
     const [userName, setUserName] = useState<string>("");
 
     useEffect(() => {
+        let isMounted = true;
+
         if (isLoggedIn) {
-            getProfile().then((data) => {
-                if (data?.profileImage) {
-                    setProfileImage(data.profileImage);
-                }
-                if (data?.name) {
-                    setUserName(data.name);
-                }
-            }).catch(console.error);
+            getProfile()
+                .then((data) => {
+                    if (!isMounted) return;
+                    if (data?.profileImage) {
+                        setProfileImage(data.profileImage);
+                    }
+                    if (data?.name) {
+                        setUserName(data.name);
+                    }
+                })
+                .catch(console.error);
         } else {
             setProfileImage("/user.svg");
             setUserName("");
         }
+
+        return () => {
+            isMounted = false;
+        };
     }, [isLoggedIn]);
 
     if (!isLoggedIn) {
