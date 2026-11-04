@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Menu, X, MapPin, HelpCircle, ChevronDown, ShoppingBag } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
@@ -85,15 +85,19 @@ export default function Navbar({
         return () => window.removeEventListener('auth-change', refreshAddresses);
     }, [isLoggedIn]);
 
-    const handleSelectLocation = (location: DeliveryLocation) => {
+    const handleSelectLocation = useCallback((location: DeliveryLocation) => {
         setCurrentLocation(location);
         writeDeliveryLocation(location);
-    };
+    }, []);
 
-    const handleAddressesChange = (next: ShippingAddress[]) => {
+    const handleAddressesChange = useCallback((next: ShippingAddress[]) => {
         setAddresses(next);
         router.refresh();
-    };
+    }, [router]);
+
+    const handleCloseLocation = useCallback(() => setIsLocationOpen(false), []);
+    const handleCloseLang = useCallback(() => setIsLangOpen(false), []);
+    const handleCloseMenu = useCallback(() => setIsMenuOpen(false), []);
 
     const activeLangObj = languagesList.find((l) => l.code === locale) || languagesList[0];
 
@@ -137,7 +141,7 @@ export default function Navbar({
 
                             <LanguageRegionModal
                                 isOpen={isLangOpen}
-                                onClose={() => setIsLangOpen(false)}
+                                onClose={handleCloseLang}
                                 currentLang={locale}
                                 currentCountry={country.code}
                                 onSelectLanguage={() => undefined}
@@ -210,7 +214,7 @@ export default function Navbar({
             {/* Modals & Slide-out Menus */}
             <LocationModal
                 isOpen={isLocationOpen}
-                onClose={() => setIsLocationOpen(false)}
+                onClose={handleCloseLocation}
                 countryCode={country.code}
                 currentLocation={currentLocation}
                 onSelectLocation={handleSelectLocation}
@@ -223,7 +227,7 @@ export default function Navbar({
                 {isMenuOpen && (
                     <CustomerMobileMenu
                         isOpen={isMenuOpen}
-                        onClose={() => setIsMenuOpen(false)}
+                        onClose={handleCloseMenu}
                         isLoggedIn={isLoggedIn}
                         logout={logout}
                         userMode={userMode}

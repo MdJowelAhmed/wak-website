@@ -6,6 +6,7 @@ import {
   useState,
   useEffect,
   useCallback,
+  useMemo,
   ReactNode,
 } from "react";
 import { useRouter } from "next/navigation";
@@ -61,7 +62,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, [checkAuth]);
 
-  const login = async (token?: string) => {
+  const login = useCallback(async (token?: string) => {
     if (token) {
       Cookies.set("accessToken", token, { expires: 30, path: "/" });
       await setAccessToken(token);
@@ -69,9 +70,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("isLogin", "true");
     setIsLoggedIn(true);
     window.dispatchEvent(new Event("auth-change"));
-  };
+  }, []);
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
       Cookies.remove("accessToken", { path: "/" });
       Cookies.remove("accessToken");
@@ -86,10 +87,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       router.push("/");
       router.refresh();
     }
-  };
+  }, [router]);
+
+  const contextValue = useMemo<AuthContextValue>(
+    () => ({
+      isLoggedIn,
+      isLoading,
+      login,
+      logout,
+    }),
+    [isLoggedIn, isLoading, login, logout]
+  );
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, isLoading, login, logout }}>
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );

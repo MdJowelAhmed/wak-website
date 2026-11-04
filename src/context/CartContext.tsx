@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, useMemo, ReactNode } from "react";
 import { apiGetCart } from "../../helpers/cartService";
 import { useAuth } from "./AuthContext";
 
@@ -52,8 +52,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
         return () => window.removeEventListener("auth-change", handleAuthChange);
     }, [isLoggedIn, refreshCart]);
 
+    const contextValue = useMemo<CartContextValue>(
+        () => ({ cartCount, refreshCart }),
+        [cartCount, refreshCart]
+    );
+
     return (
-        <CartContext.Provider value={{ cartCount, refreshCart }}>
+        <CartContext.Provider value={contextValue}>
             {children}
         </CartContext.Provider>
     );

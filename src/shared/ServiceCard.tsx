@@ -45,6 +45,7 @@ const ServiceCard = ({ id, name, coverImage, category, price, rating, reviewCoun
                     src={coverImage}
                     alt={name}
                     fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 {/* Gradient Overlay */}

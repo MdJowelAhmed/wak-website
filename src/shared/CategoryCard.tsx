@@ -31,7 +31,6 @@ export default function CategoryCard({
                     alt={category.name}
                     fill
                     sizes={layout === "row" ? "192px" : "(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 180px"}
-                    unoptimized
                     className="object-cover transition-transform duration-300 group-hover:scale-110"
                 />
             </div>
