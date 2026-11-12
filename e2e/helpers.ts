@@ -8,14 +8,12 @@ export function appPath(path: string): string {
   return path.startsWith("/") ? `${LOCALE_HOME}${path}` : `${LOCALE_HOME}/${path}`;
 }
 
-/** Auth UI shows a placeholder until `getSession()` finishes. */
 export async function gotoHomeAndWaitForAuth(page: Page) {
-  await page.goto(LOCALE_HOME, { waitUntil: "domcontentloaded" });
+  await page.goto(LOCALE_HOME);
   const loginButton = page.locator("header button").filter({ hasText: /login/i });
   const profileLink = page.getByRole("link", { name: /my profile/i });
 
   await expect(loginButton.or(profileLink).first()).toBeVisible({ timeout: 20_000 });
-  await expect(loginButton).not.toHaveAttribute("aria-busy", "true", { timeout: 20_000 });
 }
 
 export async function openLoginDialog(page: Page) {

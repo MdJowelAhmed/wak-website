@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Play } from "lucide-react";
 import { useTranslations } from "next-intl";
 import MediaVideo from "@/ui/MediaVideo";
+import { skipImageOptimization } from "../../../../../helpers/image-optimization";
 
 const LENS_SIZE = 230;
 
@@ -107,7 +108,7 @@ export default function ProductGallery({
                                 src={image}
                                 alt={t("viewImage", { name, index: index + 1 })}
                                 fill
-                                unoptimized
+                                unoptimized={skipImageOptimization(image)}
                                 className="object-cover"
                                 sizes="80px"
                             />
@@ -189,7 +190,7 @@ export default function ProductGallery({
                                     src={activeImage}
                                     alt={name}
                                     fill
-                                    unoptimized
+                                    unoptimized={skipImageOptimization(activeImage)}
                                     priority
                                     draggable={false}
                                     className="pointer-events-none object-cover"

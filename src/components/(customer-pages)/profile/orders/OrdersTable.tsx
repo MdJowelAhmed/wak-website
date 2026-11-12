@@ -13,6 +13,7 @@ import {
   PaginationPrevious,
 } from "@/ui/pagination";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
+import { skipImageOptimization } from "../../../../../helpers/image-optimization";
 import { formatLabel, orderStatusMessageKey, statusBadgeClass, type Order } from "./types";
 
 export type { Order } from "./types";
@@ -218,7 +219,14 @@ function OrderThumb({ order }: { order: Order }) {
     "/placeholder.svg";
   return (
     <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-white/10">
-      <Image src={src} alt={order.title} fill sizes="48px" unoptimized className="object-cover" />
+      <Image
+        src={src}
+        alt={order.title}
+        fill
+        sizes="48px"
+        unoptimized={skipImageOptimization(src)}
+        className="object-cover"
+      />
     </div>
   );
 }

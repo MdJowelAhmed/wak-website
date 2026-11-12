@@ -14,7 +14,8 @@ import { useTranslations } from "next-intl";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
 import { removeAccessToken, setAccessToken } from "../../helpers/authActions";
-import { getSession, type SessionResult, type SessionUser } from "../../helpers/getSession";
+import { getSession } from "../../helpers/getSession";
+import type { SessionResult, SessionUser } from "../../helpers/getProfile";
 
 const LOGIN_FLAG_KEY = "isLogin";
 const SESSION_LOOKUP_TIMEOUT_MS = 12_000;
@@ -30,7 +31,6 @@ function withSessionTimeout(promise: Promise<SessionResult>): Promise<SessionRes
 
 interface AuthContextValue {
   isLoggedIn: boolean;
-  isLoading: boolean;
   user: SessionUser | null;
   login: (token: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -39,7 +39,6 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue>({
   isLoggedIn: false,
-  isLoading: true,
   user: null,
   login: async () => {},
   logout: async () => {},
@@ -51,45 +50,50 @@ function clearClientSession() {
   localStorage.removeItem(LOGIN_FLAG_KEY);
 }
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<SessionUser | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+/** Keeps the cross-tab login flag and the readable cookie in line with the session. */
+function syncClientSession(session: SessionResult) {
+  if (session.status === "authenticated") {
+    localStorage.setItem(LOGIN_FLAG_KEY, "true");
+  } else if (session.status === "unauthenticated") {
+    clearClientSession();
+  }
+}
+
+interface AuthProviderProps {
+  children: ReactNode;
+  initialSession: SessionResult;
+}
+
+export function AuthProvider({ children, initialSession }: AuthProviderProps) {
+  const [user, setUser] = useState<SessionUser | null>(
+    initialSession.status === "authenticated" ? initialSession.user : null,
+  );
   const router = useRouter();
   const t = useTranslations("Navigation");
 
-  const applySession = useCallback((session: SessionResult) => {
-    if (session.status === "authenticated") {
-      localStorage.setItem(LOGIN_FLAG_KEY, "true");
-      setUser(session.user);
-    } else if (session.status === "unauthenticated") {
-      clearClientSession();
-      setUser(null);
-    }
-    // On "error" (network/server failure) keep the last known state.
-    setIsLoading(false);
-  }, []);
-
   const refreshUser = useCallback(async () => {
     if (!Cookies.get("accessToken")) {
-      applySession({ status: "unauthenticated" });
+      clearClientSession();
+      setUser(null);
       return;
     }
 
-    await withSessionTimeout(
+    const session = await withSessionTimeout(
       getSession().catch((): SessionResult => ({ status: "error" })),
-    ).then(applySession);
-  }, [applySession]);
+    );
+    syncClientSession(session);
+    // On "error" (network/server failure) keep the last known state.
+    if (session.status === "authenticated") setUser(session.user);
+    else if (session.status === "unauthenticated") setUser(null);
+  }, []);
 
   useEffect(() => {
-    let alive = true;
-    const failSafe = window.setTimeout(() => {
-      if (alive) setIsLoading(false);
-    }, SESSION_LOOKUP_TIMEOUT_MS + 1_000);
+    syncClientSession(initialSession);
+    // Only the first server snapshot needs syncing; later changes go through refreshUser.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    void refreshUser().finally(() => {
-      if (alive) window.clearTimeout(failSafe);
-    });
-
+  useEffect(() => {
     const handleStorage = (event: StorageEvent) => {
       if (event.key === LOGIN_FLAG_KEY || event.key === null) {
         void refreshUser();
@@ -97,11 +101,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     window.addEventListener("storage", handleStorage);
-    return () => {
-      alive = false;
-      window.clearTimeout(failSafe);
-      window.removeEventListener("storage", handleStorage);
-    };
+    return () => window.removeEventListener("storage", handleStorage);
   }, [refreshUser]);
 
   const login = useCallback(
@@ -128,13 +128,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const contextValue = useMemo<AuthContextValue>(
     () => ({
       isLoggedIn: user !== null,
-      isLoading,
       user,
       login,
       logout,
       refreshUser,
     }),
-    [user, isLoading, login, logout, refreshUser],
+    [user, login, logout, refreshUser],
   );
 
   return (

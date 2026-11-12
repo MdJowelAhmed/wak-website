@@ -156,15 +156,6 @@
       "emptyProducts": "Không tìm thấy danh mục sản phẩm",
       "emptyServices": "Không tìm thấy danh mục dịch vụ"
     },
-    "featured": {
-      "title": "Danh mục nổi bật",
-      "loading": "Đang tải danh mục...",
-      "empty": "Không tìm thấy danh mục nổi bật.",
-      "exploreProducts": "Khám phá sản phẩm",
-      "exploreServices": "Khám phá dịch vụ",
-      "previous": "Danh mục trước",
-      "next": "Danh mục tiếp"
-    },
     "bestSelling": {
       "eyebrow": "Tháng này",
       "title": "Sản phẩm bán chạy",

@@ -8,18 +8,20 @@ import Features from "./components/Features";
 import NewArrival from "./components/NewArrival";
 import Services from "./components/Services";
 import AppDownloadSection from "./components/AppDownloadSection";
-import RecommendedProducts, { RecommendedProductsSkeleton } from "./components/RecommendedProducts";
-import RecommendedServices, { RecommendedServicesSkeleton } from "./components/RecommendedServices";
+import { RecommendedProductsSkeleton } from "./components/RecommendedProducts";
+import { RecommendedServicesSkeleton } from "./components/RecommendedServices";
+import {
+    RecommendedProductsSection,
+    RecommendedServicesSection,
+} from "./components/RecommendationSections";
 import { getActiveCategories } from "../../../../helpers/categoryService";
 import { myFetch } from "../../../../helpers/myFetch";
 import { normalizeShoppingCountryCode } from "../../../../helpers/regions";
-import {
-    RecommendationResponseData,
-    RecommendedProductData,
-    RecommendedServiceData,
-} from "../../../../helpers/recommendationService";
 import { cookies, headers } from "next/headers";
 import { mapHeroBanners } from "../../../../helpers/mapHeroBanner";
+
+const NEW_ARRIVAL_COUNT = 6;
+const SERVICES_COUNT = 10;
 
 const Home = async () => {
     const [headerStore, cookieStore] = await Promise.all([headers(), cookies()]);
@@ -27,27 +29,18 @@ const Home = async () => {
     const countryQuery = `countryCode=${encodeURIComponent(countryCode)}`;
     const hasAuthToken = Boolean(cookieStore.get("accessToken")?.value);
 
-    const [
-        prodRes,
-        servRes,
-        bestSellingRes,
-        newArrivalsRes,
-        servicesRes,
-        heroRes,
-        recProdRes,
-        recServRes,
-    ] = await Promise.all([
+    const [prodRes, servRes, bestSellingRes, newArrivalsRes, servicesRes, heroRes] = await Promise.all([
         getActiveCategories({ type: 'product' }),
         getActiveCategories({ type: 'service' }),
         myFetch(`/products/best-selling?${countryQuery}`, {
             cache: 'force-cache',
             next: { revalidate: 3600, tags: ['products', `products-best-selling-${countryCode}`] },
         }),
-        myFetch(`/products?${countryQuery}`, {
+        myFetch(`/products?${countryQuery}&limit=${NEW_ARRIVAL_COUNT}`, {
             cache: 'force-cache',
             next: { revalidate: 3600, tags: ['products', `products-${countryCode}`] },
         }),
-        myFetch('/services', {
+        myFetch(`/services?limit=${SERVICES_COUNT}`, {
             cache: 'force-cache',
             next: { revalidate: 3600, tags: ['services'] },
         }),
@@ -55,17 +48,6 @@ const Home = async () => {
             cache: 'force-cache',
             next: { revalidate: 3600, tags: [`hero-section-${countryCode}`] },
         }),
-        // Only request personalized recommendations when the user is logged in
-        hasAuthToken
-            ? myFetch<RecommendationResponseData>(`/recommendations/me?limit=10&itemType=Product`, {
-                cache: 'no-store',
-            })
-            : Promise.resolve(null),
-        hasAuthToken
-            ? myFetch<RecommendationResponseData>(`/recommendations/me?limit=10&itemType=Service`, {
-                cache: 'no-store',
-            })
-            : Promise.resolve(null),
     ]);
 
     const productCategories = prodRes?.data || [];
@@ -74,22 +56,6 @@ const Home = async () => {
     const newArrivalProducts = newArrivalsRes?.data || [];
     const servicesList = servicesRes?.data || [];
     const heroBanners = mapHeroBanners(heroRes?.data);
-
-    const recProducts = (recProdRes?.data?.items
-        ?.filter((it) => it.type === "Product")
-        ?.map((it) => it.data) || []) as RecommendedProductData[];
-
-    const recServices = (recServRes?.data?.items
-        ?.filter((it) => it.type === "Service")
-        ?.map((it) => it.data) || []) as RecommendedServiceData[];
-
-    const recommendedProducts = recProducts.length > 0
-        ? recProducts
-        : bestSellingProducts.slice(0, 5);
-
-    const recommendedServices = recServices.length > 0
-        ? recServices
-        : servicesList.slice(0, 5);
 
     return (
         <main className="w-full">
@@ -103,12 +69,11 @@ const Home = async () => {
                 serviceCategories={serviceCategories}
             />
 
-            {/* Recommended Products Section */}
             <Suspense fallback={<RecommendedProductsSkeleton />}>
-                <RecommendedProducts
+                <RecommendedProductsSection
                     key={`rec-products-${countryCode}`}
-                    initialProducts={recommendedProducts}
-                    isAi={recProducts.length > 0}
+                    hasAuthToken={hasAuthToken}
+                    fallback={bestSellingProducts.slice(0, 5)}
                 />
             </Suspense>
 
@@ -117,12 +82,10 @@ const Home = async () => {
             </Suspense>
             <NewArrival key={countryCode} initialProducts={newArrivalProducts} />
 
-            {/* Recommended Services Section */}
             <Suspense fallback={<RecommendedServicesSkeleton />}>
-                <RecommendedServices
-                    key="rec-services"
-                    initialServices={recommendedServices}
-                    isAi={recServices.length > 0}
+                <RecommendedServicesSection
+                    hasAuthToken={hasAuthToken}
+                    fallback={servicesList.slice(0, 5)}
                 />
             </Suspense>
 

@@ -156,15 +156,6 @@
       "emptyProducts": "Kategori produk tidak ditemukan",
       "emptyServices": "Kategori layanan tidak ditemukan"
     },
-    "featured": {
-      "title": "Kategori unggulan",
-      "loading": "Memuat kategori...",
-      "empty": "Kategori unggulan tidak ditemukan.",
-      "exploreProducts": "Jelajahi produk",
-      "exploreServices": "Jelajahi layanan",
-      "previous": "Kategori sebelumnya",
-      "next": "Kategori berikutnya"
-    },
     "bestSelling": {
       "eyebrow": "Bulan ini",
       "title": "Produk terlaris",

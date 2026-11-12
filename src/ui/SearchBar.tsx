@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useCurrency } from '@/hooks/use-currency';
 import { myFetch } from '../../helpers/myFetch';
 import { resolveImageUrl } from '../../helpers/resolveImageUrl';
+import { skipImageOptimization } from '../../helpers/image-optimization';
 import {
     Select,
     SelectContent,
@@ -275,12 +276,12 @@ export default function SearchBar({
                                         {/* Thumbnail */}
                                         <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-gray-100 shrink-0 border border-gray-200">
                                             <Image
-                                                src={resolveImageUrl(item.image) || 'https://placehold.co/48x48'}
+                                                src={resolveImageUrl(item.image) || '/placeholder.svg'}
                                                 alt={item.name}
                                                 fill
                                                 sizes="48px"
                                                 className="object-cover"
-                                                unoptimized
+                                                unoptimized={skipImageOptimization(resolveImageUrl(item.image))}
                                             />
                                         </div>
 

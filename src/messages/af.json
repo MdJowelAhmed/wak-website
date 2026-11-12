@@ -156,15 +156,6 @@
       "emptyProducts": "Geen produkkategorieë gevind nie",
       "emptyServices": "Geen dienskategorieë gevind nie"
     },
-    "featured": {
-      "title": "Uitgestalde kategorieë",
-      "loading": "Laai kategorieë...",
-      "empty": "Geen uitgestalde kategorieë gevind nie.",
-      "exploreProducts": "Verken produkte",
-      "exploreServices": "Verken dienste",
-      "previous": "Vorige kategorieë",
-      "next": "Volgende kategorieë"
-    },
     "bestSelling": {
       "eyebrow": "Hierdie maand",
       "title": "Topverkopende produkte",

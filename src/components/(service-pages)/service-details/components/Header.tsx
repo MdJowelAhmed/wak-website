@@ -3,6 +3,7 @@ import { Star } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import type { ServiceDetailsData } from "../types";
 import ServiceHeroMedia from "./ServiceHeroMedia";
+import { skipImageOptimization } from "../../../../../helpers/image-optimization";
 
 export default async function Header({ service }: { service: ServiceDetailsData }) {
     const t = await getTranslations("ServiceDetails");
@@ -22,7 +23,7 @@ export default async function Header({ service }: { service: ServiceDetailsData 
                             src={service.creator.profileImage}
                             alt={service.creator.name}
                             fill
-                            unoptimized
+                            unoptimized={skipImageOptimization(service.creator.profileImage)}
                             className="object-cover"
                             sizes="48px"
                         />

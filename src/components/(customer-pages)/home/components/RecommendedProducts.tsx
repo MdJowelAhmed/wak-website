@@ -11,7 +11,7 @@ import { useRouter } from "@/i18n/navigation";
 export interface RecommendedProduct {
     _id: string;
     name: string;
-    images: string[];
+    images?: string[];
     price: number;
     discountPrice?: number;
     ratingAverage?: number;

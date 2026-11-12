@@ -9,7 +9,7 @@ import ProfileAvatar from '@/ui/ProfileAvatar';
 
 export default function UserAuthMenu() {
     const t = useTranslations("Navigation");
-    const { isLoggedIn, isLoading, user, logout } = useAuth();
+    const { isLoggedIn, user, logout } = useAuth();
 
     if (!isLoggedIn) {
         return (
@@ -17,10 +17,7 @@ export default function UserAuthMenu() {
                 trigger={
                     <button
                         type="button"
-                        aria-busy={isLoading || undefined}
-                        className={`text-xs font-bold px-5 py-2 rounded-xl transition-all cursor-pointer text-white shadow-xs ${
-                            isLoading ? "bg-primary/70" : "bg-primary hover:bg-primary-hover"
-                        }`}
+                        className="text-xs font-bold px-5 py-2 rounded-xl transition-all cursor-pointer text-white shadow-xs bg-primary hover:bg-primary-hover"
                     >
                         {t("login")}
                     </button>

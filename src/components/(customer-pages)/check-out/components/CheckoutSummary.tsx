@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Button } from "@/ui/button";
 import { formatVariantLabel } from "../../../../../helpers/product-variant";
+import { skipImageOptimization } from "../../../../../helpers/image-optimization";
 import type { CartItem, DeliveryOption, PaymentMethod } from "../types";
 
 interface CheckoutSummaryProps {
@@ -51,7 +52,7 @@ export default function CheckoutSummary({
                                         alt={item.name}
                                         fill
                                         sizes="48px"
-                                        unoptimized
+                                        unoptimized={skipImageOptimization(item.image)}
                                         className="object-cover"
                                     />
                                 </div>

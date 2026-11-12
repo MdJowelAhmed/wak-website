@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useCurrency } from "@/hooks/use-currency";
 import { formatVariantLabel } from "../../../../helpers/product-variant";
+import { skipImageOptimization } from "../../../../helpers/image-optimization";
 import { type CartItem } from "../check-out/types";
 
 interface CartItemRowProps {
@@ -42,7 +43,7 @@ export default function CartItemRow({
                         alt={item.name}
                         fill
                         sizes="96px"
-                        unoptimized
+                        unoptimized={skipImageOptimization(item.image)}
                         className="object-cover"
                     />
                 </Link>

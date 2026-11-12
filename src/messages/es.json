@@ -156,15 +156,6 @@
       "emptyProducts": "No se encontraron categorías de productos",
       "emptyServices": "No se encontraron categorías de servicios"
     },
-    "featured": {
-      "title": "Categorías destacadas",
-      "loading": "Cargando categorías...",
-      "empty": "No se encontraron categorías destacadas.",
-      "exploreProducts": "Explorar productos",
-      "exploreServices": "Explorar servicios",
-      "previous": "Categorías anteriores",
-      "next": "Categorías siguientes"
-    },
     "bestSelling": {
       "eyebrow": "Este mes",
       "title": "Productos más vendidos",

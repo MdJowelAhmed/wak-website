@@ -156,15 +156,6 @@
       "emptyProducts": "Ürün kategorisi bulunamadı",
       "emptyServices": "Hizmet kategorisi bulunamadı"
     },
-    "featured": {
-      "title": "Öne çıkan kategoriler",
-      "loading": "Kategoriler yükleniyor...",
-      "empty": "Öne çıkan kategori bulunamadı.",
-      "exploreProducts": "Ürünleri keşfet",
-      "exploreServices": "Hizmetleri keşfet",
-      "previous": "Önceki kategoriler",
-      "next": "Sonraki kategoriler"
-    },
     "bestSelling": {
       "eyebrow": "Bu ay",
       "title": "En çok satan ürünler",

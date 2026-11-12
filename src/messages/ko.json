@@ -156,15 +156,6 @@
       "emptyProducts": "상품 카테고리를 찾을 수 없습니다",
       "emptyServices": "서비스 카테고리를 찾을 수 없습니다"
     },
-    "featured": {
-      "title": "추천 카테고리",
-      "loading": "카테고리를 불러오는 중...",
-      "empty": "추천 카테고리를 찾을 수 없습니다.",
-      "exploreProducts": "상품 둘러보기",
-      "exploreServices": "서비스 둘러보기",
-      "previous": "이전 카테고리",
-      "next": "다음 카테고리"
-    },
     "bestSelling": {
       "eyebrow": "이번 달",
       "title": "베스트셀러 상품",

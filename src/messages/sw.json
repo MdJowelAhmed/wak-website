@@ -156,15 +156,6 @@
       "emptyProducts": "Hakuna kategoria za bidhaa",
       "emptyServices": "Hakuna kategoria za huduma"
     },
-    "featured": {
-      "title": "Kategoria maarufu",
-      "loading": "Inapakia kategoria...",
-      "empty": "Hakuna kategoria maarufu.",
-      "exploreProducts": "Gundua bidhaa",
-      "exploreServices": "Gundua huduma",
-      "previous": "Kategoria zilizotangulia",
-      "next": "Kategoria zijazo"
-    },
     "bestSelling": {
       "eyebrow": "Mwezi huu",
       "title": "Bidhaa zinazouzwa zaidi",

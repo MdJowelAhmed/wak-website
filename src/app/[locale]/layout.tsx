@@ -18,6 +18,8 @@ import { getExchangeRates } from "../../../helpers/getExchangeRates";
 import { DEFAULT_COUNTRY } from "../../../helpers/currency";
 import { resolvePreferredCurrency } from "../../../helpers/regions";
 import { myFetch } from "../../../helpers/myFetch";
+import { apiGetCart } from "../../../helpers/cartService";
+import { readSession } from "../../../helpers/getProfile";
 import { mapShippingAddresses } from "../../../helpers/shipping-address";
 
 const inter = Inter({
@@ -28,41 +30,48 @@ const inter = Inter({
 const notoArabic = Noto_Naskh_Arabic({
   subsets: ["arabic"],
   variable: "--font-arabic",
+  preload: false,
 });
 
 const notoBengali = Noto_Sans_Bengali({
   subsets: ["bengali"],
   variable: "--font-bengali",
+  preload: false,
 });
 
 const notoChinese = Noto_Sans_SC({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-chinese",
+  preload: false,
 });
 
 const notoJapanese = Noto_Sans_JP({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-japanese",
+  preload: false,
 });
 
 const notoKorean = Noto_Sans_KR({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-korean",
+  preload: false,
 });
 
 const notoHindi = Noto_Sans_Devanagari({
   subsets: ["devanagari", "latin"],
   weight: ["400", "700"],
   variable: "--font-hindi",
+  preload: false,
 });
 
 const notoThai = Noto_Sans_Thai({
   subsets: ["thai", "latin"],
   weight: ["400", "700"],
   variable: "--font-thai",
+  preload: false,
 });
 
 function bodyFontClass(locale: string) {
@@ -122,15 +131,17 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   setRequestLocale(locale);
 
   const cookieStore = await cookies();
-  const [headerStore, exchangeRates, messages, addressRes] = await Promise.all([
+  const hasAuthToken = Boolean(cookieStore.get("accessToken")?.value);
+  const [headerStore, exchangeRates, messages, session, addressRes, cartRes] = await Promise.all([
     headers(),
     getExchangeRates(),
     getMessages(),
-    cookieStore.get("accessToken")?.value
-      ? myFetch("/shipping-addresses", { cache: "no-store" })
-      : Promise.resolve(null),
+    readSession(),
+    hasAuthToken ? myFetch("/shipping-addresses", { cache: "no-store" }) : Promise.resolve(null),
+    hasAuthToken ? apiGetCart() : Promise.resolve(null),
   ]);
 
+  const initialCartCount = Array.isArray(cartRes?.data?.items) ? cartRes.data.items.length : 0;
   const userMode = cookieStore.get("user-mode")?.value || "customer";
   const initialShippingAddresses = mapShippingAddresses(addressRes?.data);
   const cookieCountry = cookieStore.get("user_country")?.value;
@@ -150,13 +161,13 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     <html lang={locale} dir={direction} className={`${inter.variable} ${notoArabic.variable} ${notoBengali.variable} ${notoChinese.variable} ${notoJapanese.variable} ${notoKorean.variable} ${notoHindi.variable} ${notoThai.variable} h-full antialiased`} suppressHydrationWarning>
       <body className={`${fontClass} min-h-full flex flex-col mx-auto`}>
         <NextIntlClientProvider messages={messages}>
-          <AuthProvider>
+          <AuthProvider initialSession={session}>
             <CurrencyProvider
               initialRates={exchangeRates}
               initialCountry={initialCountry}
               initialCurrency={initialCurrency}
             >
-              <CartProvider>
+              <CartProvider initialCartCount={initialCartCount}>
                 <Toaster richColors position="top-center" />
                 <CustomerNavbar
                   userMode={userMode}

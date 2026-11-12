@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, useMemo, ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useMemo, ReactNode } from "react";
 import { apiGetCart } from "../../helpers/cartService";
 import { useAuth } from "./AuthContext";
 
@@ -14,9 +14,21 @@ const CartContext = createContext<CartContextValue>({
     refreshCart: async () => {},
 });
 
-export function CartProvider({ children }: { children: ReactNode }) {
+interface CartProviderProps {
+    children: ReactNode;
+    initialCartCount: number;
+}
+
+export function CartProvider({ children, initialCartCount }: CartProviderProps) {
     const { isLoggedIn } = useAuth();
-    const [cartCount, setCartCount] = useState(0);
+    const [serverCount, setServerCount] = useState(initialCartCount);
+    const [cartCount, setCartCount] = useState(initialCartCount);
+
+    // A server refresh (login, router.refresh) sends a new snapshot; adopt it.
+    if (serverCount !== initialCartCount) {
+        setServerCount(initialCartCount);
+        setCartCount(initialCartCount);
+    }
 
     const refreshCart = useCallback(
         () =>
@@ -26,12 +38,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
                 .catch(() => {}),
         []
     );
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            void refreshCart();
-        }
-    }, [isLoggedIn, refreshCart]);
 
     const visibleCount = isLoggedIn ? cartCount : 0;
 

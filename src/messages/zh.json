@@ -156,15 +156,6 @@
       "emptyProducts": "未找到商品分类",
       "emptyServices": "未找到服务分类"
     },
-    "featured": {
-      "title": "精选分类",
-      "loading": "正在加载分类...",
-      "empty": "未找到精选分类。",
-      "exploreProducts": "浏览商品",
-      "exploreServices": "浏览服务",
-      "previous": "上一组分类",
-      "next": "下一组分类"
-    },
     "bestSelling": {
       "eyebrow": "本月",
       "title": "畅销商品",

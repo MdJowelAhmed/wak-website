@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/ui/tabs";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
+import { skipImageOptimization } from "../../../../../helpers/image-optimization";
 import OrderTimeline from "./OrderTimeline";
 import {
   formatDate,
@@ -51,6 +52,7 @@ export default function ServiceOrderTabs({
   const attachments = order.deliveryAttachments || [];
   const hasDelivery = Boolean(order.deliveryDescription) || attachments.length > 0;
   const imageSrc = resolveImageUrl(order.thumbnail, "/placeholder.svg") || "/placeholder.svg";
+  const sellerAvatar = resolveImageUrl(order.sellerAvatar, "/user.svg") || "/user.svg";
 
   const handleTabChange = (value: string) => {
     router.replace(`${pathname}?tab=${value}`, { scroll: false });
@@ -146,7 +148,7 @@ export default function ServiceOrderTabs({
               alt={order.title}
               fill
               sizes="(max-width: 1024px) 100vw, 900px"
-              unoptimized
+              unoptimized={skipImageOptimization(imageSrc)}
               className="object-cover"
             />
           </div>
@@ -177,11 +179,11 @@ export default function ServiceOrderTabs({
           <div className="mt-3 flex items-center gap-3">
             <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-white/10">
               <Image
-                src={resolveImageUrl(order.sellerAvatar, "/user.svg") || "/user.svg"}
+                src={sellerAvatar}
                 alt={order.sellerName}
                 fill
                 sizes="48px"
-                unoptimized
+                unoptimized={skipImageOptimization(sellerAvatar)}
                 className="object-cover"
               />
             </div>
@@ -201,11 +203,11 @@ export default function ServiceOrderTabs({
               <div className="flex items-start gap-3">
                 <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-white/10">
                   <Image
-                    src={resolveImageUrl(order.sellerAvatar, "/user.svg") || "/user.svg"}
+                    src={sellerAvatar}
                     alt={order.sellerName}
                     fill
                     sizes="40px"
-                    unoptimized
+                    unoptimized={skipImageOptimization(sellerAvatar)}
                     className="object-cover"
                   />
                 </div>

@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { appPath, gotoHomeAndWaitForAuth, LOCALE_HOME, openLoginDialog } from "./helpers";
+import { appPath, gotoHomeAndWaitForAuth, openLoginDialog } from "./helpers";
 
 test.describe("login UI", () => {
   test.beforeEach(async ({ page }) => {

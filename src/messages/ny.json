@@ -156,15 +156,6 @@
       "emptyProducts": "Palibe magulu a zinthu",
       "emptyServices": "Palibe magulu a ntchito"
     },
-    "featured": {
-      "title": "Magulu otsogola",
-      "loading": "Tikukweza magulu...",
-      "empty": "Palibe magulu otsogola.",
-      "exploreProducts": "Onani zinthu",
-      "exploreServices": "Onani ntchito",
-      "previous": "Magulu am'mbuyo",
-      "next": "Magulu otsatira"
-    },
     "bestSelling": {
       "eyebrow": "Mwezi uno",
       "title": "Zinthu zogulitsidwa kwambiri",

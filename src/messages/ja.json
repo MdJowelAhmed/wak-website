@@ -156,15 +156,6 @@
       "emptyProducts": "商品カテゴリが見つかりません",
       "emptyServices": "サービスカテゴリが見つかりません"
     },
-    "featured": {
-      "title": "注目のカテゴリ",
-      "loading": "カテゴリを読み込み中...",
-      "empty": "注目のカテゴリが見つかりません。",
-      "exploreProducts": "商品を見る",
-      "exploreServices": "サービスを見る",
-      "previous": "前のカテゴリ",
-      "next": "次のカテゴリ"
-    },
     "bestSelling": {
       "eyebrow": "今月",
       "title": "ベストセラー商品",

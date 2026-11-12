@@ -156,15 +156,6 @@
       "emptyProducts": "ไม่พบหมวดหมู่สินค้า",
       "emptyServices": "ไม่พบหมวดหมู่บริการ"
     },
-    "featured": {
-      "title": "หมวดหมู่แนะนำ",
-      "loading": "กำลังโหลดหมวดหมู่...",
-      "empty": "ไม่พบหมวดหมู่แนะนำ",
-      "exploreProducts": "สำรวจสินค้า",
-      "exploreServices": "สำรวจบริการ",
-      "previous": "หมวดหมู่ก่อนหน้า",
-      "next": "หมวดหมู่ถัดไป"
-    },
     "bestSelling": {
       "eyebrow": "เดือนนี้",
       "title": "สินค้าขายดี",

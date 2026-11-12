@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { Button } from "@/ui/button";
 import { formatVariantLabel } from "../../../../../helpers/product-variant";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
+import { skipImageOptimization } from "../../../../../helpers/image-optimization";
 import OrderTimeline from "./OrderTimeline";
 import {
   formatAddress,
@@ -74,6 +75,7 @@ export default function OrderDetails({
   const trackingKey = orderStatusMessageKey(order.trackingStatus);
   const trackingLabel = trackingKey ? t(trackingKey) : formatLabel(order.trackingStatus);
   const items = order.items || [];
+  const sellerAvatar = resolveImageUrl(order.sellerAvatar, "/user.svg") || "/user.svg";
   const deliveryLabel = [order.deliveryType, order.deliveryOption]
     .map((value) => {
       const key = orderStatusMessageKey(value);
@@ -136,7 +138,14 @@ export default function OrderDetails({
               const content = (
                 <>
                   <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-card-border bg-section-bg">
-                    <Image src={imageSrc} alt={item.name} fill sizes="64px" unoptimized className="object-cover" />
+                    <Image
+                      src={imageSrc}
+                      alt={item.name}
+                      fill
+                      sizes="64px"
+                      unoptimized={skipImageOptimization(imageSrc)}
+                      className="object-cover"
+                    />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-bold text-secondary truncate">{item.name}</p>
@@ -228,11 +237,11 @@ export default function OrderDetails({
             <div className="flex items-center gap-3 border-t border-card-border pt-4">
               <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-card-border bg-section-bg">
                 <Image
-                  src={resolveImageUrl(order.sellerAvatar, "/user.svg") || "/user.svg"}
+                  src={sellerAvatar}
                   alt={order.sellerName}
                   fill
                   sizes="40px"
-                  unoptimized
+                  unoptimized={skipImageOptimization(sellerAvatar)}
                   className="object-cover"
                 />
               </div>

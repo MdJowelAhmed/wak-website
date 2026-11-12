@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Play } from "lucide-react";
 import { useTranslations } from "next-intl";
 import MediaVideo from "@/ui/MediaVideo";
+import { skipImageOptimization } from "../../../../../helpers/image-optimization";
 
 interface ServiceHeroMediaProps {
   name: string;
@@ -41,7 +42,7 @@ export default function ServiceHeroMedia({
             src={image}
             alt={name}
             fill
-            unoptimized
+            unoptimized={skipImageOptimization(image)}
             priority
             className="object-cover"
             sizes="(min-width: 1024px) 66vw, 100vw"

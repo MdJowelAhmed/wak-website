@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { skipImageOptimization } from "../../helpers/image-optimization";
 
 const FALLBACK_SRC = "/user.svg";
 
@@ -26,14 +27,6 @@ function isRenderableSrc(src: string): boolean {
   }
 }
 
-function shouldUnoptimize(src: string): boolean {
-  return (
-    src.startsWith("blob:") ||
-    src.startsWith("data:") ||
-    src.startsWith("http://")
-  );
-}
-
 export default function ProfileAvatar({
   src,
   alt,
@@ -55,7 +48,7 @@ export default function ProfileAvatar({
         fill
         sizes={sizes}
         priority={priority}
-        unoptimized={useFallback || shouldUnoptimize(trimmedSrc)}
+        unoptimized={useFallback || skipImageOptimization(trimmedSrc)}
         className={cn("object-cover", useFallback && "object-contain p-3")}
         onError={() => {
           if (!useFallback) {
