@@ -17,6 +17,16 @@ import { removeAccessToken, setAccessToken } from "../../helpers/authActions";
 import { getSession, type SessionResult, type SessionUser } from "../../helpers/getSession";
 
 const LOGIN_FLAG_KEY = "isLogin";
+const SESSION_LOOKUP_TIMEOUT_MS = 12_000;
+
+function withSessionTimeout(promise: Promise<SessionResult>): Promise<SessionResult> {
+  return Promise.race([
+    promise,
+    new Promise<SessionResult>((resolve) => {
+      window.setTimeout(() => resolve({ status: "error" }), SESSION_LOOKUP_TIMEOUT_MS);
+    }),
+  ]);
+}
 
 interface AuthContextValue {
   isLoggedIn: boolean;
@@ -59,16 +69,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false);
   }, []);
 
-  const refreshUser = useCallback(
-    () =>
-      getSession()
-        .catch((): SessionResult => ({ status: "error" }))
-        .then(applySession),
-    [applySession],
-  );
+  const refreshUser = useCallback(async () => {
+    if (!Cookies.get("accessToken")) {
+      applySession({ status: "unauthenticated" });
+      return;
+    }
+
+    await withSessionTimeout(
+      getSession().catch((): SessionResult => ({ status: "error" })),
+    ).then(applySession);
+  }, [applySession]);
 
   useEffect(() => {
-    void refreshUser();
+    let alive = true;
+    const failSafe = window.setTimeout(() => {
+      if (alive) setIsLoading(false);
+    }, SESSION_LOOKUP_TIMEOUT_MS + 1_000);
+
+    void refreshUser().finally(() => {
+      if (alive) window.clearTimeout(failSafe);
+    });
 
     const handleStorage = (event: StorageEvent) => {
       if (event.key === LOGIN_FLAG_KEY || event.key === null) {
@@ -77,7 +97,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
+    return () => {
+      alive = false;
+      window.clearTimeout(failSafe);
+      window.removeEventListener("storage", handleStorage);
+    };
   }, [refreshUser]);
 
   const login = useCallback(

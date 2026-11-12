@@ -11,20 +11,17 @@ export default function UserAuthMenu() {
     const t = useTranslations("Navigation");
     const { isLoggedIn, isLoading, user, logout } = useAuth();
 
-    if (isLoading) {
-        return (
-            <div
-                className="h-10 w-10 shrink-0 rounded-full border border-border bg-section-bg"
-                aria-hidden
-            />
-        );
-    }
-
     if (!isLoggedIn) {
         return (
             <AuthModal
                 trigger={
-                    <button type="button" className="text-xs font-bold bg-primary px-5 py-2 rounded-xl transition-all cursor-pointer text-white hover:bg-primary-hover shadow-xs">
+                    <button
+                        type="button"
+                        aria-busy={isLoading || undefined}
+                        className={`text-xs font-bold px-5 py-2 rounded-xl transition-all cursor-pointer text-white shadow-xs ${
+                            isLoading ? "bg-primary/70" : "bg-primary hover:bg-primary-hover"
+                        }`}
+                    >
                         {t("login")}
                     </button>
                 }

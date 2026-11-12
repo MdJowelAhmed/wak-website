@@ -81,6 +81,7 @@ export default function CustomerMobileMenu({
 
             {/* Menu Container starting from top-0 taking dynamic content height */}
             <motion.div
+                data-testid="customer-mobile-menu"
                 variants={menuVariants}
                 initial="hidden"
                 animate="visible"
