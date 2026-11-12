@@ -98,7 +98,7 @@ export function OtpForm({ onSwitch, email, setResetToken, purpose }: OtpFormProp
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-3 text-center">
-        <h2 className="auth-title mb-0! text-zinc-900">{t("otpTitle")}</h2>
+        <h2 className="mb-0! text-accent text-2xl font-bold">{t("otpTitle")}</h2>
         <p className="text-sm text-zinc-500 font-medium">
           {t("otpSentTo")} <span className="text-zinc-900 font-bold">{email || t("yourEmail")}</span><br />
           {t("otpHint")}

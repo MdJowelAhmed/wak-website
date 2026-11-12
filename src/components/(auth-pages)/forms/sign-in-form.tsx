@@ -66,7 +66,7 @@ export function SignInForm({ onSwitch }: SignInFormProps) {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-3 text-center">
-        <h2 className="auth-title mb-0! text-zinc-900">{t("loginTitle")}</h2>
+        <h2 className=" mb-0! text-accent text-2xl font-bold">{t("loginTitle")}</h2>
         <p className="text-sm text-zinc-500">{t("loginSubtitle")}</p>
       </div>
 

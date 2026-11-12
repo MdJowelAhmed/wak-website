@@ -167,7 +167,7 @@ export default function Navbar({
                     <Link href="/">
                         <Image
                             src="/logo.png"
-                            alt="Logo"
+                            alt="Worth World"
                             width={70}
                             height={70}
                             className='rounded-full object-cover h-[70px] w-[70px]'

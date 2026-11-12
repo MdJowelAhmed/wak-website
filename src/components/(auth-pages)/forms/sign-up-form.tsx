@@ -59,7 +59,7 @@ export function SignUpForm({ onSwitch }: SignUpFormProps) {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-3 text-center">
-        <h2 className="auth-title mb-0! text-zinc-900">{t("registerTitle")}</h2>
+        <h2 className="mb-0! text-accent text-2xl font-bold">{t("registerTitle")}</h2>
         <p className="text-sm text-zinc-500">{t("registerSubtitle")}</p>
       </div>
 

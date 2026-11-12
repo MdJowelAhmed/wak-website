@@ -103,6 +103,11 @@ export async function generateMetadata({
       template: `%s | ${t("title")}`,
     },
     description: t("description"),
+    icons: {
+      icon: [{ url: "/logo.png", type: "image/png" }],
+      shortcut: "/logo.png",
+      apple: "/logo.png",
+    },
   };
 }
 

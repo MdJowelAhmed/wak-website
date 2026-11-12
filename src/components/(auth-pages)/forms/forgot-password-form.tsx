@@ -57,7 +57,7 @@ export function ForgotPasswordForm({ onSwitch, setEmail }: ForgotPasswordFormPro
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-3 text-center">
-        <h2 className="auth-title mb-0! text-zinc-900">{t("forgotTitle")}</h2>
+        <h2 className="mb-0! text-accent text-2xl font-bold">{t("forgotTitle")}</h2>
       </div>
 
       <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
