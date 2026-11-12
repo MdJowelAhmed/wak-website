@@ -49,7 +49,7 @@ export default function Navbar({
     const t = useTranslations();
     const router = useRouter();
 
-    const { isLoggedIn, logout } = useAuth();
+    const { isLoggedIn, isLoading: authLoading, logout } = useAuth();
     const { country, currency, setCountry } = useCurrency();
     const defaultAddress = defaultShippingAddress(addresses);
     const deliveryLabel =
@@ -149,13 +149,15 @@ export default function Navbar({
                             />
                         </div>
 
-                        <Link
-                            href="/profile/orders"
-                            className="hidden sm:flex items-center gap-1 text-accent-foreground transition-colors hover:opacity-90"
-                        >
-                            <ShoppingBag className="w-3.5 h-3.5 text-accent-foreground" />
-                            <span>{t("Profile.sidebar.orders")}</span>
-                        </Link>
+                        {isLoggedIn && (
+                            <Link
+                                href="/profile/orders"
+                                className="hidden sm:flex items-center gap-1 text-accent-foreground transition-colors hover:opacity-90"
+                            >
+                                <ShoppingBag className="w-3.5 h-3.5 text-accent-foreground" />
+                                <span>{t("Profile.sidebar.orders")}</span>
+                            </Link>
+                        )}
 
                         <Link
                             href="/contact-us"
@@ -197,7 +199,11 @@ export default function Navbar({
                     <div className="ms-auto flex items-center gap-2.5 sm:gap-4 shrink-0">
                         {/* <WishlistButton /> */}
                         <CartButton />
-                        <UserAuthMenu isLoggedIn={isLoggedIn} logout={logout} />
+                        <UserAuthMenu
+                            isLoggedIn={isLoggedIn}
+                            isLoading={authLoading}
+                            logout={logout}
+                        />
 
                         {/* Mobile Hamburger */}
                         <button

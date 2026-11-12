@@ -12,6 +12,7 @@ import {
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
+import { myFetch } from "../../helpers/myFetch";
 import { removeAccessToken, setAccessToken } from "../../helpers/authActions";
 
 interface AuthContextValue {
@@ -33,30 +34,76 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
 
-  const checkAuth = useCallback(() => {
-    const token = Cookies.get("accessToken");
-    const isLogin = localStorage.getItem("isLogin") === "true";
-    setIsLoggedIn(Boolean(token || isLogin));
-    setIsLoading(false);
+  const clearClientAuth = useCallback(async () => {
+    Cookies.remove("accessToken", { path: "/" });
+    Cookies.remove("accessToken");
+    localStorage.removeItem("isLogin");
+    try {
+      await removeAccessToken();
+    } catch {
+      // Server cookie may already be cleared
+    }
+    setIsLoggedIn(false);
   }, []);
 
+  const checkAuth = useCallback(async () => {
+    const token = Cookies.get("accessToken");
+
+    if (!token) {
+      if (localStorage.getItem("isLogin") === "true") {
+        localStorage.removeItem("isLogin");
+      }
+      setIsLoggedIn(false);
+      setIsLoading(false);
+      return;
+    }
+
+    const res = await myFetch("/users/profile", { cache: "no-store" });
+    if (res.data) {
+      localStorage.setItem("isLogin", "true");
+      setIsLoggedIn(true);
+      setIsLoading(false);
+      return;
+    }
+
+    if (res.message === "Network error") {
+      setIsLoggedIn(true);
+      setIsLoading(false);
+      return;
+    }
+
+    await clearClientAuth();
+    setIsLoading(false);
+  }, [clearClientAuth]);
+
   useEffect(() => {
-    checkAuth();
+    let isActive = true;
+
+    const runCheck = async (withLoading: boolean) => {
+      if (withLoading) {
+        setIsLoading(true);
+      }
+      await checkAuth();
+      if (!isActive) return;
+    };
+
+    void runCheck(true);
 
     const handleStorage = (event: StorageEvent) => {
       if (event.key === "isLogin" || event.key === null) {
-        checkAuth();
+        void runCheck(false);
       }
     };
 
     const handleAuthChange = () => {
-      checkAuth();
+      void runCheck(false);
     };
 
     window.addEventListener("storage", handleStorage);
     window.addEventListener("auth-change", handleAuthChange);
 
     return () => {
+      isActive = false;
       window.removeEventListener("storage", handleStorage);
       window.removeEventListener("auth-change", handleAuthChange);
     };

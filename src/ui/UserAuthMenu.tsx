@@ -10,10 +10,11 @@ import getProfile from '../../helpers/getProfile';
 
 interface UserAuthMenuProps {
     isLoggedIn: boolean;
+    isLoading?: boolean;
     logout: () => void;
 }
 
-export default function UserAuthMenu({ isLoggedIn, logout }: UserAuthMenuProps) {
+export default function UserAuthMenu({ isLoggedIn, isLoading = false, logout }: UserAuthMenuProps) {
     const t = useTranslations("Navigation");
     const [profileImage, setProfileImage] = useState<string>("/user.svg");
     const [userName, setUserName] = useState<string>("");
@@ -25,14 +26,22 @@ export default function UserAuthMenu({ isLoggedIn, logout }: UserAuthMenuProps) 
             getProfile()
                 .then((data) => {
                     if (!isMounted) return;
-                    if (data?.profileImage) {
+                    if (!data) {
+                        window.dispatchEvent(new Event("auth-change"));
+                        return;
+                    }
+                    if (data.profileImage) {
                         setProfileImage(data.profileImage);
                     }
-                    if (data?.name) {
+                    if (data.name) {
                         setUserName(data.name);
                     }
                 })
-                .catch(console.error);
+                .catch(() => {
+                    if (isMounted) {
+                        window.dispatchEvent(new Event("auth-change"));
+                    }
+                });
         } else {
             setProfileImage("/user.svg");
             setUserName("");
@@ -42,6 +51,15 @@ export default function UserAuthMenu({ isLoggedIn, logout }: UserAuthMenuProps) 
             isMounted = false;
         };
     }, [isLoggedIn]);
+
+    if (isLoading) {
+        return (
+            <div
+                className="h-10 w-10 shrink-0 rounded-full border border-border bg-section-bg"
+                aria-hidden
+            />
+        );
+    }
 
     if (!isLoggedIn) {
         return (
