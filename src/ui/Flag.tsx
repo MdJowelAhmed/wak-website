@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface FlagProps {
@@ -25,13 +26,14 @@ export default function Flag({
   const label = title || countryCode.toUpperCase();
 
   return (
-    <img
+    <Image
       src={src}
       alt={label}
       title={label}
       width={20}
       height={15}
       loading={loading}
+      unoptimized
       draggable={false}
       className={cn(
         "inline-block h-3.5 w-5 shrink-0 rounded-[2px] object-cover",

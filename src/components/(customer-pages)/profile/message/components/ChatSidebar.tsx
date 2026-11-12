@@ -4,6 +4,7 @@ import { Search, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { resolveImageUrl } from "../../../../../../helpers/resolveImageUrl";
 import { ApiChat, getOtherParticipant } from "../types";
+import ProfileAvatar from "@/ui/ProfileAvatar";
 
 interface ChatSidebarProps {
   chats: ApiChat[];
@@ -67,7 +68,9 @@ export default function ChatSidebar({
         ) : (
           chats.map((chat) => {
             const participant = getOtherParticipant(chat, currentUserId);
-            const avatarUrl = participant?.profileImage ? resolveImageUrl(participant.profileImage) : "/user.svg";
+            const avatarSrc = participant?.profileImage
+              ? resolveImageUrl(participant.profileImage)
+              : null;
             const participantName = participant?.name || t("unknownUser");
             const subtitle = chat.lastMessage?.text || t("noMessagesYet");
             
@@ -81,7 +84,12 @@ export default function ChatSidebar({
                   }`}
               >
                 <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 border border-zinc-200">
-                  <img src={avatarUrl} alt={participantName} className="w-full h-full object-cover" />
+                  <ProfileAvatar
+                    src={avatarSrc}
+                    alt={participantName}
+                    className="h-10 w-10"
+                    sizes="40px"
+                  />
                 </div>
                 <div className="min-w-0 flex-1">
                   <h3 className={`font-semibold text-sm ${selectedContact === chat._id ? "text-primary" : "text-zinc-800"}`}>{participantName}</h3>

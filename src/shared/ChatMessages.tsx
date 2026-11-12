@@ -1,6 +1,7 @@
 // src/components/shared/message/ChatMessages.tsx
 import React from "react";
 import { ChatMessage } from "@/constants/mockChatData";
+import ProfileAvatar from "@/ui/ProfileAvatar";
 
 export interface ChatMessagesProps {
   messages: ChatMessage[];
@@ -27,7 +28,12 @@ export function ChatMessages({ messages, currentUserId }: ChatMessagesProps) {
             }`}
           >
             <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 border border-zinc-600">
-              <img src={m.avatar} alt="Avatar" className="w-full h-full object-cover" />
+              <ProfileAvatar
+                src={m.avatar}
+                alt="Avatar"
+                className="h-9 w-9"
+                sizes="36px"
+              />
             </div>
             <div className="max-w-md">
               <div

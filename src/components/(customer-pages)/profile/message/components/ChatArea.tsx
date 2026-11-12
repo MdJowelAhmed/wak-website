@@ -1,11 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import { Paperclip, Send, Loader2, X, Image as ImageIcon } from "lucide-react";
 import { useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { ChatMessage, OfferPaymentMethod } from "../types";
 import { resolveImageUrl } from "../../../../../../helpers/resolveImageUrl";
 import CustomOfferCard from "./CustomOfferCard";
+import ProfileAvatar from "@/ui/ProfileAvatar";
 
 interface ChatAreaProps {
   currentMessages: ChatMessage[];
@@ -121,7 +123,12 @@ export default function ChatArea({
               return (
                 <div key={m.id} className={`flex items-start gap-3.5 ${isUser ? "flex-row-reverse" : ""}`}>
                   <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-zinc-200 -mt-2">
-                    <img src={m.avatar} alt={t("avatarAlt")} className="w-full h-full object-cover" />
+                    <ProfileAvatar
+                      src={m.avatar}
+                      alt={t("avatarAlt")}
+                      className="h-12 w-12"
+                      sizes="48px"
+                    />
                   </div>
                   <div className="max-w-md">
                     <div className={`p-4 text-sm leading-relaxed shadow-xs ${isUser
@@ -129,14 +136,23 @@ export default function ChatArea({
                       : "bg-white text-zinc-800 rounded-2xl rounded-tl-none border border-zinc-200 font-normal"
                       }`}>
                       {m.type === 'image' && m.attachment && (
-                        <div className="mb-2">
-                          <img 
-                            src={resolveImageUrl(m.attachment)} 
-                            alt={t("attachmentAlt")} 
-                            className="max-w-[200px] max-h-[200px] object-cover rounded-lg border border-black/10 cursor-pointer" 
-                            onClick={() => window.open(resolveImageUrl(m.attachment!), '_blank')}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            window.open(resolveImageUrl(m.attachment!), "_blank")
+                          }
+                          className="relative mb-2 block h-[200px] w-[200px] max-h-[200px] max-w-[200px] cursor-pointer overflow-hidden rounded-lg border border-black/10"
+                          aria-label={t("attachmentAlt")}
+                        >
+                          <Image
+                            src={resolveImageUrl(m.attachment) || "/user.svg"}
+                            alt={t("attachmentAlt")}
+                            fill
+                            unoptimized
+                            sizes="200px"
+                            className="object-cover"
                           />
-                        </div>
+                        </button>
                       )}
                       {m.type === 'file' && m.attachment && (
                         <a 
