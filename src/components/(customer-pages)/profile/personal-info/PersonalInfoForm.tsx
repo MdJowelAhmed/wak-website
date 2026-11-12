@@ -14,6 +14,7 @@ import {
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
 import { useTranslations } from "next-intl";
 import type { PersonalInfoUser } from "./PersonalInfoView";
+import ProfileAvatar from "@/ui/ProfileAvatar";
 
 export type PersonalInfoSavePayload = {
   username: string;
@@ -57,7 +58,11 @@ export default function PersonalInfoForm({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [country, setCountry] = useState(userData.country || "");
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const currentImage = previewUrl || resolveImageUrl(userData.profileImage, "/user.svg") || "/user.svg";
+  const currentImage =
+    previewUrl ||
+    resolveImageUrl(userData.profileImage) ||
+    userData.profileImage ||
+    null;
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -95,10 +100,11 @@ export default function PersonalInfoForm({
             aria-label={t("changePhoto")}
             className="group relative h-28 w-28 overflow-hidden rounded-full border-4 border-primary shadow-lg shadow-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
-            <img
+            <ProfileAvatar
               src={currentImage}
               alt={t("previewAlt")}
-              className="h-full w-full object-cover"
+              className="h-28 w-28"
+              sizes="112px"
             />
             <span className="absolute inset-0 flex items-center justify-center bg-black/45 opacity-0 transition-opacity group-hover:opacity-100">
               <Camera className="h-6 w-6 text-white" aria-hidden />

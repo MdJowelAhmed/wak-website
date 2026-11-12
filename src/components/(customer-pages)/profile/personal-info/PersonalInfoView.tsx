@@ -2,6 +2,7 @@
 
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
 import { useTranslations } from "next-intl";
+import ProfileAvatar from "@/ui/ProfileAvatar";
 
 export interface PersonalInfoUser {
   username: string;
@@ -21,7 +22,8 @@ const fieldValue =
 
 export default function PersonalInfoView({ userData }: PersonalInfoViewProps) {
   const t = useTranslations("Profile.personal");
-  const imageSrc = resolveImageUrl(userData.profileImage, "/user.svg") || "/user.svg";
+  const imageSrc =
+    resolveImageUrl(userData.profileImage) || userData.profileImage || null;
 
   return (
     <div>
@@ -29,10 +31,11 @@ export default function PersonalInfoView({ userData }: PersonalInfoViewProps) {
         <div className="relative">
           <div className="absolute inset-0 rounded-full bg-primary/40 blur-xl" />
           <div className="relative h-28 w-28 overflow-hidden rounded-full border-4 border-primary shadow-lg shadow-primary/30">
-            <img
+            <ProfileAvatar
               src={imageSrc}
               alt={t("photoAlt", { name: userData.username || t("userName") })}
-              className="h-full w-full object-cover"
+              className="h-28 w-28"
+              sizes="112px"
             />
           </div>
         </div>

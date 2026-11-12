@@ -15,7 +15,7 @@ const defaultUserData: PersonalInfoUser = {
   email: "",
   phone: "",
   country: "",
-  profileImage: "/user.svg",
+  profileImage: undefined,
 };
 
 export default function PersonalInfoPage() {
@@ -31,7 +31,7 @@ export default function PersonalInfoPage() {
           email: data.email || "",
           phone: data.phone || "",
           country: data.address || "",
-          profileImage: data.profileImage || "/user.svg",
+          profileImage: data.profileImage || undefined,
         });
       }
     }).catch(console.error);
@@ -62,7 +62,7 @@ export default function PersonalInfoPage() {
               email: fetchedData.email || "",
               phone: fetchedData.phone || "",
               country: fetchedData.address || "",
-              profileImage: fetchedData.profileImage || "/user.svg",
+              profileImage: fetchedData.profileImage || undefined,
             });
             // Force a page reload to update the sidebar and navbar
             window.location.reload();

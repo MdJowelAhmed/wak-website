@@ -7,6 +7,7 @@ import { User, LogOut } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import getProfile from '../../helpers/getProfile';
+import ProfileAvatar from '@/ui/ProfileAvatar';
 
 interface UserAuthMenuProps {
     isLoggedIn: boolean;
@@ -16,7 +17,7 @@ interface UserAuthMenuProps {
 
 export default function UserAuthMenu({ isLoggedIn, isLoading = false, logout }: UserAuthMenuProps) {
     const t = useTranslations("Navigation");
-    const [profileImage, setProfileImage] = useState<string>("/user.svg");
+    const [profileImage, setProfileImage] = useState<string | null>(null);
     const [userName, setUserName] = useState<string>("");
 
     useEffect(() => {
@@ -30,9 +31,7 @@ export default function UserAuthMenu({ isLoggedIn, isLoading = false, logout }: 
                         window.dispatchEvent(new Event("auth-change"));
                         return;
                     }
-                    if (data.profileImage) {
-                        setProfileImage(data.profileImage);
-                    }
+                    setProfileImage(data.profileImage ?? null);
                     if (data.name) {
                         setUserName(data.name);
                     }
@@ -43,7 +42,7 @@ export default function UserAuthMenu({ isLoggedIn, isLoading = false, logout }: 
                     }
                 });
         } else {
-            setProfileImage("/user.svg");
+            setProfileImage(null);
             setUserName("");
         }
 
@@ -79,10 +78,11 @@ export default function UserAuthMenu({ isLoggedIn, isLoading = false, logout }: 
                 href="/profile"
                 className="block w-10 h-10 rounded-full overflow-hidden border border-border cursor-pointer hover:border-primary transition-colors bg-section-bg shadow-2xs"
             >
-                <img
+                <ProfileAvatar
                     src={profileImage}
-                    alt="User Profile"
-                    className="w-full h-full object-cover"
+                    alt={userName || t("myAccount")}
+                    className="h-10 w-10"
+                    sizes="40px"
                 />
             </Link>
 
