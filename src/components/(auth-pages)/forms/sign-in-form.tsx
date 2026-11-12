@@ -40,14 +40,13 @@ export function SignInForm({ onSwitch }: SignInFormProps) {
         body: { email, password },
       });
 
-      if (res?.success) {
+      const accessToken: unknown = res?.data?.accessToken;
+      if (res?.success && typeof accessToken === "string" && accessToken) {
+        await login(accessToken);
         toast.success(res?.message || t("loginSuccess"), { id: "login" });
-        if (res?.data?.accessToken) {
-          await login(res.data.accessToken);
-        } else {
-          await login();
-        }
         router.push("/");
+      } else if (res?.success) {
+        toast.error(t("somethingWrong"), { id: "login" });
       } else {
         if (res?.error && Array.isArray(res.error)) {
           res.error.forEach((err: { message: string }) => {
@@ -118,6 +117,7 @@ export function SignInForm({ onSwitch }: SignInFormProps) {
       <div className="text-center text-sm text-zinc-500">
         {t("noAccount")}{" "}
         <button
+          type="button"
           onClick={() => onSwitch("signup")}
           className="text-primary font-semibold hover:underline cursor-pointer"
         >

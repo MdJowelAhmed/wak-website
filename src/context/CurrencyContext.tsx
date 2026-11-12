@@ -6,7 +6,6 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -47,6 +46,7 @@ interface CurrencyContextValue {
   setCurrencyCode: (currencyCode: string) => void;
 }
 
+const FALLBACK_RATES: Record<string, number> = { USD: 1 };
 const defaultCountry = countryByCode(DEFAULT_COUNTRY);
 const defaultCurrencyOption = currencyToOption(DEFAULT_CURRENCY);
 
@@ -79,74 +79,52 @@ export function CurrencyProvider({
   initialCurrency = DEFAULT_CURRENCY,
 }: CurrencyProviderProps) {
   const startingCountry = countryByCode(initialCountry);
-  const startingCurrencyOption = currencyToOption(initialCurrency);
-  const startingCurrency = startingCurrencyOption.currency;
-  const startingRates = initialRates?.rates ?? { USD: 1 };
 
-  const [rates, setRates] = useState<Record<string, number>>(startingRates);
+  const [fetchedRates, setFetchedRates] = useState<Record<string, number> | null>(null);
   const [countryCode, setCountryCode] = useState(startingCountry.code);
-  const [currency, setCurrency] = useState(startingCurrency);
-  const [rate, setRate] = useState(resolveRate(startingRates, startingCurrency));
-  const syncedCountryRef = useRef(startingCountry.code);
+  const [currency, setCurrency] = useState(() => currencyToOption(initialCurrency).currency);
+  // Last persisted rate; only used until live rates for `currency` are available.
+  const [storedRate, setStoredRate] = useState<number | undefined>(undefined);
+  const [lastInitialCountry, setLastInitialCountry] = useState(initialCountry);
 
-  const applyCurrency = useCallback(
-    (
-      nextCurrency: string,
-      nextRates: Record<string, number>,
-      nextCountryCode: string,
-      storedRate?: number,
-    ) => {
-      const option = currencyToOption(nextCurrency);
-      const nextRate = resolveRate(nextRates, option.currency, storedRate);
-      setCurrency(option.currency);
-      setRate(nextRate);
-      persistCurrencyPreference(nextCountryCode, option.currency, nextRate);
-    },
-    [],
-  );
+  const rates = initialRates?.rates ?? fetchedRates ?? FALLBACK_RATES;
+  const rate = resolveRate(rates, currency, storedRate);
+
+  const selectCurrency = useCallback((nextCurrency: string) => {
+    setCurrency(currencyToOption(nextCurrency).currency);
+    setStoredRate(undefined);
+  }, []);
+
+  if (initialCountry !== lastInitialCountry) {
+    setLastInitialCountry(initialCountry);
+    const option = countryByCode(initialCountry);
+    if (option.code !== countryCode) {
+      setCountryCode(option.code);
+      selectCurrency(option.currency);
+    }
+  }
 
   useEffect(() => {
     const savedCountry = localStorage.getItem(STORAGE_COUNTRY);
     const savedCurrency = localStorage.getItem(STORAGE_CURRENCY);
     if (!savedCountry && !savedCurrency) return;
 
-    const preferredCurrency = resolvePreferredCurrency(
-      startingCountry.code,
-      savedCountry,
-      savedCurrency,
-    );
+    const preferredCurrency = resolvePreferredCurrency(startingCountry.code, savedCountry, savedCurrency);
     const savedRate = Number(localStorage.getItem(STORAGE_RATE));
-    const keepStoredRate = preferredCurrency === savedCurrency;
-    applyCurrency(
-      preferredCurrency,
-      startingRates,
-      startingCountry.code,
-      keepStoredRate && Number.isFinite(savedRate) && savedRate > 0 ? savedRate : undefined,
-    );
-    // Hydrate from localStorage only when it belongs to the current country.
+    const keepStoredRate = preferredCurrency === savedCurrency && Number.isFinite(savedRate) && savedRate > 0;
+    // localStorage is only readable after hydration, so this one-time sync must run in an effect.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCurrency(preferredCurrency);
+    setStoredRate(keepStoredRate ? savedRate : undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    const option = countryByCode(initialCountry);
-    if (option.code === syncedCountryRef.current) return;
-    syncedCountryRef.current = option.code;
-    setCountryCode(option.code);
-    applyCurrency(option.currency, rates, option.code);
-    // URL country changed; live rates update the displayed number in the persist effect.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [applyCurrency, initialCountry]);
-
-  useEffect(() => {
-    if (initialRates?.rates) {
-      setRates(initialRates.rates);
-      return;
-    }
+    if (initialRates?.rates) return;
 
     let cancelled = false;
     getExchangeRates().then((payload) => {
-      if (cancelled || !payload) return;
-      setRates(payload.rates);
+      if (!cancelled && payload) setFetchedRates(payload.rates);
     });
     return () => {
       cancelled = true;
@@ -154,30 +132,20 @@ export function CurrencyProvider({
   }, [initialRates]);
 
   useEffect(() => {
-    const nextRate = resolveRate(rates, currency, rate);
-    if (nextRate !== rate) setRate(nextRate);
-    persistCurrencyPreference(countryCode, currency, nextRate);
-  }, [rates, currency, countryCode, rate]);
+    persistCurrencyPreference(countryCode, currency, rate);
+  }, [countryCode, currency, rate]);
 
   const setCountry = useCallback(
     (nextCountryCode: string) => {
       const option = countryByCode(nextCountryCode);
-      syncedCountryRef.current = option.code;
       setCountryCode(option.code);
-      applyCurrency(option.currency, rates, option.code);
+      selectCurrency(option.currency);
     },
-    [applyCurrency, rates],
-  );
-
-  const setCurrencyCode = useCallback(
-    (nextCurrency: string) => {
-      applyCurrency(nextCurrency, rates, countryCode);
-    },
-    [applyCurrency, countryCode, rates],
+    [selectCurrency],
   );
 
   const country = countryByCode(countryCode);
-  const currencyOption = currencyToOption(currency);
+  const currencyOption = useMemo(() => currencyToOption(currency), [currency]);
   const availableCurrencies = useMemo(
     () => (Object.keys(rates).length > 1 ? currenciesFromRates(rates) : fallbackCurrencies),
     [rates],
@@ -196,7 +164,7 @@ export function CurrencyProvider({
       formatPrice: (amountUsd: number) => formatConvertedPrice(amountUsd, currency, rate),
       rateLabel: formatExchangeRate(rate, currency),
       setCountry,
-      setCurrencyCode,
+      setCurrencyCode: selectCurrency,
     }),
     [
       availableCurrencies,
@@ -207,7 +175,7 @@ export function CurrencyProvider({
       rate,
       rates,
       setCountry,
-      setCurrencyCode,
+      selectCurrency,
     ],
   );
 

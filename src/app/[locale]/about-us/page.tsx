@@ -1,10 +1,14 @@
 import { getTranslations } from "next-intl/server";
 import { myFetch } from "../../../../helpers/myFetch";
+import { sanitizeHtml } from "../../../../helpers/sanitizeHtml";
 
 async function AboutUsPage() {
     const t = await getTranslations("Legal");
-    const res = await myFetch("/disclaimers/about-us", { cache: "no-store" });
-    const content = res?.data?.content || t("aboutFallback");
+    const res = await myFetch("/disclaimers/about-us", {
+        next: { revalidate: 3600, tags: ["disclaimers"] },
+    });
+    const html = typeof res?.data?.content === "string" ? res.data.content : "";
+    const content = sanitizeHtml(html) || t("aboutFallback");
 
     return (
         <div className="container mx-auto py-[50px]">

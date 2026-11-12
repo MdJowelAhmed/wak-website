@@ -128,7 +128,7 @@ export default function OrderDetails({
           <ul className="divide-y divide-card-border">
             {items.map((item) => {
               const href = item.slug || item.productId ? `/shop/${item.slug || item.productId}` : undefined;
-              const imageSrc = resolveImageUrl(item.image, "/placeholder.jpg") || "/placeholder.jpg";
+              const imageSrc = resolveImageUrl(item.image, "/placeholder.svg") || "/placeholder.svg";
               const variantLabel = formatVariantLabel(item, {
                 color: (color) => t("colorValue", { color }),
                 size: (size) => t("sizeValue", { size }),

@@ -1,7 +1,7 @@
 // src/ui/SearchBar.tsx
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Search, X, ShoppingBag, Wrench } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -15,6 +15,9 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/ui/select';
+
+const SEARCH_DEBOUNCE_MS = 350;
+const MAX_CACHED_QUERIES = 50;
 
 interface SearchResult {
     _id: string;
@@ -54,80 +57,59 @@ export default function SearchBar({
     const cacheRef = useRef<Map<string, SearchResult[]>>(new Map());
     const searchIdRef = useRef(0);
 
-    // Debounced search API call with caching
-    const performSearch = useCallback(async (term: string) => {
-        const currentRequestId = ++searchIdRef.current;
-        const trimmed = term.trim().toLowerCase();
-        if (!trimmed) {
-            setResults([]);
-            setIsOpen(false);
-            setIsLoading(false);
-            return;
-        }
+    /** Cancels any pending/in-flight search so its response is ignored. */
+    const cancelPendingSearch = () => {
+        if (debounceRef.current) clearTimeout(debounceRef.current);
+        searchIdRef.current += 1;
+    };
 
-        // Return cached results if available
-        if (cacheRef.current.has(trimmed)) {
-            setResults(cacheRef.current.get(trimmed)!);
-            setIsLoading(false);
-            setIsOpen(true);
-            return;
-        }
+    useEffect(() => () => {
+        if (debounceRef.current) clearTimeout(debounceRef.current);
+    }, []);
 
-        try {
-            const res = await myFetch(`/search/?searchTerm=${encodeURIComponent(term.trim())}`);
-            const data: SearchResult[] = res.success && Array.isArray(res.data) ? res.data : [];
+    const fetchResults = async (term: string, cacheKey: string) => {
+        const requestId = ++searchIdRef.current;
+        const res = await myFetch(`/search/?searchTerm=${encodeURIComponent(term)}`).catch(() => null);
+        const data: SearchResult[] = res?.success && Array.isArray(res.data) ? res.data : [];
 
-            // Store in cache (maintain max 50 items to keep memory lightweight)
-            if (cacheRef.current.size >= 50) {
+        if (res?.success) {
+            if (cacheRef.current.size >= MAX_CACHED_QUERIES) {
                 const firstKey = cacheRef.current.keys().next().value;
                 if (firstKey) cacheRef.current.delete(firstKey);
             }
-            cacheRef.current.set(trimmed, data);
-
-            setResults(data);
-        } catch {
-            if (currentRequestId === searchIdRef.current) {
-                setResults([]);
-            }
-        } finally {
-            if (currentRequestId === searchIdRef.current) {
-                setIsLoading(false);
-            }
+            cacheRef.current.set(cacheKey, data);
         }
-    }, []);
 
-    useEffect(() => {
-        if (debounceRef.current) clearTimeout(debounceRef.current);
-        const trimmed = query.trim().toLowerCase();
+        if (requestId !== searchIdRef.current) return;
+        setResults(data);
+        setIsLoading(false);
+    };
 
-        if (!trimmed) {
+    const handleQueryChange = (value: string) => {
+        setQuery(value);
+        setActiveIndex(-1);
+        cancelPendingSearch();
+
+        const term = value.trim();
+        const cacheKey = term.toLowerCase();
+        if (!term) {
             setResults([]);
             setIsOpen(false);
             setIsLoading(false);
-            setActiveIndex(-1);
             return;
         }
 
-        // Instant response from cache without skeleton or network delay
-        if (cacheRef.current.has(trimmed)) {
-            setResults(cacheRef.current.get(trimmed)!);
-            setIsLoading(false);
-            setIsOpen(true);
-            return;
-        }
-
-        // If not cached, show skeleton and fetch with debounce
-        setIsLoading(true);
+        const cached = cacheRef.current.get(cacheKey);
         setIsOpen(true);
+        if (cached) {
+            setResults(cached);
+            setIsLoading(false);
+            return;
+        }
 
-        debounceRef.current = setTimeout(() => {
-            performSearch(query);
-        }, 350);
-
-        return () => {
-            if (debounceRef.current) clearTimeout(debounceRef.current);
-        };
-    }, [query, performSearch]);
+        setIsLoading(true);
+        debounceRef.current = setTimeout(() => void fetchResults(term, cacheKey), SEARCH_DEBOUNCE_MS);
+    };
 
     // Close on outside click
     useEffect(() => {
@@ -147,6 +129,7 @@ export default function SearchBar({
 
     const navigateTo = (item: SearchResult) => {
         const path = item.type === 'product' ? `/shop/${item.slug}` : `/services/${item.slug}`;
+        cancelPendingSearch();
         setIsOpen(false);
         setQuery('');
         setResults([]);
@@ -177,6 +160,7 @@ export default function SearchBar({
     };
 
     const clearQuery = () => {
+        cancelPendingSearch();
         setQuery('');
         setResults([]);
         setIsOpen(false);
@@ -213,7 +197,7 @@ export default function SearchBar({
                         type="text"
                         placeholder={placeholder || "Search products, services..."}
                         value={query}
-                        onChange={(e) => setQuery(e.target.value)}
+                        onChange={(e) => handleQueryChange(e.target.value)}
                         onKeyDown={handleKeyDown}
                         onFocus={() => {
                             if (query.trim()) setIsOpen(true);

@@ -51,8 +51,7 @@ export default function ChangePasswordForm() {
           toast.error(res?.message || t("passwordError"));
         }
       }
-    } catch (error) {
-      console.error(error);
+    } catch {
       toast.error(t("passwordChangeError"));
     } finally {
       setLoading(false);

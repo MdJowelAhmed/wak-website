@@ -16,7 +16,8 @@
     "logout": "लॉगआउट",
     "logoutAccount": "खाते से लॉगआउट",
     "signedInAs": "इस रूप में साइन इन",
-    "trackOrder": "ऑर्डर ट्रैक करें"
+    "trackOrder": "ऑर्डर ट्रैक करें",
+    "logoutSuccess": "सफलतापूर्वक लॉगआउट हो गया"
   },
   "Navbar": {
     "deliverTo": "डिलीवरी पता:",
@@ -62,7 +63,8 @@
     "deliverTo": "डिलीवरी पता:",
     "change": "बदलें",
     "languageCountry": "भाषा और देश",
-    "searchPlaceholder": "उत्पाद और सेवाएँ खोजें..."
+    "searchPlaceholder": "उत्पाद और सेवाएँ खोजें...",
+    "close": "मेनू बंद करें"
   },
   "Footer": {
     "tagline": "सोशल मीडिया पर हमसे जुड़ें",
@@ -456,7 +458,6 @@
     "noMessagesYet": "अभी कोई संदेश नहीं",
     "selectChat": "संदेश भेजने के लिए एक चैट चुनें",
     "emptyConversation": "इस बातचीत में अभी कोई संदेश नहीं है।",
-    "yesterday": "कल",
     "avatarAlt": "अवतार",
     "attachmentAlt": "अटैचमेंट",
     "downloadFile": "फ़ाइल डाउनलोड करें",
@@ -556,7 +557,8 @@
     "description": "विवरण",
     "topHighlights": "मुख्य विशेषताएं",
     "productDetails": "उत्पाद विवरण",
-    "selectVariant": "कार्ट में जोड़ने के लिए कृपया विकल्प चुनें।"
+    "selectVariant": "कार्ट में जोड़ने के लिए कृपया विकल्प चुनें।",
+    "productVideo": "उत्पाद वीडियो"
   },
   "Services": {
     "home": "होम",
@@ -594,7 +596,8 @@
     "checkoutError": "चेकआउट शुरू नहीं हो सका।",
     "checkoutUnexpected": "चेकआउट के दौरान समस्या हुई।",
     "missingProvider": "प्रदाता की जानकारी उपलब्ध नहीं।",
-    "chatError": "बातचीत शुरू नहीं हो सकी।"
+    "chatError": "बातचीत शुरू नहीं हो सकी।",
+    "playVideo": "वीडियो चलाएँ"
   },
   "Checkout": {
     "eyebrow": "चेकआउट",

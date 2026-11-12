@@ -16,7 +16,8 @@
     "logout": "ログアウト",
     "logoutAccount": "アカウントからログアウト",
     "signedInAs": "ログイン中",
-    "trackOrder": "注文を追跡"
+    "trackOrder": "注文を追跡",
+    "logoutSuccess": "ログアウトしました"
   },
   "Navbar": {
     "deliverTo": "お届け先：",
@@ -62,7 +63,8 @@
     "deliverTo": "お届け先：",
     "change": "変更",
     "languageCountry": "言語と国",
-    "searchPlaceholder": "商品とサービスを検索..."
+    "searchPlaceholder": "商品とサービスを検索...",
+    "close": "メニューを閉じる"
   },
   "Footer": {
     "tagline": "ソーシャルメディアでつながろう",
@@ -456,7 +458,6 @@
     "noMessagesYet": "まだメッセージはありません",
     "selectChat": "チャットを選んでメッセージを開始",
     "emptyConversation": "この会話にはまだメッセージがありません。",
-    "yesterday": "昨日",
     "avatarAlt": "アバター",
     "attachmentAlt": "添付ファイル",
     "downloadFile": "ファイルをダウンロード",
@@ -556,7 +557,8 @@
     "description": "商品の説明",
     "topHighlights": "主な特徴",
     "productDetails": "商品の詳細",
-    "selectVariant": "カートに追加するオプションを選択してください。"
+    "selectVariant": "カートに追加するオプションを選択してください。",
+    "productVideo": "商品動画"
   },
   "Services": {
     "home": "ホーム",
@@ -594,7 +596,8 @@
     "checkoutError": "チェックアウトを開始できませんでした。",
     "checkoutUnexpected": "決済中に問題が発生しました。",
     "missingProvider": "提供者情報がありません。",
-    "chatError": "会話を開始できませんでした。"
+    "chatError": "会話を開始できませんでした。",
+    "playVideo": "動画を再生"
   },
   "Checkout": {
     "eyebrow": "チェックアウト",

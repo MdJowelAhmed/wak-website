@@ -16,7 +16,8 @@
     "logout": "Sair",
     "logoutAccount": "Sair da conta",
     "signedInAs": "Sessão iniciada como",
-    "trackOrder": "Seguir encomenda"
+    "trackOrder": "Seguir encomenda",
+    "logoutSuccess": "Sessão encerrada com sucesso"
   },
   "Navbar": {
     "deliverTo": "Entregar em:",
@@ -62,7 +63,8 @@
     "deliverTo": "Entregar em:",
     "change": "Alterar",
     "languageCountry": "Idioma e país",
-    "searchPlaceholder": "Pesquisar produtos e serviços..."
+    "searchPlaceholder": "Pesquisar produtos e serviços...",
+    "close": "Fechar menu"
   },
   "Footer": {
     "tagline": "Conecte-se conosco nas redes sociais",
@@ -456,7 +458,6 @@
     "noMessagesYet": "Ainda não há mensagens",
     "selectChat": "Selecione uma conversa para começar",
     "emptyConversation": "Ainda não há mensagens nesta conversa.",
-    "yesterday": "Ontem",
     "avatarAlt": "Avatar",
     "attachmentAlt": "Anexo",
     "downloadFile": "Transferir ficheiro",
@@ -556,7 +557,8 @@
     "description": "Descrição",
     "topHighlights": "Destaques principais",
     "productDetails": "Detalhes do produto",
-    "selectVariant": "Selecione as opções para adicionar ao carrinho."
+    "selectVariant": "Selecione as opções para adicionar ao carrinho.",
+    "productVideo": "Vídeo do produto"
   },
   "Services": {
     "home": "Início",
@@ -594,7 +596,8 @@
     "checkoutError": "Não foi possível iniciar o pagamento.",
     "checkoutUnexpected": "Ocorreu um problema no pagamento.",
     "missingProvider": "Falta informação do prestador.",
-    "chatError": "Não foi possível iniciar uma conversa."
+    "chatError": "Não foi possível iniciar uma conversa.",
+    "playVideo": "Reproduzir vídeo"
   },
   "Checkout": {
     "eyebrow": "Pagamento",

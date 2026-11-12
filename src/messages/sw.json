@@ -16,7 +16,8 @@
     "logout": "Toka",
     "logoutAccount": "Toka kwenye akaunti",
     "signedInAs": "Umeingia kama",
-    "trackOrder": "Fuatilia agizo"
+    "trackOrder": "Fuatilia agizo",
+    "logoutSuccess": "Umetoka kwa mafanikio"
   },
   "Navbar": {
     "deliverTo": "Peleka kwa:",
@@ -62,7 +63,8 @@
     "deliverTo": "Peleka kwa:",
     "change": "Badilisha",
     "languageCountry": "Lugha na nchi",
-    "searchPlaceholder": "Tafuta bidhaa na huduma..."
+    "searchPlaceholder": "Tafuta bidhaa na huduma...",
+    "close": "Funga menyu"
   },
   "Footer": {
     "tagline": "Tuungane kwenye mitandao ya kijamii",
@@ -456,7 +458,6 @@
     "noMessagesYet": "Bado hakuna ujumbe",
     "selectChat": "Chagua gumzo ili uanze kutuma ujumbe",
     "emptyConversation": "Bado hakuna ujumbe katika mazungumzo haya.",
-    "yesterday": "Jana",
     "avatarAlt": "Picha",
     "attachmentAlt": "Kiambatisho",
     "downloadFile": "Pakua faili",
@@ -556,7 +557,8 @@
     "description": "Maelezo",
     "topHighlights": "Mambo Muhimu",
     "productDetails": "Maelezo ya Bidhaa",
-    "selectVariant": "Tafadhali chagua chaguo ili kuongeza kwenye kikapu."
+    "selectVariant": "Tafadhali chagua chaguo ili kuongeza kwenye kikapu.",
+    "productVideo": "Video ya bidhaa"
   },
   "Services": {
     "home": "Nyumbani",
@@ -594,7 +596,8 @@
     "checkoutError": "Imeshindwa kuanza malipo.",
     "checkoutUnexpected": "Hitilafu imetokea wakati wa malipo.",
     "missingProvider": "Taarifa ya mtoa huduma haipo.",
-    "chatError": "Imeshindwa kuanza mazungumzo."
+    "chatError": "Imeshindwa kuanza mazungumzo.",
+    "playVideo": "Cheza video"
   },
   "Checkout": {
     "eyebrow": "Malipo",

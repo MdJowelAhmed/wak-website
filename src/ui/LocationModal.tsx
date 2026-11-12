@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { MapPin, Navigation, Loader2, Search } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
@@ -201,7 +201,7 @@ export default function LocationModal({
         countriesRef.current = countries;
     }, [countries]);
 
-    const applyGeocode = (location: DeliveryLocation & { state?: string; countryCode?: string }) => {
+    const applyGeocode = useCallback((location: DeliveryLocation & { state?: string; countryCode?: string }) => {
         setDraft(location);
         setCoordsConfirmed(hasMapCoords(location.lat, location.lng));
         setForm((prev) => {
@@ -222,31 +222,22 @@ export default function LocationModal({
                 longitude: location.lng,
             };
         });
-    };
-    const applyGeocodeRef = useRef(applyGeocode);
+    }, []);
 
-    useEffect(() => {
-        applyGeocodeRef.current = applyGeocode;
-    }, [applyGeocode]);
-
-    useEffect(() => {
-        if (!isOpen) return;
-        setDraft(currentLocation);
-        const current = addresses.find((address) => address.isDefault) || addresses[0] || null;
-        if (current) {
-            setSelectedId(current._id);
-            setForm(payloadFromAddress(current));
-            setCoordsConfirmed(hasMapCoords(current.latitude, current.longitude));
-        } else {
-            setSelectedId('new');
-            setForm(emptyShippingPayload(true));
-            setCoordsConfirmed(false);
+    // Initialize once per open (not on parent re-renders) so typing is not reset.
+    const [wasOpen, setWasOpen] = useState(false);
+    if (isOpen !== wasOpen) {
+        setWasOpen(isOpen);
+        if (isOpen) {
+            const current = addresses.find((address) => address.isDefault) || addresses[0] || null;
+            setDraft(currentLocation);
+            setSelectedId(current ? current._id : 'new');
+            setForm(current ? payloadFromAddress(current) : emptyShippingPayload(true));
+            setCoordsConfirmed(current ? hasMapCoords(current.latitude, current.longitude) : false);
+            setSearchQuery('');
+            setSuggestions([]);
         }
-        setSearchQuery('');
-        setSuggestions([]);
-        // Initialize once per open so typing is not reset by parent re-renders.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isOpen]);
+    }
 
     useEffect(() => {
         if (!isOpen || !isLoggedIn) return;
@@ -277,7 +268,7 @@ export default function LocationModal({
             const response = await geocoder.geocode({ location: latLng });
             const result = response.results[0];
             if (!result || cancelled) return;
-            applyGeocodeRef.current(locationFromGeocoderResult(result, latLng.lat(), latLng.lng()));
+            applyGeocode(locationFromGeocoderResult(result, latLng.lat(), latLng.lng()));
         };
 
         const timer = window.setTimeout(async () => {
@@ -354,7 +345,7 @@ export default function LocationModal({
         };
         // Map mounts when the dialog opens; address switches pan via a separate effect.
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isOpen, countryCode, t]);
+    }, [isOpen, countryCode, t, applyGeocode]);
 
     const panTo = (lat: number, lng: number) => {
         if (!mapRef.current || !markerRef.current) return;

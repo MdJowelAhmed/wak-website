@@ -16,7 +16,8 @@
     "logout": "Đăng xuất",
     "logoutAccount": "Đăng xuất tài khoản",
     "signedInAs": "Đăng nhập với",
-    "trackOrder": "Theo dõi đơn hàng"
+    "trackOrder": "Theo dõi đơn hàng",
+    "logoutSuccess": "Đăng xuất thành công"
   },
   "Navbar": {
     "deliverTo": "Giao đến:",
@@ -62,7 +63,8 @@
     "deliverTo": "Giao đến:",
     "change": "Đổi",
     "languageCountry": "Ngôn ngữ và quốc gia",
-    "searchPlaceholder": "Tìm sản phẩm và dịch vụ..."
+    "searchPlaceholder": "Tìm sản phẩm và dịch vụ...",
+    "close": "Đóng menu"
   },
   "Footer": {
     "tagline": "Kết nối với chúng tôi trên mạng xã hội",
@@ -456,7 +458,6 @@
     "noMessagesYet": "Chưa có tin nhắn",
     "selectChat": "Chọn một cuộc trò chuyện để bắt đầu",
     "emptyConversation": "Cuộc trò chuyện này chưa có tin nhắn.",
-    "yesterday": "Hôm qua",
     "avatarAlt": "Ảnh đại diện",
     "attachmentAlt": "Tệp đính kèm",
     "downloadFile": "Tải tệp",
@@ -556,7 +557,8 @@
     "description": "Mô tả sản phẩm",
     "topHighlights": "Đặc điểm nổi bật",
     "productDetails": "Chi tiết sản phẩm",
-    "selectVariant": "Vui lòng chọn tùy chọn để thêm vào giỏ hàng."
+    "selectVariant": "Vui lòng chọn tùy chọn để thêm vào giỏ hàng.",
+    "productVideo": "Video sản phẩm"
   },
   "Services": {
     "home": "Trang chủ",
@@ -594,7 +596,8 @@
     "checkoutError": "Không thể bắt đầu thanh toán.",
     "checkoutUnexpected": "Đã xảy ra sự cố khi thanh toán.",
     "missingProvider": "Thiếu thông tin nhà cung cấp.",
-    "chatError": "Không thể bắt đầu cuộc trò chuyện."
+    "chatError": "Không thể bắt đầu cuộc trò chuyện.",
+    "playVideo": "Phát video"
   },
   "Checkout": {
     "eyebrow": "Thanh toán",

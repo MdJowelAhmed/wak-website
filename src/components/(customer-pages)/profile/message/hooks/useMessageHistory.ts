@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { myFetch } from "../../../../../../helpers/myFetch";
+import { redirectToCheckout } from "../../../../../../helpers/safe-url";
 import { loadChatMessagesAction, revalidateMessageCaches } from "../actions";
 import { ChatMessage, OfferPaymentMethod } from "../types";
 
@@ -79,17 +80,11 @@ export function useMessageHistory({
         method: "POST",
         body: { paymentMethod },
       });
-      const checkoutUrl =
-        res?.success && typeof res.data?.checkoutUrl === "string"
-          ? res.data.checkoutUrl
-          : null;
-
       if (selectedContact) {
         void revalidateMessageCaches(selectedContact);
       }
 
-      if (checkoutUrl) {
-        window.location.href = checkoutUrl;
+      if (res?.success && redirectToCheckout(res.data?.checkoutUrl)) {
         return;
       }
 

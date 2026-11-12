@@ -16,7 +16,8 @@
     "logout": "Выйти",
     "logoutAccount": "Выйти из аккаунта",
     "signedInAs": "Вы вошли как",
-    "trackOrder": "Отследить заказ"
+    "trackOrder": "Отследить заказ",
+    "logoutSuccess": "Вы успешно вышли"
   },
   "Navbar": {
     "deliverTo": "Доставка в:",
@@ -62,7 +63,8 @@
     "deliverTo": "Доставка в:",
     "change": "Изменить",
     "languageCountry": "Язык и страна",
-    "searchPlaceholder": "Поиск товаров и услуг..."
+    "searchPlaceholder": "Поиск товаров и услуг...",
+    "close": "Закрыть меню"
   },
   "Footer": {
     "tagline": "Свяжитесь с нами в соцсетях",
@@ -456,7 +458,6 @@
     "noMessagesYet": "Пока нет сообщений",
     "selectChat": "Выберите чат, чтобы начать переписку",
     "emptyConversation": "В этом разговоре пока нет сообщений.",
-    "yesterday": "Вчера",
     "avatarAlt": "Аватар",
     "attachmentAlt": "Вложение",
     "downloadFile": "Скачать файл",
@@ -556,7 +557,8 @@
     "description": "Описание",
     "topHighlights": "Главные особенности",
     "productDetails": "Информация о товаре",
-    "selectVariant": "Пожалуйста, выберите параметры для добавления в корзину."
+    "selectVariant": "Пожалуйста, выберите параметры для добавления в корзину.",
+    "productVideo": "Видео товара"
   },
   "Services": {
     "home": "Главная",
@@ -594,7 +596,8 @@
     "checkoutError": "Не удалось начать оформление.",
     "checkoutUnexpected": "Произошла ошибка при оформлении.",
     "missingProvider": "Нет информации об исполнителе.",
-    "chatError": "Не удалось начать переписку."
+    "chatError": "Не удалось начать переписку.",
+    "playVideo": "Воспроизвести видео"
   },
   "Checkout": {
     "eyebrow": "Оформление",

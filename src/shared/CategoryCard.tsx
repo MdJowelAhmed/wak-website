@@ -27,7 +27,7 @@ export default function CategoryCard({
         >
             <div className="relative h-24 w-full shrink-0 overflow-hidden rounded-xl shadow-inner sm:h-28">
                 <Image
-                    src={resolveImageUrl(category.image) || "/placeholder.jpg"}
+                    src={resolveImageUrl(category.image) || "/placeholder.svg"}
                     alt={category.name}
                     fill
                     sizes={layout === "row" ? "192px" : "(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 180px"}

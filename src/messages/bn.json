@@ -16,7 +16,8 @@
     "logout": "লগআউট",
     "logoutAccount": "অ্যাকাউন্ট থেকে লগআউট",
     "signedInAs": "লগইন করেছেন",
-    "trackOrder": "অর্ডার ট্র্যাক করুন"
+    "trackOrder": "অর্ডার ট্র্যাক করুন",
+    "logoutSuccess": "সফলভাবে লগআউট হয়েছে"
   },
   "Navbar": {
     "deliverTo": "ডেলিভারি ঠিকানা:",
@@ -62,7 +63,8 @@
     "deliverTo": "ডেলিভারি ঠিকানা:",
     "change": "পরিবর্তন",
     "languageCountry": "ভাষা ও দেশ",
-    "searchPlaceholder": "পণ্য ও সার্ভিস খুঁজুন..."
+    "searchPlaceholder": "পণ্য ও সার্ভিস খুঁজুন...",
+    "close": "মেনু বন্ধ করুন"
   },
   "Footer": {
     "tagline": "সোশ্যাল মিডিয়ায় আমাদের সাথে যুক্ত হোন",
@@ -475,7 +477,6 @@
     "noMessagesYet": "এখনো কোনো মেসেজ নেই",
     "selectChat": "মেসেজ করতে একটি চ্যাট বেছে নিন",
     "emptyConversation": "এই কথোপকথনে এখনো কোনো মেসেজ নেই।",
-    "yesterday": "গতকাল",
     "avatarAlt": "অ্যাভাটার",
     "attachmentAlt": "অ্যাটাচমেন্ট",
     "downloadFile": "ফাইল ডাউনলোড",
@@ -575,7 +576,8 @@
     "dimensionsValue": "{length} × {width} × {height} সেমি",
     "related": "সম্পর্কিত পণ্য",
     "viewAll": "সব দেখুন",
-    "selectVariant": "কার্টে যোগ করতে অনুগ্রহ করে অপশন বেছে নিন।"
+    "selectVariant": "কার্টে যোগ করতে অনুগ্রহ করে অপশন বেছে নিন।",
+    "productVideo": "পণ্যের ভিডিও"
   },
   "Services": {
     "home": "হোম",
@@ -613,7 +615,8 @@
     "checkoutError": "চেকআউট শুরু করা যায়নি।",
     "checkoutUnexpected": "চেকআউটে সমস্যা হয়েছে।",
     "missingProvider": "প্রোভাইডারের তথ্য পাওয়া যায়নি।",
-    "chatError": "কথোপকথন শুরু করা যায়নি।"
+    "chatError": "কথোপকথন শুরু করা যায়নি।",
+    "playVideo": "ভিডিও চালান"
   },
   "Checkout": {
     "eyebrow": "চেকআউট",

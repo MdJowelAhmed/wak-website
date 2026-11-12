@@ -16,7 +16,8 @@
     "logout": "退出",
     "logoutAccount": "退出账户",
     "signedInAs": "已登录为",
-    "trackOrder": "追踪订单"
+    "trackOrder": "追踪订单",
+    "logoutSuccess": "已成功退出"
   },
   "Navbar": {
     "deliverTo": "配送至：",
@@ -62,7 +63,8 @@
     "deliverTo": "配送至：",
     "change": "更改",
     "languageCountry": "语言和国家",
-    "searchPlaceholder": "搜索商品和服务..."
+    "searchPlaceholder": "搜索商品和服务...",
+    "close": "关闭菜单"
   },
   "Footer": {
     "tagline": "在社交媒体上关注我们",
@@ -456,7 +458,6 @@
     "noMessagesYet": "暂无消息",
     "selectChat": "选择一个聊天开始发送消息",
     "emptyConversation": "此对话中还没有消息。",
-    "yesterday": "昨天",
     "avatarAlt": "头像",
     "attachmentAlt": "附件",
     "downloadFile": "下载文件",
@@ -556,7 +557,8 @@
     "description": "商品描述",
     "topHighlights": "核心亮点",
     "productDetails": "商品详情",
-    "selectVariant": "请选择选项以加入购物车。"
+    "selectVariant": "请选择选项以加入购物车。",
+    "productVideo": "商品视频"
   },
   "Services": {
     "home": "首页",
@@ -594,7 +596,8 @@
     "checkoutError": "无法开始结账。",
     "checkoutUnexpected": "结账时出现问题。",
     "missingProvider": "缺少服务提供者信息。",
-    "chatError": "无法开始对话。"
+    "chatError": "无法开始对话。",
+    "playVideo": "播放视频"
   },
   "Checkout": {
     "eyebrow": "结账",

@@ -16,7 +16,8 @@
     "logout": "Uitloggen",
     "logoutAccount": "Account uitloggen",
     "signedInAs": "Ingelogd als",
-    "trackOrder": "Bestelling volgen"
+    "trackOrder": "Bestelling volgen",
+    "logoutSuccess": "Succesvol uitgelogd"
   },
   "Navbar": {
     "deliverTo": "Bezorgen bij:",
@@ -62,7 +63,8 @@
     "deliverTo": "Bezorgen bij:",
     "change": "Wijzigen",
     "languageCountry": "Taal en land",
-    "searchPlaceholder": "Zoek producten en diensten..."
+    "searchPlaceholder": "Zoek producten en diensten...",
+    "close": "Menu sluiten"
   },
   "Footer": {
     "tagline": "Volg ons op social media",
@@ -456,7 +458,6 @@
     "noMessagesYet": "Nog geen berichten",
     "selectChat": "Selecteer een chat om te beginnen",
     "emptyConversation": "Er zijn nog geen berichten in dit gesprek.",
-    "yesterday": "Gisteren",
     "avatarAlt": "Avatar",
     "attachmentAlt": "Bijlage",
     "downloadFile": "Bestand downloaden",
@@ -556,7 +557,8 @@
     "description": "Beschrijving",
     "topHighlights": "Belangrijkste kenmerken",
     "productDetails": "Productdetails",
-    "selectVariant": "Selecteer opties om toe te voegen aan de winkelwagen."
+    "selectVariant": "Selecteer opties om toe te voegen aan de winkelwagen.",
+    "productVideo": "Productvideo"
   },
   "Services": {
     "home": "Home",
@@ -594,7 +596,8 @@
     "checkoutError": "Afrekenen kon niet worden gestart.",
     "checkoutUnexpected": "Er ging iets mis tijdens het afrekenen.",
     "missingProvider": "Aanbiedersinformatie ontbreekt.",
-    "chatError": "Gesprek kon niet worden gestart."
+    "chatError": "Gesprek kon niet worden gestart.",
+    "playVideo": "Video afspelen"
   },
   "Checkout": {
     "eyebrow": "Afrekenen",

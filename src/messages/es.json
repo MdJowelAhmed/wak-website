@@ -16,7 +16,8 @@
     "logout": "Cerrar sesión",
     "logoutAccount": "Cerrar sesión",
     "signedInAs": "Conectado como",
-    "trackOrder": "Seguir pedido"
+    "trackOrder": "Seguir pedido",
+    "logoutSuccess": "Sesión cerrada correctamente"
   },
   "Navbar": {
     "deliverTo": "Entregar en:",
@@ -62,7 +63,8 @@
     "deliverTo": "Entregar en:",
     "change": "Cambiar",
     "languageCountry": "Idioma y país",
-    "searchPlaceholder": "Buscar productos y servicios..."
+    "searchPlaceholder": "Buscar productos y servicios...",
+    "close": "Cerrar menú"
   },
   "Footer": {
     "tagline": "Conéctate con nosotros en redes sociales",
@@ -456,7 +458,6 @@
     "noMessagesYet": "Aún no hay mensajes",
     "selectChat": "Selecciona un chat para empezar a escribir",
     "emptyConversation": "Aún no hay mensajes en esta conversación.",
-    "yesterday": "Ayer",
     "avatarAlt": "Avatar",
     "attachmentAlt": "Adjunto",
     "downloadFile": "Descargar archivo",
@@ -556,7 +557,8 @@
     "description": "Descripción",
     "topHighlights": "Puntos destacados",
     "productDetails": "Detalles del producto",
-    "selectVariant": "Por favor seleccione las opciones para añadir al carrito."
+    "selectVariant": "Por favor seleccione las opciones para añadir al carrito.",
+    "productVideo": "Video del producto"
   },
   "Services": {
     "home": "Inicio",
@@ -594,7 +596,8 @@
     "checkoutError": "No se pudo iniciar el pago.",
     "checkoutUnexpected": "Algo salió mal durante el pago.",
     "missingProvider": "Falta la información del proveedor.",
-    "chatError": "No se pudo iniciar una conversación."
+    "chatError": "No se pudo iniciar una conversación.",
+    "playVideo": "Reproducir video"
   },
   "Checkout": {
     "eyebrow": "Pago",

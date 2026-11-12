@@ -1,29 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Clock, Loader2, MessageCircle, Shield } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Button } from "@/ui/button";
 import { myFetch } from "../../../../../helpers/myFetch";
+import { redirectToCheckout } from "../../../../../helpers/safe-url";
 import { useCurrency } from "@/hooks/use-currency";
+import { usePaymentMethod } from "@/hooks/use-payment-method";
 import { useRouter } from "@/i18n/navigation";
 import { type ServiceDetailsData } from "../types";
-
-type PaymentMethod = "stripe" | "paychangu";
 
 export default function Pricing({ service }: { service: ServiceDetailsData }) {
     const t = useTranslations("ServiceDetails");
     const checkoutT = useTranslations("Checkout");
     const router = useRouter();
-    const { countryCode, formatPrice } = useCurrency();
-    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(() =>
-        countryCode?.toUpperCase() === "MW" ? "paychangu" : "stripe"
-    );
-
-    useEffect(() => {
-        setPaymentMethod(countryCode?.toUpperCase() === "MW" ? "paychangu" : "stripe");
-    }, [countryCode]);
+    const { formatPrice } = useCurrency();
+    const [paymentMethod, setPaymentMethod] = usePaymentMethod();
     const [isCheckingOut, setIsCheckingOut] = useState(false);
     const [isCreatingChat, setIsCreatingChat] = useState(false);
 
@@ -34,14 +28,8 @@ export default function Pricing({ service }: { service: ServiceDetailsData }) {
             const res = await myFetch(`/service-orders/services/${service.id}/checkout`, {
                 method: "POST",
                 body: { paymentMethod },
-                
             });
-            const checkoutUrl =
-                res?.success && typeof res.data?.checkoutUrl === "string"
-                    ? res.data.checkoutUrl
-                    : null;
-            if (checkoutUrl) {
-                window.location.href = checkoutUrl;
+            if (res?.success && redirectToCheckout(res.data?.checkoutUrl)) {
                 return;
             }
             toast.error(res?.message || t("checkoutError"));

@@ -93,7 +93,7 @@ export function mapServiceDetails(raw: unknown): ServiceDetailsData | null {
         slug: row.slug || row._id,
         name: row.name,
         description: row.description || "",
-        image: resolveImageUrl(row.image, "/placeholder.jpg") || "/placeholder.jpg",
+        image: resolveImageUrl(row.image, "/placeholder.svg") || "/placeholder.svg",
         video,
         price: typeof row.price === "number" ? row.price : 0,
         deliveryTime: typeof row.deliveryTime === "number" ? row.deliveryTime : 0,
@@ -105,12 +105,4 @@ export function mapServiceDetails(raw: unknown): ServiceDetailsData | null {
         packageDetails: readStringArray(row.packageDetails),
         creator,
     };
-}
-
-export function formatServicePrice(amount: number): string {
-    return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 0,
-    }).format(amount);
 }

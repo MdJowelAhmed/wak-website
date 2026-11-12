@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
     IMG_URL: process.env.IMG_URL,
   },
   images: {
+    // The dev API serves media from a LAN IP; keep Next's SSRF protection on in production.
+    dangerouslyAllowLocalIP: process.env.NODE_ENV !== "production",
     remotePatterns: [
       {
         protocol: "https",
@@ -24,6 +26,7 @@ const nextConfig: NextConfig = {
       {
         source: "/:path*",
         headers: [
+          { key: "Strict-Transport-Security", value: "max-age=63072000" },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },

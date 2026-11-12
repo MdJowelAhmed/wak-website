@@ -3,11 +3,11 @@
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
 import { isVideoHeroBanner } from "../../../../../helpers/mapHeroBanner";
+import { toInternalPath, toSafeExternalUrl } from "../../../../../helpers/safe-url";
 import MediaVideo from "@/ui/MediaVideo";
 
 import "swiper/css";
@@ -59,58 +59,51 @@ export const BannerSkeleton = ({ count = 4 }: { count?: number }) => {
     );
 };
 
-function goToBanner(item: HeroData, router: ReturnType<typeof useRouter>) {
-    if (item.product?.slug) {
-        router.push(`/shop/${item.product.slug}`);
-        return;
-    }
-    if (item.service?.slug) {
-        router.push(`/services/${item.service.slug}`);
-        return;
-    }
-    if (item.link) {
-        window.location.href = item.link;
-        return;
-    }
-    router.push(item.type === "service" ? "/services" : "/shop");
+type BannerTarget = { href: string; external: boolean };
+
+function bannerTarget(item: HeroData): BannerTarget {
+    if (item.product?.slug) return { href: `/shop/${item.product.slug}`, external: false };
+    if (item.service?.slug) return { href: `/services/${item.service.slug}`, external: false };
+
+    const internalPath = toInternalPath(item.link);
+    if (internalPath) return { href: internalPath, external: false };
+
+    const externalUrl = toSafeExternalUrl(item.link);
+    if (externalUrl) return { href: externalUrl, external: true };
+
+    return { href: item.type === "service" ? "/services" : "/shop", external: false };
 }
 
 function BannerCard({ item, priority }: { item: HeroData; priority?: boolean }) {
-    const router = useRouter();
     const t = useTranslations("Home.banner");
     const showVideo = isVideoHeroBanner(item) && Boolean(item.video);
-    const poster =
-        item.thumbnail ||
-        (item.image ? resolveImageUrl(item.image) : null) ||
-        "/banner.png";
+    const poster = item.thumbnail || item.image || "/banner.png";
+    const target = bannerTarget(item);
+    const ctaLabel = item.type === "service" ? t("viewService") : t("shopNow");
+    const ctaClassName =
+        "group/btn mt-2 inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-semibold text-white shadow-md transition-all duration-300 hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:text-sm";
+    const ctaContent = (
+        <>
+            {ctaLabel}
+            <ArrowUpRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" aria-hidden />
+        </>
+    );
 
     return (
-        <div
-            onClick={() => goToBanner(item, router)}
-            className="group relative flex min-h-[280px] cursor-pointer flex-col justify-end overflow-hidden rounded-2xl p-6 shadow-lg transition-all duration-300 hover:shadow-xl sm:min-h-[320px] md:p-8 lg:min-h-[350px]"
-        >
+        <article className="group relative flex min-h-[280px] flex-col justify-end overflow-hidden rounded-2xl p-6 shadow-lg transition-all duration-300 hover:shadow-xl sm:min-h-[320px] md:p-8 lg:min-h-[350px]">
             <div className="absolute inset-0 h-full w-full">
                 {showVideo && item.video ? (
-                    <div
-                        className="h-full w-full"
-                        onClick={(event) => event.stopPropagation()}
-                        onKeyDown={(event) => event.stopPropagation()}
-                        role="presentation"
-                    >
-                        <MediaVideo
-                            src={item.video}
-                            poster={poster}
-                            playsInline
-                            autoPlay
-                            controls
-                            muted
-                            loop
-                            preload="auto"
-                            ariaLabel={item.header}
-                            className="transition-transform duration-500 group-hover:scale-105"
-                            videoClassName="pointer-events-auto"
-                        />
-                    </div>
+                    <MediaVideo
+                        src={item.video}
+                        poster={poster}
+                        playsInline
+                        autoPlay
+                        controls
+                        muted
+                        loop
+                        preload="auto"
+                        ariaLabel={item.header}
+                    />
                 ) : (
                     <Image
                         src={item.image || "/banner.png"}
@@ -124,7 +117,15 @@ function BannerCard({ item, priority }: { item: HeroData; priority?: boolean }) 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
             </div>
 
-            <div className="relative z-10 flex flex-col items-start gap-2">
+            {/* Whole-card click target for image banners; video banners keep player controls usable. */}
+            {!showVideo &&
+                (target.external ? (
+                    <a href={target.href} rel="noopener noreferrer" tabIndex={-1} aria-hidden className="absolute inset-0 cursor-pointer" />
+                ) : (
+                    <Link href={target.href} tabIndex={-1} aria-hidden className="absolute inset-0 cursor-pointer" />
+                ))}
+
+            <div className="pointer-events-none relative z-10 flex flex-col items-start gap-2">
                 <h3 className="line-clamp-2 text-xl leading-tight font-bold text-foreground transition-colors group-hover:text-foreground/80 sm:text-2xl">
                     {item.header}
                 </h3>
@@ -133,19 +134,19 @@ function BannerCard({ item, priority }: { item: HeroData; priority?: boolean }) 
                         {item.description}
                     </p>
                 )}
-                <button
-                    type="button"
-                    onClick={(event) => {
-                        event.stopPropagation();
-                        goToBanner(item, router);
-                    }}
-                    className="group/btn pointer-events-auto relative z-10 mt-2 inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-semibold text-white shadow-md transition-all duration-300 hover:bg-primary-hover sm:text-sm"
-                >
-                    {item.type === "service" ? t("viewService") : t("shopNow")}
-                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-                </button>
+                <div className="pointer-events-auto">
+                    {target.external ? (
+                        <a href={target.href} rel="noopener noreferrer" className={ctaClassName}>
+                            {ctaContent}
+                        </a>
+                    ) : (
+                        <Link href={target.href} className={ctaClassName}>
+                            {ctaContent}
+                        </Link>
+                    )}
+                </div>
             </div>
-        </div>
+        </article>
     );
 }
 

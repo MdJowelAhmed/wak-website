@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -41,18 +41,13 @@ export default function ProfileAvatar({
   sizes = "80px",
   priority = false,
 }: ProfileAvatarProps) {
-  const [failed, setFailed] = useState(false);
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
   const trimmedSrc = src?.trim() ?? "";
   const canRender = Boolean(trimmedSrc) && isRenderableSrc(trimmedSrc);
-
-  useEffect(() => {
-    setFailed(false);
-  }, [trimmedSrc]);
-
-  const useFallback = !canRender || failed;
+  const useFallback = !canRender || failedSrc === trimmedSrc;
 
   return (
-    <div className={cn("relative overflow-hidden bg-section-bg", className)}>
+    <span className={cn("relative block overflow-hidden bg-section-bg", className)}>
       <Image
         key={useFallback ? "fallback" : trimmedSrc}
         src={useFallback ? FALLBACK_SRC : trimmedSrc}
@@ -64,16 +59,16 @@ export default function ProfileAvatar({
         className={cn("object-cover", useFallback && "object-contain p-3")}
         onError={() => {
           if (!useFallback) {
-            setFailed(true);
+            setFailedSrc(trimmedSrc);
           }
         }}
         onLoad={(event) => {
           const { naturalWidth, naturalHeight } = event.currentTarget;
           if (!useFallback && naturalWidth === 0 && naturalHeight === 0) {
-            setFailed(true);
+            setFailedSrc(trimmedSrc);
           }
         }}
       />
-    </div>
+    </span>
   );
 }

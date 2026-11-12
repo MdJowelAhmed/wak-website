@@ -7,6 +7,9 @@ export function useCategories(params?: CategoryQueryParams, enabled: boolean = t
     const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState(enabled);
     const [error, setError] = useState<string | null>(null);
+    const type = params?.type;
+    const isFeatured = params?.isFeatured;
+    const limit = params?.limit;
 
     useEffect(() => {
         if (!enabled) return;
@@ -15,20 +18,17 @@ export function useCategories(params?: CategoryQueryParams, enabled: boolean = t
         const fetchCategories = async () => {
             setLoading(true);
             try {
-                const res = await getActiveCategories(params);
-                if (isMounted) {
-                    if (res?.data) {
-                        let filtered = res.data;
-                        if (params?.isFeatured !== undefined) {
-                            filtered = filtered.filter((c) => c.isFeatured === params.isFeatured);
-                        }
-                        setCategories(filtered);
-                    }
-                    setError(res?.error || null);
+                const res = await getActiveCategories({ type, isFeatured, limit });
+                if (!isMounted) return;
+                if (res?.data) {
+                    setCategories(
+                        isFeatured === undefined ? res.data : res.data.filter((c) => c.isFeatured === isFeatured)
+                    );
                 }
-            } catch (err: any) {
+                setError(res?.error || null);
+            } catch (err: unknown) {
                 if (isMounted) {
-                    setError(err?.message || "Failed to fetch categories");
+                    setError(err instanceof Error ? err.message : "Failed to fetch categories");
                 }
             } finally {
                 if (isMounted) {
@@ -42,7 +42,7 @@ export function useCategories(params?: CategoryQueryParams, enabled: boolean = t
         return () => {
             isMounted = false;
         };
-    }, [enabled, params?.type, params?.isFeatured, params?.limit]);
+    }, [enabled, type, isFeatured, limit]);
 
     return { categories, loading, error };
 }

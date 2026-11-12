@@ -16,7 +16,8 @@
     "logout": "Tuluka",
     "logoutAccount": "Tuluka ku akaunti",
     "signedInAs": "Mwalowa ngati",
-    "trackOrder": "Tsatirani oda"
+    "trackOrder": "Tsatirani oda",
+    "logoutSuccess": "Mwatuluka bwino"
   },
   "Navbar": {
     "deliverTo": "Tumizani ku:",
@@ -62,7 +63,8 @@
     "deliverTo": "Tumizani ku:",
     "change": "Sinthani",
     "languageCountry": "Chinenero ndi dziko",
-    "searchPlaceholder": "Fufuzani zogulitsa ndi ntchito..."
+    "searchPlaceholder": "Fufuzani zogulitsa ndi ntchito...",
+    "close": "Tsekani menyu"
   },
   "Footer": {
     "tagline": "Lumikizanani nafe pa social media",
@@ -456,7 +458,6 @@
     "noMessagesYet": "Palibe mauthenga pano",
     "selectChat": "Sankhani nkhani kuti muyambe kutumiza",
     "emptyConversation": "Palibe mauthenga mu nkhani iyi pano.",
-    "yesterday": "Dzulo",
     "avatarAlt": "Chithunzi",
     "attachmentAlt": "Chophatikizika",
     "downloadFile": "Tsitsani fayilo",
@@ -556,7 +557,8 @@
     "description": "Kufotokozera",
     "topHighlights": "Zofunika Kwambiri",
     "productDetails": "Zambiri za Katundu",
-    "selectVariant": "Chonde sankhani zomwe mukufuna kuti muwonjezere pa ngolo."
+    "selectVariant": "Chonde sankhani zomwe mukufuna kuti muwonjezere pa ngolo.",
+    "productVideo": "Kanema wa katundu"
   },
   "Services": {
     "home": "Nyumba",
@@ -594,7 +596,8 @@
     "checkoutError": "Sichinathe kuyambitsa kulipira.",
     "checkoutUnexpected": "Pali vuto polipira.",
     "missingProvider": "Zambiri za wopereka zilibe.",
-    "chatError": "Sichinathe kuyambitsa nkhani."
+    "chatError": "Sichinathe kuyambitsa nkhani.",
+    "playVideo": "Sewerani kanema"
   },
   "Checkout": {
     "eyebrow": "Malipiro",

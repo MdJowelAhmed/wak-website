@@ -133,9 +133,9 @@ const ProductCard = ({ product }: { product: ProductCardProps }) => {
 
                     <div className="flex items-center gap-1.5 sm:gap-3 mt-1">
                         <span className="text-primary font-bold text-xs sm:text-base">{formatPrice(currentPrice)}</span>
-                        {originalPrice && (
+                        {originalPrice && originalPrice > currentPrice ? (
                             <span className="text-muted-text line-through text-[10px] sm:text-sm">{formatPrice(originalPrice)}</span>
-                        )}
+                        ) : null}
                     </div>
                 </div>
 

@@ -36,6 +36,7 @@ export default function LanguageRegionModal({
     onSelectCountry,
 }: LanguageRegionDropdownProps) {
     const [selectedLang, setSelectedLang] = useState(currentLang);
+    const [syncedLang, setSyncedLang] = useState(currentLang);
     const [isChangingCurrency, setIsChangingCurrency] = useState(false);
     const [isChangingCountry, setIsChangingCountry] = useState(false);
     const [currencyQuery, setCurrencyQuery] = useState("");
@@ -55,9 +56,10 @@ export default function LanguageRegionModal({
     const pathname = usePathname();
     const router = useRouter();
 
-    useEffect(() => {
+    if (currentLang !== syncedLang) {
+        setSyncedLang(currentLang);
         setSelectedLang(currentLang);
-    }, [currentLang]);
+    }
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
@@ -90,6 +92,8 @@ export default function LanguageRegionModal({
             return;
         }
 
+        // Locale/country segments are rewritten by the proxy, so a full document load is required.
+        // eslint-disable-next-line @next/next/no-location-assign-relative-destination
         window.location.assign(nextPath);
     };
 
@@ -180,19 +184,22 @@ export default function LanguageRegionModal({
                         {filteredLanguages.map((lang) => {
                             const isSelected = selectedLang === lang.code;
                             return (
-                                <label
+                                <button
+                                    type="button"
                                     key={lang.code}
                                     onClick={() => handleSelectLang(lang.code)}
-                                    className="flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-section-bg cursor-pointer transition-colors group select-none"
+                                    aria-pressed={isSelected}
+                                    className="flex w-full items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-section-bg cursor-pointer transition-colors group select-none text-left"
                                 >
-                                    <div
+                                    <span
                                         className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all ${isSelected
                                                 ? 'border-primary'
                                                 : 'border-border group-hover:border-primary/60'
                                             }`}
+                                        aria-hidden
                                     >
-                                        {isSelected && <div className="w-2 h-2 rounded-full bg-primary" />}
-                                    </div>
+                                        {isSelected && <span className="w-2 h-2 rounded-full bg-primary" />}
+                                    </span>
 
                                     <span
                                         className={`text-xs ${isSelected
@@ -202,7 +209,7 @@ export default function LanguageRegionModal({
                                     >
                                         {lang.nativeName} — {lang.name}
                                     </span>
-                                </label>
+                                </button>
                             );
                         })}
                     </div>

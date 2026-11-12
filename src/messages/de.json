@@ -16,7 +16,8 @@
     "logout": "Abmelden",
     "logoutAccount": "Konto abmelden",
     "signedInAs": "Angemeldet als",
-    "trackOrder": "Bestellung verfolgen"
+    "trackOrder": "Bestellung verfolgen",
+    "logoutSuccess": "Erfolgreich abgemeldet"
   },
   "Navbar": {
     "deliverTo": "Liefern an:",
@@ -62,7 +63,8 @@
     "deliverTo": "Liefern an:",
     "change": "Ändern",
     "languageCountry": "Sprache & Land",
-    "searchPlaceholder": "Produkte und Services suchen..."
+    "searchPlaceholder": "Produkte und Services suchen...",
+    "close": "Menü schließen"
   },
   "Footer": {
     "tagline": "Folgen Sie uns in den sozialen Medien",
@@ -456,7 +458,6 @@
     "noMessagesYet": "Noch keine Nachrichten",
     "selectChat": "Wähle einen Chat, um zu schreiben",
     "emptyConversation": "In dieser Unterhaltung gibt es noch keine Nachrichten.",
-    "yesterday": "Gestern",
     "avatarAlt": "Avatar",
     "attachmentAlt": "Anhang",
     "downloadFile": "Datei herunterladen",
@@ -556,7 +557,8 @@
     "description": "Beschreibung",
     "topHighlights": "Top-Highlights",
     "productDetails": "Produktdetails",
-    "selectVariant": "Bitte wählen Sie Optionen aus, um sie in den Warenkorb zu legen."
+    "selectVariant": "Bitte wählen Sie Optionen aus, um sie in den Warenkorb zu legen.",
+    "productVideo": "Produktvideo"
   },
   "Services": {
     "home": "Startseite",
@@ -594,7 +596,8 @@
     "checkoutError": "Kasse konnte nicht gestartet werden.",
     "checkoutUnexpected": "Beim Bezahlen ist ein Fehler aufgetreten.",
     "missingProvider": "Anbieterinformationen fehlen.",
-    "chatError": "Unterhaltung konnte nicht gestartet werden."
+    "chatError": "Unterhaltung konnte nicht gestartet werden.",
+    "playVideo": "Video abspielen"
   },
   "Checkout": {
     "eyebrow": "Kasse",

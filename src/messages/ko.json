@@ -16,7 +16,8 @@
     "logout": "로그아웃",
     "logoutAccount": "계정 로그아웃",
     "signedInAs": "로그인 계정",
-    "trackOrder": "주문 조회"
+    "trackOrder": "주문 조회",
+    "logoutSuccess": "로그아웃되었습니다"
   },
   "Navbar": {
     "deliverTo": "배송지:",
@@ -62,7 +63,8 @@
     "deliverTo": "배송지:",
     "change": "변경",
     "languageCountry": "언어 및 국가",
-    "searchPlaceholder": "상품 및 서비스 검색..."
+    "searchPlaceholder": "상품 및 서비스 검색...",
+    "close": "메뉴 닫기"
   },
   "Footer": {
     "tagline": "소셜 미디어에서 만나보세요",
@@ -456,7 +458,6 @@
     "noMessagesYet": "아직 메시지가 없습니다",
     "selectChat": "메시지를 시작하려면 채팅을 선택하세요",
     "emptyConversation": "이 대화에는 아직 메시지가 없습니다.",
-    "yesterday": "어제",
     "avatarAlt": "아바타",
     "attachmentAlt": "첨부 파일",
     "downloadFile": "파일 다운로드",
@@ -556,7 +557,8 @@
     "description": "상품 설명",
     "topHighlights": "주요 특징",
     "productDetails": "상품 상세 정보",
-    "selectVariant": "장바구니에 담으려면 옵션을 선택해 주세요."
+    "selectVariant": "장바구니에 담으려면 옵션을 선택해 주세요.",
+    "productVideo": "제품 동영상"
   },
   "Services": {
     "home": "홈",
@@ -594,7 +596,8 @@
     "checkoutError": "결제를 시작할 수 없습니다.",
     "checkoutUnexpected": "결제 중 문제가 발생했습니다.",
     "missingProvider": "제공자 정보가 없습니다.",
-    "chatError": "대화를 시작할 수 없습니다."
+    "chatError": "대화를 시작할 수 없습니다.",
+    "playVideo": "동영상 재생"
   },
   "Checkout": {
     "eyebrow": "결제",

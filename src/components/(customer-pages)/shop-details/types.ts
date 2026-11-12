@@ -64,14 +64,6 @@ function asNumber(value: unknown): number | undefined {
     return typeof value === "number" && Number.isFinite(value) ? value : undefined;
 }
 
-export function formatProductPrice(amount: number): string {
-    return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 0,
-    }).format(amount);
-}
-
 export function mapProductDetails(raw: unknown): ProductDetailsData | null {
     if (!raw || typeof raw !== "object") return null;
     const row = raw as {
@@ -111,7 +103,7 @@ export function mapProductDetails(raw: unknown): ProductDetailsData | null {
     const baseImages = Array.isArray(row.images)
         ? row.images
               .filter((item): item is string => typeof item === "string" && item.length > 0)
-              .map((item) => resolveImageUrl(item, "/placeholder.jpg") || "/placeholder.jpg")
+              .map((item) => resolveImageUrl(item, "/placeholder.svg") || "/placeholder.svg")
         : [];
 
     // Parse Variants
@@ -121,7 +113,7 @@ export function mapProductDetails(raw: unknown): ProductDetailsData | null {
     const variantSizesSet = new Set<string>();
     const variantImages: string[] = [];
 
-    for (const v of rawVariants) {
+    for (const [index, v] of rawVariants.entries()) {
         if (!v || typeof v !== "object") continue;
         const item = v as {
             _id?: string;
@@ -152,7 +144,7 @@ export function mapProductDetails(raw: unknown): ProductDetailsData | null {
         }
 
         variants.push({
-            id: item._id || color || Math.random().toString(),
+            id: item._id || color || `variant-${index}`,
             color,
             image: resolvedVariantImg || undefined,
             stock,
@@ -167,7 +159,7 @@ export function mapProductDetails(raw: unknown): ProductDetailsData | null {
             allImages.push(vImg);
         }
     }
-    const finalImages = allImages.length > 0 ? allImages : ["/placeholder.jpg"];
+    const finalImages = allImages.length > 0 ? allImages : ["/placeholder.svg"];
 
     const video =
       typeof row.video === "string" && row.video.trim().length > 0

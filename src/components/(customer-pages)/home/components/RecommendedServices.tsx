@@ -155,7 +155,7 @@ const RecommendedServices = ({
                                 price={service.price || 0}
                                 coverImage={
                                     resolveImageUrl(service.image || service.images?.[0]) ||
-                                    "/placeholder.jpg"
+                                    "/placeholder.svg"
                                 }
                             />
                         );

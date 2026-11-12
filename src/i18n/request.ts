@@ -2,23 +2,21 @@ import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
 import { routing } from "./routing";
 
-function mergeMessages(fallback: Record<string, unknown>, current: Record<string, unknown>) {
-  const result: Record<string, unknown> = { ...fallback };
+type Messages = Record<string, unknown>;
+
+function isMessageObject(value: unknown): value is Messages {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function mergeMessages(fallback: Messages, current: Messages): Messages {
+  const result: Messages = { ...fallback };
   for (const key of Object.keys(current)) {
-    if (
-      typeof current[key] === "object" &&
-      current[key] !== null &&
-      !Array.isArray(current[key]) &&
-      typeof fallback[key] === "object" &&
-      fallback[key] !== null
-    ) {
-      result[key] = {
-        ...(fallback[key] as Record<string, unknown>),
-        ...(current[key] as Record<string, unknown>),
-      };
-    } else {
-      result[key] = current[key];
-    }
+    const fallbackValue = fallback[key];
+    const currentValue = current[key];
+    result[key] =
+      isMessageObject(fallbackValue) && isMessageObject(currentValue)
+        ? mergeMessages(fallbackValue, currentValue)
+        : currentValue;
   }
   return result;
 }

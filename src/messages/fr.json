@@ -16,7 +16,8 @@
     "logout": "Déconnexion",
     "logoutAccount": "Se déconnecter",
     "signedInAs": "Connecté en tant que",
-    "trackOrder": "Suivre la commande"
+    "trackOrder": "Suivre la commande",
+    "logoutSuccess": "Déconnexion réussie"
   },
   "Navbar": {
     "deliverTo": "Livrer à :",
@@ -62,7 +63,8 @@
     "deliverTo": "Livrer à :",
     "change": "Modifier",
     "languageCountry": "Langue et pays",
-    "searchPlaceholder": "Rechercher des produits et services..."
+    "searchPlaceholder": "Rechercher des produits et services...",
+    "close": "Fermer le menu"
   },
   "Footer": {
     "tagline": "Rejoignez-nous sur les réseaux sociaux",
@@ -456,7 +458,6 @@
     "noMessagesYet": "Aucun message pour le moment",
     "selectChat": "Sélectionnez une discussion pour commencer",
     "emptyConversation": "Aucun message dans cette conversation pour le moment.",
-    "yesterday": "Hier",
     "avatarAlt": "Avatar",
     "attachmentAlt": "Pièce jointe",
     "downloadFile": "Télécharger le fichier",
@@ -556,7 +557,8 @@
     "description": "Description",
     "topHighlights": "Points forts",
     "productDetails": "Détails du produit",
-    "selectVariant": "Veuillez sélectionner les options pour ajouter au panier."
+    "selectVariant": "Veuillez sélectionner les options pour ajouter au panier.",
+    "productVideo": "Vidéo du produit"
   },
   "Services": {
     "home": "Accueil",
@@ -594,7 +596,8 @@
     "checkoutError": "Impossible de démarrer le paiement.",
     "checkoutUnexpected": "Un problème est survenu lors du paiement.",
     "missingProvider": "Les informations du prestataire manquent.",
-    "chatError": "Impossible de démarrer une conversation."
+    "chatError": "Impossible de démarrer une conversation.",
+    "playVideo": "Lire la vidéo"
   },
   "Checkout": {
     "eyebrow": "Paiement",

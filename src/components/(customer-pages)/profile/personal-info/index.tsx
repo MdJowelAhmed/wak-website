@@ -1,41 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useRouter } from "@/i18n/navigation";
 import DashboardCard from "../../../../shared/DashboardCard";
 import ProfileHeader from "./ProfileHeader";
 import PersonalInfoView, { type PersonalInfoUser } from "./PersonalInfoView";
 import PersonalInfoForm, { type PersonalInfoSavePayload } from "./PersonalInfoForm";
-import getProfile from "../../../../../helpers/getProfile";
 import { myFetch } from "../../../../../helpers/myFetch";
+import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 
-const defaultUserData: PersonalInfoUser = {
-  username: "",
-  email: "",
-  phone: "",
-  country: "",
-  profileImage: undefined,
-};
-
-export default function PersonalInfoPage() {
+export default function PersonalInfoPage({ userData }: { userData: PersonalInfoUser }) {
   const t = useTranslations("Profile.personal");
+  const router = useRouter();
+  const { refreshUser } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
-  const [userData, setUserData] = useState(defaultUserData);
-
-  useEffect(() => {
-    getProfile().then((data) => {
-      if (data) {
-        setUserData({
-          username: data.name || "",
-          email: data.email || "",
-          phone: data.phone || "",
-          country: data.address || "",
-          profileImage: data.profileImage || undefined,
-        });
-      }
-    }).catch(console.error);
-  }, []);
 
   const handleSave = async (data: PersonalInfoSavePayload) => {
     const formData = new FormData();
@@ -52,29 +32,16 @@ export default function PersonalInfoPage() {
         body: formData,
       });
 
-      if (res?.success) {
-        toast.success(res?.message || t("updateSuccess"));
-        
-        getProfile().then((fetchedData) => {
-          if (fetchedData) {
-            setUserData({
-              username: fetchedData.name || "",
-              email: fetchedData.email || "",
-              phone: fetchedData.phone || "",
-              country: fetchedData.address || "",
-              profileImage: fetchedData.profileImage || undefined,
-            });
-            // Force a page reload to update the sidebar and navbar
-            window.location.reload();
-          }
-        });
-        
-        setIsEditing(false);
-      } else {
+      if (!res?.success) {
         toast.error(res?.message || t("updateError"));
+        return;
       }
-    } catch (error) {
-      console.error(error);
+
+      toast.success(res?.message || t("updateSuccess"));
+      setIsEditing(false);
+      await refreshUser();
+      router.refresh();
+    } catch {
       toast.error(t("saveError"));
     }
   };

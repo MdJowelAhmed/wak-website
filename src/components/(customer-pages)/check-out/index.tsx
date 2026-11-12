@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Link, useRouter } from "@/i18n/navigation";
 import { myFetch } from "../../../../helpers/myFetch";
+import { redirectToCheckout } from "../../../../helpers/safe-url";
 import { useCurrency } from "@/hooks/use-currency";
+import { usePaymentMethod } from "@/hooks/use-payment-method";
 import CheckoutChoices from "./CheckoutChoices";
 import ShippingForm from "./components/ShippingForm";
 import CheckoutSummary from "./components/CheckoutSummary";
@@ -43,23 +45,17 @@ export default function Checkout({
     initialAddressId,
     initialEstimate,
 }: CheckoutProps) {
-    const { countryCode, formatPrice } = useCurrency();
+    const { formatPrice } = useCurrency();
     const [addresses, setAddresses] = useState(initialAddresses);
     const [selectedAddressId, setSelectedAddressId] = useState(initialAddressId);
     const [formData, setFormData] = useState(initialForm);
     const [deliveryOption, setDeliveryOption] = useState<DeliveryOption>("delivery");
-    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(() =>
-        countryCode?.toUpperCase() === "MW" ? "paychangu" : "stripe"
-    );
+    const [paymentMethod, setPaymentMethod] = usePaymentMethod();
     const [estimate, setEstimate] = useState(initialEstimate);
     const [isCalculating, setIsCalculating] = useState(false);
     const [isPlacingOrder, setIsPlacingOrder] = useState(false);
     const t = useTranslations("Checkout");
     const router = useRouter();
-
-    useEffect(() => {
-        setPaymentMethod(countryCode?.toUpperCase() === "MW" ? "paychangu" : "stripe");
-    }, [countryCode]);
 
     const fallbackSubtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const subtotal = estimate?.grandSubTotal ?? fallbackSubtotal;
@@ -244,13 +240,7 @@ export default function Checkout({
                 body,
             });
 
-            const checkoutUrl =
-                res?.success && typeof res.data?.checkoutUrl === "string"
-                    ? res.data.checkoutUrl
-                    : null;
-
-            if (checkoutUrl) {
-                window.location.href = checkoutUrl;
+            if (res?.success && redirectToCheckout(res.data?.checkoutUrl)) {
                 return;
             }
 

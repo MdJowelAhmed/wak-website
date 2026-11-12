@@ -11,6 +11,14 @@ import { normalizeShoppingCountryCode } from "../helpers/regions";
 
 const intlMiddleware = createMiddleware(routing);
 
+const PROTECTED_PREFIXES = ["/profile", "/check-out"];
+
+function isProtectedPath(rest: string) {
+  return PROTECTED_PREFIXES.some(
+    (prefix) => rest === prefix || rest.startsWith(`${prefix}/`),
+  );
+}
+
 function withCountryCookie(response: NextResponse, countryCode: string) {
   response.cookies.set(STORAGE_COUNTRY, countryCode, {
     path: "/",
@@ -30,6 +38,13 @@ export default function middleware(request: NextRequest) {
     if (pathname !== canonical) {
       const url = request.nextUrl.clone();
       url.pathname = canonical;
+      return withCountryCookie(NextResponse.redirect(url), country);
+    }
+
+    if (isProtectedPath(parsed.rest) && !request.cookies.get("accessToken")?.value) {
+      const url = request.nextUrl.clone();
+      url.pathname = buildCountryPath(parsed.locale, country, "/");
+      url.search = "";
       return withCountryCookie(NextResponse.redirect(url), country);
     }
 

@@ -68,7 +68,9 @@ const AppDownloadSection = () => {
 
         window.addEventListener('select-app-tab', handleSelectTab);
 
-        if (typeof window !== 'undefined' && window.location.hash === '#driver') {
+        if (window.location.hash === '#driver') {
+            // The URL hash is never sent to the server, so it can only be applied after hydration.
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setActiveTab('driver');
         }
 

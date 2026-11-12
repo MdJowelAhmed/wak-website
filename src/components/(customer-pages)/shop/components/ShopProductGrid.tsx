@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import ProductCard from "@/shared/ProductCard";
 import { productRequiresVariant } from "../../../../../helpers/product-variant";
+import { getProductCardPricing } from "../../../../../helpers/product-pricing";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
 import {
     Pagination,
@@ -74,10 +75,8 @@ export default function ShopProductGrid({ products = [], pagination }: ShopProdu
                             id: product.slug || product._id,
                             productId: product._id,
                             name: product.name,
-                            image: resolveImageUrl(product.images?.[0]) || "/placeholder.jpg",
-                            currentPrice: product.discountPrice || product.price,
-                            originalPrice: product.price,
-                            discount: product.discountPrice ? Math.round(((product.price - product.discountPrice) / product.price) * 100) : 0,
+                            image: resolveImageUrl(product.images?.[0]) || "/placeholder.svg",
+                            ...getProductCardPricing(product.price, product.discountPrice),
                             rating: product.ratingAverage || 0,
                             reviews: product.ratingCount || 0,
                             requiresVariant: productRequiresVariant(product),

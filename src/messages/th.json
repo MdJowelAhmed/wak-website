@@ -16,7 +16,8 @@
     "logout": "ออกจากระบบ",
     "logoutAccount": "ออกจากบัญชี",
     "signedInAs": "เข้าสู่ระบบในชื่อ",
-    "trackOrder": "ติดตามคำสั่งซื้อ"
+    "trackOrder": "ติดตามคำสั่งซื้อ",
+    "logoutSuccess": "ออกจากระบบสำเร็จ"
   },
   "Navbar": {
     "deliverTo": "จัดส่งถึง:",
@@ -62,7 +63,8 @@
     "deliverTo": "จัดส่งถึง:",
     "change": "เปลี่ยน",
     "languageCountry": "ภาษาและประเทศ",
-    "searchPlaceholder": "ค้นหาสินค้าและบริการ..."
+    "searchPlaceholder": "ค้นหาสินค้าและบริการ...",
+    "close": "ปิดเมนู"
   },
   "Footer": {
     "tagline": "ติดต่อเราบนโซเชียลมีเดีย",
@@ -456,7 +458,6 @@
     "noMessagesYet": "ยังไม่มีข้อความ",
     "selectChat": "เลือกแชทเพื่อเริ่มส่งข้อความ",
     "emptyConversation": "ยังไม่มีข้อความในการสนทนานี้",
-    "yesterday": "เมื่อวาน",
     "avatarAlt": "รูปโปรไฟล์",
     "attachmentAlt": "ไฟล์แนบ",
     "downloadFile": "ดาวน์โหลดไฟล์",
@@ -556,7 +557,8 @@
     "description": "คำอธิบายสินค้า",
     "topHighlights": "ไฮไลท์สำคัญ",
     "productDetails": "รายละเอียดสินค้า",
-    "selectVariant": "กรุณาเลือกตัวเลือกเพื่อเพิ่มลงในตะกร้า"
+    "selectVariant": "กรุณาเลือกตัวเลือกเพื่อเพิ่มลงในตะกร้า",
+    "productVideo": "วิดีโอสินค้า"
   },
   "Services": {
     "home": "หน้าแรก",
@@ -594,7 +596,8 @@
     "checkoutError": "ไม่สามารถเริ่มชำระเงินได้",
     "checkoutUnexpected": "เกิดปัญหาขณะชำระเงิน",
     "missingProvider": "ไม่มีข้อมูลผู้ให้บริการ",
-    "chatError": "ไม่สามารถเริ่มการสนทนาได้"
+    "chatError": "ไม่สามารถเริ่มการสนทนาได้",
+    "playVideo": "เล่นวิดีโอ"
   },
   "Checkout": {
     "eyebrow": "ชำระเงิน",

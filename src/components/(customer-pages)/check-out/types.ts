@@ -45,13 +45,6 @@ export interface ShippingEstimate {
     grandTotal: number;
 }
 
-export function formatCheckoutMoney(amount: number): string {
-    return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-    }).format(amount);
-}
-
 export function mapCartItems(items: unknown): CartItem[] {
     if (!Array.isArray(items)) return [];
 
@@ -104,7 +97,7 @@ export function mapCartItems(items: unknown): CartItem[] {
             slug: productObj?.slug,
             name: productObj?.name || "Unknown Product",
             price,
-            image: resolveImageUrl(productObj?.images?.[0], "/placeholder.jpg") || "/placeholder.jpg",
+            image: resolveImageUrl(productObj?.images?.[0], "/placeholder.svg") || "/placeholder.svg",
             quantity: row.quantity || 1,
             ...variantFields({
                 color: row.color || productObj?.color,

@@ -229,7 +229,7 @@ export default function ServiceList({
                                 category={service.category?.name || t("fallbackCategory")}
                                 description={service.description || service.name || ""}
                                 price={service.price || 0}
-                                coverImage={resolveImageUrl(service.image) || "/placeholder.jpg"}
+                                coverImage={resolveImageUrl(service.image) || "/placeholder.svg"}
                                 fromLabel={t("from", { price: formatPrice(service.price || 0) })}
                             />
                         ))}

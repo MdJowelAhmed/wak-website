@@ -6,10 +6,12 @@ import { Eye, EyeOff, Check } from "lucide-react";
 import { Input } from "@/ui/input";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { useAuth } from "@/hooks/use-auth";
 import { myFetch } from "../../../../../helpers/myFetch";
 
 export default function DeleteAccount() {
   const t = useTranslations("Profile.settings");
+  const { logout } = useAuth();
   const [selectedReasonId, setSelectedReasonId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -41,14 +43,13 @@ export default function DeleteAccount() {
 
       if (res.success) {
         toast.success(res.message || t("deleteSuccess"));
-        // Clear the form
         setSelectedReasonId("");
         setPassword("");
+        await logout();
       } else {
         toast.error(res.message || res.error || t("deleteError"));
       }
-    } catch (error) {
-      console.error("Account deletion error:", error);
+    } catch {
       toast.error(t("unexpectedError"));
     } finally {
       setLoading(false);
@@ -69,27 +70,35 @@ export default function DeleteAccount() {
       {/* Reason Selection */}
       <div>
         <h3 className="text-lg font-bold text-zinc-900 mb-4 tracking-tight">{t("reasonTitle")}</h3>
-        <div className="space-y-3.5">
+        <div className="space-y-3.5" role="radiogroup" aria-label={t("reasonTitle")}>
           {reasons.map((reason) => {
             const isSelected = selectedReasonId === reason.id;
             return (
-              <div
+              <label
                 key={reason.id}
-                onClick={() => setSelectedReasonId(reason.id)}
                 className="flex items-center gap-3.5 cursor-pointer group"
               >
-                <div
-                  className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors ${isSelected
+                <input
+                  type="radio"
+                  name="delete-reason"
+                  value={reason.id}
+                  checked={isSelected}
+                  onChange={() => setSelectedReasonId(reason.id)}
+                  className="peer sr-only"
+                />
+                <span
+                  className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-2 ${isSelected
                     ? "bg-primary border-primary text-white"
                     : "bg-zinc-50 border-zinc-300 text-transparent group-hover:border-zinc-400"
                     }`}
+                  aria-hidden
                 >
                   <Check className={`w-3.5 h-3.5 ${isSelected ? "text-white" : "opacity-0"}`} />
-                </div>
+                </span>
                 <span className="text-sm font-semibold text-zinc-600 group-hover:text-zinc-900 transition-colors">
                   {reason.label}
                 </span>
-              </div>
+              </label>
             );
           })}
         </div>

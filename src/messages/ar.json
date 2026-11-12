@@ -16,7 +16,8 @@
     "logout": "تسجيل الخروج",
     "logoutAccount": "تسجيل الخروج من الحساب",
     "signedInAs": "مسجّل الدخول باسم",
-    "trackOrder": "تتبّع الطلب"
+    "trackOrder": "تتبّع الطلب",
+    "logoutSuccess": "تم تسجيل الخروج بنجاح"
   },
   "Navbar": {
     "deliverTo": "التوصيل إلى:",
@@ -62,7 +63,8 @@
     "deliverTo": "التوصيل إلى:",
     "change": "تغيير",
     "languageCountry": "اللغة والدولة",
-    "searchPlaceholder": "ابحث عن منتجات وخدمات..."
+    "searchPlaceholder": "ابحث عن منتجات وخدمات...",
+    "close": "إغلاق القائمة"
   },
   "Footer": {
     "tagline": "تواصل معنا على وسائل التواصل الاجتماعي",
@@ -456,7 +458,6 @@
     "noMessagesYet": "لا توجد رسائل بعد",
     "selectChat": "اختر محادثة لبدء المراسلة",
     "emptyConversation": "لا توجد رسائل في هذه المحادثة بعد.",
-    "yesterday": "أمس",
     "avatarAlt": "الصورة الرمزية",
     "attachmentAlt": "مرفق",
     "downloadFile": "تنزيل الملف",
@@ -556,7 +557,8 @@
     "description": "الوصف",
     "topHighlights": "أهم المميزات",
     "productDetails": "تفاصيل المنتج",
-    "selectVariant": "يرجى تحديد الخيارات لإضافتها إلى سلة التسوق."
+    "selectVariant": "يرجى تحديد الخيارات لإضافتها إلى سلة التسوق.",
+    "productVideo": "فيديو المنتج"
   },
   "Services": {
     "home": "الرئيسية",
@@ -594,7 +596,8 @@
     "checkoutError": "تعذر بدء الدفع.",
     "checkoutUnexpected": "حدث خطأ أثناء الدفع.",
     "missingProvider": "معلومات مقدم الخدمة غير متوفرة.",
-    "chatError": "تعذر بدء محادثة."
+    "chatError": "تعذر بدء محادثة.",
+    "playVideo": "تشغيل الفيديو"
   },
   "Checkout": {
     "eyebrow": "الدفع",

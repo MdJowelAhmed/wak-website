@@ -16,7 +16,8 @@
     "logout": "لاگ آؤٹ",
     "logoutAccount": "اکاؤنٹ سے لاگ آؤٹ",
     "signedInAs": "لاگ ان بطور",
-    "trackOrder": "آرڈر ٹریک کریں"
+    "trackOrder": "آرڈر ٹریک کریں",
+    "logoutSuccess": "کامیابی سے لاگ آؤٹ ہو گئے"
   },
   "Navbar": {
     "deliverTo": "ڈیلیوری پتہ:",
@@ -62,7 +63,8 @@
     "deliverTo": "ڈیلیوری پتہ:",
     "change": "تبدیل کریں",
     "languageCountry": "زبان اور ملک",
-    "searchPlaceholder": "مصنوعات اور خدمات تلاش کریں..."
+    "searchPlaceholder": "مصنوعات اور خدمات تلاش کریں...",
+    "close": "مینو بند کریں"
   },
   "Footer": {
     "tagline": "سوشل میڈیا پر ہم سے جڑیں",
@@ -456,7 +458,6 @@
     "noMessagesYet": "ابھی کوئی پیغام نہیں",
     "selectChat": "پیغام بھیجنے کے لیے ایک چیٹ منتخب کریں",
     "emptyConversation": "اس گفتگو میں ابھی کوئی پیغام نہیں۔",
-    "yesterday": "کل",
     "avatarAlt": "اوتار",
     "attachmentAlt": "منسلکہ",
     "downloadFile": "فائل ڈاؤن لوڈ کریں",
@@ -556,7 +557,8 @@
     "description": "تفصیل",
     "topHighlights": "اہم خصوصیات",
     "productDetails": "مصنوعات کی تفصیلات",
-    "selectVariant": "ٹوکری میں شامل کرنے کے لیے براہ کرم اختیارات منتخب کریں۔"
+    "selectVariant": "ٹوکری میں شامل کرنے کے لیے براہ کرم اختیارات منتخب کریں۔",
+    "productVideo": "پروڈکٹ ویڈیو"
   },
   "Services": {
     "home": "ہوم",
@@ -594,7 +596,8 @@
     "checkoutError": "چیک آؤٹ شروع نہیں ہو سکا۔",
     "checkoutUnexpected": "چیک آؤٹ کے دوران مسئلہ ہوا۔",
     "missingProvider": "فراہم کنندہ کی معلومات موجود نہیں۔",
-    "chatError": "گفتگو شروع نہیں ہو سکی۔"
+    "chatError": "گفتگو شروع نہیں ہو سکی۔",
+    "playVideo": "ویڈیو چلائیں"
   },
   "Checkout": {
     "eyebrow": "چیک آؤٹ",

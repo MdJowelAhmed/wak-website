@@ -15,6 +15,7 @@
     "myProfile": "My Profile",
     "logout": "Logout",
     "logoutAccount": "Logout Account",
+    "logoutSuccess": "Logged out successfully",
     "signedInAs": "Signed in as",
     "trackOrder": "Track Order"
   },
@@ -62,7 +63,8 @@
     "deliverTo": "Deliver to:",
     "change": "Change",
     "languageCountry": "Language & Country",
-    "searchPlaceholder": "Search products & services..."
+    "searchPlaceholder": "Search products & services...",
+    "close": "Close menu"
   },
   "Footer": {
     "tagline": "Connect Us On Social Media",
@@ -485,7 +487,6 @@
     "noMessagesYet": "No messages yet",
     "selectChat": "Select a chat to start messaging",
     "emptyConversation": "No messages in this conversation yet.",
-    "yesterday": "Yesterday",
     "avatarAlt": "Avatar",
     "attachmentAlt": "Attachment",
     "downloadFile": "Download File",

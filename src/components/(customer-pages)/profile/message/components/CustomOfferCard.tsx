@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import {
   Dialog,
@@ -12,6 +12,7 @@ import {
 } from "@/ui/dialog";
 import { Button } from "@/ui/button";
 import { useCurrency } from "@/hooks/use-currency";
+import { usePaymentMethod } from "@/hooks/use-payment-method";
 import { useTranslations } from "next-intl";
 import type { CustomOffer, OfferPaymentMethod } from "../types";
 
@@ -37,17 +38,11 @@ export default function CustomOfferCard({
   onAccept,
   onReject,
 }: CustomOfferCardProps) {
-  const { countryCode, formatPrice } = useCurrency();
+  const { formatPrice } = useCurrency();
   const t = useTranslations("Messages");
   const [step, setStep] = useState<DialogStep>("closed");
-  const [paymentMethod, setPaymentMethod] = useState<OfferPaymentMethod>(() =>
-    countryCode?.toUpperCase() === "MW" ? "paychangu" : "stripe"
-  );
+  const [paymentMethod, setPaymentMethod] = usePaymentMethod();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    setPaymentMethod(countryCode?.toUpperCase() === "MW" ? "paychangu" : "stripe");
-  }, [countryCode]);
 
   const closeDialog = () => {
     if (isSubmitting) return;

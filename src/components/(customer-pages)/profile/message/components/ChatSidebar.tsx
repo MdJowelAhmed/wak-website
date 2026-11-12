@@ -74,33 +74,37 @@ export default function ChatSidebar({
             const participantName = participant?.name || t("unknownUser");
             const subtitle = chat.lastMessage?.text || t("noMessagesYet");
             
+            const isSelected = selectedContact === chat._id;
+
             return (
-              <div
+              <button
+                type="button"
                 key={chat._id}
                 onClick={() => setSelectedContact(chat._id)}
-                className={`flex items-center gap-3.5 p-3 rounded-xl cursor-pointer transition-colors ${selectedContact === chat._id
+                aria-current={isSelected ? "true" : undefined}
+                className={`flex w-full items-center gap-3.5 p-3 rounded-xl cursor-pointer text-left transition-colors ${isSelected
                     ? "bg-primary/5 border border-primary/20"
                     : "bg-white hover:bg-zinc-100/50 border border-zinc-200/50"
                   }`}
               >
-                <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 border border-zinc-200">
+                <span className="block w-10 h-10 rounded-full overflow-hidden shrink-0 border border-zinc-200">
                   <ProfileAvatar
                     src={avatarSrc}
                     alt={participantName}
                     className="h-10 w-10"
                     sizes="40px"
                   />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className={`font-semibold text-sm ${selectedContact === chat._id ? "text-primary" : "text-zinc-800"}`}>{participantName}</h3>
-                  <p className="text-xs text-zinc-500 truncate mt-0.5">{subtitle}</p>
-                </div>
+                </span>
+                <span className="block min-w-0 flex-1">
+                  <span className={`block font-semibold text-sm ${isSelected ? "text-primary" : "text-zinc-800"}`}>{participantName}</span>
+                  <span className="block text-xs text-zinc-500 truncate mt-0.5">{subtitle}</span>
+                </span>
                 {chat.unreadCount > 0 && (
-                  <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center shrink-0">
+                  <span className="w-5 h-5 rounded-full bg-primary flex items-center justify-center shrink-0">
                     <span className="text-[10px] font-bold text-white">{chat.unreadCount}</span>
-                  </div>
+                  </span>
                 )}
-              </div>
+              </button>
             );
           })
         )}

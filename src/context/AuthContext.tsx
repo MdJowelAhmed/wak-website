@@ -10,140 +10,107 @@ import {
   ReactNode,
 } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
-import { myFetch } from "../../helpers/myFetch";
 import { removeAccessToken, setAccessToken } from "../../helpers/authActions";
+import { getSession, type SessionResult, type SessionUser } from "../../helpers/getSession";
+
+const LOGIN_FLAG_KEY = "isLogin";
 
 interface AuthContextValue {
   isLoggedIn: boolean;
   isLoading: boolean;
-  login: (token?: string) => Promise<void>;
+  user: SessionUser | null;
+  login: (token: string) => Promise<void>;
   logout: () => Promise<void>;
+  refreshUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue>({
   isLoggedIn: false,
   isLoading: true,
+  user: null,
   login: async () => {},
   logout: async () => {},
+  refreshUser: async () => {},
 });
 
+function clearClientSession() {
+  Cookies.remove("accessToken", { path: "/" });
+  localStorage.removeItem(LOGIN_FLAG_KEY);
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [user, setUser] = useState<SessionUser | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
+  const t = useTranslations("Navigation");
 
-  const clearClientAuth = useCallback(async () => {
-    Cookies.remove("accessToken", { path: "/" });
-    Cookies.remove("accessToken");
-    localStorage.removeItem("isLogin");
-    try {
-      await removeAccessToken();
-    } catch {
-      // Server cookie may already be cleared
+  const applySession = useCallback((session: SessionResult) => {
+    if (session.status === "authenticated") {
+      localStorage.setItem(LOGIN_FLAG_KEY, "true");
+      setUser(session.user);
+    } else if (session.status === "unauthenticated") {
+      clearClientSession();
+      setUser(null);
     }
-    setIsLoggedIn(false);
+    // On "error" (network/server failure) keep the last known state.
+    setIsLoading(false);
   }, []);
 
-  const checkAuth = useCallback(async () => {
-    const token = Cookies.get("accessToken");
-
-    if (!token) {
-      if (localStorage.getItem("isLogin") === "true") {
-        localStorage.removeItem("isLogin");
-      }
-      setIsLoggedIn(false);
-      setIsLoading(false);
-      return;
-    }
-
-    const res = await myFetch("/users/profile", { cache: "no-store" });
-    if (res.data) {
-      localStorage.setItem("isLogin", "true");
-      setIsLoggedIn(true);
-      setIsLoading(false);
-      return;
-    }
-
-    if (res.message === "Network error") {
-      setIsLoggedIn(true);
-      setIsLoading(false);
-      return;
-    }
-
-    await clearClientAuth();
-    setIsLoading(false);
-  }, [clearClientAuth]);
+  const refreshUser = useCallback(
+    () =>
+      getSession()
+        .catch((): SessionResult => ({ status: "error" }))
+        .then(applySession),
+    [applySession],
+  );
 
   useEffect(() => {
-    let isActive = true;
-
-    const runCheck = async (withLoading: boolean) => {
-      if (withLoading) {
-        setIsLoading(true);
-      }
-      await checkAuth();
-      if (!isActive) return;
-    };
-
-    void runCheck(true);
+    void refreshUser();
 
     const handleStorage = (event: StorageEvent) => {
-      if (event.key === "isLogin" || event.key === null) {
-        void runCheck(false);
+      if (event.key === LOGIN_FLAG_KEY || event.key === null) {
+        void refreshUser();
       }
-    };
-
-    const handleAuthChange = () => {
-      void runCheck(false);
     };
 
     window.addEventListener("storage", handleStorage);
-    window.addEventListener("auth-change", handleAuthChange);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, [refreshUser]);
 
-    return () => {
-      isActive = false;
-      window.removeEventListener("storage", handleStorage);
-      window.removeEventListener("auth-change", handleAuthChange);
-    };
-  }, [checkAuth]);
-
-  const login = useCallback(async (token?: string) => {
-    if (token) {
-      Cookies.set("accessToken", token, { expires: 30, path: "/" });
+  const login = useCallback(
+    async (token: string) => {
       await setAccessToken(token);
-    }
-    localStorage.setItem("isLogin", "true");
-    setIsLoggedIn(true);
-    window.dispatchEvent(new Event("auth-change"));
-  }, []);
+      await refreshUser();
+      router.refresh();
+    },
+    [refreshUser, router],
+  );
 
   const logout = useCallback(async () => {
+    clearClientSession();
     try {
-      Cookies.remove("accessToken", { path: "/" });
-      Cookies.remove("accessToken");
-      localStorage.removeItem("isLogin");
       await removeAccessToken();
-    } catch (err) {
-      console.error("Error removing token during logout:", err);
     } finally {
-      setIsLoggedIn(false);
-      window.dispatchEvent(new Event("auth-change"));
-      toast.success("Logged out successfully");
+      setUser(null);
+      toast.success(t("logoutSuccess"));
       router.push("/");
       router.refresh();
     }
-  }, [router]);
+  }, [router, t]);
 
   const contextValue = useMemo<AuthContextValue>(
     () => ({
-      isLoggedIn,
+      isLoggedIn: user !== null,
       isLoading,
+      user,
       login,
       logout,
+      refreshUser,
     }),
-    [isLoggedIn, isLoading, login, logout]
+    [user, isLoading, login, logout, refreshUser],
   );
 
   return (

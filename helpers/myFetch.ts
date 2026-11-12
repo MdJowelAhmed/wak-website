@@ -35,16 +35,40 @@ export interface FetchResponse<T = any> {
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
+const ALLOWED_METHODS: ReadonlySet<string> = new Set(["GET", "POST", "PUT", "PATCH", "DELETE"]);
+
 interface FetchOptions {
   method?: HttpMethod;
   body?: any;
   token?: string;
-  headers?: Record<string, string>;
   cache?: RequestCache;
   tags?: string[];
   next?: RequestInit["next"];
   /** Dev-only. Logs this request's endpoint and response in the terminal and browser console. */
   debug?: boolean;
+}
+
+/** This module is callable from the browser, so the path must never escape BASE_URL's origin. */
+function buildBackendUrl(path: unknown): string | null {
+  const baseUrl = process.env.BASE_URL;
+  if (!baseUrl || typeof path !== "string") return null;
+  if (!path.startsWith("/") || path.startsWith("//")) return null;
+
+  try {
+    const target = new URL(`${baseUrl}${path}`);
+    return target.origin === new URL(baseUrl).origin ? target.toString() : null;
+  } catch {
+    return null;
+  }
+}
+
+function rejectedRequest<T>(): FetchResponse<T> {
+  return {
+    success: false,
+    message: "Invalid request",
+    data: null as any,
+    error: "Invalid request",
+  };
 }
 
 export const nextFetch = async <T = any>(
@@ -54,12 +78,16 @@ export const nextFetch = async <T = any>(
     body,
     tags,
     token,
-    headers = {},
     cache,
     next,
     debug = false,
   }: FetchOptions = {}
 ): Promise<FetchResponse<T>> => {
+  const requestUrl = buildBackendUrl(url);
+  if (!requestUrl || !ALLOWED_METHODS.has(method)) {
+    return rejectedRequest<T>();
+  }
+
   const isGet = method === "GET";
   const resolvedCache = cache ?? (isGet ? "force-cache" : undefined);
   const resolvedNext =
@@ -71,13 +99,11 @@ export const nextFetch = async <T = any>(
 
   const reqHeaders: Record<string, string> = {
     Accept: "application/json",
-    ...headers,
     ...(isFormData ? {} : { "Content-Type": "application/json" }),
     ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
     ...(token ? { Authorization: `${token}` } : {}),
   };
 
-  const requestUrl = `${process.env.BASE_URL}${url}`;
   const shouldLog = debug && process.env.NODE_ENV === "development";
 
   try {

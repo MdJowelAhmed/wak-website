@@ -50,7 +50,7 @@ export default function ServiceOrderTabs({
   };
   const attachments = order.deliveryAttachments || [];
   const hasDelivery = Boolean(order.deliveryDescription) || attachments.length > 0;
-  const imageSrc = resolveImageUrl(order.thumbnail, "/placeholder.jpg") || "/placeholder.jpg";
+  const imageSrc = resolveImageUrl(order.thumbnail, "/placeholder.svg") || "/placeholder.svg";
 
   const handleTabChange = (value: string) => {
     router.replace(`${pathname}?tab=${value}`, { scroll: false });

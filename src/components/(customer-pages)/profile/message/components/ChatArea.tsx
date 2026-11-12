@@ -110,13 +110,6 @@ export default function ChatArea({
                 <Loader2 className="w-5 h-5 animate-spin text-primary" />
               </div>
             )}
-            
-            {/* Yesterday Badge */}
-            <div className="flex justify-center mb-8">
-              <span className="px-4 py-1.5 rounded-full border border-zinc-200 bg-zinc-150 text-xs text-zinc-500 font-semibold tracking-wide uppercase">
-                {t("yesterday")}
-              </span>
-            </div>
 
             {currentMessages.map((m) => {
               const isUser = m.sender === "user";

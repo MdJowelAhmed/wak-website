@@ -2,7 +2,7 @@
 
 import { getAccessToken } from "../../../../../helpers/getAccessToken";
 import getProfile from "../../../../../helpers/getProfile";
-import { revalidateTags } from "../../../../../helpers/revalidateTags";
+import { revalidateTag } from "next/cache";
 import { getCachedChats, getCachedMessages, type ChatsResult, type MessagesResult } from "./data";
 import { readEntityId } from "./types";
 
@@ -32,11 +32,10 @@ export async function loadChatMessagesAction(
 export async function revalidateMessageCaches(chatId?: string) {
   const profile = await getProfile();
   const userId = readEntityId(profile);
-  const tags: string[] = [];
+  if (!userId) return;
 
-  if (userId) tags.push(`chats-${userId}`);
-  if (chatId) tags.push(`messages-${chatId}`);
-  if (tags.length === 0) return;
-
-  await revalidateTags(tags);
+  revalidateTag(`chats-${userId}`, "max");
+  if (typeof chatId === "string" && /^[a-zA-Z0-9_-]{1,64}$/.test(chatId)) {
+    revalidateTag(`messages-${chatId}`, "max");
+  }
 }

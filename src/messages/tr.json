@@ -16,7 +16,8 @@
     "logout": "Çıkış",
     "logoutAccount": "Hesaptan çıkış",
     "signedInAs": "Giriş yapılan hesap",
-    "trackOrder": "Siparişi takip et"
+    "trackOrder": "Siparişi takip et",
+    "logoutSuccess": "Başarıyla çıkış yapıldı"
   },
   "Navbar": {
     "deliverTo": "Teslimat adresi:",
@@ -62,7 +63,8 @@
     "deliverTo": "Teslimat adresi:",
     "change": "Değiştir",
     "languageCountry": "Dil ve ülke",
-    "searchPlaceholder": "Ürün ve hizmet ara..."
+    "searchPlaceholder": "Ürün ve hizmet ara...",
+    "close": "Menüyü kapat"
   },
   "Footer": {
     "tagline": "Sosyal medyada bize bağlanın",
@@ -456,7 +458,6 @@
     "noMessagesYet": "Henüz mesaj yok",
     "selectChat": "Mesajlaşmaya başlamak için bir sohbet seçin",
     "emptyConversation": "Bu konuşmada henüz mesaj yok.",
-    "yesterday": "Dün",
     "avatarAlt": "Avatar",
     "attachmentAlt": "Ek",
     "downloadFile": "Dosyayı indir",
@@ -556,7 +557,8 @@
     "description": "Açıklama",
     "topHighlights": "Öne Çıkanlar",
     "productDetails": "Ürün Detayları",
-    "selectVariant": "Sepete eklemek için lütfen seçenekleri belirleyin."
+    "selectVariant": "Sepete eklemek için lütfen seçenekleri belirleyin.",
+    "productVideo": "Ürün videosu"
   },
   "Services": {
     "home": "Ana sayfa",
@@ -594,7 +596,8 @@
     "checkoutError": "Ödeme başlatılamadı.",
     "checkoutUnexpected": "Ödeme sırasında bir sorun oluştu.",
     "missingProvider": "Sağlayıcı bilgisi eksik.",
-    "chatError": "Sohbet başlatılamadı."
+    "chatError": "Sohbet başlatılamadı.",
+    "playVideo": "Videoyu oynat"
   },
   "Checkout": {
     "eyebrow": "Ödeme",

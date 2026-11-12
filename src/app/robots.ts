@@ -7,12 +7,14 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      // Every page is served under /{locale}/ or /{locale}/{country}/, so match any prefix.
       disallow: [
-        "/profile/",
-        "/order/failed",
-        "/orders/failed",
-        "/cart",
-        "/check-out",
+        "/*/profile$",
+        "/*/profile/",
+        "/*/order/failed$",
+        "/*/orders/failed$",
+        "/*/cart$",
+        "/*/check-out$",
       ],
     },
     sitemap: `${siteUrl}/sitemap.xml`,

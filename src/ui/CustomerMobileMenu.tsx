@@ -12,16 +12,15 @@ import SearchBar from '@/ui/SearchBar';
 import Logo from '@/ui/Logo';
 
 interface CustomerMobileMenuProps {
-    isOpen?: boolean;
     onClose: () => void;
     isLoggedIn: boolean;
     userMode: string;
-    logout?: () => void;
-    currentLocation?: string;
-    onOpenLocationModal?: () => void;
-    onOpenLangModal?: () => void;
-    currentCurrencyLabel?: ReactNode;
-    currentLangName?: string;
+    logout: () => void;
+    currentLocation: string;
+    onOpenLocationModal: () => void;
+    onOpenLangModal: () => void;
+    currentCurrencyLabel: ReactNode;
+    currentLangName: string;
 }
 
 const menuVariants: Variants = {
@@ -60,11 +59,11 @@ export default function CustomerMobileMenu({
     isLoggedIn,
     userMode,
     logout,
-    currentLocation = 'Malawi',
+    currentLocation,
     onOpenLocationModal,
     onOpenLangModal,
-    currentCurrencyLabel = '🇲🇼 MWK',
-    currentLangName = 'English',
+    currentCurrencyLabel,
+    currentLangName,
 }: CustomerMobileMenuProps) {
     const t = useTranslations();
 
@@ -95,7 +94,7 @@ export default function CustomerMobileMenu({
                         type="button"
                         onClick={onClose}
                         className="p-2 text-white/90 hover:text-white rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
-                        aria-label="Close menu"
+                        aria-label={t("MobileMenu.close")}
                     >
                         <X className="w-5 h-5" />
                     </button>
@@ -112,20 +111,21 @@ export default function CustomerMobileMenu({
                     </motion.div>
 
                     {/* Location Control Pill */}
-                    <motion.div
+                    <motion.button
+                        type="button"
                         variants={itemVariants}
                         onClick={() => {
                             onClose();
-                            onOpenLocationModal?.();
+                            onOpenLocationModal();
                         }}
-                        className="flex items-center justify-between p-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 cursor-pointer transition-colors"
+                        className="flex w-full items-center justify-between p-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 cursor-pointer transition-colors text-left"
                     >
-                        <div className="flex items-center gap-2 text-xs font-semibold text-white">
-                            <MapPin className="w-4 h-4 text-primary shrink-0" />
+                        <span className="flex items-center gap-2 text-xs font-semibold text-white">
+                            <MapPin className="w-4 h-4 text-primary shrink-0" aria-hidden />
                             <span>{t("MobileMenu.deliverTo")} <strong className="text-primary">{currentLocation}</strong></span>
-                        </div>
+                        </span>
                         <span className="text-[10px] font-bold text-primary underline">{t("MobileMenu.change")}</span>
-                    </motion.div>
+                    </motion.button>
 
                     {/* Main Navigation Links */}
                     <motion.div variants={itemVariants} onClick={onClose} className="py-2 border-y border-white/10">
@@ -135,9 +135,10 @@ export default function CustomerMobileMenu({
                     {/* Quick Utility Links */}
                     <motion.div variants={itemVariants} className="flex flex-col gap-3 text-xs font-medium text-white/90">
                         <button
+                            type="button"
                             onClick={() => {
                                 onClose();
-                                onOpenLangModal?.();
+                                onOpenLangModal();
                             }}
                             className="flex items-center justify-between py-2 text-white/90 hover:text-primary transition-colors cursor-pointer text-left"
                         >
@@ -157,7 +158,7 @@ export default function CustomerMobileMenu({
                                     <span>{t("Profile.sidebar.orders")}</span>
                                 </Link>
 
-                                <Link href="/profile" onClick={onClose} className="flex items-center gap-2 py-2 text-white/90 hover:text-primary transition-colors">
+                                <Link href="/profile/order-tracking" onClick={onClose} className="flex items-center gap-2 py-2 text-white/90 hover:text-primary transition-colors">
                                     <Truck className="w-4 h-4 text-primary shrink-0" />
                                     <span>{t("Navigation.trackOrder")}</span>
                                 </Link>
@@ -175,16 +176,17 @@ export default function CustomerMobileMenu({
                         {!isLoggedIn ? (
                             <AuthModal
                                 trigger={
-                                    <button className="w-full bg-primary hover:bg-primary-hover transition-colors text-white py-2.5 rounded-xl font-bold text-xs cursor-pointer shadow-xs">
+                                    <button type="button" className="w-full bg-primary hover:bg-primary-hover transition-colors text-white py-2.5 rounded-xl font-bold text-xs cursor-pointer shadow-xs">
                                         {t("Navigation.login")}
                                     </button>
                                 }
                             />
                         ) : (
                             <button
+                                type="button"
                                 onClick={() => {
                                     onClose();
-                                    logout?.();
+                                    logout();
                                 }}
                                 className="flex items-center justify-between text-red-400 hover:bg-red-500/10 py-2.5 px-3.5 rounded-xl cursor-pointer w-full text-left font-semibold text-xs border border-red-500/20 transition-colors"
                             >

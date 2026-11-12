@@ -5,16 +5,13 @@ import { Menu, X, MapPin, HelpCircle, ChevronDown, ShoppingBag } from 'lucide-re
 import { useLocale, useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/navigation';
 import { AnimatePresence } from 'framer-motion';
-import { myFetch } from '../../helpers/myFetch';
 import {
     defaultShippingAddress,
-    mapShippingAddresses,
     shippingAddressLabel,
     type ShippingAddress,
 } from '../../helpers/shipping-address';
 import NavLinks from '@/ui/NavLinks';
 import { useAuth } from '@/hooks/use-auth';
-import Logo from '@/ui/Logo';
 import CartButton from '@/ui/CartButton';
 import UserAuthMenu from '@/ui/UserAuthMenu';
 import SearchBar from '@/ui/SearchBar';
@@ -49,41 +46,34 @@ export default function Navbar({
     const t = useTranslations();
     const router = useRouter();
 
-    const { isLoggedIn, isLoading: authLoading, logout } = useAuth();
+    const { isLoggedIn, logout } = useAuth();
     const { country, currency, setCountry } = useCurrency();
-    const defaultAddress = defaultShippingAddress(addresses);
+
+    const addressSyncKey = initialShippingAddresses
+        .map((address) => `${address._id}:${Number(address.isDefault)}:${address.address}`)
+        .join(",");
+    const [syncedAddressKey, setSyncedAddressKey] = useState(addressSyncKey);
+    if (syncedAddressKey !== addressSyncKey) {
+        setSyncedAddressKey(addressSyncKey);
+        setAddresses(initialShippingAddresses);
+    }
+
+    const visibleAddresses = isLoggedIn ? addresses : [];
+    const defaultAddress = defaultShippingAddress(visibleAddresses);
     const deliveryLabel =
         (defaultAddress && shippingAddressLabel(defaultAddress)) ||
         currentLocation?.label ||
         shoppingCountryShortName(country.code);
 
-    const addressSyncKey = initialShippingAddresses
-        .map((address) => `${address._id}:${Number(address.isDefault)}:${address.address}`)
-        .join(",");
-
     useEffect(() => {
-        setAddresses(initialShippingAddresses);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [addressSyncKey]);
-
-    useEffect(() => {
+        // localStorage is only readable after hydration
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setCurrentLocation(readDeliveryLocation());
+    }, []);
+
+    useEffect(() => {
         localStorage.setItem('user_language', locale);
     }, [locale]);
-
-    useEffect(() => {
-        const refreshAddresses = async () => {
-            if (!isLoggedIn) {
-                setAddresses([]);
-                return;
-            }
-            const res = await myFetch('/shipping-addresses', { cache: 'no-store' });
-            setAddresses(mapShippingAddresses(res?.data));
-        };
-
-        window.addEventListener('auth-change', refreshAddresses);
-        return () => window.removeEventListener('auth-change', refreshAddresses);
-    }, [isLoggedIn]);
 
     const handleSelectLocation = useCallback((location: DeliveryLocation) => {
         setCurrentLocation(location);
@@ -128,6 +118,7 @@ export default function Navbar({
                         {/* Language & Region Selector Trigger + Dropdown */}
                         <div className="relative">
                             <button
+                                type="button"
                                 onClick={() => setIsLangOpen(!isLangOpen)}
                                 className="flex items-center gap-1.5 hover:text-accent-foreground transition-colors cursor-pointer text-accent-foreground font-semibold py-0.5"
                                 aria-label={t("Navbar.languageCurrency")}
@@ -173,9 +164,6 @@ export default function Navbar({
             {/* 2. Main Header Bar */}
             <div className="bg-secondary  py-3 px-4 sm:px-6">
                 <div className="container mx-auto flex items-center justify-between gap-4 lg:gap-6">
-                    {/* Logo & Tagline */}
-                    {/* <Logo /> */}
-
                     <Link href="/">
                         <Image
                             src="/logo.png"
@@ -197,16 +185,12 @@ export default function Navbar({
 
                     {/* Action Icons */}
                     <div className="ms-auto flex items-center gap-2.5 sm:gap-4 shrink-0">
-                        {/* <WishlistButton /> */}
                         <CartButton />
-                        <UserAuthMenu
-                            isLoggedIn={isLoggedIn}
-                            isLoading={authLoading}
-                            logout={logout}
-                        />
+                        <UserAuthMenu />
 
                         {/* Mobile Hamburger */}
                         <button
+                            type="button"
                             className="lg:hidden text-foreground cursor-pointer p-2 rounded-xl border border-border hover:bg-section-bg transition-colors ms-1"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             aria-label={t("Navbar.toggleMenu")}
@@ -224,7 +208,7 @@ export default function Navbar({
                 countryCode={country.code}
                 currentLocation={currentLocation}
                 onSelectLocation={handleSelectLocation}
-                addresses={addresses}
+                addresses={visibleAddresses}
                 onAddressesChange={handleAddressesChange}
                 isLoggedIn={isLoggedIn}
             />
@@ -232,7 +216,6 @@ export default function Navbar({
             <AnimatePresence>
                 {isMenuOpen && (
                     <CustomerMobileMenu
-                        isOpen={isMenuOpen}
                         onClose={handleCloseMenu}
                         isLoggedIn={isLoggedIn}
                         logout={logout}

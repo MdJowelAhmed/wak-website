@@ -16,7 +16,8 @@
     "logout": "Esci",
     "logoutAccount": "Esci dall’account",
     "signedInAs": "Accesso effettuato come",
-    "trackOrder": "Traccia ordine"
+    "trackOrder": "Traccia ordine",
+    "logoutSuccess": "Disconnessione riuscita"
   },
   "Navbar": {
     "deliverTo": "Consegna a:",
@@ -62,7 +63,8 @@
     "deliverTo": "Consegna a:",
     "change": "Cambia",
     "languageCountry": "Lingua e paese",
-    "searchPlaceholder": "Cerca prodotti e servizi..."
+    "searchPlaceholder": "Cerca prodotti e servizi...",
+    "close": "Chiudi menu"
   },
   "Footer": {
     "tagline": "Connettiti con noi sui social media",
@@ -456,7 +458,6 @@
     "noMessagesYet": "Nessun messaggio ancora",
     "selectChat": "Seleziona una chat per iniziare",
     "emptyConversation": "Non ci sono ancora messaggi in questa conversazione.",
-    "yesterday": "Ieri",
     "avatarAlt": "Avatar",
     "attachmentAlt": "Allegato",
     "downloadFile": "Scarica file",
@@ -556,7 +557,8 @@
     "description": "Descrizione",
     "topHighlights": "Caratteristiche principali",
     "productDetails": "Dettagli del prodotto",
-    "selectVariant": "Seleziona le opzioni per aggiungere al carrello."
+    "selectVariant": "Seleziona le opzioni per aggiungere al carrello.",
+    "productVideo": "Video del prodotto"
   },
   "Services": {
     "home": "Home",
@@ -594,7 +596,8 @@
     "checkoutError": "Impossibile avviare il pagamento.",
     "checkoutUnexpected": "Si è verificato un problema durante il pagamento.",
     "missingProvider": "Mancano le informazioni del fornitore.",
-    "chatError": "Impossibile avviare una conversazione."
+    "chatError": "Impossibile avviare una conversazione.",
+    "playVideo": "Riproduci video"
   },
   "Checkout": {
     "eyebrow": "Pagamento",

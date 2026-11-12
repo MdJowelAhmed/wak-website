@@ -77,7 +77,7 @@ const Services = ({ initialServices = [] }: ServicesProps) => {
                                 category={service.category?.name || t("services.fallbackCategory")}
                                 description={service.name || ""}
                                 price={service.price || 0}
-                                coverImage={resolveImageUrl(service.image) || "/placeholder.jpg"}
+                                coverImage={resolveImageUrl(service.image) || "/placeholder.svg"}
                             />
                         ))}
                     </div>

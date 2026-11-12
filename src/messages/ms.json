@@ -16,7 +16,8 @@
     "logout": "Log keluar",
     "logoutAccount": "Log keluar akaun",
     "signedInAs": "Log masuk sebagai",
-    "trackOrder": "Jejak pesanan"
+    "trackOrder": "Jejak pesanan",
+    "logoutSuccess": "Berjaya log keluar"
   },
   "Navbar": {
     "deliverTo": "Hantar ke:",
@@ -62,7 +63,8 @@
     "deliverTo": "Hantar ke:",
     "change": "Tukar",
     "languageCountry": "Bahasa & negara",
-    "searchPlaceholder": "Cari produk dan perkhidmatan..."
+    "searchPlaceholder": "Cari produk dan perkhidmatan...",
+    "close": "Tutup menu"
   },
   "Footer": {
     "tagline": "Hubungi kami di media sosial",
@@ -456,7 +458,6 @@
     "noMessagesYet": "Belum ada mesej",
     "selectChat": "Pilih sembang untuk mula mesej",
     "emptyConversation": "Belum ada mesej dalam perbualan ini.",
-    "yesterday": "Semalam",
     "avatarAlt": "Avatar",
     "attachmentAlt": "Lampiran",
     "downloadFile": "Muat turun fail",
@@ -556,7 +557,8 @@
     "description": "Penerangan",
     "topHighlights": "Sorotan Utama",
     "productDetails": "Butiran Produk",
-    "selectVariant": "Sila pilih pilihan untuk menambah ke troli."
+    "selectVariant": "Sila pilih pilihan untuk menambah ke troli.",
+    "productVideo": "Video produk"
   },
   "Services": {
     "home": "Laman utama",
@@ -594,7 +596,8 @@
     "checkoutError": "Pembayaran tidak dapat dimulakan.",
     "checkoutUnexpected": "Masalah berlaku semasa pembayaran.",
     "missingProvider": "Maklumat penyedia tiada.",
-    "chatError": "Perbualan tidak dapat dimulakan."
+    "chatError": "Perbualan tidak dapat dimulakan.",
+    "playVideo": "Main video"
   },
   "Checkout": {
     "eyebrow": "Bayar",

@@ -1,9 +1,8 @@
-"use server";
-
+import { cache } from "react";
 import { cookies } from "next/headers";
 import { resolveImageUrl } from "./resolveImageUrl";
 
-const getProfile = async () => {
+const getProfile = cache(async () => {
     const token = (await cookies()).get("accessToken")?.value;
     if (!token) {
         return null;
@@ -12,9 +11,6 @@ const getProfile = async () => {
     try {
         const res = await fetch(`${process.env?.BASE_URL}/users/profile`, {
             cache: "no-store",
-            next: {
-                tags: ["user-profile"],
-            },
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -34,6 +30,6 @@ const getProfile = async () => {
     } catch {
         return null;
     }
-};
+});
 
 export default getProfile;

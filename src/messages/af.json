@@ -16,7 +16,8 @@
     "logout": "Teken uit",
     "logoutAccount": "Teken uit",
     "signedInAs": "Aangemeld as",
-    "trackOrder": "Volg bestelling"
+    "trackOrder": "Volg bestelling",
+    "logoutSuccess": "Suksesvol uitgeteken"
   },
   "Navbar": {
     "deliverTo": "Lewer aan:",
@@ -62,7 +63,8 @@
     "deliverTo": "Lewer aan:",
     "change": "Verander",
     "languageCountry": "Taal en land",
-    "searchPlaceholder": "Soek produkte en dienste..."
+    "searchPlaceholder": "Soek produkte en dienste...",
+    "close": "Sluit kieslys"
   },
   "Footer": {
     "tagline": "Skakel met ons op sosiale media",
@@ -456,7 +458,6 @@
     "noMessagesYet": "Nog geen boodskappe nie",
     "selectChat": "Kies ’n gesprek om te begin",
     "emptyConversation": "Daar is nog geen boodskappe in hierdie gesprek nie.",
-    "yesterday": "Gister",
     "avatarAlt": "Avatar",
     "attachmentAlt": "Aanhegsel",
     "downloadFile": "Laai lêer af",
@@ -556,7 +557,8 @@
     "description": "Beskrywing",
     "topHighlights": "Top Hoogtepunte",
     "productDetails": "Produkbesonderhede",
-    "selectVariant": "Kies asseblief opsies om by die mandjie te voeg."
+    "selectVariant": "Kies asseblief opsies om by die mandjie te voeg.",
+    "productVideo": "Produkvideo"
   },
   "Services": {
     "home": "Tuis",
@@ -594,7 +596,8 @@
     "checkoutError": "Kon nie betaling begin nie.",
     "checkoutUnexpected": "Iets het tydens betaling skeefgeloop.",
     "missingProvider": "Verskafferinligting ontbreek.",
-    "chatError": "Kon nie ’n gesprek begin nie."
+    "chatError": "Kon nie ’n gesprek begin nie.",
+    "playVideo": "Speel video"
   },
   "Checkout": {
     "eyebrow": "Betaal",

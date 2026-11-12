@@ -15,6 +15,13 @@ export interface CategoryQueryParams {
     limit?: number;
 }
 
+/** Matches a URL `category` value against a category's slug, id or name. */
+export function findCategory(categories: Category[], value: string): Category | undefined {
+    const normalized = value.toLowerCase();
+    return categories.find(
+        (c) => c.slug === value || c._id === value || c.name.toLowerCase() === normalized
+    );
+}
 
 export async function getActiveCategories(
     params?: CategoryQueryParams

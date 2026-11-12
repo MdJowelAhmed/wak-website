@@ -1,6 +1,8 @@
 import Checkout from "@/components/(customer-pages)/check-out";
+import { redirect } from "@/i18n/navigation";
 import { myFetch } from "../../../../helpers/myFetch";
 import { apiGetCart } from "../../../../helpers/cartService";
+import getProfile from "../../../../helpers/getProfile";
 import {
     formFromAddress,
     mapAddresses,
@@ -9,22 +11,30 @@ import {
     readEstimate,
 } from "@/components/(customer-pages)/check-out/types";
 
-export default async function CheckoutPage() {
-    const [cartRes, addressRes, profileRes, countriesRes] = await Promise.all([
+export default async function CheckoutPage({
+    params,
+}: {
+    params: Promise<{ locale: string }>;
+}) {
+    const [{ locale }, profile, cartRes, addressRes, countriesRes] = await Promise.all([
+        params,
+        getProfile(),
         apiGetCart(),
         myFetch("/shipping-addresses", { cache: "no-store" }),
-        myFetch("/users/profile", { cache: "no-store" }),
         myFetch("/meta/countries", {
             cache: "force-cache",
             next: { revalidate: 86400, tags: ["countries"] },
         }),
     ]);
 
+    if (!profile) {
+        redirect({ href: "/", locale });
+    }
+
     const cartItems = mapCartItems(cartRes?.data?.items);
     const addresses = mapAddresses(addressRes?.data);
     const countries = mapCountries(countriesRes?.data);
-    const profileEmail =
-        typeof profileRes?.data?.email === "string" ? profileRes.data.email : "";
+    const profileEmail = typeof profile?.email === "string" ? profile.email : "";
     const defaultAddress = addresses.find((address) => address.isDefault) || addresses[0] || null;
 
     let initialEstimate = null;
