@@ -2,24 +2,18 @@ import Image from "next/image";
 import { Star } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import type { ServiceDetailsData } from "../types";
+import ServiceHeroMedia from "./ServiceHeroMedia";
 
 export default async function Header({ service }: { service: ServiceDetailsData }) {
     const t = await getTranslations("ServiceDetails");
 
     return (
         <section className="overflow-hidden rounded-2xl border border-white/10 bg-secondary shadow-lg">
-            <div className="relative h-64 w-full sm:h-80 md:h-96">
-                <Image
-                    src={service.image}
-                    alt={service.name}
-                    fill
-                    unoptimized
-                    priority
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 66vw, 100vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-secondary via-black/20 to-transparent" />
-            </div>
+            <ServiceHeroMedia
+                name={service.name}
+                image={service.image}
+                video={service.video}
+            />
 
             <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
                 <div className="flex items-center gap-3">

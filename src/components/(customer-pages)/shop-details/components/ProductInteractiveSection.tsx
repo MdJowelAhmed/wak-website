@@ -24,6 +24,7 @@ export default function ProductInteractiveSection({
             <div className="lg:sticky lg:top-24">
                 <ProductGallery
                     images={product.images}
+                    video={product.video}
                     name={product.name}
                     inStock={product.stock > 0}
                     discount={product.discount}

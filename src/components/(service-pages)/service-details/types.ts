@@ -1,4 +1,5 @@
 import { resolveImageUrl } from "../../../../helpers/resolveImageUrl";
+import { resolveMediaUrl } from "../../../../helpers/resolveMediaUrl";
 
 export interface ServiceCreator {
     id: string;
@@ -12,6 +13,7 @@ export interface ServiceDetailsData {
     name: string;
     description: string;
     image: string;
+    video: string | null;
     price: number;
     deliveryTime: number;
     rating: number;
@@ -36,6 +38,7 @@ export function mapServiceDetails(raw: unknown): ServiceDetailsData | null {
         name?: string;
         description?: string;
         image?: string;
+        video?: string | null;
         price?: number;
         deliveryTime?: number;
         averageRating?: number;
@@ -80,12 +83,18 @@ export function mapServiceDetails(raw: unknown): ServiceDetailsData | null {
 
     const rating = row.averageRating ?? row.ratingAverage ?? 0;
 
+    const video =
+        typeof row.video === "string" && row.video.trim().length > 0
+            ? resolveMediaUrl(row.video) || null
+            : null;
+
     return {
         id: row._id,
         slug: row.slug || row._id,
         name: row.name,
         description: row.description || "",
         image: resolveImageUrl(row.image, "/placeholder.jpg") || "/placeholder.jpg",
+        video,
         price: typeof row.price === "number" ? row.price : 0,
         deliveryTime: typeof row.deliveryTime === "number" ? row.deliveryTime : 0,
         rating: typeof rating === "number" ? rating : 0,

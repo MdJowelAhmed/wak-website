@@ -1,5 +1,6 @@
 import { mapOptionList } from "../../../../helpers/product-variant";
 import { resolveImageUrl } from "../../../../helpers/resolveImageUrl";
+import { resolveMediaUrl } from "../../../../helpers/resolveMediaUrl";
 
 export interface ProductHighlight {
     label: string;
@@ -28,6 +29,7 @@ export interface ProductDetailsData {
     description: string;
     productDetails: string;
     images: string[];
+    video: string | null;
     price: number;
     originalPrice?: number;
     discount?: number;
@@ -80,6 +82,7 @@ export function mapProductDetails(raw: unknown): ProductDetailsData | null {
         description?: string;
         productDetails?: string;
         images?: unknown;
+        video?: string | null;
         price?: number;
         discountPrice?: number;
         stock?: number;
@@ -166,6 +169,11 @@ export function mapProductDetails(raw: unknown): ProductDetailsData | null {
     }
     const finalImages = allImages.length > 0 ? allImages : ["/placeholder.jpg"];
 
+    const video =
+      typeof row.video === "string" && row.video.trim().length > 0
+        ? resolveMediaUrl(row.video) || null
+        : null;
+
     const colors = variantColors.length > 0 ? variantColors : mapOptionList(row.colors);
     const sizes = variantSizesSet.size > 0 ? Array.from(variantSizesSet) : mapOptionList(row.sizes);
 
@@ -200,6 +208,7 @@ export function mapProductDetails(raw: unknown): ProductDetailsData | null {
         description: row.description || "",
         productDetails: row.productDetails || "",
         images: finalImages,
+        video,
         price,
         originalPrice,
         discount,

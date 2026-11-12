@@ -7,6 +7,8 @@ import { useRouter } from "@/i18n/navigation";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { resolveImageUrl } from "../../../../../helpers/resolveImageUrl";
+import { isVideoHeroBanner } from "../../../../../helpers/mapHeroBanner";
+import MediaVideo from "@/ui/MediaVideo";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -16,8 +18,11 @@ export interface HeroData {
     _id: string;
     header: string;
     description: string;
-    image: string;
-    type?: "product" | "service";
+    mediaType?: "image" | "video";
+    image?: string | null;
+    video?: string | null;
+    thumbnail?: string | null;
+    type?: "product" | "service" | "link";
     product?: { slug: string } | null;
     service?: { slug: string } | null;
     link?: string | null;
@@ -73,6 +78,11 @@ function goToBanner(item: HeroData, router: ReturnType<typeof useRouter>) {
 function BannerCard({ item, priority }: { item: HeroData; priority?: boolean }) {
     const router = useRouter();
     const t = useTranslations("Home.banner");
+    const showVideo = isVideoHeroBanner(item) && Boolean(item.video);
+    const poster =
+        item.thumbnail ||
+        (item.image ? resolveImageUrl(item.image) : null) ||
+        "/banner.png";
 
     return (
         <div
@@ -80,15 +90,38 @@ function BannerCard({ item, priority }: { item: HeroData; priority?: boolean }) 
             className="group relative flex min-h-[280px] cursor-pointer flex-col justify-end overflow-hidden rounded-2xl p-6 shadow-lg transition-all duration-300 hover:shadow-xl sm:min-h-[320px] md:p-8 lg:min-h-[350px]"
         >
             <div className="absolute inset-0 h-full w-full">
-                <Image
-                    src={resolveImageUrl(item.image) || "/banner.png"}
-                    alt={item.header}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    priority={priority}
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                {showVideo && item.video ? (
+                    <div
+                        className="h-full w-full"
+                        onClick={(event) => event.stopPropagation()}
+                        onKeyDown={(event) => event.stopPropagation()}
+                        role="presentation"
+                    >
+                        <MediaVideo
+                            src={item.video}
+                            poster={poster}
+                            playsInline
+                            autoPlay
+                            controls
+                            muted
+                            loop
+                            preload="auto"
+                            ariaLabel={item.header}
+                            className="transition-transform duration-500 group-hover:scale-105"
+                            videoClassName="pointer-events-auto"
+                        />
+                    </div>
+                ) : (
+                    <Image
+                        src={item.image || "/banner.png"}
+                        alt={item.header}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        priority={priority}
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
             </div>
 
             <div className="relative z-10 flex flex-col items-start gap-2">
@@ -106,7 +139,7 @@ function BannerCard({ item, priority }: { item: HeroData; priority?: boolean }) 
                         event.stopPropagation();
                         goToBanner(item, router);
                     }}
-                    className="group/btn mt-2 inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-semibold text-white shadow-md transition-all duration-300 hover:bg-primary-hover sm:text-sm"
+                    className="group/btn pointer-events-auto relative z-10 mt-2 inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-semibold text-white shadow-md transition-all duration-300 hover:bg-primary-hover sm:text-sm"
                 >
                     {item.type === "service" ? t("viewService") : t("shopNow")}
                     <ArrowUpRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />

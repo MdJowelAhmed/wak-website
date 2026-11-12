@@ -19,6 +19,7 @@ import {
     RecommendedServiceData,
 } from "../../../../helpers/recommendationService";
 import { cookies, headers } from "next/headers";
+import { mapHeroBanners } from "../../../../helpers/mapHeroBanner";
 
 const Home = async () => {
     const [headerStore, cookieStore] = await Promise.all([headers(), cookies()]);
@@ -72,7 +73,7 @@ const Home = async () => {
     const bestSellingProducts = bestSellingRes?.data || [];
     const newArrivalProducts = newArrivalsRes?.data || [];
     const servicesList = servicesRes?.data || [];
-    const heroBanners = heroRes?.data || [];
+    const heroBanners = mapHeroBanners(heroRes?.data);
 
     const recProducts = (recProdRes?.data?.items
         ?.filter((it) => it.type === "Product")

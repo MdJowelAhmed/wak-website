@@ -553,6 +553,7 @@
     "inStock": "In stock",
     "outOfStock": "Out of stock",
     "viewImage": "{name} view {index}",
+    "productVideo": "Product video",
     "reviewCount": "{count, plural, one {# review} other {# reviews}}",
     "stock": "Stock",
     "available": "{count} available",
@@ -605,6 +606,7 @@
   },
   "ServiceDetails": {
     "services": "Services",
+    "playVideo": "Play video",
     "reviewCount": "{count, plural, one {# review} other {# reviews}}",
     "about": "About this service",
     "included": "What's included",
