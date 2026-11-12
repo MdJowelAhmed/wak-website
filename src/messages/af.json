@@ -287,7 +287,8 @@
       "save": "Stoor",
       "updateSuccess": "Profiel is suksesvol opgedateer",
       "updateError": "Kon nie profiel opdateer nie",
-      "saveError": "’n Fout het voorgekom tydens stoor."
+      "saveError": "’n Fout het voorgekom tydens stoor.",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "Verander wagwoord",
@@ -488,7 +489,8 @@
     "paymentError": "Kon nie betaling begin nie. Probeer weer.",
     "acceptError": "Kon nie hierdie aanbod aanvaar nie.",
     "rejectError": "Kon nie hierdie aanbod verwerp nie.",
-    "rejectSuccess": "Aanbod verwerp."
+    "rejectSuccess": "Aanbod verwerp.",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "Produkte",

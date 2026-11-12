@@ -287,7 +287,8 @@
       "save": "Сохранить",
       "updateSuccess": "Профиль успешно обновлён",
       "updateError": "Не удалось обновить профиль",
-      "saveError": "Произошла ошибка при сохранении."
+      "saveError": "Произошла ошибка при сохранении.",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "Сменить пароль",
@@ -488,7 +489,8 @@
     "paymentError": "Не удалось начать оплату. Попробуйте снова.",
     "acceptError": "Не удалось принять это предложение.",
     "rejectError": "Не удалось отклонить это предложение.",
-    "rejectSuccess": "Предложение отклонено."
+    "rejectSuccess": "Предложение отклонено.",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "Товары",

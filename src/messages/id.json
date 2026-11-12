@@ -287,7 +287,8 @@
       "save": "Simpan",
       "updateSuccess": "Profil berhasil diperbarui",
       "updateError": "Profil gagal diperbarui",
-      "saveError": "Terjadi kesalahan saat menyimpan."
+      "saveError": "Terjadi kesalahan saat menyimpan.",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "Ubah kata sandi",
@@ -488,7 +489,8 @@
     "paymentError": "Pembayaran tidak dapat dimulai. Coba lagi.",
     "acceptError": "Penawaran ini tidak dapat diterima.",
     "rejectError": "Penawaran ini tidak dapat ditolak.",
-    "rejectSuccess": "Penawaran ditolak."
+    "rejectSuccess": "Penawaran ditolak.",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "Produk",

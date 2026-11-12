@@ -287,7 +287,8 @@
       "save": "حفظ",
       "updateSuccess": "تم تحديث الملف الشخصي بنجاح",
       "updateError": "فشل تحديث الملف الشخصي",
-      "saveError": "حدث خطأ أثناء الحفظ."
+      "saveError": "حدث خطأ أثناء الحفظ.",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "تغيير كلمة المرور",
@@ -488,7 +489,8 @@
     "paymentError": "تعذر بدء الدفع. يرجى المحاولة مرة أخرى.",
     "acceptError": "تعذر قبول هذا العرض.",
     "rejectError": "تعذر رفض هذا العرض.",
-    "rejectSuccess": "تم رفض العرض."
+    "rejectSuccess": "تم رفض العرض.",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "المنتجات",

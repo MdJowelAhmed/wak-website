@@ -287,7 +287,8 @@
       "save": "Sungani",
       "updateSuccess": "Mbiri yasinthidwa bwino",
       "updateError": "Mbiri sinasinthidwe",
-      "saveError": "Pali vuto posunga."
+      "saveError": "Pali vuto posunga.",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "Sinthani mawu achinsinsi",
@@ -488,7 +489,8 @@
     "paymentError": "Kulipira sikunathe kuyamba. Yeseninso.",
     "acceptError": "Malingaliro awa sanathe kulandidwa.",
     "rejectError": "Malingaliro awa sanathe kukanidwa.",
-    "rejectSuccess": "Malingaliro akanidwa."
+    "rejectSuccess": "Malingaliro akanidwa.",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "Zinthu",

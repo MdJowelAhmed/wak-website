@@ -287,7 +287,8 @@
       "save": "Hifadhi",
       "updateSuccess": "Wasifu umesasishwa",
       "updateError": "Imeshindwa kusasisha wasifu",
-      "saveError": "Hitilafu imetokea wakati wa kuhifadhi."
+      "saveError": "Hitilafu imetokea wakati wa kuhifadhi.",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "Badilisha nenosiri",
@@ -488,7 +489,8 @@
     "paymentError": "Imeshindwa kuanza malipo. Tafadhali jaribu tena.",
     "acceptError": "Imeshindwa kukubali ofa hii.",
     "rejectError": "Imeshindwa kukataa ofa hii.",
-    "rejectSuccess": "Ofa imekataliwa."
+    "rejectSuccess": "Ofa imekataliwa.",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "Bidhaa",

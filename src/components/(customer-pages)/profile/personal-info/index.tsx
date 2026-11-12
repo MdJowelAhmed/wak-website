@@ -6,7 +6,8 @@ import DashboardCard from "../../../../shared/DashboardCard";
 import ProfileHeader from "./ProfileHeader";
 import PersonalInfoView, { type PersonalInfoUser } from "./PersonalInfoView";
 import PersonalInfoForm, { type PersonalInfoSavePayload } from "./PersonalInfoForm";
-import { myFetch } from "../../../../../helpers/myFetch";
+import { MAX_UPLOAD_FILE_MB, isUploadWithinLimit } from "../../../../../helpers/upload-limits";
+import { invokeMyFetch, MY_FETCH_UPLOAD_TOO_LARGE } from "@/lib/invoke-my-fetch";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
@@ -23,17 +24,25 @@ export default function PersonalInfoPage({ userData }: { userData: PersonalInfoU
     formData.append("address", data.country);
     formData.append("phone", data.phone);
     if (data.profileImageFile) {
+      if (!isUploadWithinLimit(data.profileImageFile)) {
+        toast.error(t("uploadTooLarge", { maxMb: MAX_UPLOAD_FILE_MB }));
+        return;
+      }
       formData.append("profileImage", data.profileImageFile);
     }
 
     try {
-      const res = await myFetch("/users/profile", {
+      const res = await invokeMyFetch("/users/profile", {
         method: "PATCH",
         body: formData,
       });
 
       if (!res?.success) {
-        toast.error(res?.message || t("updateError"));
+        if (res.message === MY_FETCH_UPLOAD_TOO_LARGE) {
+          toast.error(t("uploadTooLarge", { maxMb: MAX_UPLOAD_FILE_MB }));
+        } else {
+          toast.error(res?.message || t("updateError"));
+        }
         return;
       }
 

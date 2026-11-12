@@ -287,7 +287,8 @@
       "save": "บันทึก",
       "updateSuccess": "อัปเดตโปรไฟล์แล้ว",
       "updateError": "อัปเดตโปรไฟล์ไม่สำเร็จ",
-      "saveError": "เกิดข้อผิดพลาดขณะบันทึก"
+      "saveError": "เกิดข้อผิดพลาดขณะบันทึก",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "เปลี่ยนรหัสผ่าน",
@@ -488,7 +489,8 @@
     "paymentError": "เริ่มชำระเงินไม่ได้ กรุณาลองอีกครั้ง",
     "acceptError": "ยอมรับข้อเสนอนี้ไม่ได้",
     "rejectError": "ปฏิเสธข้อเสนอนี้ไม่ได้",
-    "rejectSuccess": "ปฏิเสธข้อเสนอแล้ว"
+    "rejectSuccess": "ปฏิเสธข้อเสนอแล้ว",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "สินค้า",

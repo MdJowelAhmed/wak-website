@@ -287,7 +287,8 @@
       "save": "Kaydet",
       "updateSuccess": "Profil başarıyla güncellendi",
       "updateError": "Profil güncellenemedi",
-      "saveError": "Kaydetme sırasında bir hata oluştu."
+      "saveError": "Kaydetme sırasında bir hata oluştu.",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "Şifreyi değiştir",
@@ -488,7 +489,8 @@
     "paymentError": "Ödeme başlatılamadı. Lütfen tekrar deneyin.",
     "acceptError": "Bu teklif kabul edilemedi.",
     "rejectError": "Bu teklif reddedilemedi.",
-    "rejectSuccess": "Teklif reddedildi."
+    "rejectSuccess": "Teklif reddedildi.",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "Ürünler",

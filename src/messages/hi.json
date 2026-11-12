@@ -287,7 +287,8 @@
       "save": "सहेजें",
       "updateSuccess": "प्रोफ़ाइल सफलतापूर्वक अपडेट हुई",
       "updateError": "प्रोफ़ाइल अपडेट नहीं हो सकी",
-      "saveError": "सहेजते समय त्रुटि हुई।"
+      "saveError": "सहेजते समय त्रुटि हुई।",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "पासवर्ड बदलें",
@@ -488,7 +489,8 @@
     "paymentError": "भुगतान शुरू नहीं हो सका। कृपया फिर कोशिश करें।",
     "acceptError": "यह ऑफ़र स्वीकार नहीं हो सका।",
     "rejectError": "यह ऑफ़र अस्वीकार नहीं हो सका।",
-    "rejectSuccess": "ऑफ़र अस्वीकृत।"
+    "rejectSuccess": "ऑफ़र अस्वीकृत।",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "उत्पाद",

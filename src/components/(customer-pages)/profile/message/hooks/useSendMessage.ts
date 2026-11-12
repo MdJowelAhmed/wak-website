@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
-import { myFetch } from "../../../../../../helpers/myFetch";
+import { MAX_UPLOAD_FILE_MB, isUploadWithinLimit } from "../../../../../../helpers/upload-limits";
+import { invokeMyFetch, MY_FETCH_UPLOAD_TOO_LARGE } from "@/lib/invoke-my-fetch";
 import { revalidateMessageCaches } from "../actions";
 import {
   ApiChat,
@@ -37,6 +38,11 @@ export function useSendMessage({
     setIsSending(true);
 
     try {
+      if (selectedFile && !isUploadWithinLimit(selectedFile)) {
+        toast.error(t("uploadTooLarge", { maxMb: MAX_UPLOAD_FILE_MB }));
+        return;
+      }
+
       const formData = new FormData();
       formData.append("chat", selectedContact);
 
@@ -56,7 +62,7 @@ export function useSendMessage({
         formData.append("text", input.trim());
       }
 
-      const res = await myFetch("/messages/", {
+      const res = await invokeMyFetch("/messages/", {
         method: "POST",
         body: formData,
       });
@@ -89,6 +95,8 @@ export function useSendMessage({
         setInput("");
         setSelectedFile(null);
         void revalidateMessageCaches(selectedContact);
+      } else if (res?.message === MY_FETCH_UPLOAD_TOO_LARGE) {
+        toast.error(t("uploadTooLarge", { maxMb: MAX_UPLOAD_FILE_MB }));
       } else {
         toast.error(res?.message || t("sendError"));
       }
@@ -100,9 +108,14 @@ export function useSendMessage({
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      setSelectedFile(event.target.files[0]);
+    const file = event.target.files?.[0];
+    if (!file) return;
+    if (!isUploadWithinLimit(file)) {
+      toast.error(t("uploadTooLarge", { maxMb: MAX_UPLOAD_FILE_MB }));
+      event.target.value = "";
+      return;
     }
+    setSelectedFile(file);
   };
 
   return {

@@ -287,7 +287,8 @@
       "save": "Lưu",
       "updateSuccess": "Đã cập nhật hồ sơ",
       "updateError": "Không thể cập nhật hồ sơ",
-      "saveError": "Đã xảy ra lỗi khi lưu."
+      "saveError": "Đã xảy ra lỗi khi lưu.",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "Đổi mật khẩu",
@@ -488,7 +489,8 @@
     "paymentError": "Không bắt đầu được thanh toán. Vui lòng thử lại.",
     "acceptError": "Không chấp nhận được đề xuất này.",
     "rejectError": "Không từ chối được đề xuất này.",
-    "rejectSuccess": "Đã từ chối đề xuất."
+    "rejectSuccess": "Đã từ chối đề xuất.",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "Sản phẩm",

@@ -287,7 +287,8 @@
       "save": "保存",
       "updateSuccess": "资料已更新",
       "updateError": "资料更新失败",
-      "saveError": "保存时出错。"
+      "saveError": "保存时出错。",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "更改密码",
@@ -488,7 +489,8 @@
     "paymentError": "无法开始付款，请重试。",
     "acceptError": "无法接受此报价。",
     "rejectError": "无法拒绝此报价。",
-    "rejectSuccess": "报价已拒绝。"
+    "rejectSuccess": "报价已拒绝。",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "商品",

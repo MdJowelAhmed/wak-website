@@ -287,7 +287,8 @@
       "save": "Opslaan",
       "updateSuccess": "Profiel is bijgewerkt",
       "updateError": "Profiel kon niet worden bijgewerkt",
-      "saveError": "Er is een fout opgetreden bij het opslaan."
+      "saveError": "Er is een fout opgetreden bij het opslaan.",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "Wachtwoord wijzigen",
@@ -488,7 +489,8 @@
     "paymentError": "Betaling kon niet worden gestart. Probeer opnieuw.",
     "acceptError": "Dit aanbod kon niet worden geaccepteerd.",
     "rejectError": "Dit aanbod kon niet worden afgewezen.",
-    "rejectSuccess": "Aanbod afgewezen."
+    "rejectSuccess": "Aanbod afgewezen.",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "Producten",

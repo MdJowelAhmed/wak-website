@@ -306,7 +306,8 @@
       "save": "Save",
       "updateSuccess": "Profile updated successfully",
       "updateError": "Failed to update profile",
-      "saveError": "An error occurred while saving."
+      "saveError": "An error occurred while saving.",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "Change Password",
@@ -512,6 +513,7 @@
     "confirmReject": "Reject “{title}”? The provider will be notified and you won’t be able to accept it later.",
     "sendError": "Failed to send message",
     "sendUnexpected": "An error occurred while sending",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB.",
     "attachment": "Attachment",
     "loadError": "Could not load messages.",
     "paymentError": "Could not start payment. Please try again.",

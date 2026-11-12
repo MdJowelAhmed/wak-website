@@ -287,7 +287,8 @@
       "save": "저장",
       "updateSuccess": "프로필이 업데이트되었습니다",
       "updateError": "프로필을 업데이트하지 못했습니다",
-      "saveError": "저장 중 오류가 발생했습니다."
+      "saveError": "저장 중 오류가 발생했습니다.",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "비밀번호 변경",
@@ -488,7 +489,8 @@
     "paymentError": "결제를 시작하지 못했습니다. 다시 시도하세요.",
     "acceptError": "이 제안을 수락하지 못했습니다.",
     "rejectError": "이 제안을 거절하지 못했습니다.",
-    "rejectSuccess": "제안이 거절되었습니다."
+    "rejectSuccess": "제안이 거절되었습니다.",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "상품",

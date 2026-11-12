@@ -287,7 +287,8 @@
       "save": "保存",
       "updateSuccess": "プロフィールを更新しました",
       "updateError": "プロフィールを更新できませんでした",
-      "saveError": "保存中にエラーが発生しました。"
+      "saveError": "保存中にエラーが発生しました。",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "パスワードを変更",
@@ -488,7 +489,8 @@
     "paymentError": "支払いを開始できませんでした。もう一度お試しください。",
     "acceptError": "このオファーを承認できませんでした。",
     "rejectError": "このオファーを拒否できませんでした。",
-    "rejectSuccess": "オファーは拒否されました。"
+    "rejectSuccess": "オファーは拒否されました。",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "商品",

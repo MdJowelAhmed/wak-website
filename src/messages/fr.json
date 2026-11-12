@@ -287,7 +287,8 @@
       "save": "Enregistrer",
       "updateSuccess": "Profil mis à jour avec succès",
       "updateError": "Échec de la mise à jour du profil",
-      "saveError": "Une erreur s’est produite lors de l’enregistrement."
+      "saveError": "Une erreur s’est produite lors de l’enregistrement.",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "Changer le mot de passe",
@@ -488,7 +489,8 @@
     "paymentError": "Impossible de démarrer le paiement. Veuillez réessayer.",
     "acceptError": "Impossible d’accepter cette offre.",
     "rejectError": "Impossible de refuser cette offre.",
-    "rejectSuccess": "Offre refusée."
+    "rejectSuccess": "Offre refusée.",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "Produits",

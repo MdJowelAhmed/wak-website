@@ -287,7 +287,8 @@
       "save": "محفوظ کریں",
       "updateSuccess": "پروفائل کامیابی سے اپ ڈیٹ ہو گیا",
       "updateError": "پروفائل اپ ڈیٹ نہیں ہو سکا",
-      "saveError": "محفوظ کرتے وقت خرابی ہوئی۔"
+      "saveError": "محفوظ کرتے وقت خرابی ہوئی۔",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "پاس ورڈ تبدیل کریں",
@@ -488,7 +489,8 @@
     "paymentError": "ادائیگی شروع نہیں ہو سکی۔ دوبارہ کوشش کریں۔",
     "acceptError": "یہ پیشکش قبول نہیں ہو سکی۔",
     "rejectError": "یہ پیشکش مسترد نہیں ہو سکی۔",
-    "rejectSuccess": "پیشکش مسترد ہو گئی۔"
+    "rejectSuccess": "پیشکش مسترد ہو گئی۔",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "مصنوعات",

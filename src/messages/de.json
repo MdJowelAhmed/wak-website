@@ -287,7 +287,8 @@
       "save": "Speichern",
       "updateSuccess": "Profil erfolgreich aktualisiert",
       "updateError": "Profil konnte nicht aktualisiert werden",
-      "saveError": "Beim Speichern ist ein Fehler aufgetreten."
+      "saveError": "Beim Speichern ist ein Fehler aufgetreten.",
+      "uploadTooLarge": "File is too large. Please choose one under {maxMb} MB."
     },
     "settings": {
       "changePassword": "Passwort ändern",
@@ -488,7 +489,8 @@
     "paymentError": "Zahlung konnte nicht gestartet werden. Bitte erneut versuchen.",
     "acceptError": "Dieses Angebot konnte nicht angenommen werden.",
     "rejectError": "Dieses Angebot konnte nicht abgelehnt werden.",
-    "rejectSuccess": "Angebot abgelehnt."
+    "rejectSuccess": "Angebot abgelehnt.",
+    "uploadTooLarge": "Attachment is too large. Maximum size is {maxMb} MB."
   },
   "Shop": {
     "products": "Produkte",
