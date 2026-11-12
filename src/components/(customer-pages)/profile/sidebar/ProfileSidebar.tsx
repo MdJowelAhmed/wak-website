@@ -7,6 +7,7 @@ import ProfileAvatar from "@/ui/ProfileAvatar";
 export default async function ProfileSidebar() {
   const t = await getTranslations("Profile.sidebar");
   const profile = await getProfile();
+  console.log(profile);
 
   const imageUrl = profile?.profileImage ?? null;
   const name = profile?.name || t("guest");
