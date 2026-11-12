@@ -62,9 +62,14 @@ function syncClientSession(session: SessionResult) {
 interface AuthProviderProps {
   children: ReactNode;
   initialSession: SessionResult;
+  syncSessionFromCookie?: boolean;
 }
 
-export function AuthProvider({ children, initialSession }: AuthProviderProps) {
+export function AuthProvider({
+  children,
+  initialSession,
+  syncSessionFromCookie = false,
+}: AuthProviderProps) {
   const [user, setUser] = useState<SessionUser | null>(
     initialSession.status === "authenticated" ? initialSession.user : null,
   );
@@ -92,6 +97,16 @@ export function AuthProvider({ children, initialSession }: AuthProviderProps) {
     // Only the first server snapshot needs syncing; later changes go through refreshUser.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (
+      syncSessionFromCookie &&
+      initialSession.status !== "authenticated" &&
+      Cookies.get("accessToken")
+    ) {
+      void refreshUser();
+    }
+  }, [syncSessionFromCookie, initialSession.status, refreshUser]);
 
   useEffect(() => {
     const handleStorage = (event: StorageEvent) => {

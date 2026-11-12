@@ -1,4 +1,5 @@
-import { myFetch, FetchResponse } from "./myFetch";
+import { publicFetch } from "./publicFetch";
+import type { FetchResponse } from "./myFetch";
 
 export interface Category {
     _id: string;
@@ -39,7 +40,7 @@ export async function getActiveCategories(
     }
 
     const queryString = query.toString() ? `?${query.toString()}` : "";
-    return await myFetch<Category[]>(`/categories/active${queryString}`, {
+    return await publicFetch<Category[]>(`/categories/active${queryString}`, {
         cache: "force-cache",
         next: {
             revalidate: 3600, 
